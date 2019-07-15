@@ -16,9 +16,6 @@
     <ClCompile Include="Source\FPSCounter.cpp" />
     <ClCompile Include="Source\GraphicsManager.cpp" />
     <ClCompile Include="Source\KeyboardController.cpp" />
-    <ClCompile Include="Source\LightBase.cpp" />
-    <ClCompile Include="Source\LoadOBJ.cpp" />
-    <ClCompile Include="Source\LoadTGA.cpp" />
     <ClCompile Include="Source\MathUtility.cpp" />
     <ClCompile Include="Source\MatrixStack.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
@@ -44,10 +41,6 @@
     <ClInclude Include="Source\HelperResources.h" />
     <ClInclude Include="Source\HelperShader.h" />
     <ClInclude Include="Source\KeyboardController.h" />
-    <ClInclude Include="Source\LightBase.h" />
-    <ClInclude Include="Source\LoadOBJ.h" />
-    <ClInclude Include="Source\LoadTGA.h" />
-    <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\MathUtility.h" />
     <ClInclude Include="Source\MatrixStack.h" />
     <ClInclude Include="Source\Mesh.h" />
@@ -60,7 +53,6 @@
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\Singleton.h" />
-    <ClInclude Include="Source\SingletonTemplate.h" />
     <ClInclude Include="Source\SoundEngine.h" />
     <ClInclude Include="Source\timer.h" />
     <ClInclude Include="Source\UniBlend.h" />

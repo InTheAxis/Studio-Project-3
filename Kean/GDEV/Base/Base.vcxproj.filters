@@ -25,6 +25,9 @@
     <ClCompile Include="Source\MgrGObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -51,5 +54,52 @@
     <ClInclude Include="Source\ScriptBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SceneText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\Shadow.fragmentshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Shadow.vertexshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\simple.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\simple.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\unlit.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\unlit_scroll.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\unlit_tint.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\wave.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\billboard.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\default.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\GPass.fragmentshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\GPass.vertexshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\lit.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\lit_blend.frag">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

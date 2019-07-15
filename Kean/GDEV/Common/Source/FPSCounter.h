@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SingletonTemplate.h"
+#include "Singleton.h"
 
 class CFPSCounter : public Singleton<CFPSCounter>
 {

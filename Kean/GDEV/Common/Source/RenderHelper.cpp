@@ -184,9 +184,9 @@ void RenderHelper::RenderMeshWithLight(Mesh* _mesh)
 	currProg->UpdateMatrix44("MV_inverse_transpose", &modelView.a[0]);
 
 	//load material
-	currProg->UpdateVector3("material.kAmbient", &_mesh->material.kAmbient.r);
-	currProg->UpdateVector3("material.kDiffuse", &_mesh->material.kDiffuse.r);
-	currProg->UpdateVector3("material.kSpecular", &_mesh->material.kSpecular.r);
+	currProg->UpdateVector3("material.kAmbient", &_mesh->material.kAmbient.x);
+	currProg->UpdateVector3("material.kDiffuse", &_mesh->material.kDiffuse.x);
+	currProg->UpdateVector3("material.kSpecular", &_mesh->material.kSpecular.x);
 	currProg->UpdateFloat("material.kShininess", _mesh->material.kShininess);
 
 	// Update textures first if available
@@ -304,7 +304,7 @@ void RenderHelper::RenderText(Mesh* _mesh, const std::string& _text, Color _colo
 	ShaderProgram* currProg = GraphicsManager::GetInstance()->GetActiveShader();
 
 	//currProg->UpdateInt("textEnabled", 1);
-	currProg->UpdateVector3("textColor", &_color.r);
+	currProg->UpdateVector3("textColor", &_color.x);
 	//currProg->UpdateInt("lightEnabled", 0);
 
 	if (_mesh->textureID > 0)
@@ -345,7 +345,7 @@ void RenderHelper::RenderText(Mesh* _mesh, const std::string& _text, Color _colo
 	}
 	//currProg->UpdateInt("textEnabled", 0);
 	Color reset = Color(1, 1, 1);
-	currProg->UpdateVector3("textColor", &reset.r);
+	currProg->UpdateVector3("textColor", &reset.x);
 }
 
 // Post Render Text to setup the shaders before rendering text

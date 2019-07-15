@@ -1,7 +1,7 @@
 #ifndef MESH_BUILDER_H
 #define MESH_BUILDER_H
 
-#include "SingletonTemplate.h"
+#include "Singleton.h"
 #include "Vertex.h"
 #include <map>
 #include <string>

@@ -1,8 +1,8 @@
 #include "Application.h"
 #include "MouseController.h"
 #include "KeyboardController.h"
-//#include "SceneManager.h"
-//#include "GraphicsManager.h"
+#include "SceneManager.h"
+#include "GraphicsManager.h"
 
 //Include GLEW
 #include <GL/glew.h>
@@ -14,8 +14,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//#include "SceneText.h"
-//#include "FPSCounter.h"
+#include "SceneText.h"
+#include "FPSCounter.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -108,16 +108,16 @@ void Application::Init()
 	glfwSetScrollCallback(m_window, &Application::MouseScrollCallbacks);
 
 	// Init systems
-	//GraphicsManager::GetInstance()->Init();
+	GraphicsManager::GetInstance()->Init();
 }
 
 void Application::Run()
 {
-	//SceneManager::GetInstance()->SetActiveScene("Start");
+	SceneManager::GetInstance()->SetActiveScene("Start");
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 
 	// Init the FPSCounter
-	//CFPSCounter::GetInstance()->Init();
+	CFPSCounter::GetInstance()->Init();
 	double dElapsedTime = 0.0;
 
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
@@ -126,9 +126,9 @@ void Application::Run()
 		UpdateInput();
 
 		dElapsedTime = m_timer.getElapsedTime();
-		//CFPSCounter::GetInstance()->Update(dElapsedTime);
-		//SceneManager::GetInstance()->Update(dElapsedTime);
-		//SceneManager::GetInstance()->Render();
+		CFPSCounter::GetInstance()->Update(dElapsedTime);
+		SceneManager::GetInstance()->Update(dElapsedTime);
+		SceneManager::GetInstance()->Render();
 
 		//Swap buffers
 		glfwSwapBuffers(m_window);
@@ -138,7 +138,7 @@ void Application::Run()
 
 		PostInputUpdate();
 	}
-	//SceneManager::GetInstance()->Exit();
+	SceneManager::GetInstance()->Exit();
 }
 
 void Application::Exit()

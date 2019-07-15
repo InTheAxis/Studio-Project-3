@@ -1,25 +1,36 @@
-#ifndef SINGLETON_H
-#define SINGLETON_H
+#ifndef SINGLETON_TEMPLATE_H
+#define SINGLETON_TEMPLATE_H
 
-//thanks to https://stackoverflow.com/questions/41328038/singleton-template-as-base-class-in-c
-
-template<typename T>
+template <typename T>
 class Singleton
 {
 public:
-	static T& Instance()
+	static T* GetInstance()
 	{
-		static T instance;
-		return instance;
+		if (s_mInstance == nullptr)
+			s_mInstance = new T();
+
+		return s_mInstance;
 	}
 
-	virtual void Init() = 0;
-	virtual void Drop() = 0;
+	static void Destroy()
+	{
+		if (s_mInstance)
+		{
+			delete s_mInstance;
+			s_mInstance = nullptr;
+		}
+	}
 
-	Singleton(Singleton const &) = delete;
-	Singleton& operator=(Singleton const &) = delete;
 protected:
-	Singleton() {}
-	~Singleton() {}
+	Singleton(){};
+	virtual ~Singleton(){};
+
+private:
+	static T* s_mInstance;
 };
-#endif
+
+template <typename T>
+T* Singleton<T>::s_mInstance = nullptr;
+
+#endif // SINGLETON_TEMPLATE_H

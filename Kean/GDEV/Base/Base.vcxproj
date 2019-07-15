@@ -15,6 +15,7 @@
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\MgrGObject.cpp" />
+    <ClCompile Include="Source\SceneText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
@@ -22,9 +23,26 @@
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\MgrGObject.h" />
     <ClInclude Include="Source\SceneBase.h" />
+    <ClInclude Include="Source\SceneText.h" />
     <ClInclude Include="Source\ScriptBase.h" />
     <ClInclude Include="Source\Singleton.h" />
     <ClInclude Include="Source\WinDebug.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\billboard.vert" />
+    <None Include="Shader\default.vert" />
+    <None Include="Shader\GPass.fragmentshader" />
+    <None Include="Shader\GPass.vertexshader" />
+    <None Include="Shader\lit.frag" />
+    <None Include="Shader\lit_blend.frag" />
+    <None Include="Shader\Shadow.fragmentshader" />
+    <None Include="Shader\Shadow.vertexshader" />
+    <None Include="Shader\simple.frag" />
+    <None Include="Shader\simple.vert" />
+    <None Include="Shader\unlit.frag" />
+    <None Include="Shader\unlit_scroll.frag" />
+    <None Include="Shader\unlit_tint.frag" />
+    <None Include="Shader\wave.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9B172635-4E2B-46F1-A403-08F4194D00F5}</ProjectGuid>

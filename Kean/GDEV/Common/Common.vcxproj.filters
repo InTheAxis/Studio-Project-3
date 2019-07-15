@@ -47,19 +47,10 @@
     <ClCompile Include="Source\Utility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LoadTGA.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Win32Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LoadOBJ.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CameraBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LightBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\MeshBuilder.cpp">
@@ -103,9 +94,6 @@
     <ClInclude Include="Source\Vector2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SingletonTemplate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\MouseController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -124,28 +112,16 @@
     <ClInclude Include="Source\ShaderProgram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Material.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\LoadOBJ.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\LoadTGA.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Win32Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\CameraBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\LightBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\MeshBuilder.h">
@@ -178,9 +154,6 @@
     <ClInclude Include="Source\HelperResources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\UniBlend.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -191,6 +164,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\UniMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Singleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
