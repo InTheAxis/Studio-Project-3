@@ -1,6 +1,6 @@
 /******************************************************************************/
 /*!
-\file	Vector3.cpp
+\file	Vector4.cpp
 \author Wen Sheng Tang
 \par	email: tang_wen_sheng\@nyp.edu.sg
 \brief
@@ -8,11 +8,11 @@ Struct to define a 3D vector
 */
 /******************************************************************************/
 #include <cmath>
-#include "Vector3.h"
+#include "Vector4.h"
 
 /******************************************************************************/
 /*!
-\brief	Vector3 default constructor
+\brief	Vector4 default constructor
 
 \param	a
 	x value
@@ -22,28 +22,32 @@ Struct to define a 3D vector
 	z value
 */
 /******************************************************************************/
-Vector3::Vector3(float a, float b, float c) : x(a), y(b), z(c)
+Vector4::Vector4(float a, float b, float c, float d) : x(a), y(b), z(c), w(d)
 {
 }
 
 /******************************************************************************/
 /*!
-\brief	Vector3 copy constructor
+\brief	Vector4 copy constructor
 
 \param	rhs
 	Vector to copy from
 */
 /******************************************************************************/
-Vector3::Vector3(const Vector3 &rhs) : x(rhs.x), y(rhs.y), z(rhs.z)
+Vector4::Vector4(const Vector4 &rhs) : x(rhs.x), y(rhs.y), z(rhs.z), w(rhs.w)
+{
+}
+
+Vector4::Vector4(const Vector3 & rhs, float d) : x(rhs.x), y(rhs.y), z(rhs.z), w(d)
 {
 }
 
 /******************************************************************************/
 /*!
-\brief	Vector3 destructor
+\brief	Vector4 destructor
 */
 /******************************************************************************/
-Vector3::~Vector3()
+Vector4::~Vector4()
 {
 }
 
@@ -59,11 +63,12 @@ Vector3::~Vector3()
 	z value
 */
 /******************************************************************************/
-void Vector3::Set( float a, float b, float c )
+void Vector4::Set(float a, float b, float c, float d)
 {
 	x = a;
 	y = b;
 	z = c;
+	w = d;
 }
 
 /******************************************************************************/
@@ -71,9 +76,9 @@ void Vector3::Set( float a, float b, float c )
 \brief	Set all elements to zero
 */
 /******************************************************************************/
-void Vector3::SetZero( void )
+void Vector4::SetZero(void)
 {
-	x = y = z = 0.0f;
+	x = y = z = w = 0.0f;
 }
 
 /******************************************************************************/
@@ -83,9 +88,9 @@ void Vector3::SetZero( void )
 \return TRUE if vector is zero
 */
 /******************************************************************************/
-bool Vector3::IsZero( void ) const
+bool Vector4::IsZero(void) const
 {
-	return Math::FIsEqual(x, 0.f) && Math::FIsEqual(y, 0.f) && Math::FIsEqual(z, 0.f);
+	return Math::FIsEqual(x, 0.f) && Math::FIsEqual(y, 0.f) && Math::FIsEqual(z, 0.f) && Math::FIsEqual(w, 0.f);
 }
 
 /******************************************************************************/
@@ -94,14 +99,14 @@ bool Vector3::IsZero( void ) const
 operator+ overload for vector addition
 
 \param rhs
-	Vector3 to add with
-\return 
+	Vector4 to add with
+\return
 	Resulting vector
 */
 /******************************************************************************/
-Vector3 Vector3::operator+( const Vector3& rhs ) const
+Vector4 Vector4::operator+(const Vector4& rhs) const
 {
-	return Vector3(x + rhs.x, y + rhs.y, z + rhs.z);
+	return Vector4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
 }
 
 /******************************************************************************/
@@ -110,16 +115,17 @@ Vector3 Vector3::operator+( const Vector3& rhs ) const
 operator+= overload for vector addition and assignment
 
 \param rhs
-	Vector3 to add with
-\return 
+	Vector4 to add with
+\return
 	Resulting vector
 */
 /******************************************************************************/
-Vector3& Vector3::operator+=( const Vector3& rhs )
+Vector4& Vector4::operator+=(const Vector4& rhs)
 {
 	x += rhs.x;
 	y += rhs.y;
 	z += rhs.z;
+	w += rhs.w;
 	return *this;
 }
 
@@ -129,13 +135,13 @@ Vector3& Vector3::operator+=( const Vector3& rhs )
 operator- overload for vector subtraction
 
 \param rhs
-	Vector3 to subtract with
+	Vector4 to subtract with
 \return Resulting vector
 */
 /******************************************************************************/
-Vector3 Vector3::operator-( const Vector3& rhs ) const
+Vector4 Vector4::operator-(const Vector4& rhs) const
 {
-	return Vector3(x - rhs.x, y - rhs.y, z - rhs.z);
+	return Vector4(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
 }
 
 /******************************************************************************/
@@ -144,16 +150,17 @@ Vector3 Vector3::operator-( const Vector3& rhs ) const
 operator-= overload for vector subtraction and assignment
 
 \param rhs
-	Vector3 to subtract with
-\return 
+	Vector4 to subtract with
+\return
 	Resulting vector
 */
 /******************************************************************************/
-Vector3& Vector3::operator-=( const Vector3& rhs )
+Vector4& Vector4::operator-=(const Vector4& rhs)
 {
 	x -= rhs.x;
 	y -= rhs.y;
 	z -= rhs.z;
+	w -= rhs.w;
 	return *this;
 }
 
@@ -162,13 +169,13 @@ Vector3& Vector3::operator-=( const Vector3& rhs )
 \brief
 operator- overload for unary negation
 
-\return 
+\return
 	Resulting vector
 */
 /******************************************************************************/
-Vector3 Vector3::operator-( void ) const
+Vector4 Vector4::operator-(void) const
 {
-	return Vector3(-x, -y, -z);
+	return Vector4(-x, -y, -z, -w);
 }
 
 /******************************************************************************/
@@ -177,13 +184,13 @@ Vector3 Vector3::operator-( void ) const
 operator* overload for scalar multiplication
 
 \param scalar - float to multiply with
- 
+
 \exception None
 \return Resulting vector
 */
-Vector3 Vector3::operator*( float scalar ) const
+Vector4 Vector4::operator*(float scalar) const
 {
-	return Vector3(scalar * x, scalar * y, scalar * z);
+	return Vector4(scalar * x, scalar * y, scalar * z, scalar * w);
 }
 
 /******************************************************************************/
@@ -193,15 +200,16 @@ operator*= overload for scalar multiplication and assignment
 
 \param scalar
 	float to multiply with
-\return 
+\return
 	Resulting vector
 */
 /******************************************************************************/
-Vector3& Vector3::operator*=( float scalar )
+Vector4& Vector4::operator*=(float scalar)
 {
 	x *= scalar;
 	y *= scalar;
 	z *= scalar;
+	w *= scalar;
 	return *this;
 }
 
@@ -212,14 +220,14 @@ operator== overload for equality check, using Math::EPSILON
 
 \param rhs
 	vector to compare with
- 
+
 \exception None
 \return Resulting vector
 */
 /******************************************************************************/
-bool Vector3::operator==( const Vector3& rhs ) const
+bool Vector4::operator==(const Vector4& rhs) const
 {
-	return Math::FIsEqual(x, rhs.x) && Math::FIsEqual(y, rhs.y) && Math::FIsEqual(z, rhs.z);
+	return Math::FIsEqual(x, rhs.x) && Math::FIsEqual(y, rhs.y) && Math::FIsEqual(z, rhs.z) && Math::FIsEqual(w, rhs.w);
 }
 
 /******************************************************************************/
@@ -229,13 +237,13 @@ operator!= overload for inequality check, using Math::EPSILON
 
 \param rhs
 	vector to compare with
-\return 
+\return
 	Resulting vector
 */
 /******************************************************************************/
-bool Vector3::operator!= ( const Vector3& rhs ) const
+bool Vector4::operator!= (const Vector4& rhs) const
 {
-	return !Math::FIsEqual(x, rhs.x) || !Math::FIsEqual(y, rhs.y) || !Math::FIsEqual(z, rhs.z);
+	return !Math::FIsEqual(x, rhs.x) || !Math::FIsEqual(y, rhs.y) || !Math::FIsEqual(z, rhs.z) || !Math::FIsEqual(w, rhs.w);
 }
 
 /******************************************************************************/
@@ -244,15 +252,16 @@ bool Vector3::operator!= ( const Vector3& rhs ) const
 
 \param	rhs
 	Vector to assign
-\return 
+\return
 	A reference to this vector
 */
 /******************************************************************************/
-Vector3& Vector3::operator=(const Vector3& rhs)
+Vector4& Vector4::operator=(const Vector4& rhs)
 {
 	x = rhs.x;
 	y = rhs.y;
 	z = rhs.z;
+	w = rhs.w;
 	return *this;
 }
 
@@ -261,13 +270,13 @@ Vector3& Vector3::operator=(const Vector3& rhs)
 \brief
 Return length of vector
 
-\return 
+\return
 	Length
 */
 /******************************************************************************/
-float Vector3::Length( void ) const
+float Vector4::Length(void) const
 {
-  return sqrt(x * x + y * y + z * z);
+	return sqrt(x * x + y * y + z * z + w * w);
 }
 
 /******************************************************************************/
@@ -275,45 +284,13 @@ float Vector3::Length( void ) const
 \brief
 Return square of length of vector
 
-\return 
+\return
 	Length square
 */
 /******************************************************************************/
-float Vector3::LengthSquared (void ) const
+float Vector4::LengthSquared(void) const
 {
-	return x * x + y * y + z * z;
-}
-
-/******************************************************************************/
-/*!
-\brief
-Dot product of 2 vectors
-
-\param rhs
-	Point to calculate dot product with
-\return 
-	float value of dot product
-*/
-/******************************************************************************/
-float Vector3::Dot( const Vector3& rhs ) const
-{
-	return x * rhs.x + y * rhs.y + z * rhs.z;
-}
-
-/******************************************************************************/
-/*!
-\brief
-Cross product of 2 vectors
-
-\param rhs
-	Point to calculate cross product with
-\return 
-	Vector of cross product
-*/
-/******************************************************************************/
-Vector3 Vector3::Cross( const Vector3& rhs ) const
-{
-	return Vector3(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
+	return x * x + y * y + z * z + w * w;
 }
 
 /******************************************************************************/
@@ -323,18 +300,18 @@ Return a copy of this vector, normalized
 
 \param rhs
 	Point to calculate distance from
-\exception Divide by zero 
+\exception Divide by zero
 	thrown if normalizing a zero vector
-\return 
+\return
 	Resulting normalized vector
 */
 /******************************************************************************/
-Vector3 Vector3::Normalized( void ) const throw( DivideByZero )
+Vector4 Vector4::Normalized(void) const throw(DivideByZero)
 {
 	float d = Length();
-	if(d <= Math::EPSILON && -d <= Math::EPSILON)
-	  throw DivideByZero();
-	return Vector3(x / d, y / d, z / d);
+	if (d <= Math::EPSILON && -d <= Math::EPSILON)
+		throw DivideByZero();
+	return Vector4(x / d, y / d, z / d, w / d);
 }
 
 /******************************************************************************/
@@ -344,26 +321,27 @@ Normalize this vector and return a reference to it
 
 \param rhs
 	Point to calculate distance from
-\exception Divide by zero 
+\exception Divide by zero
 	thrown if normalizing a zero vector
-\return 
+\return
 	Reference to this vector
 */
 /******************************************************************************/
-Vector3& Vector3::Normalize( void ) throw( DivideByZero )
+Vector4& Vector4::Normalize(void) throw(DivideByZero)
 {
 	float d = Length();
-	if(d <= Math::EPSILON && -d <= Math::EPSILON)
-	  throw DivideByZero();
+	if (d <= Math::EPSILON && -d <= Math::EPSILON)
+		throw DivideByZero();
 	x /= d;
 	y /= d;
 	z /= d;
+	w /= d;
 	return *this;
 }
 
-std::ostream& operator<< (std::ostream& os, Vector3& rhs)
+std::ostream& operator<< (std::ostream& os, Vector4& rhs)
 {
-	os << "[ " << rhs.x << ", " << rhs.y << ", " << rhs.z << " ]";
+	os << "[ " << rhs.x << ", " << rhs.y << ", " << rhs.z << ", " << rhs.w << " ]";
 	return os;
 }
 
@@ -376,11 +354,11 @@ Scalar product of scalar with vector
 	scalar value
 \param vector
 	vector
-\return 
+\return
 	Resulting vector
 */
 /******************************************************************************/
-Vector3 operator*( float scalar, const Vector3& rhs )
+Vector4 operator*(float scalar, const Vector4& rhs)
 {
 	return rhs * scalar;
 }

@@ -12,62 +12,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
-    <ClCompile Include="Source\Enemy\Enemy3D.cpp" />
-    <ClCompile Include="Source\EntityManager.cpp" />
-    <ClCompile Include="Source\FPSCamera.cpp" />
-    <ClCompile Include="Source\GenericEntity.cpp" />
-    <ClCompile Include="Source\GroundEntity.cpp" />
-    <ClCompile Include="Source\Light.cpp" />
+    <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\main.cpp" />
-    <ClCompile Include="Source\OBJMesh.cpp" />
-    <ClCompile Include="Source\PlayerInfo\PlayerInfo.cpp" />
-    <ClCompile Include="Source\Projectile\Projectile.cpp" />
-    <ClCompile Include="Source\Scene2D\Animation.cpp" />
-    <ClCompile Include="Source\Scene2D\Enemy.cpp" />
-    <ClCompile Include="Source\Scene2D\Goodies.cpp" />
-    <ClCompile Include="Source\Scene2D\GoodiesFactory.cpp" />
-    <ClCompile Include="Source\Scene2D\Map.cpp" />
-    <ClCompile Include="Source\Scene2D\PlayerInfo2D.cpp" />
-    <ClCompile Include="Source\Scene2D\Scene2D.cpp" />
-    <ClCompile Include="Source\Scene2D\Strategy.cpp" />
-    <ClCompile Include="Source\Scene2D\Strategy_Kill.cpp" />
-    <ClCompile Include="Source\Scene2D\TreasureChest.cpp" />
-    <ClCompile Include="Source\SceneText.cpp" />
-    <ClCompile Include="Source\SkyBox\SkyBoxEntity.cpp" />
-    <ClCompile Include="Source\SoundEngine.cpp" />
-    <ClCompile Include="Source\SpriteEntity.cpp" />
-    <ClCompile Include="Source\TextEntity.cpp" />
-    <ClCompile Include="Source\WeaponInfo\Pistol.cpp" />
-    <ClCompile Include="Source\WeaponInfo\WeaponInfo.cpp" />
+    <ClCompile Include="Source\MgrGObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
-    <ClInclude Include="Source\Enemy\Enemy3D.h" />
-    <ClInclude Include="Source\EntityManager.h" />
-    <ClInclude Include="Source\FPSCamera.h" />
-    <ClInclude Include="Source\GenericEntity.h" />
-    <ClInclude Include="Source\GroundEntity.h" />
-    <ClInclude Include="Source\Light.h" />
-    <ClInclude Include="Source\OBJMesh.h" />
-    <ClInclude Include="Source\PlayerInfo\PlayerInfo.h" />
-    <ClInclude Include="Source\Projectile\Projectile.h" />
-    <ClInclude Include="Source\Scene2D\Animation.h" />
-    <ClInclude Include="Source\Scene2D\Enemy.h" />
-    <ClInclude Include="Source\Scene2D\Goodies.h" />
-    <ClInclude Include="Source\Scene2D\GoodiesFactory.h" />
-    <ClInclude Include="Source\Scene2D\Map.h" />
-    <ClInclude Include="Source\Scene2D\PlayerInfo2D.h" />
-    <ClInclude Include="Source\Scene2D\Scene2D.h" />
-    <ClInclude Include="Source\Scene2D\Strategy.h" />
-    <ClInclude Include="Source\Scene2D\Strategy_Kill.h" />
-    <ClInclude Include="Source\Scene2D\TreasureChest.h" />
-    <ClInclude Include="Source\SceneText.h" />
-    <ClInclude Include="Source\SkyBox\SkyBoxEntity.h" />
-    <ClInclude Include="Source\SoundEngine.h" />
-    <ClInclude Include="Source\SpriteEntity.h" />
-    <ClInclude Include="Source\TextEntity.h" />
-    <ClInclude Include="Source\WeaponInfo\Pistol.h" />
-    <ClInclude Include="Source\WeaponInfo\WeaponInfo.h" />
+    <ClInclude Include="Source\CompBase.h" />
+    <ClInclude Include="Source\GameObject.h" />
+    <ClInclude Include="Source\MgrGObject.h" />
+    <ClInclude Include="Source\SceneBase.h" />
+    <ClInclude Include="Source\ScriptBase.h" />
+    <ClInclude Include="Source\Singleton.h" />
+    <ClInclude Include="Source\WinDebug.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9B172635-4E2B-46F1-A403-08F4194D00F5}</ProjectGuid>
