@@ -22,6 +22,12 @@
     <Filter Include="Node">
       <UniqueIdentifier>{24e96907-32bc-417f-a65b-3e62a921c9f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utility\Math">
+      <UniqueIdentifier>{5cd95b1a-597b-4ac9-b904-29a5915050b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\Input">
+      <UniqueIdentifier>{1d018dc0-0727-4d6d-84d1-80ee7d9f2922}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -35,6 +41,33 @@
     </ClCompile>
     <ClCompile Include="Source\Node\NGameObj.cpp">
       <Filter>Node</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Math\Vector3.cpp">
+      <Filter>Utility\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Math\Vector4.cpp">
+      <Filter>Utility\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Math\Vector2.cpp">
+      <Filter>Utility\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Math\MatrixStack.cpp">
+      <Filter>Utility\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Math\Mtx44.cpp">
+      <Filter>Utility\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Math\Stopwatch.cpp">
+      <Filter>Utility\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Input\MouseController.cpp">
+      <Filter>Utility\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Input\KeyboardController.cpp">
+      <Filter>Utility\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +88,42 @@
     </ClInclude>
     <ClInclude Include="Source\Node\NGameObj.h">
       <Filter>Node</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Resource.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Vector2.h">
+      <Filter>Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Vector3.h">
+      <Filter>Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Vector4.h">
+      <Filter>Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Mtx44.h">
+      <Filter>Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\MyMath.h">
+      <Filter>Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\MatrixStack.h">
+      <Filter>Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Vertex.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Stopwatch.h">
+      <Filter>Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Input\KeyboardController.h">
+      <Filter>Utility\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Input\MouseController.h">
+      <Filter>Utility\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
