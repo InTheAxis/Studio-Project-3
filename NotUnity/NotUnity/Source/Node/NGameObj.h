@@ -7,7 +7,7 @@
 class NGameObj : public Node, public TypeID<NGameObj>
 {
 public:
-	NGameObj() {}
+	NGameObj(std::string name = "NGameObj") : Node(name) {}
 	~NGameObj() {}
 	
 	virtual void Start();

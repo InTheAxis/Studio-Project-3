@@ -63,11 +63,14 @@
     <ClCompile Include="Source\Utility\Math\Stopwatch.cpp">
       <Filter>Utility\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Utility\Input\MouseController.cpp">
+    <ClCompile Include="Source\Utility\Input\ControllerMouse.cpp">
       <Filter>Utility\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Utility\Input\KeyboardController.cpp">
+    <ClCompile Include="Source\Utility\Input\ControllerKeyboard.cpp">
       <Filter>Utility\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\MgrScene.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,11 +122,17 @@
     <ClInclude Include="Source\Utility\Math\Stopwatch.h">
       <Filter>Utility\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Utility\Input\KeyboardController.h">
+    <ClInclude Include="Source\Manager\Manager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Input\ControllerMouse.h">
       <Filter>Utility\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Utility\Input\MouseController.h">
+    <ClInclude Include="Source\Utility\Input\ControllerKeyboard.h">
       <Filter>Utility\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\MgrScene.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

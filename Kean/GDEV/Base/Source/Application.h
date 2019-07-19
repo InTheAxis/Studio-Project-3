@@ -17,8 +17,8 @@ public:
 	void Run();
 	void Exit();
 
-	void UpdateInput();
-	void PostInputUpdate();
+	void CheckForInput();
+	void InputReset();
 	
 	static void MouseButtonCallbacks(GLFWwindow* window, int button, int action, int mods);
 	static void MouseScrollCallbacks(GLFWwindow* window, double xoffset, double yoffset);

@@ -7,7 +7,7 @@
 class NScene : public Node, public TypeID<NScene>
 {
 public:
-	NScene() {}
+	NScene(std::string name = "NScene") : Node(name) {}
 	~NScene() {}
 	
 	virtual void Start();

@@ -5,6 +5,8 @@
 #include "Math/Vector3.h"
 #include "Math/Vector4.h"
 
+//defines what a vertex stores
+
 typedef Vector3 Position;
 typedef Vector4 Color;
 typedef Vector3 Normal;

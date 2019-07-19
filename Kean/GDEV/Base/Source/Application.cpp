@@ -123,7 +123,7 @@ void Application::Run()
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
 		glfwPollEvents();
-		UpdateInput();
+		CheckForInput();
 
 		dElapsedTime = m_timer.getElapsedTime();
 		CFPSCounter::GetInstance()->Update(dElapsedTime);
@@ -136,7 +136,7 @@ void Application::Run()
 
 		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.
 
-		PostInputUpdate();
+		InputReset();
 	}
 	SceneManager::GetInstance()->Exit();
 }
@@ -149,7 +149,7 @@ void Application::Exit()
 	glfwTerminate();
 }
 
-void Application::UpdateInput()
+void Application::CheckForInput()
 {
 	// Update Mouse Position
 	double mouse_currX, mouse_currY;
@@ -161,7 +161,7 @@ void Application::UpdateInput()
 		KeyboardController::GetInstance()->UpdateKeyboardStatus(i, IsKeyPressed(i));
 }
 
-void Application::PostInputUpdate()
+void Application::InputReset()
 {
 	// If mouse is centered, need to update the center position for next frame
 	if (MouseController::GetInstance()->GetKeepMouseCentered())

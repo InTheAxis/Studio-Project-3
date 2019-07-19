@@ -21,7 +21,7 @@ public:
 	int GetWindowHalfWidth();
 	
 private:
-	int m_window_width = 800;
+	int m_window_width = 1280;
 	int m_window_height = m_window_width / 16 * 9;
 	
 	const unsigned char FPS = 60;

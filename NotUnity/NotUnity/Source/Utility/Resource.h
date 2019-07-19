@@ -10,6 +10,8 @@
 #include "Vertex.h"
 #include "Math/Vector3.h"
 
+//this namespace handles the loading in of resources like tga, etc
+
 namespace Resource
 {
 	//HEIGHT MAP

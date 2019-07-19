@@ -21,11 +21,12 @@
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Manager\MgrScene.cpp" />
     <ClCompile Include="Source\Node\NGameObj.cpp" />
     <ClCompile Include="Source\Node\Node.cpp" />
     <ClCompile Include="Source\Node\NScene.cpp" />
-    <ClCompile Include="Source\Utility\Input\KeyboardController.cpp" />
-    <ClCompile Include="Source\Utility\Input\MouseController.cpp" />
+    <ClCompile Include="Source\Utility\Input\ControllerKeyboard.cpp" />
+    <ClCompile Include="Source\Utility\Input\ControllerMouse.cpp" />
     <ClCompile Include="Source\Utility\Math\MatrixStack.cpp" />
     <ClCompile Include="Source\Utility\Math\Mtx44.cpp" />
     <ClCompile Include="Source\Utility\Math\Stopwatch.cpp" />
@@ -35,11 +36,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\Manager\Manager.h" />
+    <ClInclude Include="Source\Manager\MgrScene.h" />
     <ClInclude Include="Source\Node\NGameObj.h" />
     <ClInclude Include="Source\Node\Node.h" />
     <ClInclude Include="Source\Node\NScene.h" />
-    <ClInclude Include="Source\Utility\Input\KeyboardController.h" />
-    <ClInclude Include="Source\Utility\Input\MouseController.h" />
+    <ClInclude Include="Source\Utility\Input\ControllerKeyboard.h" />
+    <ClInclude Include="Source\Utility\Input\ControllerMouse.h" />
     <ClInclude Include="Source\Utility\Math\MatrixStack.h" />
     <ClInclude Include="Source\Utility\Math\Mtx44.h" />
     <ClInclude Include="Source\Utility\Math\MyMath.h" />

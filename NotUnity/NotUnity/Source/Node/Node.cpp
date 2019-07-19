@@ -12,12 +12,25 @@ void Node::Update(double dt)
 		m_lifetime += dt;
 	else
 		m_lifetime = 0;
+
+	for (auto &childNode : m_children)
+		childNode.second->Update(dt);
 }
 
 void Node::End()
 {
 	for (auto &childNode : m_children)
 		childNode.second->End();
+}
+
+void Node::SetName(std::string name)
+{
+	m_name = name;
+}
+
+std::string Node::GetName()
+{
+	return m_name;
 }
 
 bool Node::IsActive()

@@ -1,11 +1,13 @@
-#ifndef MOUSE_CONTROLLER_H
-#define MOUSE_CONTROLLER_H
+#ifndef CONTROLLER_MOUSE_H
+#define CONTROLLER_MOUSE_H
 
 #include "../Singleton.h"
 
-class MouseController : public Singleton<MouseController>
+//controls the status of the mouse, use this singleton to get mouse input (under User Interface)
+
+class ControllerMouse : public Singleton<ControllerMouse>
 {
-	friend Singleton<MouseController>;
+	friend Singleton<ControllerMouse>;
 public:
 	enum BUTTON_TYPE
 	{
@@ -41,12 +43,12 @@ public:
 	void GetMouseDelta(double& _resultX, double& _resultY);
 
 private:
-	MouseController();
-	~MouseController();
+	ControllerMouse();
+	~ControllerMouse();
 
 	double curr_posX, curr_posY, prev_posX, prev_posY;
 	unsigned char currBtnStatus, prevBtnStatus;
 	double xoffset, yoffset;	
 };
 
-#endif // MOUSE_CONTROLLER_H
+#endif

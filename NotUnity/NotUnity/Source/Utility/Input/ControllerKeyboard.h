@@ -1,13 +1,15 @@
-#ifndef KEYBOARD_CONTROLLER_H
-#define KEYBOARD_CONTROLLER_H
+#ifndef CONTROLLER_KEYBOARD_H
+#define CONTROLLER_KEYBOARD_H
 
 #include "../Singleton.h"
 #include <bitset>
 #include <windows.h>
 
-class KeyboardController : public Singleton<KeyboardController>
+//controls the status of the keyboard, use this singleton to get keyboard input (under User Interface)
+
+class ControllerKeyboard : public Singleton<ControllerKeyboard>
 {
-	friend Singleton<KeyboardController>;
+	friend Singleton<ControllerKeyboard>;
 public:
 	const static int MAX_KEYS = 256;
 
@@ -22,10 +24,10 @@ public:
 	bool IsKeyReleased(unsigned char _slot);
 
 private:
-	KeyboardController();
-	~KeyboardController();
+	ControllerKeyboard();
+	~ControllerKeyboard();
 
 	std::bitset<MAX_KEYS> currStatus, prevStatus;
 };
 
-#endif // KEYBOARD_CONTROLLER_H
+#endif

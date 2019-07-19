@@ -6,10 +6,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Utility/WinDebug.h"
-#include "Utility/Input/MouseController.h"
-#include "Utility/Input/KeyboardController.h"
-//#include "SceneManager.h"
-//#include "GraphicsManager.h"
+#include "Utility/Input/ControllerMouse.h"
+#include "Utility/Input/ControllerKeyboard.h"
+#include "Manager/MgrScene.h"
 
 Application::Application()
 {
@@ -62,7 +61,7 @@ void Application::Create()
 	}
 
 	//set windows position
-	glfwSetWindowPos(m_window, 10, 30);
+	glfwSetWindowPos(m_window, Application::GetWindowHalfWidth() >> 1, Application::GetWindowHalfHeight() >> 1);
 
 	//this function makes the context of the specified window current on the calling thread.
 	glfwMakeContextCurrent(m_window);
@@ -86,10 +85,13 @@ void Application::Create()
 		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
 		//return -1;
 	}	
+
+	//init managers
+	MgrScene::Instance()->Start();
 }
 
 void Application::Run()
-{
+{		
 	//SceneManager::GetInstance()->SetActiveScene("Start");
 	m_timer.StartTimer();    // Start timer to calculate how long it takes to render this frame
 
@@ -107,14 +109,15 @@ void Application::Run()
 		//SceneManager::GetInstance()->Update(deltaTime);
 		//SceneManager::GetInstance()->Render();
 
+		MgrScene::Instance()->Update(deltaTime);
+
 		//Swap buffers
 		glfwSwapBuffers(m_window);
 
 		m_timer.WaitUntil(frameTime); // Frame rate limiter. Limits each frame to a specified time in ms.
 
 		InputReset();
-	}
-	//SceneManager::GetInstance()->Exit();
+	}		
 }
 
 void Application::Exit()
@@ -123,6 +126,8 @@ void Application::Exit()
 	glfwDestroyWindow(m_window);
 	//Finalize and clean up GLFW
 	glfwTerminate();
+	//clean up managers
+	MgrScene::Instance()->End();	
 }
 
 int Application::GetWindowHeight()
@@ -161,18 +166,18 @@ void Application::CheckForInput()
 	double mouse_currX, mouse_currY;
 	glfwGetCursorPos(m_window, &mouse_currX, &mouse_currY);
 	glfwSetCursorPos(m_window, Application::GetWindowHalfWidth(), Application::GetWindowHalfHeight()); //reset mouse to center
-	MouseController::Instance()->UpdateMousePosition(mouse_currX, mouse_currY);	
+	ControllerMouse::Instance()->UpdateMousePosition(mouse_currX, mouse_currY);	
 
 	// Update Keyboard Input
-	for (int i = 0; i < KeyboardController::MAX_KEYS; ++i)
-		KeyboardController::Instance()->UpdateKeyboardStatus(i, IsKeyPressed(i));
+	for (int i = 0; i < ControllerKeyboard::MAX_KEYS; ++i)
+		ControllerKeyboard::Instance()->UpdateKeyboardStatus(i, IsKeyPressed(i));
 }
 
 void Application::InputReset()
 {
 	// Call input systems to update at end of frame
-	MouseController::Instance()->EndFrameUpdate();
-	KeyboardController::Instance()->EndFrameUpdate();
+	ControllerMouse::Instance()->EndFrameUpdate();
+	ControllerKeyboard::Instance()->EndFrameUpdate();
 }
 
 
@@ -193,12 +198,12 @@ void Application::mouse_click_callback(GLFWwindow* window, int button, int actio
 {
 	// Send the callback to the mouse controller to handle
 	if (action == GLFW_PRESS)
-		MouseController::Instance()->UpdateMouseButtonPressed(button);
+		ControllerMouse::Instance()->UpdateMouseButtonPressed(button);
 	else
-		MouseController::Instance()->UpdateMouseButtonReleased(button);
+		ControllerMouse::Instance()->UpdateMouseButtonReleased(button);
 }
 
 void Application::mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	MouseController::Instance()->UpdateMouseScroll(xoffset, yoffset);
+	ControllerMouse::Instance()->UpdateMouseScroll(xoffset, yoffset);
 }
