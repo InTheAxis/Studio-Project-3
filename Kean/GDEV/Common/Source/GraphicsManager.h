@@ -1,7 +1,7 @@
 #ifndef GRAPHICS_MANAGER_H
 #define GRAPHICS_MANAGER_H
 
-#include "SingletonTemplate.h"
+#include "Singleton.h"
 #include "Mtx44.h"
 #include "MatrixStack.h"
 #include <map>

@@ -25,11 +25,6 @@ Struct to define a 3D vector
 struct Vector3
 {
 	float x, y, z;
-	bool IsEqual(float a, float b) const;
-	bool IsGreater(float a, float b) const;
-	bool IsGreaterEqual(float a, float b) const;
-	bool IsLesser(float a, float b) const;
-	bool IsLesserEqual(float a, float b) const;
 
 	Vector3(float a = 0.0, float b = 0.0, float c = 0.0);
 	Vector3(const Vector3 &rhs);
@@ -52,10 +47,6 @@ struct Vector3
 
 	bool operator==( const Vector3& rhs ) const; //Equality check
 	bool operator!= ( const Vector3& rhs ) const; //Inequality check
-	bool operator>=(const Vector3& rhs) const;	// Check if LHS is >= RHS
-	bool operator>(const Vector3& rhs) const;	// Check if LHS is > RHS
-	bool operator<=(const Vector3& rhs) const;	// Check if LHS is <= RHS
-	bool operator<(const Vector3& rhs) const;	// Check if LHS is < RHS
 
 	Vector3& operator=(const Vector3& rhs); //Assignment operator
 
@@ -76,8 +67,6 @@ struct Vector3
 	friend std::ostream& operator<<( std::ostream& os, Vector3& rhs); //print to ostream
 
 	friend Vector3 operator*( float scalar, const Vector3& rhs ); //what is this for?
-
-	friend double DistanceSquaredBetween(Vector3 thisVector, Vector3 thatVector);
 };
 
 #endif //VECTOR3_H

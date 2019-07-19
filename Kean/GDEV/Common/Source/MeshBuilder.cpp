@@ -3,7 +3,7 @@
 #include <GL\glew.h>
 #include <vector>
 #include "MyMath.h"
-#include "LoadOBJ.h"
+#include "HelperResources.h"
 #include <iostream>
 using namespace std;
 /******************************************************************************/
@@ -444,14 +444,14 @@ Mesh* MeshBuilder::GenerateOBJ(const std::string &meshName, const std::string &f
 	std::vector<Position> vertices;
 	std::vector<TexCoord> uvs;
 	std::vector<Vector3> normals;
-	bool success = LoadOBJ(file_path.c_str(), vertices, uvs, normals);
+	bool success = HelperResources::LoadOBJ(file_path.c_str(), vertices, uvs, normals);
 	if(!success)
 		return NULL;
 
 	std::vector<Vertex> vertex_buffer_data;
 	std::vector<GLuint> index_buffer_data;
 	
-	IndexVBO(vertices, uvs, normals, index_buffer_data, vertex_buffer_data);
+	HelperResources::IndexVBO(vertices, uvs, normals, index_buffer_data, vertex_buffer_data);
 
 	Mesh *mesh = new Mesh(meshName);
 	

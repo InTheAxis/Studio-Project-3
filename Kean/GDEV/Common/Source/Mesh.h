@@ -2,7 +2,7 @@
 #define MESH_H
 
 #include <string>
-#include "Material.h"
+#include "UniMaterial.h"
 
 class Mesh
 {

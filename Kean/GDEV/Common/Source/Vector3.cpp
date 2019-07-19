@@ -10,33 +10,6 @@ Struct to define a 3D vector
 #include <cmath>
 #include "Vector3.h"
 
-// Methods to do comparison between 2 values
-// Used to compare components of 2 vectors
-bool Vector3::IsEqual(float a, float b) const
-{
-	return a - b <= Math::EPSILON && b - a <= Math::EPSILON;
-}
-
-bool Vector3::IsGreater(float a, float b) const
-{
-	return (a > b - Math::EPSILON);
-}
-
-bool Vector3::IsGreaterEqual(float a, float b) const
-{
-	return IsGreater(a, b) || IsEqual(a, b);
-}
-
-bool Vector3::IsLesser(float a, float b) const
-{
-	return (a < b + Math::EPSILON);
-}
-
-bool Vector3::IsLesserEqual(float a, float b) const
-{
-	return IsLesser(a, b) || IsEqual(a, b);
-}
-
 /******************************************************************************/
 /*!
 \brief	Vector3 default constructor
@@ -112,7 +85,7 @@ void Vector3::SetZero( void )
 /******************************************************************************/
 bool Vector3::IsZero( void ) const
 {
-	return IsEqual(x, 0.f) && IsEqual(y, 0.f) && IsEqual(z, 0.f);
+	return Math::FIsEqual(x, 0.f) && Math::FIsEqual(y, 0.f) && Math::FIsEqual(z, 0.f);
 }
 
 /******************************************************************************/
@@ -246,7 +219,7 @@ operator== overload for equality check, using Math::EPSILON
 /******************************************************************************/
 bool Vector3::operator==( const Vector3& rhs ) const
 {
-	return IsEqual(x, rhs.x) && IsEqual(y, rhs.y) && IsEqual(z, rhs.z);
+	return Math::FIsEqual(x, rhs.x) && Math::FIsEqual(y, rhs.y) && Math::FIsEqual(z, rhs.z);
 }
 
 /******************************************************************************/
@@ -262,73 +235,8 @@ operator!= overload for inequality check, using Math::EPSILON
 /******************************************************************************/
 bool Vector3::operator!= ( const Vector3& rhs ) const
 {
-	return !IsEqual(x, rhs.x) || !IsEqual(y, rhs.y) || !IsEqual(z, rhs.z);
+	return !Math::FIsEqual(x, rhs.x) || !Math::FIsEqual(y, rhs.y) || !Math::FIsEqual(z, rhs.z);
 }
-
-/******************************************************************************/
-/*!
-\brief
-operator>= overload for greater or equal to check
-
-\param rhs
-vector to compare with
-\return
-Resulting vector
-*/
-/******************************************************************************/
-bool Vector3::operator>= (const Vector3& rhs) const
-{
-	return IsGreaterEqual(x, rhs.x) && IsGreaterEqual(y, rhs.y) && IsGreaterEqual(z, rhs.z);
-}
-
-/******************************************************************************/
-/*!
-\brief
-operator>= overload for greater check
-
-\param rhs
-vector to compare with
-\return
-Resulting vector
-*/
-/******************************************************************************/
-bool Vector3::operator> (const Vector3& rhs) const
-{
-	return IsGreater(x, rhs.x) && IsGreater(y, rhs.y) && IsGreater(z, rhs.z);
-}
-
-/******************************************************************************/
-/*!
-\brief
-operator>= overload for lesser or equal to check
-
-\param rhs
-vector to compare with
-\return
-Resulting vector
-*/
-/******************************************************************************/
-bool Vector3::operator<= (const Vector3& rhs) const
-{
-	return IsLesser(x, rhs.x) && IsLesser(y, rhs.y) && IsLesser(z, rhs.z);
-}
-
-/******************************************************************************/
-/*!
-\brief
-operator>= overload for lesser
-
-\param rhs
-vector to compare with
-\return
-Resulting vector
-*/
-/******************************************************************************/
-bool Vector3::operator< (const Vector3& rhs) const
-{
-	return IsLesserEqual(x, rhs.x) && IsLesserEqual(y, rhs.y) && IsLesserEqual(z, rhs.z);
-}
-
 
 /******************************************************************************/
 /*!
@@ -455,7 +363,7 @@ Vector3& Vector3::Normalize( void ) throw( DivideByZero )
 
 std::ostream& operator<< (std::ostream& os, Vector3& rhs)
 {
-	os << "[" << rhs.x << "," << rhs.y << "," << rhs.z << "]";
+	os << "[ " << rhs.x << ", " << rhs.y << ", " << rhs.z << " ]";
 	return os;
 }
 
@@ -475,24 +383,4 @@ Scalar product of scalar with vector
 Vector3 operator*( float scalar, const Vector3& rhs )
 {
 	return rhs * scalar;
-}
-
-/******************************************************************************/
-/*!
-\brief
-Distance Squared between 2 Vector3 positions
-
-\param thisVector
-Vector3 thisVector
-\param thatVector
-Vector3 thatVector
-\return
-Distance squared between the 2 Vector3 positions
-*/
-/******************************************************************************/
-double DistanceSquaredBetween(Vector3 thisVector, Vector3 thatVector)
-{
-	return	((thatVector.x - thisVector.x)*(thatVector.x - thisVector.x) +
-			(thatVector.y - thisVector.y)*(thatVector.y - thisVector.y) +
-			(thatVector.z - thisVector.z)*(thatVector.z - thisVector.z));
 }

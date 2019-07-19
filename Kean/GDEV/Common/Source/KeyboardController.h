@@ -1,7 +1,7 @@
 #ifndef KEYBOARD_CONTROLLER_H
 #define KEYBOARD_CONTROLLER_H
 
-#include "SingletonTemplate.h"
+#include "Singleton.h"
 #include <bitset>
 #include <windows.h>
 

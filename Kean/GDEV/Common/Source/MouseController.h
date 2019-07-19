@@ -1,7 +1,7 @@
 #ifndef MOUSE_CONTROLLER_H
 #define MOUSE_CONTROLLER_H
 
-#include "SingletonTemplate.h"
+#include "Singleton.h"
 
 class MouseController : public Singleton<MouseController>
 {

@@ -5,7 +5,6 @@
 #include <fstream>
 #include "ShaderProgram.h"
 #include "CameraBase.h"
-#include "LightBase.h"
 
 GraphicsManager::GraphicsManager() :
 activeShader(nullptr),
@@ -293,31 +292,31 @@ void GraphicsManager::AddLight(const std::string& _name, LightBase* _newLight)
 
 void GraphicsManager::RemoveLight(const std::string& _name)
 {
-	if (lightMap.count(_name) == 0)
+	/*if (lightMap.count(_name) == 0)
 		return;
 
 	delete lightMap[_name];
-	lightMap.erase(_name);
+	lightMap.erase(_name);*/
 }
 
 void GraphicsManager::UpdateLights(double _dt)
 {
-	std::map<std::string, LightBase*>::iterator it, end;
+	/*std::map<std::string, LightBase*>::iterator it, end;
 	end = lightMap.end();
 	for (it = lightMap.begin(); it != end; ++it)
 	{
 		it->second->Update(_dt);
-	}
+	}*/
 }
 
 void GraphicsManager::UpdateLightUniforms()
 {
-	std::map<std::string, LightBase*>::iterator it, end;
+	/*std::map<std::string, LightBase*>::iterator it, end;
 	end = lightMap.end();
 	for (it = lightMap.begin(); it != end; ++it)
 	{
 		it->second->UpdateUniforms();
-	}
+	}*/
 }
 
 void GraphicsManager::UpdateTexture(int _slot, int _textureValue)

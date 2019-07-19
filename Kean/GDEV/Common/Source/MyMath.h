@@ -30,6 +30,11 @@ namespace Math
 	const float HALF_PI    = PI / 2.0f;
 	const float QUARTER_PI = PI / 4.0f;
 
+	inline bool FIsEqual(float a, float b)
+	{
+		return a - b <= EPSILON && b - a <= EPSILON;
+	}
+
 	inline float FAbs(float value)
 	{
 		return (value < 0) ? -value : value;
