@@ -19,19 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Developer\GameObject.cpp" />
-    <ClCompile Include="Source\Developer\main.cpp" />
-    <ClCompile Include="Source\Developer\MgrGObject.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Node\NGameObj.cpp" />
+    <ClCompile Include="Source\Node\Node.cpp" />
+    <ClCompile Include="Source\Node\NScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Developer\CompBase.h" />
-    <ClInclude Include="Source\Developer\GameObject.h" />
-    <ClInclude Include="Source\Developer\MgrBase.h" />
-    <ClInclude Include="Source\Developer\MgrGObject.h" />
-    <ClInclude Include="Source\Developer\SceneBase.h" />
-    <ClInclude Include="Source\Developer\ScriptBase.h" />
-    <ClInclude Include="Source\Developer\Singleton.h" />
-    <ClInclude Include="Source\Developer\WinDebug.h" />
+    <ClInclude Include="Source\Node\NGameObj.h" />
+    <ClInclude Include="Source\Node\Node.h" />
+    <ClInclude Include="Source\Node\NScene.h" />
+    <ClInclude Include="Source\Utility\Singleton.h" />
+    <ClInclude Include="Source\Utility\TypeID.h" />
+    <ClInclude Include="Source\Utility\WinDebug.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

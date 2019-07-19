@@ -1,5 +1,5 @@
-#ifndef DEBUG_H
-#define DEBUG_H
+#ifndef WIN_DEBUG_H
+#define WIN_DEBUG_H
 
 #include "windows.h"
 #include <iostream>

@@ -1,15 +1,15 @@
-#include "WinDebug.h"
-#include "GameObject.h"
-#include "SceneBase.h"
+#include "Utility/WinDebug.h"
+#include "Node/NScene.h"
+#include "Node/NGameObj.h"
 
 int main()
 {
-	SceneTest scene;
-	scene.m_goList.emplace_back(new GameObject);
-	scene.m_goList.emplace_back(new GameObject);
+	NScene* scene = new NScene;
 
-	scene.m_goList[0]->Transform()->temp = 100;
-	scene.m_goList.emplace_back(scene.m_goList[0]->Clone());
+	NGameObj* GO = new NGameObj;
 
+	scene->AddChild<NGameObj>();
+
+	NGameObj* temp = scene->GetChild<NGameObj>();
 	return 0;
 }

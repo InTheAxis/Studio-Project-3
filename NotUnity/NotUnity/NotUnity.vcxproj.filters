@@ -13,42 +13,48 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{47afc0a2-7065-4282-adda-b3f1f6051763}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{a6f1f7ae-9edc-4e9f-994b-37169109fb0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Node">
+      <UniqueIdentifier>{24e96907-32bc-417f-a65b-3e62a921c9f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Developer\main.cpp">
+    <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Developer\MgrGObject.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\Node\Node.cpp">
+      <Filter>Node</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Developer\GameObject.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\Node\NScene.cpp">
+      <Filter>Node</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\NGameObj.cpp">
+      <Filter>Node</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Developer\MgrGObject.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\Utility\TypeID.h">
+      <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Developer\SceneBase.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\Utility\WinDebug.h">
+      <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Developer\ScriptBase.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\Utility\Singleton.h">
+      <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Developer\Singleton.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\Node\Node.h">
+      <Filter>Node</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Developer\WinDebug.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\Node\NScene.h">
+      <Filter>Node</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Developer\CompBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Developer\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Developer\MgrBase.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\Node\NGameObj.h">
+      <Filter>Node</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
