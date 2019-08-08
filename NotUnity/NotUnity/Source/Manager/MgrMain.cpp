@@ -4,18 +4,14 @@ void MgrMain::Start()
 {
 	//order matters
 
-	AddChild("MgrScene", MgrScene::Instance());
 	AddChild("MgrGraphics", MgrGraphics::Instance());
+	AddChild("MgrScene", MgrScene::Instance());
 	
 	Node::Start();
 }
 
 void MgrMain::Update(double dt)
 {
-	Mesh* temp = MgrGraphics::Instance()->GetCachedMesh("tri");
-	MgrGraphics::Instance()->UseShader(MgrGraphics::DEFAULT);
-	glBindVertexArray(temp->vao);
-	glDrawArrays(temp->drawMode, 0, temp->indexSize);
 	Node::Update(dt);
 }
 

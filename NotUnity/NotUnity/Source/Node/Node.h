@@ -35,7 +35,7 @@ class NExample : public Node, public TypeID<NExample>
 class Node
 {
 public:	
-	Node(std::string name = "node") : m_name(name) { m_active = true; }
+	Node(std::string name = "node") : m_name(name) { m_active = true; parent = nullptr; }
 	~Node() {}
 	
 	virtual void Start();
@@ -55,8 +55,9 @@ public:
 			return nullptr;
 
 		T* child = ptr ? ptr : new T(key);
+		child->parent = this;
 		m_children[key] = static_cast<Node*>(child);
-		
+
 		return GetChild<T>(key);
 	}
 
@@ -73,6 +74,7 @@ protected:
 	std::map<std::string, Node*> m_children;
 
 	double m_lifetime;
+	Node* parent;
 };
 
 #endif

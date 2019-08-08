@@ -104,10 +104,6 @@ void Application::Run()
 		CheckForInput();		
 
 		deltaTime = m_timer.GetElapsedTime();
-		//CFPSCounter::GetInstance()->Update(deltaTime);
-		//SceneManager::GetInstance()->Update(deltaTime);
-		//SceneManager::GetInstance()->Render();
-
 		MgrMain::Instance()->Update(deltaTime);
 
 		//Swap buffers
@@ -178,6 +174,7 @@ void Application::InputReset()
 	ControllerMouse::Instance()->EndFrameUpdate();
 	ControllerKeyboard::Instance()->EndFrameUpdate();
 }
+
 
 
 /////////////Callbacks/////////////

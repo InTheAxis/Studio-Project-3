@@ -1,11 +1,11 @@
 #include "Scene.h"
+#include "Renderable.h"
 #include "../Utility/Graphics/MeshBuilder.h"
 
 void Scene::Start()
-{
+{	
+	AddChild<Renderable>("tri")->AttachMesh(MeshBuilder::GenerateQuad("tri"));
 	Node::Start();
-
-	MeshBuilder::GenerateTriangle("tri");
 }
 
 void Scene::Update(double dt)

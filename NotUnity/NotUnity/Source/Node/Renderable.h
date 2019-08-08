@@ -15,7 +15,16 @@ public:
 	virtual void Update(double dt);
 	virtual void End();
 
+	void Render();
+
+	void AttachMesh(Mesh* mesh);
+
+
+protected:
 	Mesh* mesh;
+
+	void DrawMesh();
+	void DrawMesh(unsigned count, unsigned offset);
 };
 
 #endif
