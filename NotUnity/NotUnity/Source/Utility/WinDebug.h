@@ -6,6 +6,7 @@
 #include <string>
 
 //this handles the use of std::cout to print debugging information
+//Call only using the macros!
 //first variable is whatever that has operator<< overloaded to return an std::ostream
 //second variable is whether to show the console over everything
 //errors will throw an exception, halting the program
@@ -118,11 +119,11 @@ public:
 	Debug() {}
 	~Debug() {}	
 	template <typename T>
-	inline static void _Log(T input) {}
+	inline static void _Log(int line, const char* fileName, T input, bool popup = false) {}
 	template <typename T>
-	inline static void _LogWarning(T input) {}
+	inline static void _LogWarning(int line, const char* fileName, T input, bool popup = true) {}
 	template <typename T>
-	inline static void _LogError(T input) {}
+	inline static void _LogError(int line, const char* fileName, T input, bool popup = true) {}
 };
 #endif
 
