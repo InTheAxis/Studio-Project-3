@@ -47,10 +47,12 @@ void Application::Create()
 	//create a window and create its OpenGL context
 #ifdef _DEBUG
 	m_window = glfwCreateWindow(m_window_width, m_window_height, "SP3", NULL, NULL);
+	//set windows position
+	glfwSetWindowPos(m_window, Application::GetWindowHalfWidth(), Application::GetWindowHalfHeight());
 #else
 	m_window_height = mode->height;
 	m_window_width = mode->height * 16.f / 9.f;
-	m_window = glfwCreateWindow(m_width, m_height, "SP3", glfwGetPrimaryMonitor(), NULL);
+	m_window = glfwCreateWindow(m_window_width, m_window_height, "SP3", monitor, NULL);
 #endif
 	
 	if (!m_window)
@@ -59,9 +61,6 @@ void Application::Create()
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
-
-	//set windows position
-	glfwSetWindowPos(m_window, Application::GetWindowHalfWidth() >> 1, Application::GetWindowHalfHeight() >> 1);
 
 	//this function makes the context of the specified window current on the calling thread.
 	glfwMakeContextCurrent(m_window);
