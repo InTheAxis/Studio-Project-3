@@ -13,8 +13,9 @@ void Node::Update(double dt)
 	else
 		m_lifetime = 0;
 
-	for (auto &childNode : m_children)
-		childNode.second->Update(dt);
+	for (auto &childNode : m_children)	
+		if (childNode.second->IsActive())
+			childNode.second->Update(dt);
 }
 
 void Node::End()

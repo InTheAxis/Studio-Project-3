@@ -1,138 +1,183 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
+    <Filter Include="Source">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Utility">
-      <UniqueIdentifier>{47afc0a2-7065-4282-adda-b3f1f6051763}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Manager">
-      <UniqueIdentifier>{a6f1f7ae-9edc-4e9f-994b-37169109fb0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Node">
+    <Filter Include="Source\Node">
       <UniqueIdentifier>{24e96907-32bc-417f-a65b-3e62a921c9f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utility\Math">
+    <Filter Include="Source\Manager">
+      <UniqueIdentifier>{a6f1f7ae-9edc-4e9f-994b-37169109fb0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Utility">
+      <UniqueIdentifier>{47afc0a2-7065-4282-adda-b3f1f6051763}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Utility\Math">
       <UniqueIdentifier>{5cd95b1a-597b-4ac9-b904-29a5915050b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utility\Input">
+    <Filter Include="Source\Utility\Input">
       <UniqueIdentifier>{1d018dc0-0727-4d6d-84d1-80ee7d9f2922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Utility\Graphics">
+      <UniqueIdentifier>{e89a401e-ad41-4fbb-9897-6754eff39e5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{ffccf244-ace3-4ced-90b6-11875ee43b0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shader">
+      <UniqueIdentifier>{1d8e0f40-c2c2-49ba-acbb-d6407af223f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Node.cpp">
-      <Filter>Node</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\NScene.cpp">
-      <Filter>Node</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\NGameObj.cpp">
-      <Filter>Node</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\Math\Vector3.cpp">
-      <Filter>Utility\Math</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\Math\Vector4.cpp">
-      <Filter>Utility\Math</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\Math\Vector2.cpp">
-      <Filter>Utility\Math</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\Math\MatrixStack.cpp">
-      <Filter>Utility\Math</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\Math\Mtx44.cpp">
-      <Filter>Utility\Math</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Application.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\Math\Stopwatch.cpp">
-      <Filter>Utility\Math</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\Input\ControllerMouse.cpp">
-      <Filter>Utility\Input</Filter>
+      <Filter>Source\Utility\Input</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\Input\ControllerKeyboard.cpp">
-      <Filter>Utility\Input</Filter>
+      <Filter>Source\Utility\Input</Filter>
     </ClCompile>
     <ClCompile Include="Source\Manager\MgrScene.cpp">
-      <Filter>Manager</Filter>
+      <Filter>Source\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\MgrGraphics.cpp">
+      <Filter>Source\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\MgrMain.cpp">
+      <Filter>Source\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Renderable.cpp">
+      <Filter>Source\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scene.cpp">
+      <Filter>Source\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\GameObj.cpp">
+      <Filter>Source\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Node.cpp">
+      <Filter>Source\Node</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
-      <Filter>Utility</Filter>
+      <Filter>Source\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\WinDebug.h">
-      <Filter>Utility</Filter>
+      <Filter>Source\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Singleton.h">
-      <Filter>Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Node\Node.h">
-      <Filter>Node</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Node\NScene.h">
-      <Filter>Node</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Node\NGameObj.h">
-      <Filter>Node</Filter>
+      <Filter>Source\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Resource.h">
-      <Filter>Utility</Filter>
+      <Filter>Source\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Math\Vector2.h">
-      <Filter>Utility\Math</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Math\Vector3.h">
-      <Filter>Utility\Math</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Math\Vector4.h">
-      <Filter>Utility\Math</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Math\Mtx44.h">
-      <Filter>Utility\Math</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Math\MyMath.h">
-      <Filter>Utility\Math</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Math\MatrixStack.h">
-      <Filter>Utility\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Utility\Vertex.h">
-      <Filter>Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Application.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Math\Stopwatch.h">
-      <Filter>Utility\Math</Filter>
+      <Filter>Source\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\Manager\Manager.h">
-      <Filter>Manager</Filter>
+      <Filter>Source\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Input\ControllerMouse.h">
-      <Filter>Utility\Input</Filter>
+      <Filter>Source\Utility\Input</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Input\ControllerKeyboard.h">
-      <Filter>Utility\Input</Filter>
+      <Filter>Source\Utility\Input</Filter>
     </ClInclude>
     <ClInclude Include="Source\Manager\MgrScene.h">
-      <Filter>Manager</Filter>
+      <Filter>Source\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Utility\Graphics\Vertex.h">
+      <Filter>Source\Utility\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Graphics\MeshBuilder.h">
+      <Filter>Source\Utility\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Graphics\Mesh.h">
+      <Filter>Source\Utility\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Application.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\MgrGraphics.h">
+      <Filter>Source\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\MgrMain.h">
+      <Filter>Source\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Renderable.h">
+      <Filter>Source\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scene.h">
+      <Filter>Source\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\GameObj.h">
+      <Filter>Source\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Node.h">
+      <Filter>Source\Node</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shader\simple.frag">
+      <Filter>Resources\Shader</Filter>
+    </None>
+    <None Include="Resources\Shader\unlit.frag">
+      <Filter>Resources\Shader</Filter>
+    </None>
+    <None Include="Resources\Shader\unlit_tint.frag">
+      <Filter>Resources\Shader</Filter>
+    </None>
+    <None Include="Resources\Shader\default.vert">
+      <Filter>Resources\Shader</Filter>
+    </None>
+    <None Include="Resources\Shader\lit.frag">
+      <Filter>Resources\Shader</Filter>
+    </None>
+    <None Include="Resources\Shader\lit_blend.frag">
+      <Filter>Resources\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

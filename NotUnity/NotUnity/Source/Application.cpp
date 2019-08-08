@@ -8,7 +8,7 @@
 #include "Utility/WinDebug.h"
 #include "Utility/Input/ControllerMouse.h"
 #include "Utility/Input/ControllerKeyboard.h"
-#include "Manager/MgrScene.h"
+#include "Manager/MgrMain.h"
 
 Application::Application()
 {
@@ -72,7 +72,7 @@ void Application::Create()
 	glfwSetScrollCallback(m_window, mouse_scroll_callback);
 
 	//hide the cursor
-	//glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);	
+	//glfwSetInputMod(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 	//needed for core profile
 	glewExperimental = true; 
@@ -86,8 +86,8 @@ void Application::Create()
 		//return -1;
 	}	
 
-	//init managers
-	MgrScene::Instance()->Start();
+	//init managers	
+	MgrMain::Instance()->Start();
 }
 
 void Application::Run()
@@ -109,12 +109,12 @@ void Application::Run()
 		//SceneManager::GetInstance()->Update(deltaTime);
 		//SceneManager::GetInstance()->Render();
 
-		MgrScene::Instance()->Update(deltaTime);
+		MgrMain::Instance()->Update(deltaTime);
 
 		//Swap buffers
 		glfwSwapBuffers(m_window);
 
-		m_timer.WaitUntil(frameTime); // Frame rate limiter. Limits each frame to a specified time in ms.
+		m_timer.WaitUntil((long long)frameTime); // Frame rate limiter. Limits each frame to a specified time in ms.
 
 		InputReset();
 	}		
@@ -164,9 +164,9 @@ void Application::CheckForInput()
 {
 	//// Update Mouse Position
 	double mouse_currX, mouse_currY;
-	glfwGetCursorPos(m_window, &mouse_currX, &mouse_currY);
-	glfwSetCursorPos(m_window, Application::GetWindowHalfWidth(), Application::GetWindowHalfHeight()); //reset mouse to center
-	ControllerMouse::Instance()->UpdateMousePosition(mouse_currX, mouse_currY);	
+	glfwGetCursorPos(m_window, &mouse_currX, &mouse_currY);	
+	//glfwSetCursorPos(m_window, Application::GetWindowHalfWidth(), Application::GetWindowHalfHeight()); //reset mouse to center
+	//ControllerMouse::Instance()->UpdateMousePosition(mouse_currX, mouse_currY);
 
 	// Update Keyboard Input
 	for (int i = 0; i < ControllerKeyboard::MAX_KEYS; ++i)

@@ -1,16 +1,16 @@
 #include "MgrScene.h"
 
-#include "../Node/NScene.h"
+#include "../Node/Scene.h"
 
 void MgrScene::Start()
 {
 	Node::Start();
-	//create scenes here
-	AddChild<NScene>("default");
+	//create scenes here, and set inactive accordingly
+	AddChild<Scene>("default")->ActiveSelf(true);
 }
 
 void MgrScene::Update(double dt)
-{
+{	
 	Node::Update(dt);
 }
 

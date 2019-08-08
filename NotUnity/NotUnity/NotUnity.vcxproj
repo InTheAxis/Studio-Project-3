@@ -21,10 +21,13 @@
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Manager\MgrGraphics.cpp" />
+    <ClCompile Include="Source\Manager\MgrMain.cpp" />
     <ClCompile Include="Source\Manager\MgrScene.cpp" />
-    <ClCompile Include="Source\Node\NGameObj.cpp" />
+    <ClCompile Include="Source\Node\GameObj.cpp" />
     <ClCompile Include="Source\Node\Node.cpp" />
-    <ClCompile Include="Source\Node\NScene.cpp" />
+    <ClCompile Include="Source\Node\Renderable.cpp" />
+    <ClCompile Include="Source\Node\Scene.cpp" />
     <ClCompile Include="Source\Utility\Input\ControllerKeyboard.cpp" />
     <ClCompile Include="Source\Utility\Input\ControllerMouse.cpp" />
     <ClCompile Include="Source\Utility\Math\MatrixStack.cpp" />
@@ -37,10 +40,16 @@
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Manager\Manager.h" />
+    <ClInclude Include="Source\Manager\MgrGraphics.h" />
+    <ClInclude Include="Source\Manager\MgrMain.h" />
     <ClInclude Include="Source\Manager\MgrScene.h" />
-    <ClInclude Include="Source\Node\NGameObj.h" />
+    <ClInclude Include="Source\Node\GameObj.h" />
     <ClInclude Include="Source\Node\Node.h" />
-    <ClInclude Include="Source\Node\NScene.h" />
+    <ClInclude Include="Source\Node\Renderable.h" />
+    <ClInclude Include="Source\Node\Scene.h" />
+    <ClInclude Include="Source\Utility\Graphics\Mesh.h" />
+    <ClInclude Include="Source\Utility\Graphics\MeshBuilder.h" />
+    <ClInclude Include="Source\Utility\Graphics\Vertex.h" />
     <ClInclude Include="Source\Utility\Input\ControllerKeyboard.h" />
     <ClInclude Include="Source\Utility\Input\ControllerMouse.h" />
     <ClInclude Include="Source\Utility\Math\MatrixStack.h" />
@@ -53,8 +62,15 @@
     <ClInclude Include="Source\Utility\Resource.h" />
     <ClInclude Include="Source\Utility\Singleton.h" />
     <ClInclude Include="Source\Utility\TypeID.h" />
-    <ClInclude Include="Source\Utility\Vertex.h" />
     <ClInclude Include="Source\Utility\WinDebug.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shader\default.vert" />
+    <None Include="Resources\Shader\lit.frag" />
+    <None Include="Resources\Shader\lit_blend.frag" />
+    <None Include="Resources\Shader\simple.frag" />
+    <None Include="Resources\Shader\unlit.frag" />
+    <None Include="Resources\Shader\unlit_tint.frag" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

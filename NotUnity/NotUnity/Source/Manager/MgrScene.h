@@ -6,16 +6,16 @@
 
 #include "Manager.h"
 
-class NScene;
+class Scene;
 class MgrScene : public Manager<MgrScene>
 {
 	friend Singleton<MgrScene>;
+	friend Node;
 public:
 	virtual void Start();
 	virtual void Update(double dt);
-	virtual void End();
-	int i = 0;
-private:
+	virtual void End();	
+protected:
 	MgrScene(std::string name = "MgrScene") : Manager<MgrScene>(name) {}
 	~MgrScene() {}
 
