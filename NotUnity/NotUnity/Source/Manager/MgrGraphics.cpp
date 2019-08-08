@@ -1,15 +1,15 @@
 #include "MgrGraphics.h"
-#include <iostream>
+#include "../Utility/WinDebug.h"
 
 void MgrGraphics::Start()
 {
 	Node::Start();
+	Debug::Log("Loading shaders...");
 }
 
 void MgrGraphics::Update(double dt)
 {
 	Node::Update(dt);
-	std::cout << "update graphics\n";
 }
 
 void MgrGraphics::End()

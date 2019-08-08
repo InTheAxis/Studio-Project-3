@@ -2,12 +2,12 @@
 
 void MgrMain::Start()
 {
-	Node::Start();
-	
 	//order matters
 
 	AddChild("MgrScene", MgrScene::Instance());
 	AddChild("MgrGraphics", MgrGraphics::Instance());
+	
+	Node::Start();
 }
 
 void MgrMain::Update(double dt)

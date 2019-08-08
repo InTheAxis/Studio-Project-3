@@ -35,7 +35,7 @@ class NExample : public Node, public TypeID<NExample>
 class Node
 {
 public:	
-	Node(std::string name = "node") : m_name(name) {}
+	Node(std::string name = "node") : m_name(name) { m_active = true; }
 	~Node() {}
 	
 	virtual void Start();

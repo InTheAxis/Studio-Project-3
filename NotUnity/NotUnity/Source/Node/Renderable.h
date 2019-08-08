@@ -3,6 +3,7 @@
 
 #include "Node.h"
 #include "../Utility/TypeID.h"
+#include "../Utility/Graphics/Mesh.h"
 
 class Renderable : public Node, public TypeID<Renderable>
 {
