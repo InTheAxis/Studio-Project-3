@@ -6,17 +6,9 @@
 class Mesh
 {
 public:
-	enum DRAW_MODE
-	{
-		DRAW_TRIANGLES = 0,
-		DRAW_TRIANGLE_STRIP,
-		DRAW_LINES,
-		DRAW_MODE_LAST,
-	};
-
 	Mesh()
 		: name("unnamed")
-		, mode(DRAW_TRIANGLES)
+		, drawMode(GL_LINE)
 		, indexSize(0)		
 	{
 		glGenBuffers(1, &vbo);
@@ -30,7 +22,7 @@ public:
 	}
 
 	std::string name;
-	DRAW_MODE mode;
+	unsigned drawMode;
 	unsigned indexSize;
 	unsigned vbo;
 	unsigned ebo;

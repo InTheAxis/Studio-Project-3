@@ -16,6 +16,6 @@ uniform vec4 outColor;
 
 void main()
 {
-	color = outColor;
+	color = vec4(1);
 }
 

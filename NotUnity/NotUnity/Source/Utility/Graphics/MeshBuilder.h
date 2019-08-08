@@ -9,6 +9,7 @@
 #include "Mesh.h"
 #include "../Resource.h"
 #include "../Math/MyMath.h"
+#include "../../Manager/MgrGraphics.h"
 
 /******************************************************************************/
 /*!
@@ -44,8 +45,9 @@ namespace MeshBuilder
 		glBindVertexArray(0);
 	}
 
-	Mesh* GenerateAxes(const std::string &meshName, float lengthX = 1.0f, float lengthY = 1.0f, float lengthZ = 1.0f)
+	Mesh* GenerateAxes(const std::string &meshName, float lengthX = 1.0f, float lengthY = 1.0f, float lengthZ = 1.0f, bool cache = true)
 	{
+		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
 		std::vector<Vertex> vertex_buffer_data;
 		v.pos.Set(-1000, 0, 0);
@@ -80,13 +82,15 @@ namespace MeshBuilder
 
 		mesh->name = meshName;
 		mesh->indexSize = index_buffer_data.size();
-		mesh->mode = Mesh::DRAW_LINES;
+		mesh->drawMode = GL_LINE;
+		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
 
 		return mesh;
 	}
 
-	Mesh* GenerateQuad(const std::string &meshName, float tile = 1.f)
+	Mesh* GenerateQuad(const std::string &meshName, float tile = 1.f, bool cache = true)
 	{
+		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
 		std::vector<Vertex> vertex_buffer_data;
 		v.normal.Set(0, 0, 1);
@@ -119,13 +123,15 @@ namespace MeshBuilder
 
 		mesh->name = meshName;
 		mesh->indexSize = index_buffer_data.size();
-		mesh->mode = Mesh::DRAW_TRIANGLES;
+		mesh->drawMode = GL_TRIANGLES;
+		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
 
 		return mesh;
 	}
 
-	Mesh* GenerateTriangle(const std::string &meshName)
+	Mesh* GenerateTriangle(const std::string &meshName, bool cache = true)
 	{
+		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
 		std::vector<Vertex> vertex_buffer_data;
 		v.normal.Set(0, 0, 1);
@@ -152,13 +158,15 @@ namespace MeshBuilder
 
 		mesh->name = meshName;
 		mesh->indexSize = index_buffer_data.size();
-		mesh->mode = Mesh::DRAW_TRIANGLES;
+		mesh->drawMode = GL_TRIANGLES;
+		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
 
 		return mesh;
 	}
 
-	Mesh* GeneratePolygon(const std::string &meshName, unsigned numSides = 3)
+	Mesh* GeneratePolygon(const std::string &meshName, unsigned numSides = 3, bool cache = true)
 	{
+		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
 		std::vector<Vertex> vertex_buffer_data;
 
@@ -194,13 +202,15 @@ namespace MeshBuilder
 
 		mesh->name = meshName;
 		mesh->indexSize = index_buffer_data.size();
-		mesh->mode = Mesh::DRAW_TRIANGLES;
+		mesh->drawMode = GL_TRIANGLES;
+		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
 
 		return mesh;
 	}
 
-	Mesh* GeneratePlane(const std::string &meshName, unsigned numRow = 10, unsigned numCol = 10, float tileSize = 1.f)
+	Mesh* GeneratePlane(const std::string &meshName, unsigned numRow = 10, unsigned numCol = 10, float tileSize = 1.f, bool cache = true)
 	{
+		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
 		std::vector<Vertex> vertex_buffer_data;
 		std::vector<GLuint> index_buffer_data;
@@ -245,13 +255,15 @@ namespace MeshBuilder
 
 		mesh->name = meshName;
 		mesh->indexSize = index_buffer_data.size();
-		mesh->mode = Mesh::DRAW_TRIANGLES;
+		mesh->drawMode = GL_TRIANGLES;
+		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
 
 		return mesh;
 	}
 
-	Mesh* GenerateCube(const std::string &meshName)
+	Mesh* GenerateCube(const std::string &meshName, bool cache = true)
 	{
+		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
 		std::vector<Vertex> vertex_buffer_data;
 
@@ -319,13 +331,15 @@ namespace MeshBuilder
 
 		mesh->name = meshName;
 		mesh->indexSize = 36;
-		mesh->mode = Mesh::DRAW_TRIANGLES;
+		mesh->drawMode = GL_TRIANGLES;
+		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
 
 		return mesh;
 	}
 
-	Mesh* GenerateSphere(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius = 1.f)
+	Mesh* GenerateSphere(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius = 1.f, bool cache = true)
 	{
+		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
 		std::vector<Vertex> vertex_buffer_data;
 		std::vector<GLuint> index_buffer_data;
@@ -363,13 +377,15 @@ namespace MeshBuilder
 		BindVao(mesh, vertex_buffer_data, index_buffer_data);
 
 		mesh->indexSize = index_buffer_data.size();
-		mesh->mode = Mesh::DRAW_TRIANGLE_STRIP;
+		mesh->drawMode = GL_TRIANGLE_STRIP;
+		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
 
 		return mesh;
 	}
 
-	Mesh* GenerateOBJ(const std::string &meshName, const std::string &file_path)
+	Mesh* GenerateOBJ(const std::string &meshName, const std::string &file_path, bool cache = true)
 	{
+		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		std::vector<Position> vertices;
 		std::vector<TexCoord> uvs;
 		std::vector<Vector3> normals;
@@ -388,13 +404,15 @@ namespace MeshBuilder
 
 		mesh->name = meshName;
 		mesh->indexSize = index_buffer_data.size();
-		mesh->mode = Mesh::DRAW_TRIANGLES;
+		mesh->drawMode = GL_TRIANGLES;
+		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
 
 		return mesh;
 	}
 
-	Mesh* GenerateText(const std::string &meshName, unsigned numRow, unsigned numCol)
+	Mesh* GenerateText(const std::string &meshName, unsigned numRow, unsigned numCol, bool cache = true)
 	{
+		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
 		std::vector<Vertex> vertex_buffer_data;
 		std::vector<GLuint> index_buffer_data;
@@ -443,13 +461,15 @@ namespace MeshBuilder
 
 		mesh->name = meshName;
 		mesh->indexSize = index_buffer_data.size();
-		mesh->mode = Mesh::DRAW_TRIANGLES;
+		mesh->drawMode = GL_TRIANGLES;
+		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
 
 		return mesh;
 	}
 
-	Mesh* GenerateSkyPlane(const std::string &meshName, int slices, float planetRadius, float atmosphereRadius, float hTile = 1, float vTile = 1)
+	Mesh* GenerateSkyPlane(const std::string &meshName, int slices, float planetRadius, float atmosphereRadius, float hTile = 1, float vTile = 1, bool cache = true)
 	{
+		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
 		std::vector<Vertex> vertex_buffer_data;
 		std::vector<GLuint> index_buffer_data;
@@ -499,13 +519,15 @@ namespace MeshBuilder
 
 		mesh->name = meshName;
 		mesh->indexSize = index_buffer_data.size();
-		mesh->mode = Mesh::DRAW_TRIANGLES;
+		mesh->drawMode = GL_TRIANGLES;
+		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
 
 		return mesh;
 	}
 
-	Mesh* GenerateTerrain(const std::string &meshName, const std::string &file_path, std::vector<unsigned char> &heightMap, float scaleX = 1.f, float scaleY = 1.f, float scaleZ = 1.f)
+	Mesh* GenerateTerrain(const std::string &meshName, const std::string &file_path, std::vector<unsigned char> &heightMap, float scaleX = 1.f, float scaleY = 1.f, float scaleZ = 1.f, bool cache = true)
 	{
+		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
 		std::vector<Vertex> vertex_buffer_data;
 		std::vector<GLuint> index_buffer_data;
@@ -574,7 +596,8 @@ namespace MeshBuilder
 
 		mesh->name = meshName;
 		mesh->indexSize = index_buffer_data.size();
-		mesh->mode = Mesh::DRAW_TRIANGLES;
+		mesh->drawMode = GL_TRIANGLES;
+		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
 
 		return mesh;
 	}

@@ -9,53 +9,171 @@
 #include <GL\glew.h>
 #include "Graphics/Vertex.h"
 #include "Math/Vector3.h"
+#include "WinDebug.h"
 
 //this namespace handles the loading in of resources like tga, etc
 
 namespace Resource
 {
-	//HEIGHT MAP
-	inline bool LoadHeightMap(const char *file_path, std::vector<unsigned char> &heightMap)
+	//SHADER
+	inline GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path) 
 	{
-		std::ifstream fileStream(file_path, std::ios::binary);
-		if (!fileStream.is_open())
+		GLint result = GL_FALSE;
+		int infoLogLen;
+		std::string vertFilePath = vertex_file_path, fragfilePath = fragment_file_path;
+
+		// Create the shaders
+		GLuint vertID = glCreateShader(GL_VERTEX_SHADER);
+		GLuint fragID = glCreateShader(GL_FRAGMENT_SHADER);
+		
+		// Read the Vertex Shader code from the file
+		std::string vertCode;
+		std::ifstream vertFileStream(("Resources\\" + vertFilePath).c_str(), std::ios::in);
+		if (vertFileStream.is_open()) 
 		{
-			std::cout << "Impossible to open " << file_path << ". Are you in the right directory ?\n";
-			return false;
+			std::string line = "";
+			while (getline(vertFileStream, line))
+				vertCode += "\n" + line;
+			vertFileStream.close();
+		}
+		else 
+		{
+			Debug::LogWarning("Failed to open file: " + vertFilePath);
+		}
+		// Read the Fragment Shader code from the file
+		std::string fragCode;
+		std::ifstream fragFileStream(("Resources\\" + fragfilePath).c_str(), std::ios::in);
+		if (fragFileStream.is_open()) {
+			std::string line = "";
+			while (getline(fragFileStream, line))
+				fragCode += "\n" + line;
+			fragFileStream.close();
+		}
+		else
+		{
+			Debug::LogWarning("Failed to open file: " + fragfilePath);
+			return 0;
 		}
 
-		fileStream.seekg(0, std::ios::end);
-		std::streampos fsize = (unsigned)fileStream.tellg();
+		// Compile Vertex Shader
+		char const * vertSrc = vertCode.c_str();
+		glShaderSource(vertID, 1, &vertSrc, NULL);
+		glCompileShader(vertID);
+		// Check Vertex Shader
+		glGetShaderiv(vertID, GL_COMPILE_STATUS, &result);
+		glGetShaderiv(vertID, GL_INFO_LOG_LENGTH, &infoLogLen);
+		if (infoLogLen > 0)
+		{
+			std::vector<char> vertErrorMsg(infoLogLen + 1);
+			glGetShaderInfoLog(vertID, infoLogLen, NULL, &vertErrorMsg[0]);
+			Debug::LogWarning("Failed to compile " + vertFilePath + ":");
+			printf("%s\n", &vertErrorMsg[0]);
+		}
 
-		fileStream.seekg(0, std::ios::beg);
-		heightMap.resize((unsigned)fsize);
-		fileStream.read((char *)&heightMap[0], fsize);
+		// Compile Fragment Shader
+		char const * fragSrc = fragCode.c_str();
+		glShaderSource(fragID, 1, &fragSrc, NULL);
+		glCompileShader(fragID);
+		// Check Fragment Shader
+		glGetShaderiv(fragID, GL_COMPILE_STATUS, &result);
+		glGetShaderiv(fragID, GL_INFO_LOG_LENGTH, &infoLogLen);
+		if (infoLogLen > 0) 
+		{
+			std::vector<char> fragErrorMsg(infoLogLen + 1);
+			glGetShaderInfoLog(fragID, infoLogLen, NULL, &fragErrorMsg[0]);
+			Debug::LogWarning("Failed to compile " + fragfilePath + ":");
+			printf("%s\n", &fragErrorMsg[0]);
+		}
 
-		fileStream.close();
-		return true;
-	}
-	inline float ReadHeightMap(std::vector<unsigned char> &heightMap, float x, float z)
-	{
-		if (x < -0.5f || x > 0.5f || z < -0.5f || z > 0.5f)
-			return 0;
-		if (heightMap.size() == 0)
-			return 0;
+		// Link the program
+		GLuint programID = glCreateProgram();
+		glAttachShader(programID, vertID);
+		glAttachShader(programID, fragID);
+		glLinkProgram(programID);
+		// Check the program
+		glGetProgramiv(programID, GL_LINK_STATUS, &result);
+		glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &infoLogLen);
+		if (infoLogLen > 0) 
+		{
+			std::vector<char> linkMsg(infoLogLen + 1);
+			glGetProgramInfoLog(programID, infoLogLen, NULL, &linkMsg[0]);
+			Debug::LogWarning("Failed to link: ");
+			printf("%s\n", &linkMsg[0]);
+		}
 
-		unsigned terrainSize = (unsigned)sqrt((double)heightMap.size());
+		glDeleteShader(vertID);
+		glDeleteShader(fragID);
 
-		unsigned zCoord = (unsigned)((z + 0.5f) * terrainSize);
-		unsigned xCoord = (unsigned)((x + 0.5f) * terrainSize);
-
-		return (float)heightMap[zCoord * terrainSize + xCoord] / 256.f;
+		return programID;
 	}
 
 	//OBJ
-	inline bool LoadOBJ(const char *file_path, std::vector<Position> & out_vertices, std::vector<TexCoord> & out_uvs, std::vector<Vector3> & out_normals)
+	namespace
 	{
-		std::ifstream fileStream(file_path, std::ios::binary);
+		struct PackedVertex
+		{
+			Position position;
+			TexCoord uv;
+			Vector3 normal;
+			bool operator<(const PackedVertex that) const
+			{
+				return memcmp((void*)this, (void*)&that, sizeof(PackedVertex)) > 0;
+			};
+		};
+		inline bool getSimilarVertexIndex_fast(PackedVertex & packed, std::map<PackedVertex, unsigned short> & VertexToOutIndex, unsigned short & result)
+		{
+			std::map<PackedVertex, unsigned short>::iterator it = VertexToOutIndex.find(packed);
+			if (it == VertexToOutIndex.end())
+			{
+				return false;
+			}
+			else
+			{
+				result = it->second;
+				return true;
+			}
+		}
+		inline void IndexVBO(std::vector<Position> & in_vertices, std::vector<TexCoord> & in_uvs, std::vector<Vector3> & in_normals, std::vector<unsigned> & out_indices, std::vector<Vertex> & out_vertices)
+		{
+			std::map<PackedVertex, unsigned short> VertexToOutIndex;
+
+			// For each input vertex
+			for (unsigned int i = 0; i < in_vertices.size(); ++i)
+			{
+
+				PackedVertex packed = { in_vertices[i], in_uvs[i], in_normals[i] };
+
+				// Try to find a similar vertex in out_XXXX
+				unsigned short index;
+				bool found = getSimilarVertexIndex_fast(packed, VertexToOutIndex, index);
+
+				if (found)
+				{
+					// A similar vertex is already in the VBO, use it instead !
+					out_indices.push_back(index);
+				}
+				else
+				{
+					// If not, it needs to be added in the output data.
+					Vertex v;
+					v.pos.Set(in_vertices[i].x, in_vertices[i].y, in_vertices[i].z);
+					v.texCoord.Set(in_uvs[i].x, in_uvs[i].y);
+					v.normal.Set(in_normals[i].x, in_normals[i].y, in_normals[i].z);
+					out_vertices.push_back(v);
+					unsigned newindex = (unsigned)out_vertices.size() - 1;
+					out_indices.push_back(newindex);
+					VertexToOutIndex[packed] = newindex;
+				}
+			}
+		}
+	}
+	inline bool LoadOBJ(const char *file_rel_path, std::vector<Position> & out_vertices, std::vector<TexCoord> & out_uvs, std::vector<Vector3> & out_normals)
+	{
+		std::string filePath = file_rel_path;
+		std::ifstream fileStream(("Resources\\" + filePath).c_str(), std::ios::binary);
 		if (!fileStream.is_open())
 		{
-			std::cout << "Impossible to open " << file_path << ". Are you in the right directory ?\n";
+			Debug::LogWarning("Failed to open file: " + filePath);
 			return false;
 		}
 
@@ -130,9 +248,8 @@ namespace Resource
 					normalIndices.push_back(normalIndex[0]);
 				}
 				else
-				{
-					std::cout << "Error line: " << buf << std::endl;
-					std::cout << "File can't be read by parser\n";
+				{					
+					Debug::LogWarning("File can't be read by parser");
 					return false;
 				}
 			}
@@ -160,69 +277,15 @@ namespace Resource
 
 		return true;
 	}
-	struct PackedVertex
-	{
-		Position position;
-		TexCoord uv;
-		Vector3 normal;
-		bool operator<(const PackedVertex that) const
-		{
-			return memcmp((void*)this, (void*)&that, sizeof(PackedVertex)) > 0;
-		};
-	};
-	inline bool getSimilarVertexIndex_fast(PackedVertex & packed, std::map<PackedVertex, unsigned short> & VertexToOutIndex, unsigned short & result)
-	{
-		std::map<PackedVertex, unsigned short>::iterator it = VertexToOutIndex.find(packed);
-		if (it == VertexToOutIndex.end())
-		{
-			return false;
-		}
-		else
-		{
-			result = it->second;
-			return true;
-		}
-	}
-	inline void IndexVBO(std::vector<Position> & in_vertices, std::vector<TexCoord> & in_uvs, std::vector<Vector3> & in_normals, std::vector<unsigned> & out_indices, std::vector<Vertex> & out_vertices)
-	{
-		std::map<PackedVertex, unsigned short> VertexToOutIndex;
-
-		// For each input vertex
-		for (unsigned int i = 0; i < in_vertices.size(); ++i)
-		{
-
-			PackedVertex packed = { in_vertices[i], in_uvs[i], in_normals[i] };
-
-			// Try to find a similar vertex in out_XXXX
-			unsigned short index;
-			bool found = getSimilarVertexIndex_fast(packed, VertexToOutIndex, index);
-
-			if (found)
-			{
-				// A similar vertex is already in the VBO, use it instead !
-				out_indices.push_back(index);
-			}
-			else
-			{
-				// If not, it needs to be added in the output data.
-				Vertex v;
-				v.pos.Set(in_vertices[i].x, in_vertices[i].y, in_vertices[i].z);
-				v.texCoord.Set(in_uvs[i].x, in_uvs[i].y);
-				v.normal.Set(in_normals[i].x, in_normals[i].y, in_normals[i].z);
-				out_vertices.push_back(v);
-				unsigned newindex = (unsigned)out_vertices.size() - 1;
-				out_indices.push_back(newindex);
-				VertexToOutIndex[packed] = newindex;
-			}
-		}
-	}
 
 	//TGA
-	inline GLuint LoadTGA(const char *file_path)				// load TGA file to memory
+	inline GLuint LoadTGA(const char *file_rel_path)				// load TGA file to memory
 	{
-		std::ifstream fileStream(file_path, std::ios::binary);
-		if (!fileStream.is_open()) {
-			std::cout << "Impossible to open " << file_path << ". Are you in the right directory ?\n";
+		std::string filePath = file_rel_path;
+		std::ifstream fileStream(("Resources\\" + filePath).c_str(), std::ios::binary);
+		if (!fileStream.is_open())
+		{
+			Debug::LogWarning("Failed to open file: " + filePath);
 			return 0;
 		}
 
@@ -276,6 +339,43 @@ namespace Resource
 
 		return texture;
 	}
+
+	//HEIGHT MAP
+	inline bool LoadHeightMap(const char *file_rel_path, std::vector<unsigned char> &heightMap)
+	{
+		std::string filePath = file_rel_path;
+		std::ifstream fileStream(("Resources\\" + filePath).c_str(), std::ios::binary);
+		if (!fileStream.is_open())
+		{
+			Debug::LogWarning("Failed to open file: " + filePath);
+			return false;
+		}
+
+		fileStream.seekg(0, std::ios::end);
+		std::streampos fsize = (unsigned)fileStream.tellg();
+
+		fileStream.seekg(0, std::ios::beg);
+		heightMap.resize((unsigned)fsize);
+		fileStream.read((char *)&heightMap[0], fsize);
+
+		fileStream.close();
+		return true;
+	}
+	inline float ReadHeightMap(std::vector<unsigned char> &heightMap, float x, float z)
+	{
+		if (x < -0.5f || x > 0.5f || z < -0.5f || z > 0.5f)
+			return 0;
+		if (heightMap.size() == 0)
+			return 0;
+
+		unsigned terrainSize = (unsigned)sqrt((double)heightMap.size());
+
+		unsigned zCoord = (unsigned)((z + 0.5f) * terrainSize);
+		unsigned xCoord = (unsigned)((x + 0.5f) * terrainSize);
+
+		return (float)heightMap[zCoord * terrainSize + xCoord] / 256.f;
+	}
+
 };
 
 #endif

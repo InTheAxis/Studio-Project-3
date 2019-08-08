@@ -4,7 +4,8 @@
 void MgrGraphics::Start()
 {
 	Node::Start();
-	Debug::Log("Loading shaders...");
+	Debug::Log("Loading shaders...");	
+	shaderPrograms[DEFAULT] = Resource::LoadShaders("Shader/default.vert", "Shader/simple.frag");
 }
 
 void MgrGraphics::Update(double dt)
@@ -25,4 +26,10 @@ void MgrGraphics::CacheMesh(Mesh * mesh)
 Mesh* MgrGraphics::GetCachedMesh(std::string name)
 {
 	return cachedMeshes[name];
+}
+
+void MgrGraphics::UseShader(MgrGraphics::SHADER shader)
+{
+	currShader = shader;
+	glUseProgram(shaderPrograms[currShader]);
 }
