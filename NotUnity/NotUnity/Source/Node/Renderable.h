@@ -17,8 +17,8 @@ public:
 
 	void Render();
 
-	void AttachMesh(Mesh* mesh);
-
+	Renderable* AttachMesh(Mesh* mesh);
+	Renderable* AttachMaterial(Material material);
 
 protected:
 	Mesh* mesh;

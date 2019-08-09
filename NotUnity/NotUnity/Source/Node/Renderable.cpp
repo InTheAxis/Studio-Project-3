@@ -1,4 +1,5 @@
 #include "Renderable.h"
+#include "../Manager/MgrGraphics.h"
 
 void Renderable::Start()
 {
@@ -19,12 +20,30 @@ void Renderable::End()
 void Renderable::Render()
 {
 	if (!mesh || mesh->vao < 1) return;
+
+	MgrGraphics* mgrG = MgrGraphics::Instance();
+	
+	mgrG->SetUniform("material.albedo", mesh->material.albedo);
+	for (int i = 0; i <= Material::COLOR7; ++i)
+	{
+		std::string cast = "material.colorMapEnabled[" + std::to_string(i) + "]";
+		mgrG->SetUniform(cast.c_str(), mesh->material.maps[i] > 0);
+	}
+	glBindTexture(GL_TEXTURE_2D, mesh->material.maps[Material::COLOR0]);
+
 	DrawMesh();
 }
 
-void Renderable::AttachMesh(Mesh* mesh)
+Renderable* Renderable::AttachMesh(Mesh* mesh)
 {
 	this->mesh = mesh;
+	return this;
+}
+
+Renderable* Renderable::AttachMaterial(Material material)
+{
+	this->mesh->material = material;
+	return this;
 }
 
 void Renderable::DrawMesh()

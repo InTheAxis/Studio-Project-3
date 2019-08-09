@@ -179,7 +179,7 @@ namespace MeshBuilder
 		v.pos.SetZero();
 		v.texCoord.Set(0.5f, 0.5f);
 		vertex_buffer_data.push_back(v);
-		for (int i = 0; i < 360.f; i += deltaTheta)
+		for (float i = 0; i < 360.f; i += deltaTheta)
 		{
 			rad = Math::DegreeToRadian(i);
 			pos.Set(cosf(rad), sinf(rad), 0);
@@ -189,7 +189,7 @@ namespace MeshBuilder
 		}
 
 		std::vector<GLuint> index_buffer_data;
-		for (int i = 0; i < numSides; ++i)
+		for (unsigned i = 0; i < numSides; ++i)
 		{
 			index_buffer_data.push_back(0);
 			index_buffer_data.push_back(i);
@@ -222,9 +222,9 @@ namespace MeshBuilder
 		v.normal.Set(0, 1, 0);
 		v.color.Set(1, 1, 1);
 
-		for (int x = 0; x <= numRow; ++x)
+		for (unsigned x = 0; x <= numRow; ++x)
 		{
-			for (int z = 0; z <= numCol; ++z)
+			for (unsigned z = 0; z <= numCol; ++z)
 			{
 				float xDist = x - numRow * 0.5f;
 				float zDist = z - numCol * 0.5f;
@@ -234,9 +234,9 @@ namespace MeshBuilder
 			}
 		}
 
-		for (int x = 0; x < numRow; ++x)
+		for (unsigned x = 0; x < numRow; ++x)
 		{
-			for (int z = 0; z < numCol; ++z)
+			for (unsigned z = 0; z < numCol; ++z)
 			{
 				int startVert = x * (numRow + 1) + z;
 				index_buffer_data.emplace_back(startVert);
@@ -358,7 +358,7 @@ namespace MeshBuilder
 					cos(Math::DegreeToRadian(phi)) * sin(Math::DegreeToRadian(theta)));
 				v.pos = 0.5f * pos;
 				v.normal = pos;
-				v.texCoord.Set(atan2f(pos.x, pos.z) / (2 * Math::PI) + 0.5, pos.y * 0.5 + 0.5);
+				v.texCoord.Set(atan2f(pos.x, pos.z) / (2 * Math::PI) + 0.5f, pos.y * 0.5f + 0.5f);
 				vertex_buffer_data.push_back(v);
 			}
 		}

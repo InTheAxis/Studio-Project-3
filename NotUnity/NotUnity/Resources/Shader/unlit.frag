@@ -3,40 +3,45 @@
 //lit.frag but without light and fog stuff
 
 // Interpolated values from the vertex shaders
-in vec3 vertexPosition_cameraspace;
-in vec4 fragmentColor;
-in vec3 vertexNormal_cameraspace;
+in vec4 fragColor;
 in vec2 texCoord;
+in vec3 vertexPos_cameraspace;
+in vec3 vertNormal_cameraspace;
 
 // Ouput data
 out vec4 color;
 
 // constants
-const int MAX_TEXTURES = 8;
+const int MAX_COLORMAPS = 8;
 
 // misc uniforms
-uniform bool colorTextureEnabled[MAX_TEXTURES];
-uniform sampler2D colorTexture[MAX_TEXTURES];
+struct Material
+{
+	vec4 albedo;
+
+	bool colorMapEnabled[MAX_COLORMAPS];
+	sampler2D colorMap[MAX_COLORMAPS];
+};
+uniform Material material;
 
 void main()
 {
 	/**HANDLING TEXTURES**/
-
 	vec4 baseColor = vec4(0);
-	//applying textures
-	int texCount = 0;
-	for (int i = 0; i < MAX_TEXTURES; ++i)
+	int colorCount = 0;
+	for (int i = 0; i < MAX_COLORMAPS; ++i)
 	{
-		if(colorTextureEnabled[i] == true)
+		if (material.colorMapEnabled[i])
 		{
-			baseColor += texture2D( colorTexture[i], texCoord );
-			++texCount;
+			baseColor += texture2D(material.colorMap[i], texCoord);
+			++colorCount;
 		}
 	}
-	if (texCount > 0)
-		baseColor = baseColor / texCount; //TODO add weights
+
+	if (colorCount > 0)
+		baseColor = baseColor / colorCount;
 	else
-		baseColor = fragmentColor;
+		baseColor = fragColor;
 	
-	color = baseColor;
+	color = material.albedo * baseColor;
 }

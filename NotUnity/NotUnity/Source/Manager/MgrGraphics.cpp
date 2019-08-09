@@ -18,7 +18,8 @@ void MgrGraphics::Start()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	Debug::Log("Loading shaders...");	
-	shaderPrograms[DEFAULT] = Resource::LoadShaders("Shader/default.vert", "Shader/simple.frag");
+	shaderPrograms[DEFAULT] = Resource::LoadShaders("Shader/default.vert", "Shader/unlit.frag");
+	shaderPrograms[SIMPLE] = Resource::LoadShaders("Shader/simple.vert", "Shader/simple.frag");
 	
 	Node::Start();
 }
@@ -56,4 +57,42 @@ void MgrGraphics::UseShader(MgrGraphics::SHADER shader)
 {
 	currShader = shader;
 	glUseProgram(shaderPrograms[currShader]);
+}
+
+void MgrGraphics::SetUniform(std::string uniform, int i, MgrGraphics::SHADER shader)
+{
+	glUniform1i(GetUniLoc(uniform, shader), i);
+}
+
+void MgrGraphics::SetUniform(std::string uniform, bool b, MgrGraphics::SHADER shader)
+{
+	glUniform1i(GetUniLoc(uniform, shader), b);
+}
+
+void MgrGraphics::SetUniform(std::string uniform, const Mtx44& m, MgrGraphics::SHADER shader)
+{
+	glUniformMatrix4fv(GetUniLoc(uniform, shader), 1, GL_FALSE, &(m.a[0]));
+}
+
+void MgrGraphics::SetUniform(std::string uniform, const Vector3& v, MgrGraphics::SHADER shader)
+{
+	glUniform3fv(GetUniLoc(uniform, shader), 1, &v.x);
+}
+
+void MgrGraphics::SetUniform(std::string uniform, const Vector4& v, MgrGraphics::SHADER shader)
+{
+	glUniform4fv(GetUniLoc(uniform, shader), 1, &v.x);
+}
+
+void MgrGraphics::SetUniform(std::string uniform, float f, MgrGraphics::SHADER shader)
+{
+	glUniform1f(GetUniLoc(uniform, shader), f);
+}
+
+unsigned MgrGraphics::GetUniLoc(std::string uniform, MgrGraphics::SHADER shader)
+{
+	return glGetUniformLocation(shader == CURRENT ? shaderPrograms[currShader] : shaderPrograms[DEFAULT], uniform.c_str());
+	//if (cachedUniforms.count(uniform) <= 0)
+	//	cachedUniforms[uniform] = 
+	//return cachedUniforms[uniform];
 }

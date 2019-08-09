@@ -4,7 +4,7 @@
 
 void Scene::Start()
 {	
-	AddChild<Renderable>("tri")->AttachMesh(MeshBuilder::GenerateQuad("tri"));
+	AddChild<Renderable>("tri")->AttachMesh(MeshBuilder::GenerateQuad("tri"))->AttachMaterial(Material());
 	Node::Start();
 }
 

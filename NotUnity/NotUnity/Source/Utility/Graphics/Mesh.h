@@ -2,6 +2,7 @@
 #define COMP_MESH_H
 
 #include "GL/glew.h"
+#include "Material.h"
 
 class Mesh
 {
@@ -9,7 +10,7 @@ public:
 	Mesh()
 		: name("unnamed")
 		, drawMode(GL_LINE)
-		, indexSize(0)		
+		, indexSize(0)	
 	{
 		glGenBuffers(1, &vbo);
 		glGenBuffers(1, &ebo);	
@@ -29,7 +30,7 @@ public:
 	unsigned vao;
 
 
-	//Material material;
+	Material material;
 };
 
 #endif

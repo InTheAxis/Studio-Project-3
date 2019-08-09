@@ -47,6 +47,7 @@
     <ClInclude Include="Source\Node\Node.h" />
     <ClInclude Include="Source\Node\Renderable.h" />
     <ClInclude Include="Source\Node\Scene.h" />
+    <ClInclude Include="Source\Utility\Graphics\Material.h" />
     <ClInclude Include="Source\Utility\Graphics\Mesh.h" />
     <ClInclude Include="Source\Utility\Graphics\MeshBuilder.h" />
     <ClInclude Include="Source\Utility\Graphics\Vertex.h" />
@@ -66,11 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\default.vert" />
-    <None Include="Resources\Shader\lit.frag" />
-    <None Include="Resources\Shader\lit_blend.frag" />
     <None Include="Resources\Shader\simple.frag" />
+    <None Include="Resources\Shader\simple.vert" />
     <None Include="Resources\Shader\unlit.frag" />
-    <None Include="Resources\Shader\unlit_tint.frag" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

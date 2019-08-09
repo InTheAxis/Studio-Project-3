@@ -28,7 +28,7 @@ namespace Resource
 		
 		// Read the Vertex Shader code from the file
 		std::string vertCode;
-		std::ifstream vertFileStream(("Resources\\" + vertFilePath).c_str(), std::ios::in);
+		std::ifstream vertFileStream(("Resources/" + vertFilePath).c_str(), std::ios::in);
 		if (vertFileStream.is_open()) 
 		{
 			std::string line = "";
@@ -42,7 +42,7 @@ namespace Resource
 		}
 		// Read the Fragment Shader code from the file
 		std::string fragCode;
-		std::ifstream fragFileStream(("Resources\\" + fragfilePath).c_str(), std::ios::in);
+		std::ifstream fragFileStream(("Resources/" + fragfilePath).c_str(), std::ios::in);
 		if (fragFileStream.is_open()) {
 			std::string line = "";
 			while (getline(fragFileStream, line))
@@ -170,7 +170,7 @@ namespace Resource
 	inline bool LoadOBJ(const char *file_rel_path, std::vector<Position> & out_vertices, std::vector<TexCoord> & out_uvs, std::vector<Vector3> & out_normals)
 	{
 		std::string filePath = file_rel_path;
-		std::ifstream fileStream(("Resources\\" + filePath).c_str(), std::ios::binary);
+		std::ifstream fileStream(("Resources/" + filePath).c_str(), std::ios::binary);
 		if (!fileStream.is_open())
 		{
 			Debug::LogWarning("Failed to open file: " + filePath);
@@ -282,7 +282,7 @@ namespace Resource
 	inline GLuint LoadTGA(const char *file_rel_path)				// load TGA file to memory
 	{
 		std::string filePath = file_rel_path;
-		std::ifstream fileStream(("Resources\\" + filePath).c_str(), std::ios::binary);
+		std::ifstream fileStream(("Resources/" + filePath).c_str(), std::ios::binary);
 		if (!fileStream.is_open())
 		{
 			Debug::LogWarning("Failed to open file: " + filePath);
@@ -330,8 +330,8 @@ namespace Resource
 		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAnisotropy);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, (GLint)maxAnisotropy);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
 		glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -344,7 +344,7 @@ namespace Resource
 	inline bool LoadHeightMap(const char *file_rel_path, std::vector<unsigned char> &heightMap)
 	{
 		std::string filePath = file_rel_path;
-		std::ifstream fileStream(("Resources\\" + filePath).c_str(), std::ios::binary);
+		std::ifstream fileStream(("Resources/" + filePath).c_str(), std::ios::binary);
 		if (!fileStream.is_open())
 		{
 			Debug::LogWarning("Failed to open file: " + filePath);
