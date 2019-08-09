@@ -218,5 +218,11 @@
     <None Include="Resources\Shader\simple.vert">
       <Filter>Resources\Shader</Filter>
     </None>
+    <None Include="Resources\meshes.resource">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Resources\materials.resource">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>

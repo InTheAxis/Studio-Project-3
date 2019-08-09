@@ -78,6 +78,8 @@
     <ClInclude Include="Source\Utility\WinDebug.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\materials.resource" />
+    <None Include="Resources\meshes.resource" />
     <None Include="Resources\Shader\default.vert" />
     <None Include="Resources\Shader\simple.frag" />
     <None Include="Resources\Shader\simple.vert" />

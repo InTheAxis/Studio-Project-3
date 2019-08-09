@@ -44,4 +44,7 @@ void main()
 		baseColor = fragColor;
 	
 	color = material.albedo * baseColor;
+
+	if (color.a < 0.01) 
+		discard;
 }

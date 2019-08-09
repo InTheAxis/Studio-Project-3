@@ -159,6 +159,7 @@ namespace Resource
 					v.pos.Set(in_vertices[i].x, in_vertices[i].y, in_vertices[i].z);
 					v.texCoord.Set(in_uvs[i].x, in_uvs[i].y);
 					v.normal.Set(in_normals[i].x, in_normals[i].y, in_normals[i].z);
+					v.color.Set(1, 1, 1, 1);
 					out_vertices.push_back(v);
 					unsigned newindex = (unsigned)out_vertices.size() - 1;
 					out_indices.push_back(newindex);

@@ -36,7 +36,7 @@ void Components::LoadPreset(Components::PRESET p)
 		AddChild<Renderable>()->AttachTransform(GetChild<Transform>())->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("axes"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("default"));
 		break;
 	case RENDERABLE:
-		AddChild<Renderable>()->AttachTransform(GetChild<Transform>())->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("tri"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("placeholder"));
+		AddChild<Renderable>()->AttachTransform(GetChild<Transform>())->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("placeholder"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("default"));
 		break;
 	}
 	Node::Start();
