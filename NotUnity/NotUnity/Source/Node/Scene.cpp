@@ -4,7 +4,10 @@
 
 void Scene::Start()
 {	
-	AddChild<Renderable>("tri")->AttachMesh(MeshBuilder::GenerateQuad("tri"))->AttachMaterial(Material());
+	Material* placeholder = new Material("placeholder");
+	Transform* t = new Transform;
+
+	AddChild<Renderable>("tri")->AttachMesh(MeshBuilder::GenerateQuad("tri"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("placeholder"))->AttachTransform(t);
 	Node::Start();
 }
 

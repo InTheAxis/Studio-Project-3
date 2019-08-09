@@ -5,13 +5,13 @@
 #include <map>
 
 #include "Manager.h"
-#include "../Utility/Graphics/Mesh.h"
 #include "../Utility/Resource.h"
 #include "../Utility/Math/Mtx44.h"
 #include "../Utility/Math/Vector3.h"
 #include "../Utility/Math/Vector4.h"
 
-class Scene;
+class Mesh;
+class Material;
 class MgrGraphics : public Manager<MgrGraphics>
 {
 	friend Singleton<MgrGraphics>;	
@@ -31,15 +31,17 @@ public:
 
 	void UseShader(MgrGraphics::SHADER shader);
 
-	void CacheMesh(Mesh* mesh);
-	Mesh* GetCachedMesh(std::string name);
-
 	void SetUniform(std::string uniform, int i, MgrGraphics::SHADER shader = CURRENT);
 	void SetUniform(std::string uniform, bool b, MgrGraphics::SHADER shader = CURRENT);
 	void SetUniform(std::string uniform, const Mtx44& m, MgrGraphics::SHADER shader = CURRENT);
 	void SetUniform(std::string uniform, const Vector3& v, MgrGraphics::SHADER shader = CURRENT);
 	void SetUniform(std::string uniform, const Vector4& v, MgrGraphics::SHADER shader = CURRENT);
 	void SetUniform(std::string uniform, float f, MgrGraphics::SHADER shader = CURRENT);
+
+	void CacheMesh(Mesh* mesh);
+	Mesh* GetCachedMesh(std::string name);
+	void CacheMaterial(Material* mat);
+	Material* GetCachedMaterial(std::string name);
 protected:
 	MgrGraphics(std::string name = "MgrGraphics") : Manager<MgrGraphics>(name) {}
 	~MgrGraphics() {}
@@ -47,8 +49,9 @@ protected:
 	SHADER currShader;
 
 	std::map <int, GLuint> shaderPrograms;
-	std::map<std::string, Mesh*> cachedMeshes;
 	std::map<MgrGraphics::SHADER, std::map<std::string, unsigned>> cachedUniforms;
+	std::map<std::string, Mesh*> cachedMeshes;
+	std::map<std::string, Material*> cachedMaterials;
 
 	unsigned GetUniLoc(std::string uniform, MgrGraphics::SHADER shader);
 };

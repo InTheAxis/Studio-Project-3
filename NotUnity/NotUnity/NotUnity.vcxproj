@@ -28,6 +28,7 @@
     <ClCompile Include="Source\Node\Node.cpp" />
     <ClCompile Include="Source\Node\Renderable.cpp" />
     <ClCompile Include="Source\Node\Scene.cpp" />
+    <ClCompile Include="Source\Node\Transform.cpp" />
     <ClCompile Include="Source\Utility\Input\ControllerKeyboard.cpp" />
     <ClCompile Include="Source\Utility\Input\ControllerMouse.cpp" />
     <ClCompile Include="Source\Utility\Math\MatrixStack.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="Source\Node\Node.h" />
     <ClInclude Include="Source\Node\Renderable.h" />
     <ClInclude Include="Source\Node\Scene.h" />
+    <ClInclude Include="Source\Node\Transform.h" />
     <ClInclude Include="Source\Utility\Graphics\Material.h" />
     <ClInclude Include="Source\Utility\Graphics\Mesh.h" />
     <ClInclude Include="Source\Utility\Graphics\MeshBuilder.h" />

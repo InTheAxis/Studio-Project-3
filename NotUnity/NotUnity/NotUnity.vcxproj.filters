@@ -82,6 +82,9 @@
     <ClCompile Include="Source\Node\Node.cpp">
       <Filter>Source\Node</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Node\Transform.cpp">
+      <Filter>Source\Node</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -161,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="Source\Utility\Graphics\Material.h">
       <Filter>Source\Utility\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Transform.h">
+      <Filter>Source\Node</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

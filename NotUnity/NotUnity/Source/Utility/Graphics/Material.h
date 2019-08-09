@@ -1,19 +1,26 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
+#include <string>
+
 #include "../Math/Vector3.h"
 #include "../Math/Vector4.h"
 #include "../Resource.h"
+#include "../../Manager/MgrGraphics.h"
 
 class Material
 {
 public:
-	Material() 
-	{
+	Material(std::string name)
+		:name(name)
+	{		
 		albedo.Set(1, 1, 1, 1);
 		maps[COLOR0] = Resource::LoadTGA("Tga/placeholder.tga"); 
 		for (int i = 1; i < NUM_MAPS; ++i)
 			maps[i] = 0;
+
+		if (!MgrGraphics::Instance()->GetCachedMaterial(name))
+			MgrGraphics::Instance()->CacheMaterial(this);
 	}
 	~Material() {}
 	enum MAPS
@@ -31,6 +38,8 @@ public:
 		NORMAL,
 		NUM_MAPS
 	};
+
+	std::string name;
 	Vector4 albedo;
 	unsigned maps[NUM_MAPS];
 };

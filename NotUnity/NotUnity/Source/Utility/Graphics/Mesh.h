@@ -2,7 +2,6 @@
 #define COMP_MESH_H
 
 #include "GL/glew.h"
-#include "Material.h"
 
 class Mesh
 {
@@ -28,9 +27,6 @@ public:
 	unsigned vbo;
 	unsigned ebo;
 	unsigned vao;
-
-
-	Material material;
 };
 
 #endif

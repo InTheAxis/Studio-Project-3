@@ -21,15 +21,21 @@ void Renderable::Render()
 {
 	if (!mesh || mesh->vao < 1) return;
 
+	//get handle for MgrGraphics
 	MgrGraphics* mgrG = MgrGraphics::Instance();
 	
-	mgrG->SetUniform("material.albedo", mesh->material.albedo);
+	//set uniforms for material
+	mgrG->SetUniform("material.albedo", material->albedo);
 	for (int i = 0; i <= Material::COLOR7; ++i)
 	{
 		std::string cast = "material.colorMapEnabled[" + std::to_string(i) + "]";
-		mgrG->SetUniform(cast.c_str(), mesh->material.maps[i] > 0);
+		mgrG->SetUniform(cast.c_str(), material->maps[i] > 0);
 	}
-	glBindTexture(GL_TEXTURE_2D, mesh->material.maps[Material::COLOR0]);
+	glBindTexture(GL_TEXTURE_2D, material->maps[Material::COLOR0]);
+
+	//set uniforms for transform
+	mgrG->SetUniform("model", t->GetModel());
+
 
 	DrawMesh();
 }
@@ -40,9 +46,15 @@ Renderable* Renderable::AttachMesh(Mesh* mesh)
 	return this;
 }
 
-Renderable* Renderable::AttachMaterial(Material material)
+Renderable* Renderable::AttachMaterial(Material* material)
 {
-	this->mesh->material = material;
+	this->material = material;
+	return this;
+}
+
+Renderable* Renderable::AttachTransform(Transform* t)
+{
+	this->t = t;
 	return this;
 }
 

@@ -2,6 +2,8 @@
 #include "../Utility/WinDebug.h"
 #include "../Utility/Input/ControllerKeyboard.h"
 #include "../Node/Renderable.h"
+#include "../Utility/Graphics/Mesh.h"
+#include "../Utility/Graphics/Material.h"
 
 void MgrGraphics::Start()
 {
@@ -43,16 +45,6 @@ void MgrGraphics::End()
 	Node::End();
 }
 
-void MgrGraphics::CacheMesh(Mesh * mesh)
-{
-	cachedMeshes[mesh->name] = mesh;
-}
-
-Mesh* MgrGraphics::GetCachedMesh(std::string name)
-{
-	return cachedMeshes[name];
-}
-
 void MgrGraphics::UseShader(MgrGraphics::SHADER shader)
 {
 	currShader = shader;
@@ -91,8 +83,29 @@ void MgrGraphics::SetUniform(std::string uniform, float f, MgrGraphics::SHADER s
 
 unsigned MgrGraphics::GetUniLoc(std::string uniform, MgrGraphics::SHADER shader)
 {
+	if (shader != CURRENT && currShader != shader)
+		UseShader(shader);
 	//return glGetUniformLocation(shader == CURRENT ? shaderPrograms[currShader] : shaderPrograms[shader], uniform.c_str());
 	if (cachedUniforms[shader].count(uniform) <= 0)
 		cachedUniforms[shader][uniform] = glGetUniformLocation(shader == CURRENT ? shaderPrograms[currShader] : shaderPrograms[shader], uniform.c_str());
 	return cachedUniforms[shader][uniform];
+}
+
+void MgrGraphics::CacheMesh(Mesh * mesh)
+{
+	cachedMeshes[mesh->name] = mesh;
+}
+
+Mesh* MgrGraphics::GetCachedMesh(std::string name)
+{
+	return cachedMeshes[name];
+}
+
+void MgrGraphics::CacheMaterial(Material* mat)
+{
+	cachedMaterials[mat->name] = mat;
+}
+Material* MgrGraphics::GetCachedMaterial(std::string name)
+{
+	return cachedMaterials[name];
 }

@@ -17,7 +17,7 @@ uniform mat4 model, view, proj;
 
 void main(){
 //	gl_Position =  proj * view * model * vec4(vertexPosition_modelspace, 1);
-	gl_Position = vec4(aVertPos, 1);	
+	gl_Position = model * vec4(aVertPos, 1);	
 	vertexPos_cameraspace = (view * model * vec4(aVertPos, 1)).xyz;		
 	vertNormal_cameraspace = (transpose(inverse(view * model)) * vec4(aVertNormal, 0)).xyz;
 	

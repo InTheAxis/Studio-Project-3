@@ -4,6 +4,8 @@
 #include "Node.h"
 #include "../Utility/TypeID.h"
 #include "../Utility/Graphics/Mesh.h"
+#include "../Utility/Graphics/Material.h"
+#include "Transform.h"
 
 class Renderable : public Node, public TypeID<Renderable>
 {
@@ -18,10 +20,13 @@ public:
 	void Render();
 
 	Renderable* AttachMesh(Mesh* mesh);
-	Renderable* AttachMaterial(Material material);
+	Renderable* AttachMaterial(Material* material);
+	Renderable* AttachTransform(Transform* t);
 
 protected:
 	Mesh* mesh;
+	Material* material;
+	Transform* t;
 
 	void DrawMesh();
 	void DrawMesh(unsigned count, unsigned offset);
