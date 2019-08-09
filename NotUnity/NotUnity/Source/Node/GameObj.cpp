@@ -24,17 +24,22 @@ void GameObj::End()
 	Node::End();
 }
 
-bool GameObj::Create(std::string filePath)
+GameObj* GameObj::Create(std::string filePath)
 {
 	//attach comps and scripts from json
-	return false;
+	return this;
 }
 
-bool GameObj::Create(Components::PRESET cPreset, Scripts::PRESET sPreset)
+GameObj* GameObj::Create(Components::PRESET cPreset, Scripts::PRESET sPreset)
 {
 	this->Start();
+	if (cPreset == Components::JSON || cPreset == Scripts::JSON)
+	{
+		Debug::LogWarning("Provide filePath to load as json!");
+		return this;
+	}
 	//attach comps and scripts from presets
 	comps->LoadPreset(cPreset);
 	scripts->LoadPreset(sPreset);
-	return false;
+	return this;
 }

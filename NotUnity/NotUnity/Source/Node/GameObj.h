@@ -17,8 +17,8 @@ public:
 	virtual void Update(double dt);
 	virtual void End();
 
-	bool Create(std::string filePath);
-	bool Create(Components::PRESET cPreset = Components::EMPTY, Scripts::PRESET sPreset = Scripts::EMPTY);
+	GameObj* Create(std::string filePath);
+	GameObj* Create(Components::PRESET cPreset = Components::EMPTY, Scripts::PRESET sPreset = Scripts::EMPTY);
 
 private:
 	//refrences to children

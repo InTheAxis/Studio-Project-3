@@ -3,7 +3,7 @@
 
 void Scene::Start()
 {	
-	AddChild<GameObj>("temp")->Create(Components::RENDERABLE);
+	AddChild<GameObj>("temp")->Create(Components::JSON);
 	//Node::Start(); //gameobjects start themselves
 }
 
