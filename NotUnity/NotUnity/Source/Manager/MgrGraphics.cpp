@@ -91,8 +91,8 @@ void MgrGraphics::SetUniform(std::string uniform, float f, MgrGraphics::SHADER s
 
 unsigned MgrGraphics::GetUniLoc(std::string uniform, MgrGraphics::SHADER shader)
 {
-	return glGetUniformLocation(shader == CURRENT ? shaderPrograms[currShader] : shaderPrograms[DEFAULT], uniform.c_str());
-	//if (cachedUniforms.count(uniform) <= 0)
-	//	cachedUniforms[uniform] = 
-	//return cachedUniforms[uniform];
+	//return glGetUniformLocation(shader == CURRENT ? shaderPrograms[currShader] : shaderPrograms[shader], uniform.c_str());
+	if (cachedUniforms[shader].count(uniform) <= 0)
+		cachedUniforms[shader][uniform] = glGetUniformLocation(shader == CURRENT ? shaderPrograms[currShader] : shaderPrograms[shader], uniform.c_str());
+	return cachedUniforms[shader][uniform];
 }

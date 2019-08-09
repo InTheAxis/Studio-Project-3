@@ -48,7 +48,7 @@ protected:
 
 	std::map <int, GLuint> shaderPrograms;
 	std::map<std::string, Mesh*> cachedMeshes;
-	std::map<std::string, unsigned> cachedUniforms;
+	std::map<MgrGraphics::SHADER, std::map<std::string, unsigned>> cachedUniforms;
 
 	unsigned GetUniLoc(std::string uniform, MgrGraphics::SHADER shader);
 };
