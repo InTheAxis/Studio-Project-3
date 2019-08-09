@@ -1,11 +1,11 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
-#include "Node.h"
-#include "../Utility/TypeID.h"
-#include "../Utility/Math/Vector3.h"
-#include "../Utility/Math/Mtx44.h"
-#include "../Utility/Math/MatrixStack.h"
+#include "../Node.h"
+#include "../../Utility/TypeID.h"
+#include "../../Utility/Math/Vector3.h"
+#include "../../Utility/Math/Mtx44.h"
+#include "../../Utility/Math/MatrixStack.h"
 
 class Transform : public Node, public TypeID<Transform>
 {

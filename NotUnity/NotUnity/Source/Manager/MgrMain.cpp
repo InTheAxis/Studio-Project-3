@@ -1,10 +1,15 @@
 #include "MgrMain.h"
 
+#include "MgrScene.h"
+#include "MgrGraphics.h"
+#include "MgrResource.h"
+
 void MgrMain::Start()
 {
-	//order matters
+	//order matters, make sure not to use generic template
 
 	AddChild("MgrGraphics", MgrGraphics::Instance());
+	AddChild("MgrResource", MgrResource::Instance());
 	AddChild("MgrScene", MgrScene::Instance());
 	
 	Node::Start();

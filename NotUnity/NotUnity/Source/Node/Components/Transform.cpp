@@ -19,6 +19,7 @@ Mtx44 Transform::GetModel()
 {	
 	MS model;
 	model.Translate(translate.x, translate.y, translate.z);
+	model.Rotate(rotate.z, 0, 0, 1);
 	model.Scale(scale.x, scale.y, scale.z);
 	return model.Top();
 }

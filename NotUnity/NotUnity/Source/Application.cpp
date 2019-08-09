@@ -122,7 +122,7 @@ void Application::Exit()
 	//Finalize and clean up GLFW
 	glfwTerminate();
 	//clean up managers
-	MgrScene::Instance()->End();	
+	MgrMain::Instance()->End();
 }
 
 int Application::GetWindowHeight()

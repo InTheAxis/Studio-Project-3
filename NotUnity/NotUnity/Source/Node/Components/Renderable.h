@@ -1,10 +1,10 @@
 #ifndef RENDERABLE_H
 #define RENDERABLE_H
 
-#include "Node.h"
-#include "../Utility/TypeID.h"
-#include "../Utility/Graphics/Mesh.h"
-#include "../Utility/Graphics/Material.h"
+#include "../Node.h"
+#include "../../Utility/TypeID.h"
+#include "../../Utility/Graphics/Mesh.h"
+#include "../../Utility/Graphics/Material.h"
 #include "Transform.h"
 
 class Renderable : public Node, public TypeID<Renderable>

@@ -3,9 +3,6 @@
 
 #include "Manager.h"
 
-#include "MgrScene.h"
-#include "MgrGraphics.h"
-
 class MgrMain : public Manager<MgrMain>
 {
 	friend Singleton<MgrMain>;

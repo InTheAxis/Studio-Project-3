@@ -20,7 +20,7 @@
 namespace MeshBuilder
 {
 	//generates a vao for the given mesh
-	void BindVao(Mesh* mesh, std::vector<Vertex>& vertex_buffer_data, std::vector<unsigned>& index_buffer_data)
+	inline void BindVao(Mesh* mesh, std::vector<Vertex>& vertex_buffer_data, std::vector<unsigned>& index_buffer_data)
 	{
 		glBindVertexArray(mesh->vao);
 
@@ -45,7 +45,7 @@ namespace MeshBuilder
 		glBindVertexArray(0);
 	}
 
-	Mesh* GenerateAxes(const std::string &meshName, float lengthX = 1.0f, float lengthY = 1.0f, float lengthZ = 1.0f, bool cache = true)
+	inline Mesh* GenerateAxes(const std::string &meshName, float lengthX = 1.0f, float lengthY = 1.0f, float lengthZ = 1.0f, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
@@ -88,7 +88,7 @@ namespace MeshBuilder
 		return mesh;
 	}
 
-	Mesh* GenerateQuad(const std::string &meshName, float tile = 1.f, bool cache = true)
+	inline Mesh* GenerateQuad(const std::string &meshName, float tile = 1.f, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
@@ -129,7 +129,7 @@ namespace MeshBuilder
 		return mesh;
 	}
 
-	Mesh* GenerateTriangle(const std::string &meshName, bool cache = true)
+	inline Mesh* GenerateTriangle(const std::string &meshName, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
@@ -164,7 +164,7 @@ namespace MeshBuilder
 		return mesh;
 	}
 
-	Mesh* GeneratePolygon(const std::string &meshName, unsigned numSides = 3, bool cache = true)
+	inline Mesh* GeneratePolygon(const std::string &meshName, unsigned numSides = 3, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
@@ -208,7 +208,7 @@ namespace MeshBuilder
 		return mesh;
 	}
 
-	Mesh* GeneratePlane(const std::string &meshName, unsigned numRow = 10, unsigned numCol = 10, float tileSize = 1.f, bool cache = true)
+	inline Mesh* GeneratePlane(const std::string &meshName, unsigned numRow = 10, unsigned numCol = 10, float tileSize = 1.f, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
@@ -261,7 +261,7 @@ namespace MeshBuilder
 		return mesh;
 	}
 
-	Mesh* GenerateCube(const std::string &meshName, bool cache = true)
+	inline Mesh* GenerateCube(const std::string &meshName, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
@@ -337,7 +337,7 @@ namespace MeshBuilder
 		return mesh;
 	}
 
-	Mesh* GenerateSphere(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius = 1.f, bool cache = true)
+	inline Mesh* GenerateSphere(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius = 1.f, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
@@ -383,7 +383,7 @@ namespace MeshBuilder
 		return mesh;
 	}
 
-	Mesh* GenerateOBJ(const std::string &meshName, const std::string &file_path, bool cache = true)
+	inline Mesh* GenerateOBJ(const std::string &meshName, const std::string &file_path, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		std::vector<Position> vertices;
@@ -410,7 +410,7 @@ namespace MeshBuilder
 		return mesh;
 	}
 
-	Mesh* GenerateText(const std::string &meshName, unsigned numRow, unsigned numCol, bool cache = true)
+	inline Mesh* GenerateText(const std::string &meshName, unsigned numRow, unsigned numCol, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
@@ -467,7 +467,7 @@ namespace MeshBuilder
 		return mesh;
 	}
 
-	Mesh* GenerateSkyPlane(const std::string &meshName, int slices, float planetRadius, float atmosphereRadius, float hTile = 1, float vTile = 1, bool cache = true)
+	inline Mesh* GenerateSkyPlane(const std::string &meshName, int slices, float planetRadius, float atmosphereRadius, float hTile = 1, float vTile = 1, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
@@ -525,7 +525,7 @@ namespace MeshBuilder
 		return mesh;
 	}
 
-	Mesh* GenerateTerrain(const std::string &meshName, const std::string &file_path, std::vector<unsigned char> &heightMap, float scaleX = 1.f, float scaleY = 1.f, float scaleZ = 1.f, bool cache = true)
+	inline Mesh* GenerateTerrain(const std::string &meshName, const std::string &file_path, std::vector<unsigned char> &heightMap, float scaleX = 1.f, float scaleY = 1.f, float scaleZ = 1.f, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;

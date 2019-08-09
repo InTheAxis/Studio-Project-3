@@ -29,6 +29,12 @@
     <Filter Include="Resources\Shader">
       <UniqueIdentifier>{1d8e0f40-c2c2-49ba-acbb-d6407af223f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Node\Components">
+      <UniqueIdentifier>{b19c852b-2afe-4036-8bed-26bd36155bce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Node\Scripts">
+      <UniqueIdentifier>{e6546823-b46d-4ad9-831b-806b1185f44e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -70,9 +76,6 @@
     <ClCompile Include="Source\Manager\MgrMain.cpp">
       <Filter>Source\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Node\Renderable.cpp">
-      <Filter>Source\Node</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Node\Scene.cpp">
       <Filter>Source\Node</Filter>
     </ClCompile>
@@ -82,8 +85,20 @@
     <ClCompile Include="Source\Node\Node.cpp">
       <Filter>Source\Node</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Node\Transform.cpp">
+    <ClCompile Include="Source\Manager\MgrResource.cpp">
+      <Filter>Source\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scripts.cpp">
       <Filter>Source\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Components.cpp">
+      <Filter>Source\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Components\Transform.cpp">
+      <Filter>Source\Node\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Components\Renderable.cpp">
+      <Filter>Source\Node\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,8 +180,20 @@
     <ClInclude Include="Source\Utility\Graphics\Material.h">
       <Filter>Source\Utility\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Node\Transform.h">
+    <ClInclude Include="Source\Manager\MgrResource.h">
+      <Filter>Source\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components.h">
       <Filter>Source\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scripts.h">
+      <Filter>Source\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components\Transform.h">
+      <Filter>Source\Node\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components\Renderable.h">
+      <Filter>Source\Node\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

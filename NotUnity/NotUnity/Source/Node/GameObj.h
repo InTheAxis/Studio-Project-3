@@ -4,6 +4,9 @@
 #include "Node.h"
 #include "../Utility/TypeID.h"
 
+class Scripts;
+class Components;
+class Transform;
 class GameObj : public Node, public TypeID<GameObj>
 {
 public:
@@ -13,6 +16,10 @@ public:
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
+private:
+	Transform* t;
+	Components* comps;
+	Scripts* scripts;
 };
 
 #endif

@@ -1,9 +1,9 @@
 #include "MgrGraphics.h"
 #include "../Utility/WinDebug.h"
 #include "../Utility/Input/ControllerKeyboard.h"
-#include "../Node/Renderable.h"
 #include "../Utility/Graphics/Mesh.h"
 #include "../Utility/Graphics/Material.h"
+#include "../Node/Components/Renderable.h"
 
 void MgrGraphics::Start()
 {

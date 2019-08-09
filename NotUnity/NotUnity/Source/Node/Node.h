@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include "../Utility/WinDebug.h"
 
 //defines what a "thing" is this engine
 //inherit from this and typeID for full functionality

@@ -1,5 +1,5 @@
 #include "Renderable.h"
-#include "../Manager/MgrGraphics.h"
+#include "../../Manager/MgrGraphics.h"
 
 void Renderable::Start()
 {
@@ -35,7 +35,6 @@ void Renderable::Render()
 
 	//set uniforms for transform
 	mgrG->SetUniform("model", t->GetModel());
-
 
 	DrawMesh();
 }
