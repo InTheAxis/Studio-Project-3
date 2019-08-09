@@ -3,8 +3,8 @@
 
 void Scene::Start()
 {	
-	AddChild<GameObj>("temp");
-	Node::Start();
+	AddChild<GameObj>("temp")->Create(Components::RENDERABLE);
+	//Node::Start(); //gameobjects start themselves
 }
 
 void Scene::Update(double dt)

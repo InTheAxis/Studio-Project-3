@@ -13,6 +13,15 @@ public:
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
+
+	enum PRESET
+	{
+		JSON = -1,
+		EMPTY = 0,
+		RENDERABLE,
+	};
+
+	void LoadPreset(Components::PRESET p = EMPTY);
 };
 
 #endif

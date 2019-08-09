@@ -3,9 +3,9 @@
 
 #include "Node.h"
 #include "../Utility/TypeID.h"
+#include "Components.h"
+#include "Scripts.h"
 
-class Scripts;
-class Components;
 class Transform;
 class GameObj : public Node, public TypeID<GameObj>
 {
@@ -16,10 +16,15 @@ public:
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
+
+	bool Create(std::string filePath);
+	bool Create(Components::PRESET cPreset = Components::EMPTY, Scripts::PRESET sPreset = Scripts::EMPTY);
+
 private:
-	Transform* t;
+	//refrences to children
 	Components* comps;
 	Scripts* scripts;
+	Transform* t;
 };
 
 #endif
