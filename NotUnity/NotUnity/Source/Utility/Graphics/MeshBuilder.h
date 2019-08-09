@@ -82,7 +82,7 @@ namespace MeshBuilder
 
 		mesh->name = meshName;
 		mesh->indexSize = index_buffer_data.size();
-		mesh->drawMode = GL_LINE;
+		mesh->drawMode = GL_LINES;
 		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
 
 		return mesh;

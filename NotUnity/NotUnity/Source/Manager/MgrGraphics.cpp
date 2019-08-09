@@ -142,7 +142,7 @@ void MgrGraphics::AttachView(Mtx44 * view)
 void MgrGraphics::SetProjPerspective(float fov, float farVal, float nearVal)
 {
 	Mtx44 temp;
-	temp.SetToPerspective(fov, Application::GetWindowWidth() / Application::GetWindowHeight(), nearVal, farVal);
+	temp.SetToPerspective(fov, (double)Application::GetWindowWidth() / Application::GetWindowHeight(), nearVal, farVal);
 	projStack.LoadMatrix(temp);
 }
 

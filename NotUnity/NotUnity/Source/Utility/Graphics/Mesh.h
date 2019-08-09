@@ -8,7 +8,7 @@ class Mesh
 public:
 	Mesh()
 		: name("unnamed")
-		, drawMode(GL_LINE)
+		, drawMode(GL_LINES)
 		, indexSize(0)	
 	{
 		glGenBuffers(1, &vbo);

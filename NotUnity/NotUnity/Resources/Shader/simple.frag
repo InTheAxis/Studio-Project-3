@@ -9,9 +9,14 @@ in vec2 texCoord;
 // Ouput data
 out vec4 color;
 
-uniform sampler2D colorTexture;
+// misc uniforms
+struct Material
+{
+	sampler2D colorMap[1];
+};
+uniform Material material;
 
 void main()
 {
-	color = fragColor * texture2D(colorTexture, texCoord);
+	color = fragColor * texture2D(material.colorMap[0], texCoord);
 }

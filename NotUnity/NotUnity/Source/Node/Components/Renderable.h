@@ -7,6 +7,7 @@
 #include "../../Utility/Graphics/Material.h"
 #include "Transform.h"
 
+class MgrGraphics;
 class Renderable : public Node, public TypeID<Renderable>
 {
 public:
@@ -22,11 +23,13 @@ public:
 	Renderable* AttachMesh(Mesh* mesh);
 	Renderable* AttachMaterial(Material* material);
 	Renderable* AttachTransform(Transform* t);
+	Renderable* SelectShader(MgrGraphics::SHADER shader);
 
 protected:
 	Mesh* mesh;
 	Material* material;
 	Transform* t;
+	MgrGraphics::SHADER shader;
 
 	void DrawMesh();
 	void DrawMesh(unsigned count, unsigned offset);

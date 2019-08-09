@@ -15,8 +15,9 @@ out vec2 texCoord;
 // Values that stay constant for the whole mesh.
 uniform mat4 model;
 
-void main(){
-	model * vec4(aVertPos, 1);
+void main()
+{
+	gl_Position = model * vec4(aVertPos, 1);
 
 	//pass throughs
 	fragColor = aVertColor;

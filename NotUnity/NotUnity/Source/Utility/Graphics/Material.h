@@ -15,8 +15,7 @@ public:
 		:name(name)
 	{		
 		albedo.Set(1, 1, 1, 1);
-		maps[COLOR0] = Resource::LoadTGA("Tga/placeholder.tga"); 
-		for (int i = 1; i < NUM_MAPS; ++i)
+		for (int i = 0; i < NUM_MAPS; ++i)
 			maps[i] = 0;
 
 		if (!MgrGraphics::Instance()->GetCachedMaterial(name))

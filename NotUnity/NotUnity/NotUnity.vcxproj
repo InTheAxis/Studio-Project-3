@@ -57,7 +57,6 @@
     <ClInclude Include="Source\Node\Components\Transform.h" />
     <ClInclude Include="Source\Node\GameObj.h" />
     <ClInclude Include="Source\Node\Node.h" />
-    <ClInclude Include="Source\Node\Renderable.h" />
     <ClInclude Include="Source\Node\Scene.h" />
     <ClInclude Include="Source\Node\Scripts.h" />
     <ClInclude Include="Source\Utility\Graphics\Material.h" />
