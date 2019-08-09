@@ -10,7 +10,7 @@ void Components::Start()
 }
 
 void Components::Update(double dt)
-{
+{	
 	Node::Update(dt);
 }
 

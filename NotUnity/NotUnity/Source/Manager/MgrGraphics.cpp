@@ -4,6 +4,7 @@
 #include "../Utility/Graphics/Mesh.h"
 #include "../Utility/Graphics/Material.h"
 #include "../Node/Components/Renderable.h"
+#include "../Application.h"
 
 void MgrGraphics::Start()
 {
@@ -18,6 +19,11 @@ void MgrGraphics::Start()
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	modelStack.LoadIdentity();
+	viewStack.LoadIdentity();
+	projStack.LoadIdentity();
+	SetProjPerspective();
 
 	Debug::Log("Loading shaders...");	
 	shaderPrograms[DEFAULT] = Resource::LoadShaders("Shader/default.vert", "Shader/unlit.frag");
@@ -85,10 +91,13 @@ unsigned MgrGraphics::GetUniLoc(std::string uniform, MgrGraphics::SHADER shader)
 {
 	if (shader != CURRENT && currShader != shader)
 		UseShader(shader);
+
+	MgrGraphics::SHADER shad = (shader == CURRENT ? currShader : shader);
+
 	//return glGetUniformLocation(shader == CURRENT ? shaderPrograms[currShader] : shaderPrograms[shader], uniform.c_str());
-	if (cachedUniforms[shader].count(uniform) <= 0)
-		cachedUniforms[shader][uniform] = glGetUniformLocation(shader == CURRENT ? shaderPrograms[currShader] : shaderPrograms[shader], uniform.c_str());
-	return cachedUniforms[shader][uniform];
+	if (cachedUniforms[shad].count(uniform) <= 0)
+		cachedUniforms[shad][uniform] = glGetUniformLocation(shaderPrograms[shad], uniform.c_str());
+	return cachedUniforms[shad][uniform];
 }
 
 void MgrGraphics::CacheMesh(Mesh * mesh)
@@ -108,4 +117,35 @@ void MgrGraphics::CacheMaterial(Material* mat)
 Material* MgrGraphics::GetCachedMaterial(std::string name)
 {
 	return cachedMaterials[name];
+}
+
+MS* MgrGraphics::GetModelStack()
+{
+	return &modelStack;
+}
+
+MS* MgrGraphics::GetViewStack()
+{
+	return &viewStack;
+}
+
+MS* MgrGraphics::GetProjStack()
+{
+	return &projStack;
+}
+
+void MgrGraphics::SetProjPerspective(float fov, float farVal, float nearVal)
+{
+	Mtx44 temp;
+	temp.SetToPerspective(fov, Application::GetWindowWidth() / Application::GetWindowHeight(), nearVal, farVal);
+	projStack.LoadMatrix(temp);
+}
+
+void MgrGraphics::SetProjOrtho(float size, float farVal, float nearVal)
+{
+	Mtx44 temp;
+	float scaleSizeX = Application::GetWindowHalfWidth() / size;
+	float scaleSizeY = Application::GetWindowHalfHeight() / size;
+	temp.SetToOrtho(-scaleSizeX, scaleSizeX, -scaleSizeY, scaleSizeY, nearVal, farVal);
+	projStack.LoadMatrix(temp);
 }

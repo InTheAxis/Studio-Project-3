@@ -10,6 +10,10 @@
 #include "Utility/Input/ControllerKeyboard.h"
 #include "Manager/MgrMain.h"
 
+int Application::m_window_width = 1280;
+int Application::m_window_height = m_window_width / 16 * 9;
+float Application::aspect = 16.f / 9.f;
+
 Application::Application()
 {
 }
@@ -35,6 +39,7 @@ void Application::Create()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); //Request a specific OpenGL version
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //We don't want the old OpenGL
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); //cuz resizing doesn't work yet
 
 	//create a "borderless full-screen" window and create its OpenGL context
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();

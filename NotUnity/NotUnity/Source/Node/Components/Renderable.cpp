@@ -35,6 +35,8 @@ void Renderable::Render()
 
 	//set uniforms for transform
 	mgrG->SetUniform("model", t->GetModel());
+	mgrG->SetUniform("view", mgrG->GetViewStack()->Top());
+	mgrG->SetUniform("proj", mgrG->GetProjStack()->Top());
 
 	DrawMesh();
 }

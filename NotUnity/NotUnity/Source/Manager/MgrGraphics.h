@@ -6,6 +6,7 @@
 
 #include "Manager.h"
 #include "../Utility/Resource.h"
+#include "../Utility/Math/MatrixStack.h"
 #include "../Utility/Math/Mtx44.h"
 #include "../Utility/Math/Vector3.h"
 #include "../Utility/Math/Vector4.h"
@@ -42,6 +43,12 @@ public:
 	Mesh* GetCachedMesh(std::string name);
 	void CacheMaterial(Material* mat);
 	Material* GetCachedMaterial(std::string name);
+
+	MS* GetModelStack();
+	MS* GetViewStack();
+	MS* GetProjStack();
+	void SetProjPerspective(float fov = 45.f, float farVal = 10000.f, float nearVal = 0.1f);
+	void SetProjOrtho(float size = 100, float farVal = 10000.f, float nearVal = 0.1f);
 protected:
 	MgrGraphics(std::string name = "MgrGraphics") : Manager<MgrGraphics>(name) {}
 	~MgrGraphics() {}
@@ -52,6 +59,8 @@ protected:
 	std::map<MgrGraphics::SHADER, std::map<std::string, unsigned>> cachedUniforms;
 	std::map<std::string, Mesh*> cachedMeshes;
 	std::map<std::string, Material*> cachedMaterials;
+
+	MS modelStack, viewStack, projStack;
 
 	unsigned GetUniLoc(std::string uniform, MgrGraphics::SHADER shader);
 };

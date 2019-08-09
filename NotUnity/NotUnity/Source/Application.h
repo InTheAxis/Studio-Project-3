@@ -15,14 +15,15 @@ public:
 	void Run();
 	void Exit();
 
-	int GetWindowHeight();
-	int GetWindowWidth();
-	int GetWindowHalfHeight();
-	int GetWindowHalfWidth();
+	static int GetWindowHeight();
+	static int GetWindowWidth();
+	static int GetWindowHalfHeight();
+	static int GetWindowHalfWidth();
 	
 private:
-	int m_window_width = 1280;
-	int m_window_height = m_window_width / 16 * 9;
+	static int m_window_width;
+	static int m_window_height;
+	static float aspect;
 	
 	const unsigned char FPS = 60;
 	const double frameTime = 1000.0 / FPS;

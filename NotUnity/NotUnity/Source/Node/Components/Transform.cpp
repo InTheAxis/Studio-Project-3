@@ -1,4 +1,5 @@
 #include "Transform.h"
+#include "../../Manager/MgrGraphics.h"
 
 void Transform::Start()
 {
@@ -17,9 +18,12 @@ void Transform::End()
 
 Mtx44 Transform::GetModel()
 {	
-	MS model;
-	model.Translate(translate.x, translate.y, translate.z);
-	model.Rotate(rotate.z, 0, 0, 1);
-	model.Scale(scale.x, scale.y, scale.z);
-	return model.Top();
+	MS* model = MgrGraphics::Instance()->GetModelStack();
+	model->PushMatrix();	
+	model->Translate(translate.x, translate.y, translate.z);
+	model->Rotate(rotate.z, 0, 0, 1);
+	model->Scale(scale.x, scale.y, scale.z);
+	Mtx44 temp = model->Top();
+	model->PopMatrix();	
+	return temp;
 }

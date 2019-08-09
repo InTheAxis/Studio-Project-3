@@ -1,9 +1,11 @@
 #include "Scene.h"
 #include "GameObj.h"
 
+#include "../Manager/MgrGraphics.h"
+
 void Scene::Start()
-{	
-	AddChild<GameObj>("temp")->Create(Components::JSON);
+{		
+	AddChild<GameObj>("temp")->Create(Components::RENDERABLE);
 	//Node::Start(); //gameobjects start themselves
 }
 
