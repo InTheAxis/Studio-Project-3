@@ -45,8 +45,9 @@ public:
 	Material* GetCachedMaterial(std::string name);
 
 	MS* GetModelStack();
-	MS* GetViewStack();
-	MS* GetProjStack();
+	Mtx44 GetView();
+	Mtx44 GetProj();
+	void AttachView(Mtx44* view);
 	void SetProjPerspective(float fov = 45.f, float farVal = 10000.f, float nearVal = 0.1f);
 	void SetProjOrtho(float size = 100, float farVal = 10000.f, float nearVal = 0.1f);
 protected:
@@ -60,7 +61,8 @@ protected:
 	std::map<std::string, Mesh*> cachedMeshes;
 	std::map<std::string, Material*> cachedMaterials;
 
-	MS modelStack, viewStack, projStack;
+	MS modelStack, projStack;
+	Mtx44* view;
 
 	unsigned GetUniLoc(std::string uniform, MgrGraphics::SHADER shader);
 };

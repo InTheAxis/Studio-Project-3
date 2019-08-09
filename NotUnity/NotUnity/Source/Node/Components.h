@@ -18,6 +18,7 @@ public:
 	{
 		JSON = -1,
 		EMPTY = 0,
+		CAMERA_DEBUG,
 		RENDERABLE,
 	};
 

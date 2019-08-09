@@ -26,6 +26,8 @@
     <ClCompile Include="Source\Manager\MgrResource.cpp" />
     <ClCompile Include="Source\Manager\MgrScene.cpp" />
     <ClCompile Include="Source\Node\Components.cpp" />
+    <ClCompile Include="Source\Node\Components\Axis.cpp" />
+    <ClCompile Include="Source\Node\Components\Camera.cpp" />
     <ClCompile Include="Source\Node\Components\Renderable.cpp" />
     <ClCompile Include="Source\Node\Components\Transform.cpp" />
     <ClCompile Include="Source\Node\GameObj.cpp" />
@@ -49,6 +51,8 @@
     <ClInclude Include="Source\Manager\MgrResource.h" />
     <ClInclude Include="Source\Manager\MgrScene.h" />
     <ClInclude Include="Source\Node\Components.h" />
+    <ClInclude Include="Source\Node\Components\Axis.h" />
+    <ClInclude Include="Source\Node\Components\Camera.h" />
     <ClInclude Include="Source\Node\Components\Renderable.h" />
     <ClInclude Include="Source\Node\Components\Transform.h" />
     <ClInclude Include="Source\Node\GameObj.h" />

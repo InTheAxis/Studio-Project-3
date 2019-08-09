@@ -2,9 +2,12 @@
 #include "GameObj.h"
 
 #include "../Manager/MgrGraphics.h"
+#include "Components/Camera.h"
 
 void Scene::Start()
 {		
+	MgrGraphics::Instance()->AttachView(AddChild<GameObj>("MainCam")->Create(Components::CAMERA_DEBUG)->GetComp<Camera>()->GetViewMtx());
+
 	AddChild<GameObj>("temp")->Create(Components::RENDERABLE);
 	//Node::Start(); //gameobjects start themselves
 }

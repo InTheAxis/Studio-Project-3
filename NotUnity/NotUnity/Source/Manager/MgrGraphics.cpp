@@ -21,7 +21,7 @@ void MgrGraphics::Start()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	modelStack.LoadIdentity();
-	viewStack.LoadIdentity();
+	view = nullptr;
 	projStack.LoadIdentity();
 	SetProjPerspective();
 
@@ -124,14 +124,19 @@ MS* MgrGraphics::GetModelStack()
 	return &modelStack;
 }
 
-MS* MgrGraphics::GetViewStack()
+Mtx44 MgrGraphics::GetView()
 {
-	return &viewStack;
+	return *view;
 }
 
-MS* MgrGraphics::GetProjStack()
+Mtx44 MgrGraphics::GetProj()
 {
-	return &projStack;
+	return projStack.Top();
+}
+
+void MgrGraphics::AttachView(Mtx44 * view)
+{
+	this->view = view;
 }
 
 void MgrGraphics::SetProjPerspective(float fov, float farVal, float nearVal)

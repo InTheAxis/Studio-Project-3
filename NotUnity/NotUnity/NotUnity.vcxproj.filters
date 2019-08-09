@@ -100,6 +100,12 @@
     <ClCompile Include="Source\Node\Components\Renderable.cpp">
       <Filter>Source\Node\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Node\Components\Camera.cpp">
+      <Filter>Source\Node\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Components\Axis.cpp">
+      <Filter>Source\Node\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -193,6 +199,12 @@
       <Filter>Source\Node\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node\Components\Renderable.h">
+      <Filter>Source\Node\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components\Camera.h">
+      <Filter>Source\Node\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components\Axis.h">
       <Filter>Source\Node\Components</Filter>
     </ClInclude>
   </ItemGroup>

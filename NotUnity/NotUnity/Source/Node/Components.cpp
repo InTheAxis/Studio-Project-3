@@ -2,6 +2,8 @@
 
 #include "Components/Transform.h"
 #include "Components/Renderable.h"
+#include "Components/Camera.h"
+#include "Components/Axis.h"
 
 void Components::Start()
 {
@@ -26,6 +28,9 @@ void Components::LoadPreset(Components::PRESET p)
 	default:
 	case JSON:
 	case EMPTY:
+		break;
+	case CAMERA_DEBUG:
+		AddChild<Camera>()->AttachTransform(GetChild<Transform>())->SetMode(Camera::DEBUG)->SetSpeed(1.5f);
 		break;
 	case RENDERABLE:
 		AddChild<Renderable>()->AttachTransform(GetChild<Transform>())->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("tri"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("placeholder"));
