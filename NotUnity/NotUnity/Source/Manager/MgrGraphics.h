@@ -22,6 +22,8 @@ public:
 	virtual void Update(double dt);
 	virtual void End();	
 
+	void PreRender();	
+
 	enum SHADER
 	{
 		CURRENT = -1,
@@ -38,6 +40,8 @@ public:
 	void SetUniform(std::string uniform, const Vector3& v, MgrGraphics::SHADER shader = CURRENT);
 	void SetUniform(std::string uniform, const Vector4& v, MgrGraphics::SHADER shader = CURRENT);
 	void SetUniform(std::string uniform, float f, MgrGraphics::SHADER shader = CURRENT);
+
+	MgrGraphics::SHADER GetCurrShader();
 
 	void CacheMesh(Mesh* mesh);
 	Mesh* GetCachedMesh(std::string name);

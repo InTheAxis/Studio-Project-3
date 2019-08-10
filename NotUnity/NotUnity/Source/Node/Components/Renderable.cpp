@@ -7,8 +7,7 @@ void Renderable::Start()
 }
 
 void Renderable::Update(double dt)
-{
-	Render();
+{	
 	Node::Update(dt);
 }
 
@@ -24,12 +23,11 @@ void Renderable::Render()
 	//get handle for MgrGraphics
 	MgrGraphics* mgrG = MgrGraphics::Instance();
 	
-	mgrG->UseShader(shader);
+	if (shader != mgrG->GetCurrShader())
+		mgrG->UseShader(shader);
 
 	//set uniforms for transform
 	mgrG->SetUniform("model", t->GetModel());
-	mgrG->SetUniform("view", mgrG->GetView());
-	mgrG->SetUniform("proj", mgrG->GetProj());
 
 	//set uniforms for material
 	mgrG->SetUniform("material.albedo", material->albedo);
