@@ -2,6 +2,7 @@
 #define TEXT_H
 
 #include "../../Utility/TypeID.h"
+#include "../../Utility/Math/Vector4.h"
 #include "Renderable.h"
 
 class MgrGraphics;
@@ -11,7 +12,10 @@ public:
 	Text(std::string name = "Text") : Renderable(name) 
 	{
 		content = ""; 
+		color.Set(1, 1, 1, 1);
+		fontSize = 1;
 		onScreen = true;
+		align = -1;
 	}
 	~Text() {}
 	
@@ -22,11 +26,17 @@ public:
 	virtual void Render();
 
 	Text* SetText(std::string text);
+	Text* SetColor(Vector4 col);
+	Text* SetSize(float size);
 	Text* SetOnScreen(bool onScreen);
+	Text* SetAlignment(int align); //-1,0,1 = l,center,r
 
 protected:
 	std::string content;
+	Vector4 color;
 	bool onScreen;
+	float fontSize;
+	int align;
 	const float textSpacing = 0.65f;
 };
 

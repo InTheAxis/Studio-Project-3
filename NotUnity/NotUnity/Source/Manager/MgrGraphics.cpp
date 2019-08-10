@@ -57,8 +57,8 @@ void MgrGraphics::PreRender()
 {
 	//constant uniforms across shaders/meshess
 
-	SetUniform("view", GetView());
-	SetUniform("proj", GetProj());	
+	SetUniform("view", *view);
+	SetUniform("proj", projStack.Top());	
 }
 
 void MgrGraphics::UseShader(MgrGraphics::SHADER shader)
@@ -145,9 +145,9 @@ Mtx44 MgrGraphics::GetView()
 	return *view;
 }
 
-Mtx44 MgrGraphics::GetProj()
+MS* MgrGraphics::GetProjStack()
 {
-	return projStack.Top();
+	return &projStack;
 }
 
 void MgrGraphics::AttachView(Mtx44 * view)

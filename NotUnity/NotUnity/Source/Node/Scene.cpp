@@ -1,9 +1,12 @@
 #include "Scene.h"
 #include "GameObj.h"
 
+#include <sstream>
+
 #include "../Manager/MgrGraphics.h"
 #include "Components/Camera.h"
 #include "Components/Renderable.h"
+#include "Components/Text.h"
 
 void Scene::Start()
 {		
@@ -17,6 +20,11 @@ void Scene::Start()
 
 void Scene::Update(double dt)
 {
+	std::stringstream ss; 
+	ss.precision(3);
+	ss << "FPS: " << 1.0 / dt;
+
+	GetChild<GameObj>("text")->GetComp<Text>()->SetText(ss.str())->SetColor(Vector4(1,0,0,1));
 	Node::Update(dt);
 	this->Render();
 }

@@ -29,7 +29,7 @@ void Text::Render()
 		mgrG->UseShader(shader);
 
 	//set uniforms for material
-	mgrG->SetUniform("material.albedo", material->albedo);
+	mgrG->SetUniform("material.albedo", color); //let text override albedo
 	for (int i = 0; i <= Material::COLOR7; ++i)
 	{
 		std::string cast = "material.colorMapEnabled[" + std::to_string(i) + "]";
@@ -37,12 +37,40 @@ void Text::Render()
 	}
 	glBindTexture(GL_TEXTURE_2D, material->maps[Material::COLOR0]);
 
-	Mtx44 charModel;
+	//set proj and view
+	if (onScreen)
+	{
+		mgrG->GetProjStack()->PushMatrix();
+		mgrG->SetProjOrtho(50, -100, 100);
+		Mtx44 no_view; no_view.SetToIdentity();
+		mgrG->SetUniform("view", no_view);
+		mgrG->SetUniform("proj", mgrG->GetProjStack()->Top());
+	}
+
+	//set model & draw
+	MS charModel;	
+	if (!align)
+		charModel.Translate((content.length() - 1) * -0.5f * textSpacing * fontSize, 0, 0);
+	else if (align == 1)
+		charModel.Translate(content.length() * -textSpacing * fontSize, 0, 0);
+	else
+		charModel.Translate(textSpacing * fontSize, 0, 0);
 	for (unsigned i = 0; i < content.length(); ++i)
 	{
-		charModel.SetToTranslation(i * textSpacing, 0, 0);
-		mgrG->SetUniform("model", t->GetModel() * charModel);
+		charModel.PushMatrix();
+		charModel.Translate(i * textSpacing * fontSize, 0, 0);
+		charModel.Scale(fontSize, fontSize, 1);
+		mgrG->SetUniform("model", t->GetModel() * charModel.Top());
 		DrawMesh(6, (unsigned)content[i] * 6);
+		charModel.PopMatrix();
+	}
+
+	//reset proj and view
+	if (onScreen)
+	{
+		mgrG->GetProjStack()->PopMatrix();		
+		mgrG->SetUniform("view", mgrG->GetView());
+		mgrG->SetUniform("proj", mgrG->GetProjStack()->Top());
 	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -55,8 +83,26 @@ Text* Text::SetText(std::string text)
 	return this;
 }
 
-Text * Text::SetOnScreen(bool onScreen)
+Text* Text::SetColor(Vector4 col)
+{
+	color = col;
+	return this;
+}
+
+Text * Text::SetSize(float size)
+{
+	fontSize = size;
+	return this;
+}
+
+Text* Text::SetOnScreen(bool onScreen)
 {
 	this->onScreen = onScreen;
+	return this;
+}
+
+Text * Text::SetAlignment(int align)
+{
+	this->align = align;
 	return this;
 }

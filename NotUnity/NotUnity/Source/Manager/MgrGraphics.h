@@ -50,7 +50,7 @@ public:
 
 	MS* GetModelStack();
 	Mtx44 GetView();
-	Mtx44 GetProj();
+	MS* GetProjStack();
 	void AttachView(Mtx44* view);
 	void SetProjPerspective(float fov = 45.f, float farVal = 10000.f, float nearVal = 0.1f);
 	void SetProjOrtho(float size = 100, float farVal = 10000.f, float nearVal = 0.1f);

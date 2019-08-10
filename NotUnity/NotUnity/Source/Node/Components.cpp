@@ -41,7 +41,7 @@ void Components::LoadPreset(Components::PRESET p)
 		AddChild<Sprite>()->AttachTransform(GetChild<Transform>())->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("placeholder"));
 		break;
 	case TEXT:
-		AddChild<Text>()->SetText("HELLO WORLD")->AttachTransform(GetChild<Transform>())->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("text"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("font"));
+		AddChild<Text>()->AttachTransform(GetChild<Transform>())->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("text"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("font"));
 		break;
 	}
 	Node::Start();
