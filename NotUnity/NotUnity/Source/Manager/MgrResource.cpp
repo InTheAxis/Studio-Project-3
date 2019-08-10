@@ -23,10 +23,11 @@ void MgrResource::End()
 void MgrResource::LoadMeshes()
 {
 	//Load your meshes in here
-	MeshBuilder::GenerateOBJ("placeholder", "Obj/placeholder.obj");
+	MeshBuilder::GenerateOBJ("placeholder", "obj/placeholder.obj");
 
 	MeshBuilder::GenerateAxes("axes", 10, 10, 10);
-	MeshBuilder::GenerateQuad("tri");
+	MeshBuilder::GenerateText("text", 16, 16);
+	MeshBuilder::GenerateQuad("quad");
 }
 
 void MgrResource::LoadMaterials()
@@ -36,5 +37,8 @@ void MgrResource::LoadMaterials()
 	new Material("default");
 
 	temp = new Material("placeholder");
-	temp->maps[Material::COLOR0] = Resource::LoadTGA("Tga/placeholder.tga");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/placeholder.tga");
+
+	temp = new Material("font");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/myfont.tga");
 }

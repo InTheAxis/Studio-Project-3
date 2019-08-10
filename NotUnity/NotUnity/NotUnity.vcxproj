@@ -29,6 +29,8 @@
     <ClCompile Include="Source\Node\Components\Axis.cpp" />
     <ClCompile Include="Source\Node\Components\Camera.cpp" />
     <ClCompile Include="Source\Node\Components\Renderable.cpp" />
+    <ClCompile Include="Source\Node\Components\Sprite.cpp" />
+    <ClCompile Include="Source\Node\Components\Text.cpp" />
     <ClCompile Include="Source\Node\Components\Transform.cpp" />
     <ClCompile Include="Source\Node\GameObj.cpp" />
     <ClCompile Include="Source\Node\Node.cpp" />
@@ -54,6 +56,8 @@
     <ClInclude Include="Source\Node\Components\Axis.h" />
     <ClInclude Include="Source\Node\Components\Camera.h" />
     <ClInclude Include="Source\Node\Components\Renderable.h" />
+    <ClInclude Include="Source\Node\Components\Sprite.h" />
+    <ClInclude Include="Source\Node\Components\Text.h" />
     <ClInclude Include="Source\Node\Components\Transform.h" />
     <ClInclude Include="Source\Node\GameObj.h" />
     <ClInclude Include="Source\Node\Node.h" />

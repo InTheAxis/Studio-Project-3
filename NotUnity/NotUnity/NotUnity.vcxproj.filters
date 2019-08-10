@@ -106,6 +106,12 @@
     <ClCompile Include="Source\Node\Components\Axis.cpp">
       <Filter>Source\Node\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Node\Components\Text.cpp">
+      <Filter>Source\Node\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Components\Sprite.cpp">
+      <Filter>Source\Node\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -202,6 +208,12 @@
       <Filter>Source\Node\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node\Components\Axis.h">
+      <Filter>Source\Node\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components\Sprite.h">
+      <Filter>Source\Node\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components\Text.h">
       <Filter>Source\Node\Components</Filter>
     </ClInclude>
   </ItemGroup>

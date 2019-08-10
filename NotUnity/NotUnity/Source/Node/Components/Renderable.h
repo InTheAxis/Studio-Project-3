@@ -17,9 +17,9 @@ public:
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
-
-	void Render();
-
+	
+	virtual void Render();
+	 
 	Renderable* AttachMesh(Mesh* mesh);
 	Renderable* AttachMaterial(Material* material);
 	Renderable* AttachTransform(Transform* t);

@@ -19,8 +19,9 @@ public:
 		JSON = -1,
 		EMPTY = 0,
 		CAMERA_DEBUG,
-		AXES,
-		RENDERABLE,
+		AXES,		
+		SPRITE,
+		TEXT,
 	};
 
 	void LoadPreset(Components::PRESET p = EMPTY);

@@ -26,8 +26,8 @@ void MgrGraphics::Start()
 	SetProjPerspective();
 
 	Debug::Log("Loading shaders...");	
-	shaderPrograms[DEFAULT] = Resource::LoadShaders("Shader/default.vert", "Shader/unlit.frag");
-	shaderPrograms[SIMPLE] = Resource::LoadShaders("Shader/simple.vert", "Shader/simple.frag");
+	shaderPrograms[DEFAULT] = Resource::LoadShaders("shader/default.vert", "shader/unlit.frag");
+	shaderPrograms[SIMPLE] = Resource::LoadShaders("shader/simple.vert", "shader/simple.frag");
 	
 	Node::Start();
 }
@@ -42,6 +42,9 @@ void MgrGraphics::Update(double dt)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	UseShader(DEFAULT);	
+
+	modelStack.LoadIdentity();
+
 	Node::Update(dt);
 }
 

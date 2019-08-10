@@ -39,6 +39,8 @@ void Renderable::Render()
 	glBindTexture(GL_TEXTURE_2D, material->maps[Material::COLOR0]);
 
 	DrawMesh();
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 Renderable* Renderable::AttachMesh(Mesh* mesh)
@@ -72,7 +74,7 @@ void Renderable::DrawMesh()
 
 void Renderable::DrawMesh(unsigned count, unsigned offset)
 {
-	glLineWidth(mesh->drawMode == GL_LINES ? 3 : 1);
+	glLineWidth(mesh->drawMode == GL_LINES ? 3.f : 1.f);
 
 	glBindVertexArray(mesh->vao);
 	glDrawElements(mesh->drawMode, count, GL_UNSIGNED_INT, (void*)(offset * sizeof(GLuint)));

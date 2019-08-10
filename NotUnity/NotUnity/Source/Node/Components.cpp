@@ -2,6 +2,8 @@
 
 #include "Components/Transform.h"
 #include "Components/Renderable.h"
+#include "Components/Sprite.h"
+#include "Components/Text.h"
 #include "Components/Camera.h"
 #include "Components/Axis.h"
 
@@ -35,8 +37,11 @@ void Components::LoadPreset(Components::PRESET p)
 	case AXES:
 		AddChild<Renderable>()->AttachTransform(GetChild<Transform>())->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("axes"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("default"));
 		break;
-	case RENDERABLE:
-		AddChild<Renderable>()->AttachTransform(GetChild<Transform>())->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("placeholder"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("default"));
+	case SPRITE:
+		AddChild<Sprite>()->AttachTransform(GetChild<Transform>())->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("placeholder"));
+		break;
+	case TEXT:
+		AddChild<Text>()->SetText("HELLO WORLD")->AttachTransform(GetChild<Transform>())->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("text"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("font"));
 		break;
 	}
 	Node::Start();
