@@ -3,7 +3,9 @@
 
 void Transform::Start()
 {
-	Node::Start();
+	translate.SetZero();
+	rotate.SetZero();
+	scale.Set(1, 1, 1);
 }
 
 void Transform::Update(double dt)

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Manager\MgrGameObj.cpp" />
     <ClCompile Include="Source\Manager\MgrGraphics.cpp" />
     <ClCompile Include="Source\Manager\MgrMain.cpp" />
     <ClCompile Include="Source\Manager\MgrResource.cpp" />
@@ -36,6 +37,7 @@
     <ClCompile Include="Source\Node\Node.cpp" />
     <ClCompile Include="Source\Node\Scene.cpp" />
     <ClCompile Include="Source\Node\Scripts.cpp" />
+    <ClCompile Include="Source\Node\Scripts\DebugText.cpp" />
     <ClCompile Include="Source\Utility\Input\ControllerKeyboard.cpp" />
     <ClCompile Include="Source\Utility\Input\ControllerMouse.cpp" />
     <ClCompile Include="Source\Utility\Math\MatrixStack.cpp" />
@@ -48,6 +50,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Manager\Manager.h" />
+    <ClInclude Include="Source\Manager\MgrGameObj.h" />
     <ClInclude Include="Source\Manager\MgrGraphics.h" />
     <ClInclude Include="Source\Manager\MgrMain.h" />
     <ClInclude Include="Source\Manager\MgrResource.h" />
@@ -63,6 +66,7 @@
     <ClInclude Include="Source\Node\Node.h" />
     <ClInclude Include="Source\Node\Scene.h" />
     <ClInclude Include="Source\Node\Scripts.h" />
+    <ClInclude Include="Source\Node\Scripts\DebugText.h" />
     <ClInclude Include="Source\Utility\Graphics\Material.h" />
     <ClInclude Include="Source\Utility\Graphics\Mesh.h" />
     <ClInclude Include="Source\Utility\Graphics\MeshBuilder.h" />

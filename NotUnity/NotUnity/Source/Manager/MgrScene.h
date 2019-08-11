@@ -1,7 +1,6 @@
 #ifndef MGR_SCENE_H
 #define MGR_SCENE_H
 
-#include <string>
 #include <map>
 
 #include "Manager.h"

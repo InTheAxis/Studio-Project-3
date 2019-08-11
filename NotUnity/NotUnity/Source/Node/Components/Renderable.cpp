@@ -3,7 +3,7 @@
 
 void Renderable::Start()
 {
-	Node::Start();
+	t = parent->GetChild<Transform>();
 }
 
 void Renderable::Update(double dt)
@@ -52,12 +52,6 @@ Renderable* Renderable::AttachMesh(Mesh* mesh)
 Renderable* Renderable::AttachMaterial(Material* material)
 {
 	this->material = material;
-	return this;
-}
-
-Renderable* Renderable::AttachTransform(Transform* t)
-{
-	this->t = t;
 	return this;
 }
 

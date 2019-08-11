@@ -17,18 +17,29 @@ public:
 	virtual void Update(double dt);
 	virtual void End();
 
-	GameObj* Create(std::string filePath);
-	GameObj* Create(Components::PRESET cPreset = Components::EMPTY, Scripts::PRESET sPreset = Scripts::EMPTY);
-
 	template <typename T>
-	T* GetComp(std::string key = std::to_string(T::m_id))
+	T* AddComp(std::string key = std::to_string(T::m_id)) const
+	{
+		return comps->AddChild<T>(key);
+	}
+	template <typename T>
+	T* AddScript(std::string key = std::to_string(T::m_id)) const
+	{
+		return scripts->AddChild<T>(key);
+	}
+	template <typename T>
+	T* GetComp(std::string key = std::to_string(T::m_id)) const
 	{
 		return comps->GetChild<T>(key);
 	}
 	template <typename T>
-	T* GetScripts(std::string key = std::to_string(T::m_id))
+	T* GetScript(std::string key = std::to_string(T::m_id)) const
 	{
 		return scripts->GetChild<T>(key);
+	}
+	Transform* GetTransform() const
+	{
+		return t;
 	}
 
 private:

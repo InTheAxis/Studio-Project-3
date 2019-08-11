@@ -6,7 +6,9 @@
 #include "Node.h"
 #include "../Utility/TypeID.h"
 
-class Renderable;
+class GameObj;
+class MgrGameObj;
+class MgrGraphics;
 class Scene : public Node, public TypeID<Scene>
 {
 public:
@@ -20,7 +22,13 @@ public:
 	void Render();
 
 private:
-	std::vector<Renderable*> renderables;	
+	MgrGraphics* mg;
+	MgrGameObj* mgo;
+
+	std::vector<GameObj*>* renderables;	
+
+	GameObj* CreateGo(std::string name);
+	GameObj* GetGo(std::string name);
 };
 
 #endif

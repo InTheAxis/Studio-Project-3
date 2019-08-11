@@ -22,8 +22,6 @@ public:
 		DEBUG = 0,		
 		NUM_MODE		
 	};
-
-	Camera* AttachTransform(Transform* t);
 	Camera* SetMode(MODE m);
 	Camera* SetSpeed(float s);
 	Mtx44* GetViewMtx();

@@ -22,7 +22,6 @@ public:
 	 
 	Renderable* AttachMesh(Mesh* mesh);
 	Renderable* AttachMaterial(Material* material);
-	Renderable* AttachTransform(Transform* t);
 	Renderable* SelectShader(MgrGraphics::SHADER shader);
 
 protected:

@@ -10,12 +10,7 @@
 class Transform : public Node, public TypeID<Transform>
 {
 public:
-	Transform(std::string name = "Transform") : Node(name) 
-	{
-		translate.SetZero();
-		rotate.SetZero();
-		scale.Set(1, 1, 1);
-	}
+	Transform(std::string name = "Transform") : Node(name) {}
 	~Transform() {}
 	
 	virtual void Start();

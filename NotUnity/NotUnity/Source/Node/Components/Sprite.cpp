@@ -3,16 +3,18 @@
 
 void Sprite::Start()
 {
-	Node::Start();
+	Renderable::Start();
 }
 
 void Sprite::Update(double dt)
 {	
+	Renderable::Update(dt);
 	Node::Update(dt);
 }
 
 void Sprite::End()
 {
+	Renderable::End();
 	Node::End();
 }
 

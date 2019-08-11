@@ -13,14 +13,6 @@ public:
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
-
-	enum PRESET
-	{
-		JSON = -1,
-		EMPTY = 0,		
-	};
-
-	void LoadPreset(Scripts::PRESET p = EMPTY);
 };
 
 #endif

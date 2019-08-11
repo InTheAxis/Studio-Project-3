@@ -3,7 +3,6 @@
 void Axis::Start()
 {
 	Reset();
-	Node::Start();
 }
 
 void Axis::Update(double dt)

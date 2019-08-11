@@ -9,14 +9,7 @@ class MgrGraphics;
 class Text : public Renderable
 {
 public:
-	Text(std::string name = "Text") : Renderable(name) 
-	{
-		content = ""; 
-		color.Set(1, 1, 1, 1);
-		fontSize = 1;
-		onScreen = true;
-		align = -1;
-	}
+	Text(std::string name = "Text") : Renderable(name) {}
 	~Text() {}
 	
 	virtual void Start();

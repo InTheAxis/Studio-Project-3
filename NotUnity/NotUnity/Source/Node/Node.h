@@ -48,15 +48,17 @@ public:
 	bool IsActive();
 	void ActiveSelf(bool active);
 	double GetTimeAlive();
+	Node* GetParent();
 
 	template <typename T>
 	T* AddChild(std::string key = std::to_string(T::m_id), T* ptr = nullptr)
 	{
 		if (m_children.count(key) > 0)
-			return nullptr;
+			return GetChild<T>(key);
 
 		T* child = ptr ? ptr : new T(key);
 		child->parent = this;
+		child->Start();
 		m_children[key] = static_cast<Node*>(child);
 
 		return GetChild<T>(key);

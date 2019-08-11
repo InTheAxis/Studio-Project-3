@@ -52,3 +52,8 @@ double Node::GetTimeAlive()
 {
 	return m_lifetime;
 }
+
+Node * Node::GetParent()
+{
+	return parent;
+}

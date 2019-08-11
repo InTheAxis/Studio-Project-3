@@ -11,8 +11,6 @@ void MgrMain::Start()
 	AddChild("MgrGraphics", MgrGraphics::Instance());
 	AddChild("MgrResource", MgrResource::Instance());
 	AddChild("MgrScene", MgrScene::Instance());
-	
-	Node::Start();
 }
 
 void MgrMain::Update(double dt)

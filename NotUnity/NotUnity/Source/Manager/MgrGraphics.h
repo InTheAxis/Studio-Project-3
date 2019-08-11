@@ -1,7 +1,6 @@
 #ifndef MGR_GRAPHICS_H
 #define MGR_GRAPHICS_H
 
-#include <string>
 #include <map>
 
 #include "Manager.h"

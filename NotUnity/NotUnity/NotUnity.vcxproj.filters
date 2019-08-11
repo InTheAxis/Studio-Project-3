@@ -112,6 +112,12 @@
     <ClCompile Include="Source\Node\Components\Sprite.cpp">
       <Filter>Source\Node\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Node\Scripts\DebugText.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\MgrGameObj.cpp">
+      <Filter>Source\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -215,6 +221,12 @@
     </ClInclude>
     <ClInclude Include="Source\Node\Components\Text.h">
       <Filter>Source\Node\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scripts\DebugText.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\MgrGameObj.h">
+      <Filter>Source\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

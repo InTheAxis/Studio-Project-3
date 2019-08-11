@@ -5,6 +5,8 @@
 #include "../Node/Node.h"
 #include "../Utility/TypeID.h"
 
+#include <string>
+
 template <typename T>
 class Manager : public Singleton<T>, public Node, public TypeID<T>
 {		

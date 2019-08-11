@@ -13,18 +13,6 @@ public:
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
-
-	enum PRESET
-	{
-		JSON = -1,
-		EMPTY = 0,
-		CAMERA_DEBUG,
-		AXES,		
-		SPRITE,
-		TEXT,
-	};
-
-	void LoadPreset(Components::PRESET p = EMPTY);
 };
 
 #endif

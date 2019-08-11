@@ -2,7 +2,6 @@
 
 void Scripts::Start()
 {
-	//Node::Start();
 }
 
 void Scripts::Update(double dt)
@@ -13,9 +12,4 @@ void Scripts::Update(double dt)
 void Scripts::End()
 {
 	Node::End();
-}
-
-void Scripts::LoadPreset(Scripts::PRESET p)
-{
-	Node::Start();
 }

@@ -1,9 +1,6 @@
 #ifndef MGR_RESOURCE_H
 #define MGR_RESOURCE_H
 
-#include <string>
-#include <map>
-
 #include "Manager.h"
 
 class MgrResource : public Manager<MgrResource>

@@ -7,7 +7,6 @@ void MgrResource::Start()
 {
 	LoadMeshes();
 	LoadMaterials();
-	Node::Start();
 }
 
 void MgrResource::Update(double dt)

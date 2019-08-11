@@ -7,7 +7,8 @@
 void Camera::Start()
 {	
 	axis = AddChild<Axis>();
-	Node::Start();
+	t = parent->GetChild<Transform>();
+	speed = 20;
 }
 
 void Camera::Update(double dt)
@@ -39,12 +40,6 @@ void Camera::Update(double dt)
 void Camera::End()
 {
 	Node::End();
-}
-
-Camera * Camera::AttachTransform(Transform * t)
-{
-	this->t = t;
-	return this;
 }
 
 Camera * Camera::SetMode(MODE m)
