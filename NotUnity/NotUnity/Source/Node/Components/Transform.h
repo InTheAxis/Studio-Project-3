@@ -8,7 +8,7 @@
 #include "../../Utility/Math/Mtx44.h"
 #include "../../Utility/Math/MatrixStack.h"
 
-class Transform : public Node, public TypeID<Transform>, public CompBase
+class Transform : public Node, public TypeID<Transform>, public Component
 {
 public:
 	Transform(std::string name = "Transform");

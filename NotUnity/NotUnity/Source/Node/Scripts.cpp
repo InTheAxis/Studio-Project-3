@@ -1,24 +1,24 @@
 #include "Scripts.h"
 
-Scripts::Scripts(std::string name) : Node(name)
+ScriptContainer::ScriptContainer(std::string name) : Node(name)
 {
 }
 
-Scripts::~Scripts()
+ScriptContainer::~ScriptContainer()
 {
 }
 
-void Scripts::Start()
+void ScriptContainer::Start()
 {
 	Node::Start();
 }
 
-void Scripts::Update(double dt)
+void ScriptContainer::Update(double dt)
 {
 	Node::Update(dt);
 }
 
-void Scripts::End()
+void ScriptContainer::End()
 {
 	Node::End();
 }

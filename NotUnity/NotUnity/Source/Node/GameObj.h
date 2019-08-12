@@ -22,14 +22,14 @@ public:
 	T* AddComp(std::string key = std::to_string(T::m_id)) const
 	{
 		T* c = comps->AddChild<T>(key);
-		(static_cast<CompBase*>(c))->SetGameObj(const_cast<GameObj*>(this));
+		(static_cast<Component*>(c))->SetGameObj(const_cast<GameObj*>(this));
 		return c;
 	}
 	template <typename T>
 	T* AddScript(std::string key = std::to_string(T::m_id)) const
 	{
 		T* s = scripts->AddChild<T>(key);
-		(static_cast<CompBase*>(s))->SetGameObj(const_cast<GameObj*>(this));
+		(static_cast<Component*>(s))->SetGameObj(const_cast<GameObj*>(this));
 		return s;
 	}
 	template <typename T>
@@ -49,8 +49,8 @@ public:
 
 private:
 	//refrences to children
-	Components* comps;
-	Scripts* scripts;
+	CompContainer* comps;
+	ScriptContainer* scripts;
 	Transform* t;
 };
 

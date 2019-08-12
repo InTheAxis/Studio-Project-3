@@ -208,44 +208,48 @@ namespace MeshBuilder
 		return mesh;
 	}
 
-	inline Mesh* GeneratePlane(const std::string &meshName, unsigned numRow = 10, unsigned numCol = 10, float tileSize = 1.f, bool cache = true)
+	inline Mesh* GeneratePlane(const std::string &meshName, unsigned numRow = 1, unsigned numCol = 1, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
 		Vertex v;
 		std::vector<Vertex> vertex_buffer_data;
 		std::vector<GLuint> index_buffer_data;
 
-
-		float texDeltaRow = 1.f / numRow;
-		float texDeltaCol = 1.f / numCol;
-
-		v.normal.Set(0, 1, 0);
+		v.normal.Set(0, 0, 1);
 		v.color.Set(1, 1, 1);
 
-		for (unsigned x = 0; x <= numRow; ++x)
+		float width = 1.f / numCol;
+		float height = 1.f / numRow;
+		int offset = 0;
+		for (unsigned i = 0; i < numRow; ++i)
 		{
-			for (unsigned z = 0; z <= numCol; ++z)
+			for (unsigned j = 0; j < numCol; ++j)
 			{
-				float xDist = x - numRow * 0.5f;
-				float zDist = z - numCol * 0.5f;
-				v.pos.Set(xDist, 0, zDist);
-				v.texCoord.Set(numRow / tileSize * ((float)x * texDeltaRow), numCol / tileSize * (1.f - ((float)z * texDeltaCol)));
-				vertex_buffer_data.emplace_back(v);
-			}
-		}
+				float u1 = j * width;
+				float v1 = 1.f - height - i * height;
+				v.pos.Set(-0.5f, -0.5f, 0);
+				v.texCoord.Set(u1, v1);
+				vertex_buffer_data.push_back(v);
 
-		for (unsigned x = 0; x < numRow; ++x)
-		{
-			for (unsigned z = 0; z < numCol; ++z)
-			{
-				int startVert = x * (numRow + 1) + z;
-				index_buffer_data.emplace_back(startVert);
-				index_buffer_data.emplace_back(startVert + 1);
-				index_buffer_data.emplace_back(startVert + numRow + 1);
+				v.pos.Set(0.5f, -0.5f, 0);
+				v.texCoord.Set(u1 + width, v1);
+				vertex_buffer_data.push_back(v);
 
-				index_buffer_data.emplace_back(startVert + numRow + 1);
-				index_buffer_data.emplace_back(startVert + 1);
-				index_buffer_data.emplace_back(startVert + numRow + 2);
+				v.pos.Set(0.5f, 0.5f, 0);
+				v.texCoord.Set(u1 + width, v1 + height);
+				vertex_buffer_data.push_back(v);
+
+				v.pos.Set(-0.5f, 0.5f, 0);
+				v.texCoord.Set(u1, v1 + height);
+				vertex_buffer_data.push_back(v);
+
+				index_buffer_data.push_back(offset + 0);
+				index_buffer_data.push_back(offset + 1);
+				index_buffer_data.push_back(offset + 2);
+				index_buffer_data.push_back(offset + 0);
+				index_buffer_data.push_back(offset + 2);
+				index_buffer_data.push_back(offset + 3);
+				offset += 4;
 			}
 		}
 
@@ -410,63 +414,6 @@ namespace MeshBuilder
 		return mesh;
 	}
 
-	inline Mesh* GenerateText(const std::string &meshName, unsigned numRow, unsigned numCol, bool cache = true)
-	{
-		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
-		Vertex v;
-		std::vector<Vertex> vertex_buffer_data;
-		std::vector<GLuint> index_buffer_data;
-
-		v.normal.Set(0, 0, 1);
-		v.color.Set(1, 1, 1);
-
-		float width = 1.f / numCol;
-		float height = 1.f / numRow;
-		int offset = 0;
-		for (unsigned i = 0; i < numRow; ++i)
-		{
-			for (unsigned j = 0; j < numCol; ++j)
-			{
-				float u1 = j * width;
-				float v1 = 1.f - height - i * height;
-				v.pos.Set(-0.5f, -0.5f, 0);
-				v.texCoord.Set(u1, v1);
-				vertex_buffer_data.push_back(v);
-
-				v.pos.Set(0.5f, -0.5f, 0);
-				v.texCoord.Set(u1 + width, v1);
-				vertex_buffer_data.push_back(v);
-
-				v.pos.Set(0.5f, 0.5f, 0);
-				v.texCoord.Set(u1 + width, v1 + height);
-				vertex_buffer_data.push_back(v);
-
-				v.pos.Set(-0.5f, 0.5f, 0);
-				v.texCoord.Set(u1, v1 + height);
-				vertex_buffer_data.push_back(v);
-
-				index_buffer_data.push_back(offset + 0);
-				index_buffer_data.push_back(offset + 1);
-				index_buffer_data.push_back(offset + 2);
-				index_buffer_data.push_back(offset + 0);
-				index_buffer_data.push_back(offset + 2);
-				index_buffer_data.push_back(offset + 3);
-				offset += 4;
-			}
-		}
-
-		Mesh *mesh = new Mesh;
-
-		BindVao(mesh, vertex_buffer_data, index_buffer_data);
-
-		mesh->name = meshName;
-		mesh->indexSize = index_buffer_data.size();
-		mesh->drawMode = GL_TRIANGLES;
-		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
-
-		return mesh;
-	}
-
 	inline Mesh* GenerateSkyPlane(const std::string &meshName, int slices, float planetRadius, float atmosphereRadius, float hTile = 1, float vTile = 1, bool cache = true)
 	{
 		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
@@ -601,61 +548,6 @@ namespace MeshBuilder
 
 		return mesh;
 	}
-
-
-
-
-	//CompSpriteAnim * MeshBuilder::GenerateSpriteAnimation(const std::string & meshName, unsigned numRow, unsigned numCol)
-	//{
-	//	Vertex v;
-	//	std::vector<Vertex> vertex_buffer_data;
-	//	std::vector<GLuint> index_buffer_data;
-
-	//	float width = 1.f / numCol;
-	//	float height = 1.f / numRow;
-	//	int offset = 0;
-	//	for (unsigned i = 0; i < numRow; ++i)
-	//	{
-	//		for (unsigned j = 0; j < numCol; ++j)
-	//		{
-	//			float u1 = j * width;
-	//			float v1 = 1.f - height - i * height;
-	//			v.pos.Set(-0.5f, -0.5f, 0);
-	//			v.texCoord.Set(u1, v1);
-	//			vertex_buffer_data.push_back(v);
-
-	//			v.pos.Set(0.5f, -0.5f, 0);
-	//			v.texCoord.Set(u1 + width, v1);
-	//			vertex_buffer_data.push_back(v);
-
-	//			v.pos.Set(0.5f, 0.5f, 0);
-	//			v.texCoord.Set(u1 + width, v1 + height);
-	//			vertex_buffer_data.push_back(v);
-
-	//			v.pos.Set(-0.5f, 0.5f, 0);
-	//			v.texCoord.Set(u1, v1 + height);
-	//			vertex_buffer_data.push_back(v);
-
-	//			index_buffer_data.push_back(offset + 0);
-	//			index_buffer_data.push_back(offset + 1);
-	//			index_buffer_data.push_back(offset + 2);
-	//			index_buffer_data.push_back(offset + 0);
-	//			index_buffer_data.push_back(offset + 2);
-	//			index_buffer_data.push_back(offset + 3);
-	//			offset += 4;
-	//		}
-	//	}
-
-	//	CompSpriteAnim *mesh = new CompSpriteAnim(numRow, numCol);
-
-	//	GenerateVao(mesh, vertex_buffer_data, index_buffer_data);
-
-	//mesh->name = meshName;
-	//	mesh->indexSize = index_buffer_data.size();
-	//	mesh->mode = Mesh::DRAW_TRIANGLES;
-
-	//	return mesh;
-	//}
 
 };
 

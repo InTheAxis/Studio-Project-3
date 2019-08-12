@@ -10,7 +10,7 @@
 #include "../Components/Text.h"
 #include "../Components.h"
 
-class DebugText : public Node, public TypeID<DebugText>, public CompBase
+class DebugText : public Node, public TypeID<DebugText>, public Component
 {
 public:
 	DebugText(std::string name = "DebugText"); 

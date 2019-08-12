@@ -6,7 +6,7 @@
 
 Camera::Camera(std::string name) 
 	: Node(name)
-	, speed(20)
+	, speed(1)
 	, mode(DEBUG)
 	, t(nullptr)
 {

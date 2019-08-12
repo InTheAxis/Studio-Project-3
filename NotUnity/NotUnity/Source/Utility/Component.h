@@ -2,11 +2,11 @@
 #define COMPONENT_H
 
 class GameObj;
-class CompBase
+class Component
 {
 public:
-	CompBase() : gameObject(nullptr) {}
-	~CompBase() {}
+	Component() : gameObject(nullptr) {}
+	~Component() {}
 	
 	GameObj* GetGameObj()
 	{

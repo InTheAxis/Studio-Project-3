@@ -1,14 +1,16 @@
-#ifndef SCRIPTS_H
-#define SCRIPTS_H
+#ifndef SCRIPT_CONTAINER_H
+#define SCRIPT_CONTAINER_H
 
 #include "Node.h"
 #include "../Utility/TypeID.h"
 
-class Scripts : public Node, public TypeID<Scripts>
+//doesnt really do anything,just a container for Components that i call Scripts
+
+class ScriptContainer : public Node, public TypeID<ScriptContainer>
 {
 public:
-	Scripts(std::string name = "Scripts");
-	~Scripts();
+	ScriptContainer(std::string name = "ScriptContainer");
+	~ScriptContainer();
 	
 	virtual void Start();
 	virtual void Update(double dt);

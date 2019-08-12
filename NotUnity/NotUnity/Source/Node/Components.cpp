@@ -7,25 +7,25 @@
 #include "Components/Camera.h"
 #include "Components/Axis.h"
 
-Components::Components(std::string name) : Node(name)
+CompContainer::CompContainer(std::string name) : Node(name)
 {
 }
 
-Components::~Components()
+CompContainer::~CompContainer()
 {
 }
 
-void Components::Start()
+void CompContainer::Start()
 {		
 	Node::Start();
 }
 
-void Components::Update(double dt)
+void CompContainer::Update(double dt)
 {	
 	Node::Update(dt);
 }
 
-void Components::End()
+void CompContainer::End()
 {
 	Node::End();
 }

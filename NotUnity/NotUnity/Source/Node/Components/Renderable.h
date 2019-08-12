@@ -9,7 +9,7 @@
 #include "Transform.h"
 
 class MgrGraphics;
-class Renderable : public Node, public TypeID<Renderable>, public CompBase
+class Renderable : public Node, public TypeID<Renderable>, public Component
 {
 public:
 	Renderable(std::string name = "Renderable");

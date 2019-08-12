@@ -6,7 +6,7 @@
 #include "../../Utility/Component.h"
 #include "../../Utility/Math/Vector3.h"
 
-class Axis : public Node, public TypeID<Axis>, public CompBase
+class Axis : public Node, public TypeID<Axis>, public Component
 {
 public:
 	Axis(std::string name = "Axis");

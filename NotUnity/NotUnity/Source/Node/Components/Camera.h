@@ -8,7 +8,7 @@
 
 class Axis;
 class Transform;
-class Camera : public Node, public TypeID<Camera>, public CompBase
+class Camera : public Node, public TypeID<Camera>, public Component
 {
 public:
 	Camera(std::string name = "Camera");
@@ -21,6 +21,7 @@ public:
 	enum MODE
 	{
 		DEBUG = 0,		
+		CUSTOM,
 		NUM_MODE		
 	};
 	Camera* SetMode(MODE m);

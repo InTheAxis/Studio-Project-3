@@ -16,8 +16,20 @@ public:
 
 	virtual void Render();
 
-protected:
+	void SwitchAnimation(int idx);
 
+protected:
+	int currFrame;
+	double currTime;
+	int startFrame;
+	int endFrame;
+	bool repeat;
+	double animTime;
+	bool ended;
+
+	float frameTime;
+
+	int selectedAnim;
 };
 
 #endif

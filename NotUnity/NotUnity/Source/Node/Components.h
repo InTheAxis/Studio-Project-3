@@ -1,14 +1,16 @@
-#ifndef COMPONENTS_H
-#define COMPONENTS_H
+#ifndef COMP_CONTAINER_H
+#define COMP_CONTAINER_H
 
 #include "Node.h"
 #include "../Utility/TypeID.h"
 
-class Components : public Node, public TypeID<Components>
+//doesnt really do anything,just a container for Components
+
+class CompContainer : public Node, public TypeID<CompContainer>
 {
 public:
-	Components(std::string name = "Components"); 
-	~Components();
+	CompContainer(std::string name = "CompContainer"); 
+	~CompContainer();
 	
 	virtual void Start();
 	virtual void Update(double dt);

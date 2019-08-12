@@ -9,6 +9,7 @@
 #include "Components/Camera.h"
 #include "Components/Renderable.h"
 #include "Components/Text.h"
+#include "Components/Sprite.h"
 #include "Scripts/DebugText.h"
 #include "GameObj.h"
 
@@ -36,9 +37,11 @@ void Scene::Start()
 	CreateGo("mainCam");
 	CreateGo("axes");
 	CreateGo("debug_text");
+	CreateGo("sprite");
 	//add & set up components and scripts
 	GetGo("mainCam")->AddComp<Camera>()->SetMode(Camera::DEBUG);
-	GetGo("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));	
+	GetGo("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
+	GetGo("sprite")->AddComp<Sprite>()->AttachMesh(mg->GetCachedMesh("plane"))->AttachMaterial(mg->GetCachedMaterial("anim"));
 	GetGo("debug_text")->AddScript<DebugText>();
 	//attach camera
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());

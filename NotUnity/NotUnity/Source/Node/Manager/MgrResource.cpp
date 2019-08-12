@@ -34,8 +34,9 @@ void MgrResource::LoadMeshes()
 	MeshBuilder::GenerateOBJ("placeholder", "obj/placeholder.obj");
 
 	MeshBuilder::GenerateAxes("axes", 10, 10, 10);
-	MeshBuilder::GenerateText("text", 16, 16);
+	MeshBuilder::GeneratePlane("text", 16, 16);
 	MeshBuilder::GenerateQuad("quad");
+	MeshBuilder::GeneratePlane("plane", 1, 6);
 }
 
 void MgrResource::LoadMaterials()
@@ -49,4 +50,8 @@ void MgrResource::LoadMaterials()
 
 	temp = new Material("font");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/myfont.tga");
+
+	temp = new Material("anim");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/anim.tga");
+	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/anim2.tga");
 }

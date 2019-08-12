@@ -16,6 +16,6 @@ protected:
 	~MgrResource();
 
 	void LoadMeshes();
-	void LoadMaterials();
+	void LoadMaterials();	
 };
 #endif

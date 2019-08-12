@@ -4,8 +4,8 @@
 
 GameObj::GameObj(std::string name) : Node(name)
 {
-	comps = AddChild<Components>();
-	scripts = comps->AddChild<Scripts>();
+	comps = AddChild<CompContainer>();
+	scripts = comps->AddChild<ScriptContainer>();
 	t = comps->AddChild<Transform>();
 }
 

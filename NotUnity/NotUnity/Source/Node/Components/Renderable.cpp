@@ -85,7 +85,7 @@ void Renderable::DrawMesh()
 
 void Renderable::DrawMesh(unsigned count, unsigned offset)
 {
-	glLineWidth(mesh->drawMode == GL_LINES ? 3.f : 1.f);
+	glLineWidth(mesh->drawMode == GL_LINES ? 3.f : 2.f);
 
 	glBindVertexArray(mesh->vao);
 	glDrawElements(mesh->drawMode, count, GL_UNSIGNED_INT, (void*)(offset * sizeof(GLuint)));
