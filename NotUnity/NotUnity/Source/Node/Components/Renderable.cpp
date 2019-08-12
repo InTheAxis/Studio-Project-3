@@ -1,9 +1,11 @@
 #include "Renderable.h"
 #include "../../Manager/MgrGraphics.h"
+#include "../../Manager/MgrGameObj.h"
 
 void Renderable::Start()
 {
 	t = parent->GetChild<Transform>();
+	MgrGameObj::Instance()->RegisterRenderable((GameObj*)parent->GetParent());
 }
 
 void Renderable::Update(double dt)

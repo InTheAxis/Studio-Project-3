@@ -30,6 +30,12 @@ GameObj * MgrGameObj::GetGameObj(std::string name, Scene * ref)
 	return nullptr;
 }
 
+void MgrGameObj::RegisterRenderable(GameObj * go)
+{
+	if (go)
+		renderables.emplace_back(go);
+}
+
 std::vector<GameObj*>* MgrGameObj::GetRenderables()
 {
 	return &renderables;

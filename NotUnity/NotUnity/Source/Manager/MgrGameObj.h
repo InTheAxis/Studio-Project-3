@@ -20,6 +20,7 @@ public:
 	GameObj* CreateGameObj(std::string name, Scene* ref);
 	GameObj* GetGameObj(std::string name, Scene* ref);
 
+	void RegisterRenderable(GameObj* go);
 	std::vector<GameObj*>* GetRenderables();
 protected:
 	MgrGameObj(std::string name = "MgrGameObj") : Manager<MgrGameObj>(name) {}

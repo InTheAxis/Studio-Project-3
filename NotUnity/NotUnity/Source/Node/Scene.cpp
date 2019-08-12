@@ -51,9 +51,6 @@ void Scene::Render()
 	{
 		r->GetComp<Renderable>()->Render();
 	}
-
-	GetGo("axes")->GetComp<Renderable>()->Render();
-	GetGo("debug_text")->GetComp<Text>()->Render();
 }
 
 GameObj* Scene::CreateGo(std::string name)
