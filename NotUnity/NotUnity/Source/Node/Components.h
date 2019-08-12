@@ -7,8 +7,8 @@
 class Components : public Node, public TypeID<Components>
 {
 public:
-	Components(std::string name = "Components") : Node(name) {}
-	~Components() {}
+	Components(std::string name = "Components"); 
+	~Components();
 	
 	virtual void Start();
 	virtual void Update(double dt);

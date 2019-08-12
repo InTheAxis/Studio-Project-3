@@ -7,8 +7,17 @@
 #include "Components/Camera.h"
 #include "Components/Axis.h"
 
+Components::Components(std::string name) : Node(name)
+{
+}
+
+Components::~Components()
+{
+}
+
 void Components::Start()
-{	
+{		
+	Node::Start();
 }
 
 void Components::Update(double dt)

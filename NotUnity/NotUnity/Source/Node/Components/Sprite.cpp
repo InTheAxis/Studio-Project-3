@@ -1,5 +1,13 @@
 #include "Sprite.h"
-#include "../../Manager/MgrGraphics.h"
+#include "../Manager/MgrGraphics.h"
+
+Sprite::Sprite(std::string name) : Renderable(name)
+{
+}
+
+Sprite::~Sprite()
+{
+}
 
 void Sprite::Start()
 {
@@ -9,13 +17,11 @@ void Sprite::Start()
 void Sprite::Update(double dt)
 {	
 	Renderable::Update(dt);
-	Node::Update(dt);
 }
 
 void Sprite::End()
 {
 	Renderable::End();
-	Node::End();
 }
 
 void Sprite::Render()

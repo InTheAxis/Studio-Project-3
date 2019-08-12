@@ -8,9 +8,6 @@
     <Filter Include="Source\Node">
       <UniqueIdentifier>{24e96907-32bc-417f-a65b-3e62a921c9f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Manager">
-      <UniqueIdentifier>{a6f1f7ae-9edc-4e9f-994b-37169109fb0c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Utility">
       <UniqueIdentifier>{47afc0a2-7065-4282-adda-b3f1f6051763}</UniqueIdentifier>
     </Filter>
@@ -34,6 +31,9 @@
     </Filter>
     <Filter Include="Source\Node\Scripts">
       <UniqueIdentifier>{e6546823-b46d-4ad9-831b-806b1185f44e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Node\Manager">
+      <UniqueIdentifier>{a6f1f7ae-9edc-4e9f-994b-37169109fb0c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -67,15 +67,6 @@
     <ClCompile Include="Source\Utility\Input\ControllerKeyboard.cpp">
       <Filter>Source\Utility\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Manager\MgrScene.cpp">
-      <Filter>Source\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Manager\MgrGraphics.cpp">
-      <Filter>Source\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Manager\MgrMain.cpp">
-      <Filter>Source\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Node\Scene.cpp">
       <Filter>Source\Node</Filter>
     </ClCompile>
@@ -84,9 +75,6 @@
     </ClCompile>
     <ClCompile Include="Source\Node\Node.cpp">
       <Filter>Source\Node</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Manager\MgrResource.cpp">
-      <Filter>Source\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\Node\Scripts.cpp">
       <Filter>Source\Node</Filter>
@@ -106,17 +94,32 @@
     <ClCompile Include="Source\Node\Components\Axis.cpp">
       <Filter>Source\Node\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Node\Components\Text.cpp">
-      <Filter>Source\Node\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Node\Components\Sprite.cpp">
       <Filter>Source\Node\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Node\Scripts\DebugText.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Manager\MgrGameObj.cpp">
-      <Filter>Source\Manager</Filter>
+    <ClCompile Include="Source\Node\Ptr.cpp">
+      <Filter>Source\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Components\Text.cpp">
+      <Filter>Source\Node\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Manager\MgrMain.cpp">
+      <Filter>Source\Node\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Manager\MgrResource.cpp">
+      <Filter>Source\Node\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Manager\MgrScene.cpp">
+      <Filter>Source\Node\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Manager\MgrGameObj.cpp">
+      <Filter>Source\Node\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Manager\MgrGraphics.cpp">
+      <Filter>Source\Node\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,17 +156,11 @@
     <ClInclude Include="Source\Utility\Math\Stopwatch.h">
       <Filter>Source\Utility\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manager\Manager.h">
-      <Filter>Source\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Utility\Input\ControllerMouse.h">
       <Filter>Source\Utility\Input</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Input\ControllerKeyboard.h">
       <Filter>Source\Utility\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Manager\MgrScene.h">
-      <Filter>Source\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Graphics\Vertex.h">
       <Filter>Source\Utility\Graphics</Filter>
@@ -177,12 +174,6 @@
     <ClInclude Include="Source\Application.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manager\MgrGraphics.h">
-      <Filter>Source\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Manager\MgrMain.h">
-      <Filter>Source\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Node\Scene.h">
       <Filter>Source\Node</Filter>
     </ClInclude>
@@ -194,9 +185,6 @@
     </ClInclude>
     <ClInclude Include="Source\Utility\Graphics\Material.h">
       <Filter>Source\Utility\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Manager\MgrResource.h">
-      <Filter>Source\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node\Components.h">
       <Filter>Source\Node</Filter>
@@ -219,14 +207,32 @@
     <ClInclude Include="Source\Node\Components\Sprite.h">
       <Filter>Source\Node\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Node\Components\Text.h">
-      <Filter>Source\Node\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Node\Scripts\DebugText.h">
       <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manager\MgrGameObj.h">
-      <Filter>Source\Manager</Filter>
+    <ClInclude Include="Source\Node\Ptr.h">
+      <Filter>Source\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components\Text.h">
+      <Filter>Source\Node\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\MgrGraphics.h">
+      <Filter>Source\Node\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\MgrMain.h">
+      <Filter>Source\Node\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\MgrResource.h">
+      <Filter>Source\Node\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\MgrScene.h">
+      <Filter>Source\Node\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\Manager.h">
+      <Filter>Source\Node\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\MgrGameObj.h">
+      <Filter>Source\Node\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

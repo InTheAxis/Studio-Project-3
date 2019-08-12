@@ -8,8 +8,8 @@
 class Axis : public Node, public TypeID<Axis>
 {
 public:
-	Axis(std::string name = "Movement") : Node(name) {}
-	~Axis() {}
+	Axis(std::string name = "Axis");
+	~Axis();
 	
 	virtual void Start();
 	virtual void Update(double dt);

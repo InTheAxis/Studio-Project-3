@@ -1,9 +1,9 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 
-#include "../Utility/Singleton.h"
-#include "../Node/Node.h"
-#include "../Utility/TypeID.h"
+#include "../../Utility/Singleton.h"
+#include "../Node.h"
+#include "../../Utility/TypeID.h"
 
 #include <string>
 

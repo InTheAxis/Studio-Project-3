@@ -4,19 +4,33 @@
 #include <vector>
 #include <sstream>
 
-#include "../Manager/MgrGraphics.h"
-#include "../Manager/MgrGameObj.h"
+#include "Manager/MgrGraphics.h"
+#include "Manager/MgrGameObj.h"
 #include "Components/Camera.h"
 #include "Components/Renderable.h"
 #include "Components/Text.h"
 #include "Scripts/DebugText.h"
 #include "GameObj.h"
 
+Scene::Scene(std::string name) 
+	: Node(name)
+	, mg(nullptr)
+	, mgo(nullptr)
+	, renderables(nullptr)
+{
+}
+
+Scene::~Scene()
+{
+}
+
 void Scene::Start()
 {		
 	//get singleton references
 	mg = MgrGraphics::Instance();
 	mgo = MgrGameObj::Instance();
+	//get go list references
+	renderables = mgo->GetRenderables();
 
 	//create gameobjects using MgrGameObj
 	CreateGo("mainCam");
@@ -30,8 +44,7 @@ void Scene::Start()
 	//attach camera
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());
 	
-	//get go list references
-	renderables = mgo->GetRenderables();
+	Node::Start();
 }
 
 void Scene::Update(double dt)
@@ -49,7 +62,7 @@ void Scene::Render()
 {		
 	for (auto r : *renderables)
 	{
-		r->GetComp<Renderable>()->Render();
+		r->Render();
 	}
 }
 

@@ -15,8 +15,8 @@ public:
 	virtual void Update(double dt);
 	virtual void End();	
 protected:
-	MgrScene(std::string name = "MgrScene") : Manager<MgrScene>(name) {}
-	~MgrScene() {}
+	MgrScene(std::string name = "MgrScene"); 
+	~MgrScene();
 
 };
 #endif

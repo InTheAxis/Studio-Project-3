@@ -9,7 +9,7 @@
 #include "Mesh.h"
 #include "../Resource.h"
 #include "../Math/MyMath.h"
-#include "../../Manager/MgrGraphics.h"
+#include "../Manager/MgrGraphics.h"
 
 /******************************************************************************/
 /*!

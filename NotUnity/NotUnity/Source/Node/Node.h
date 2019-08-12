@@ -8,15 +8,20 @@
 //defines what a "thing" is this engine
 //inherit from this and typeID for full functionality
 //basically a node can store other nodes as children, and can be started, updated and ended
-//please name your nodes starting with N
 //call the base node start,update and end functions in your deerived class node
+//use constructor for creation, like adding children/default values
+//use Start() for init for refrences and maybe values
 /********************************************
   EXAMPLE USAGE
 
-class NExample : public Node, public TypeID<NExample>
+class Example : public Node, public TypeID<NExample>
 {
-	NExample(std::string name = "NExample") : Node(name) {}
-	~NExample() {}
+	Example(std::string name = "NExample") : Node(name) 
+	{
+	}
+	~Example() 
+	{
+	}
 
 	virtual void Start();
 	{
@@ -36,8 +41,8 @@ class NExample : public Node, public TypeID<NExample>
 class Node
 {
 public:	
-	Node(std::string name = "node") : m_name(name) { m_active = true; parent = nullptr; }
-	~Node() {}
+	Node(std::string name = "node");
+	~Node();
 	
 	virtual void Start();
 	virtual void Update(double dt);
@@ -58,7 +63,6 @@ public:
 
 		T* child = ptr ? ptr : new T(key);
 		child->parent = this;
-		child->Start();
 		m_children[key] = static_cast<Node*>(child);
 
 		return GetChild<T>(key);

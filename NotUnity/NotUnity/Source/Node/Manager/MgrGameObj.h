@@ -6,8 +6,9 @@
 
 #include "Manager.h"
 
-class GameObj;
 class Scene;
+class GameObj;
+class Renderable;
 class MgrGameObj : public Manager<MgrGameObj>
 {
 	friend Singleton<MgrGameObj>;
@@ -20,14 +21,14 @@ public:
 	GameObj* CreateGameObj(std::string name, Scene* ref);
 	GameObj* GetGameObj(std::string name, Scene* ref);
 
-	void RegisterRenderable(GameObj* go);
-	std::vector<GameObj*>* GetRenderables();
+	void RegisterRenderable(Renderable* go);
+	std::vector<Renderable*>* GetRenderables();
 protected:
-	MgrGameObj(std::string name = "MgrGameObj") : Manager<MgrGameObj>(name) {}
-	~MgrGameObj() {}
+	MgrGameObj(std::string name = "MgrGameObj");
+	~MgrGameObj();
 
 	std::map<Scene*, std::map<std::string, GameObj*>> goList;
 
-	std::vector<GameObj*> renderables;
+	std::vector<Renderable*> renderables;
 };
 #endif

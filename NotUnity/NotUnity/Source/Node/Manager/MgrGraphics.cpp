@@ -1,10 +1,18 @@
 #include "MgrGraphics.h"
-#include "../Utility/WinDebug.h"
-#include "../Utility/Input/ControllerKeyboard.h"
-#include "../Utility/Graphics/Mesh.h"
-#include "../Utility/Graphics/Material.h"
-#include "../Node/Components/Renderable.h"
-#include "../Application.h"
+#include "../../Utility/WinDebug.h"
+#include "../../Utility/Input/ControllerKeyboard.h"
+#include "../../Utility/Graphics/Mesh.h"
+#include "../../Utility/Graphics/Material.h"
+#include "../../Node/Components/Renderable.h"
+#include "../../Application.h"
+		  
+MgrGraphics::MgrGraphics(std::string name) : Manager<MgrGraphics>(name)
+{
+}
+
+MgrGraphics::~MgrGraphics()
+{
+}
 
 void MgrGraphics::Start()
 {
@@ -28,6 +36,8 @@ void MgrGraphics::Start()
 	Debug::Log("Loading shaders...");	
 	shaderPrograms[DEFAULT] = Resource::LoadShaders("shader/default.vert", "shader/unlit.frag");
 	shaderPrograms[SIMPLE] = Resource::LoadShaders("shader/simple.vert", "shader/simple.frag");
+
+	Node::Start();
 }
 void MgrGraphics::Update(double dt)
 {

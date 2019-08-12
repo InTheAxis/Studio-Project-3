@@ -1,9 +1,18 @@
 #include "MgrGameObj.h"
-#include "../Node/Scene.h"
-#include "../Node/GameObj.h"
+#include "../Scene.h"
+#include "../GameObj.h"
+
+MgrGameObj::MgrGameObj(std::string name)  : Manager<MgrGameObj>(name) 
+{
+}
+
+MgrGameObj::~MgrGameObj()
+{
+}
 
 void MgrGameObj::Start()
 {
+	Node::Start();
 }
 
 void MgrGameObj::Update(double dt)
@@ -30,13 +39,13 @@ GameObj * MgrGameObj::GetGameObj(std::string name, Scene * ref)
 	return nullptr;
 }
 
-void MgrGameObj::RegisterRenderable(GameObj * go)
+void MgrGameObj::RegisterRenderable(Renderable * go)
 {
 	if (go)
 		renderables.emplace_back(go);
 }
 
-std::vector<GameObj*>* MgrGameObj::GetRenderables()
+std::vector<Renderable*>* MgrGameObj::GetRenderables()
 {
 	return &renderables;
 }

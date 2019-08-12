@@ -1,12 +1,21 @@
 #include "MgrResource.h"
 
-#include "../Utility/Graphics/MeshBuilder.h"
-#include "../Utility/Graphics/Material.h"
+#include "../../Utility/Graphics/MeshBuilder.h"
+#include "../../Utility/Graphics/Material.h"
+
+MgrResource::MgrResource(std::string name) : Manager<MgrResource>(name)
+{
+}
+
+MgrResource::~MgrResource()
+{
+}
 
 void MgrResource::Start()
 {
 	LoadMeshes();
 	LoadMaterials();
+	Node::Start();
 }
 
 void MgrResource::Update(double dt)

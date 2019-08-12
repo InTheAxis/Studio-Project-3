@@ -4,31 +4,46 @@
 #include "Transform.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 
+Camera::Camera(std::string name) 
+	: Node(name)
+	, speed(20)
+	, mode(DEBUG)
+	, t(nullptr)
+{
+	axis = AddChild<Axis>();
+	view.SetToIdentity();
+}
+
+Camera::~Camera()
+{
+}
+
 void Camera::Start()
 {	
-	axis = AddChild<Axis>();
 	t = parent->GetChild<Transform>();
-	speed = 20;
+	
+	Node::Start();
 }
 
 void Camera::Update(double dt)
 {
+	float dtf = static_cast<float>(dt);
 	ControllerKeyboard* kb = ControllerKeyboard::Instance();
 	switch (mode)
 	{
 	case DEBUG:
 		if (kb->IsKeyDown('W'))
-			t->translate += axis->view * dt * speed;
+			t->translate += axis->view * dtf * speed;
 		if (kb->IsKeyDown('S'))
-			t->translate -= axis->view * dt * speed;
+			t->translate -= axis->view * dtf * speed;
 		if (kb->IsKeyDown('A'))
-			t->translate -= axis->RightNoY() * dt * speed;
+			t->translate -= axis->RightNoY() * dtf * speed;
 		if (kb->IsKeyDown('D'))
-			t->translate += axis->RightNoY() * dt * speed;
+			t->translate += axis->RightNoY() * dtf * speed;
 		if (kb->IsKeyDown('Q'))
-			t->translate -= axis->DefaultUp() * dt * speed;
+			t->translate -= axis->DefaultUp() * dtf * speed;
 		if (kb->IsKeyDown('E'))
-			t->translate += axis->DefaultUp() * dt * speed;
+			t->translate += axis->DefaultUp() * dtf * speed;
 		break;
 	}
 

@@ -6,7 +6,7 @@
 #include "../Math/Vector3.h"
 #include "../Math/Vector4.h"
 #include "../Resource.h"
-#include "../../Manager/MgrGraphics.h"
+#include "../Manager/MgrGraphics.h"
 
 class Material
 {

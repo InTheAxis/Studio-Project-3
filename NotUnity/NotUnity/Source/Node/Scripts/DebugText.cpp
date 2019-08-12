@@ -1,12 +1,22 @@
 #include "DebugText.h"
-#include "../../Manager/MgrGameObj.h"
+#include "../Manager/MgrGameObj.h"
 #include "../../Node/GameObj.h"
 
-void DebugText::Start()
+DebugText::DebugText(std::string name) : Node(name) 
 {
-	fps = parent->GetParent()->GetChild<Text>();
-	parent->GetParent()->GetChild <Transform>()->translate.Set(0,3,0);	
+}
+
+DebugText::~DebugText()
+{
+}
+
+void DebugText::Start()
+{	
+	Node* comps = GetChild<Ptr>()->ref->GetParent();
+	fps = comps->GetChild<Text>();
+	comps->GetChild<Transform>()->translate.Set(0,3,0);
 	fps->SetSize(0.5f);
+	Node::Start();
 }
 
 void DebugText::Update(double dt) 

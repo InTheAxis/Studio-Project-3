@@ -10,8 +10,8 @@ class Transform;
 class Camera : public Node, public TypeID<Camera>
 {
 public:
-	Camera(std::string name = "Camera") : Node(name) {}
-	~Camera() {}
+	Camera(std::string name = "Camera");
+	~Camera();
 	
 	virtual void Start();
 	virtual void Update(double dt);

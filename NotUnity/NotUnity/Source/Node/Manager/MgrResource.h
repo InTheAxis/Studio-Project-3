@@ -12,8 +12,8 @@ public:
 	virtual void Update(double dt);
 	virtual void End();	
 protected:
-	MgrResource(std::string name = "MgrResource") : Manager<MgrResource>(name) {}
-	~MgrResource() {}
+	MgrResource(std::string name = "MgrResource"); 
+	~MgrResource();
 
 	void LoadMeshes();
 	void LoadMaterials();

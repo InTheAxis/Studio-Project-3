@@ -1,5 +1,16 @@
 #include "Node.h"
 
+Node::Node(std::string name) 
+	: m_name(name) 
+	, m_active(true)
+	, parent(nullptr)
+{
+}
+
+Node::~Node()
+{
+}
+
 void Node::Start()
 {	
 	m_lifetime = 0.0;
@@ -57,3 +68,5 @@ Node * Node::GetParent()
 {
 	return parent;
 }
+
+

@@ -4,11 +4,11 @@
 #include <map>
 
 #include "Manager.h"
-#include "../Utility/Resource.h"
-#include "../Utility/Math/MatrixStack.h"
-#include "../Utility/Math/Mtx44.h"
-#include "../Utility/Math/Vector3.h"
-#include "../Utility/Math/Vector4.h"
+#include "../../Utility/Resource.h"
+#include "../../Utility/Math/MatrixStack.h"
+#include "../../Utility/Math/Mtx44.h"
+#include "../../Utility/Math/Vector3.h"
+#include "../../Utility/Math/Vector4.h"
 
 class Mesh;
 class Material;
@@ -54,8 +54,8 @@ public:
 	void SetProjPerspective(float fov = 45.f, float farVal = 10000.f, float nearVal = 0.1f);
 	void SetProjOrtho(float size = 100, float farVal = 10000.f, float nearVal = 0.1f);
 protected:
-	MgrGraphics(std::string name = "MgrGraphics") : Manager<MgrGraphics>(name) {}
-	~MgrGraphics() {}
+	MgrGraphics(std::string name = "MgrGraphics"); 
+	~MgrGraphics();
 
 	SHADER currShader;
 

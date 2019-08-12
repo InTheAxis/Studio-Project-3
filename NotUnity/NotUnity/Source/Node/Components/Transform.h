@@ -10,8 +10,8 @@
 class Transform : public Node, public TypeID<Transform>
 {
 public:
-	Transform(std::string name = "Transform") : Node(name) {}
-	~Transform() {}
+	Transform(std::string name = "Transform");
+	~Transform();
 	
 	virtual void Start();
 	virtual void Update(double dt);

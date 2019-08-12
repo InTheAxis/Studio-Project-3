@@ -5,13 +5,14 @@
 #include "../Utility/TypeID.h"
 #include "Components.h"
 #include "Scripts.h"
+#include "Ptr.h"
 
 class Transform;
 class GameObj : public Node, public TypeID<GameObj>
 {
 public:
-	GameObj(std::string name = "GameObj") : Node(name) {}
-	~GameObj() {}
+	GameObj(std::string name = "GameObj");
+	~GameObj();
 	
 	virtual void Start();
 	virtual void Update(double dt);
@@ -20,12 +21,16 @@ public:
 	template <typename T>
 	T* AddComp(std::string key = std::to_string(T::m_id)) const
 	{
-		return comps->AddChild<T>(key);
+		T* c = comps->AddChild<T>(key);
+		c->AddChild<Ptr>()->ref = static_cast<Node*>(comps); //add a refernce to Components container
+		return c;
 	}
 	template <typename T>
 	T* AddScript(std::string key = std::to_string(T::m_id)) const
 	{
-		return scripts->AddChild<T>(key);
+		T* s = scripts->AddChild<T>(key);
+		s->AddChild<Ptr>()->ref = static_cast<Node*>(scripts); //add a refernce to Scripts container
+		return s;
 	}
 	template <typename T>
 	T* GetComp(std::string key = std::to_string(T::m_id)) const

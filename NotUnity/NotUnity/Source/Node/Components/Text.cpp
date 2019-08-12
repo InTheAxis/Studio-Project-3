@@ -1,26 +1,33 @@
 #include "Text.h"
-#include "../../Manager/MgrGraphics.h"
+#include "../Manager/MgrGraphics.h"
+
+Text::Text(std::string name) 
+	: Renderable(name)
+	, content("")
+	, color(1,1,1,1)
+	, fontSize(1)
+	, onScreen(true)
+	, align(-1)
+{
+}
+
+Text::~Text()
+{
+}
 
 void Text::Start()
 {
-	content = "";
-	color.Set(1, 1, 1, 1);
-	fontSize = 1;
-	onScreen = true;
-	align = -1;
-	Renderable::Start();
+	Renderable::Start();	
 }
 
 void Text::Update(double dt)
 {	
-	Renderable::Update(dt);
-	Node::Update(dt);
+	Renderable::Update(dt);	
 }
 
 void Text::End()
 {
 	Renderable::End();
-	Node::End();
 }
 
 void Text::Render()

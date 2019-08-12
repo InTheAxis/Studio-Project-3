@@ -11,8 +11,8 @@ public:
 	virtual void Update(double dt);
 	virtual void End();	
 protected:
-	MgrMain(std::string name = "MgrMain") : Manager<MgrMain>(name) {}
-	~MgrMain() {}
+	MgrMain(std::string name = "MgrMain");
+	~MgrMain();
 
 };
 #endif

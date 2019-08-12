@@ -1,8 +1,17 @@
 #include "Axis.h"
 
+Axis::Axis(std::string name) : Node(name)
+{
+}
+
+Axis::~Axis()
+{
+}
+
 void Axis::Start()
 {
 	Reset();
+	Node::Start();
 }
 
 void Axis::Update(double dt)

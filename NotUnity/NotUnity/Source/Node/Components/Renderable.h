@@ -11,8 +11,8 @@ class MgrGraphics;
 class Renderable : public Node, public TypeID<Renderable>
 {
 public:
-	Renderable(std::string name = "Renderable") : Node(name) {}
-	~Renderable() {}
+	Renderable(std::string name = "Renderable");
+	~Renderable();
 	
 	virtual void Start();
 	virtual void Update(double dt);

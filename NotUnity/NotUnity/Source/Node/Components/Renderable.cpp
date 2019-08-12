@@ -1,11 +1,27 @@
 #include "Renderable.h"
-#include "../../Manager/MgrGraphics.h"
-#include "../../Manager/MgrGameObj.h"
+#include "../Manager/MgrGraphics.h"
+#include "../Manager/MgrGameObj.h"
+#include "../Ptr.h"
+#include "../GameObj.h"
+
+Renderable::Renderable(std::string name) 
+	: Node(name) 
+	, mesh(nullptr)
+	, material(nullptr)
+	, t(nullptr)
+	, shader(MgrGraphics::DEFAULT)
+{
+	MgrGameObj::Instance()->RegisterRenderable(this);
+}
+
+Renderable::~Renderable()
+{
+}
 
 void Renderable::Start()
 {
 	t = parent->GetChild<Transform>();
-	MgrGameObj::Instance()->RegisterRenderable((GameObj*)parent->GetParent());
+	Node::Start();
 }
 
 void Renderable::Update(double dt)

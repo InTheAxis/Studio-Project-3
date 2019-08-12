@@ -9,8 +9,8 @@ class MgrGraphics;
 class Text : public Renderable
 {
 public:
-	Text(std::string name = "Text") : Renderable(name) {}
-	~Text() {}
+	Text(std::string name = "Text");
+	~Text();
 	
 	virtual void Start();
 	virtual void Update(double dt);

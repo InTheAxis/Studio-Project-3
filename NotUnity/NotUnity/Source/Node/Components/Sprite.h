@@ -8,8 +8,8 @@ class MgrGraphics;
 class Sprite : public Renderable
 {
 public:
-	Sprite(std::string name = "Sprite") : Renderable(name) {}
-	~Sprite() {}
+	Sprite(std::string name = "Sprite");
+	~Sprite();
 
 	virtual void Start();
 	virtual void Update(double dt);

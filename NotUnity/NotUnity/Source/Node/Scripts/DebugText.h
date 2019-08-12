@@ -12,8 +12,8 @@
 class DebugText : public Node, public TypeID<DebugText>
 {
 public:
-	DebugText(std::string name = "DebugText") : Node(name) {}
-	~DebugText() {}
+	DebugText(std::string name = "DebugText"); 
+	~DebugText();
 	
 	virtual void Start();
 	virtual void Update(double dt);

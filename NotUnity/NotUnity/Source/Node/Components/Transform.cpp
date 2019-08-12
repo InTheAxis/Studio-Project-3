@@ -1,11 +1,20 @@
 #include "Transform.h"
-#include "../../Manager/MgrGraphics.h"
+#include "../Manager/MgrGraphics.h"
 
-void Transform::Start()
+Transform::Transform(std::string name) : Node(name)
 {
 	translate.SetZero();
 	rotate.SetZero();
 	scale.Set(1, 1, 1);
+}
+
+Transform::~Transform()
+{
+}
+
+void Transform::Start()
+{
+	Node::Start();
 }
 
 void Transform::Update(double dt)
