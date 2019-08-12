@@ -1,7 +1,6 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include "../../Utility/TypeID.h"
 #include "Renderable.h"
 
 class MgrGraphics;

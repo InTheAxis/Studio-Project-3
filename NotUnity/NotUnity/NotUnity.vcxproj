@@ -35,7 +35,6 @@
     <ClCompile Include="Source\Node\Manager\MgrResource.cpp" />
     <ClCompile Include="Source\Node\Manager\MgrScene.cpp" />
     <ClCompile Include="Source\Node\Node.cpp" />
-    <ClCompile Include="Source\Node\Ptr.cpp" />
     <ClCompile Include="Source\Node\Scene.cpp" />
     <ClCompile Include="Source\Node\Scripts.cpp" />
     <ClCompile Include="Source\Node\Scripts\DebugText.cpp" />
@@ -65,10 +64,10 @@
     <ClInclude Include="Source\Node\Manager\MgrResource.h" />
     <ClInclude Include="Source\Node\Manager\MgrScene.h" />
     <ClInclude Include="Source\Node\Node.h" />
-    <ClInclude Include="Source\Node\Ptr.h" />
     <ClInclude Include="Source\Node\Scene.h" />
     <ClInclude Include="Source\Node\Scripts.h" />
     <ClInclude Include="Source\Node\Scripts\DebugText.h" />
+    <ClInclude Include="Source\Utility\Component.h" />
     <ClInclude Include="Source\Utility\Graphics\Material.h" />
     <ClInclude Include="Source\Utility\Graphics\Mesh.h" />
     <ClInclude Include="Source\Utility\Graphics\MeshBuilder.h" />

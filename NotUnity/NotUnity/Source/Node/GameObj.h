@@ -3,9 +3,9 @@
 
 #include "Node.h"
 #include "../Utility/TypeID.h"
+#include "../Utility/Component.h"
 #include "Components.h"
 #include "Scripts.h"
-#include "Ptr.h"
 
 class Transform;
 class GameObj : public Node, public TypeID<GameObj>
@@ -22,14 +22,14 @@ public:
 	T* AddComp(std::string key = std::to_string(T::m_id)) const
 	{
 		T* c = comps->AddChild<T>(key);
-		c->AddChild<Ptr>()->ref = static_cast<Node*>(comps); //add a refernce to Components container
+		(static_cast<CompBase*>(c))->SetGameObj(const_cast<GameObj*>(this));
 		return c;
 	}
 	template <typename T>
 	T* AddScript(std::string key = std::to_string(T::m_id)) const
 	{
 		T* s = scripts->AddChild<T>(key);
-		s->AddChild<Ptr>()->ref = static_cast<Node*>(scripts); //add a refernce to Scripts container
+		(static_cast<CompBase*>(s))->SetGameObj(const_cast<GameObj*>(this));
 		return s;
 	}
 	template <typename T>

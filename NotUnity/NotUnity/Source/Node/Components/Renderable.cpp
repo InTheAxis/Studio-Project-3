@@ -1,7 +1,6 @@
 #include "Renderable.h"
 #include "../Manager/MgrGraphics.h"
 #include "../Manager/MgrGameObj.h"
-#include "../Ptr.h"
 #include "../GameObj.h"
 
 Renderable::Renderable(std::string name) 
@@ -20,7 +19,7 @@ Renderable::~Renderable()
 
 void Renderable::Start()
 {
-	t = parent->GetChild<Transform>();
+	t = gameObject->GetComp<Transform>();
 	Node::Start();
 }
 

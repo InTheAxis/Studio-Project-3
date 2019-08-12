@@ -3,9 +3,10 @@
 
 #include "../Node.h"
 #include "../../Utility/TypeID.h"
+#include "../../Utility/Component.h"
 #include "../../Utility/Math/Vector3.h"
 
-class Axis : public Node, public TypeID<Axis>
+class Axis : public Node, public TypeID<Axis>, public CompBase
 {
 public:
 	Axis(std::string name = "Axis");

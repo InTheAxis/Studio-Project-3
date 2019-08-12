@@ -3,11 +3,12 @@
 
 #include "../Node.h"
 #include "../../Utility/TypeID.h"
+#include "../../Utility/Component.h"
 #include "../../Utility/Math/Vector3.h"
 #include "../../Utility/Math/Mtx44.h"
 #include "../../Utility/Math/MatrixStack.h"
 
-class Transform : public Node, public TypeID<Transform>
+class Transform : public Node, public TypeID<Transform>, public CompBase
 {
 public:
 	Transform(std::string name = "Transform");

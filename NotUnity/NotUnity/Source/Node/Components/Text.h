@@ -1,7 +1,6 @@
 #ifndef TEXT_H
 #define TEXT_H
 
-#include "../../Utility/TypeID.h"
 #include "../../Utility/Math/Vector4.h"
 #include "Renderable.h"
 

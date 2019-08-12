@@ -100,9 +100,6 @@
     <ClCompile Include="Source\Node\Scripts\DebugText.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Node\Ptr.cpp">
-      <Filter>Source\Node</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Node\Components\Text.cpp">
       <Filter>Source\Node\Components</Filter>
     </ClCompile>
@@ -210,9 +207,6 @@
     <ClInclude Include="Source\Node\Scripts\DebugText.h">
       <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Node\Ptr.h">
-      <Filter>Source\Node</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Node\Components\Text.h">
       <Filter>Source\Node\Components</Filter>
     </ClInclude>
@@ -233,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="Source\Node\Manager\MgrGameObj.h">
       <Filter>Source\Node\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Component.h">
+      <Filter>Source\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -32,14 +32,13 @@ void Scene::Start()
 	//get go list references
 	renderables = mgo->GetRenderables();
 
-	//create gameobjects using MgrGameObj
+	//create gameobjects
 	CreateGo("mainCam");
 	CreateGo("axes");
 	CreateGo("debug_text");
 	//add & set up components and scripts
 	GetGo("mainCam")->AddComp<Camera>()->SetMode(Camera::DEBUG);
-	GetGo("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
-	GetGo("debug_text")->AddComp<Text>()->AttachMesh(mg->GetCachedMesh("text"))->AttachMaterial(mg->GetCachedMaterial("font"));
+	GetGo("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));	
 	GetGo("debug_text")->AddScript<DebugText>();
 	//attach camera
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());

@@ -3,12 +3,13 @@
 
 #include "../Node.h"
 #include "../../Utility/TypeID.h"
+#include "../../Utility/Component.h"
 #include "../../Utility/Graphics/Mesh.h"
 #include "../../Utility/Graphics/Material.h"
 #include "Transform.h"
 
 class MgrGraphics;
-class Renderable : public Node, public TypeID<Renderable>
+class Renderable : public Node, public TypeID<Renderable>, public CompBase
 {
 public:
 	Renderable(std::string name = "Renderable");

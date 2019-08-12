@@ -3,11 +3,12 @@
 
 #include "../Node.h"
 #include "../../Utility/TypeID.h"
+#include "../../Utility/Component.h"
 #include "../../Utility/Math/Mtx44.h"
 
 class Axis;
 class Transform;
-class Camera : public Node, public TypeID<Camera>
+class Camera : public Node, public TypeID<Camera>, public CompBase
 {
 public:
 	Camera(std::string name = "Camera");

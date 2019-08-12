@@ -5,11 +5,12 @@
 
 #include "../Node.h"
 #include "../../Utility/TypeID.h"
+#include "../../Utility/Component.h"
 #include "../Scripts.h"
 #include "../Components/Text.h"
 #include "../Components.h"
 
-class DebugText : public Node, public TypeID<DebugText>
+class DebugText : public Node, public TypeID<DebugText>, public CompBase
 {
 public:
 	DebugText(std::string name = "DebugText"); 
