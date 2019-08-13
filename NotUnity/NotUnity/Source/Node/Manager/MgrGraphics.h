@@ -51,8 +51,8 @@ public:
 	Mtx44 GetView();
 	MS* GetProjStack();
 	void AttachView(Mtx44* view);
-	void SetProjPerspective(float fov = 45.f, float farVal = 10000.f, float nearVal = 0.1f);
-	void SetProjOrtho(float size = 100, float farVal = 10000.f, float nearVal = 0.1f);
+	void SetProjPerspective(float fov = 45.f, float farVal = 10000.f, float nearVal = 0.01f);
+	void SetProjOrtho(float size = 100, float farVal = 10000.f, float nearVal = 0.01f);
 protected:
 	MgrGraphics(std::string name = "MgrGraphics"); 
 	~MgrGraphics();
@@ -66,6 +66,7 @@ protected:
 
 	MS modelStack, projStack;
 	Mtx44* view;
+	Mtx44 defaultView; // if no camera attached
 
 	unsigned GetUniLoc(std::string uniform, MgrGraphics::SHADER shader);
 };

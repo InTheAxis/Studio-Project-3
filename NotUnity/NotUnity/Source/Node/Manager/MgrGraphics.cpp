@@ -29,7 +29,8 @@ void MgrGraphics::Start()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	modelStack.LoadIdentity();
-	view = nullptr;
+	defaultView.SetToLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
+	view = &defaultView;
 	projStack.LoadIdentity();
 	SetProjPerspective();
 
@@ -64,7 +65,7 @@ void MgrGraphics::End()
 void MgrGraphics::PreRender()
 {
 	//constant uniforms across shaders/meshess
-
+	
 	SetUniform("view", *view);
 	SetUniform("proj", projStack.Top());	
 }
@@ -160,7 +161,7 @@ MS* MgrGraphics::GetProjStack()
 
 void MgrGraphics::AttachView(Mtx44 * view)
 {
-	this->view = view;
+	this->view = view;	
 }
 
 void MgrGraphics::SetProjPerspective(float fov, float farVal, float nearVal)
