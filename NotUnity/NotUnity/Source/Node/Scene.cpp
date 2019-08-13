@@ -12,6 +12,7 @@
 #include "Components/Sprite.h"
 #include "Scripts/DebugText.h"
 #include "GameObj.h"
+#include "../Utility/Input/ControllerKeyboard.h"
 
 Scene::Scene(std::string name) 
 	: Node(name)
@@ -41,16 +42,21 @@ void Scene::Start()
 	//add & set up components and scripts
 	GetGo("mainCam")->AddComp<Camera>()->SetMode(Camera::DEBUG);
 	GetGo("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
-	GetGo("sprite")->AddComp<Sprite>()->AttachMesh(mg->GetCachedMesh("plane"))->AttachMaterial(mg->GetCachedMaterial("anim"));
+	GetGo("sprite")->AddComp<Sprite>()->SetAnimation(0, 6, 1, true)->SetAnimation(1, 6, 1, true)->SwitchAnimation(0)->PlayAnimation()->AttachMesh(mg->GetCachedMesh("plane"))->AttachMaterial(mg->GetCachedMaterial("anim"));
 	GetGo("debug_text")->AddScript<DebugText>();
 	//attach camera
-	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());
-	
+	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
+
 	Node::Start();
 }
 
 void Scene::Update(double dt)
 {
+	if (ControllerKeyboard::Instance()->IsKeyPressed(VK_SPACE))
+	{
+		GetGo("sprite")->GetComp<Sprite>()->SwitchAnimation(1)->PlayAnimation();
+	}
+
 	Node::Update(dt);
 	this->Render();
 }
