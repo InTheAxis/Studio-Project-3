@@ -53,7 +53,7 @@ void Application::Create()
 #ifdef _DEBUG
 	m_window = glfwCreateWindow(m_window_width, m_window_height, "SP3", NULL, NULL);
 	//set windows position
-	glfwSetWindowPos(m_window, Application::GetWindowHalfWidth(), Application::GetWindowHalfHeight());
+	//glfwSetWindowPos(m_window, Application::GetWindowHalfWidth(), Application::GetWindowHalfHeight());
 #else
 	m_window_height = mode->height;
 	m_window_width = mode->height * 16.f / 9.f;
