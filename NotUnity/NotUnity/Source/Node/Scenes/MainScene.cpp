@@ -22,7 +22,7 @@ void MainScene::Start()
 	//add child scenes
 	AddChild<ExampleScene>("example");
 
-	//create gameobjects
+	//create gameobjects y
 	AddChild<GameObj>("mainCam");
 	AddChild<GameObj>("axes");
 	//AddChild<GameObj>("debug_text");
