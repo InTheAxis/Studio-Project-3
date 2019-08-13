@@ -36,6 +36,8 @@
     <ClCompile Include="Source\Node\Manager\MgrScene.cpp" />
     <ClCompile Include="Source\Node\Node.cpp" />
     <ClCompile Include="Source\Node\Scene.cpp" />
+    <ClCompile Include="Source\Node\Scenes\MainScene.cpp" />
+    <ClCompile Include="Source\Node\Scenes\SceneExampleEmpty.cpp" />
     <ClCompile Include="Source\Node\Scripts.cpp" />
     <ClCompile Include="Source\Node\Scripts\DebugText.cpp" />
     <ClCompile Include="Source\Utility\Input\ControllerKeyboard.cpp" />
@@ -65,6 +67,8 @@
     <ClInclude Include="Source\Node\Manager\MgrScene.h" />
     <ClInclude Include="Source\Node\Node.h" />
     <ClInclude Include="Source\Node\Scene.h" />
+    <ClInclude Include="Source\Node\Scenes\MainScene.h" />
+    <ClInclude Include="Source\Node\Scenes\SceneExampleEmpty.h" />
     <ClInclude Include="Source\Node\Scripts.h" />
     <ClInclude Include="Source\Node\Scripts\DebugText.h" />
     <ClInclude Include="Source\Utility\Component.h" />

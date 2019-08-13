@@ -35,6 +35,9 @@
     <Filter Include="Source\Node\Manager">
       <UniqueIdentifier>{a6f1f7ae-9edc-4e9f-994b-37169109fb0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Node\Scenes">
+      <UniqueIdentifier>{5fb026a7-98cd-4653-bdde-c74a319ce958}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -117,6 +120,12 @@
     </ClCompile>
     <ClCompile Include="Source\Node\Manager\MgrGraphics.cpp">
       <Filter>Source\Node\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scenes\MainScene.cpp">
+      <Filter>Source\Node\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scenes\SceneExampleEmpty.cpp">
+      <Filter>Source\Node\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,6 +239,12 @@
     </ClInclude>
     <ClInclude Include="Source\Utility\Component.h">
       <Filter>Source\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scenes\MainScene.h">
+      <Filter>Source\Node\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scenes\SceneExampleEmpty.h">
+      <Filter>Source\Node\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

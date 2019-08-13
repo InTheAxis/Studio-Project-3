@@ -20,9 +20,9 @@ public:
 	virtual void Update(double dt);
 	virtual void End();	
 
-	void Render();
+	virtual void Render();
 
-private:
+protected:
 	MgrGraphics* mg;
 	MgrGameObj* mgo;
 

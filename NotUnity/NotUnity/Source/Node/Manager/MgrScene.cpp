@@ -1,6 +1,10 @@
 #include "MgrScene.h"
+#include "MgrGameObj.h"
+#include "MgrGraphics.h"
 
-#include "../Scene.h"
+#include "../Scenes/MainScene.h"
+#include "../Scenes/SceneExampleEmpty.h"
+#include "../../Utility/Input/ControllerKeyboard.h"
 
 MgrScene::MgrScene(std::string name) : Manager<MgrScene>(name)
 {
@@ -12,8 +16,10 @@ MgrScene::~MgrScene()
 
 void MgrScene::LoadScenes()
 {
-	allScenes["default"] = new Scene;
-	SwitchScene("default");
+	allScenes["default"] = new MainScene;
+	allScenes["example"] = new ExampleScene;
+	
+	SwitchScene("default"); //change this line to your working scene
 }
 
 void MgrScene::Start()
@@ -23,8 +29,9 @@ void MgrScene::Start()
 }
 
 void MgrScene::Update(double dt)
-{	
+{		
 	rootScene->Update(dt);
+	rootScene->Render();
 	Node::Update(dt);
 }
 
@@ -45,7 +52,9 @@ void MgrScene::SetCurrScene(Scene * s)
 }
 
 Scene * MgrScene::SwitchScene(std::string name)
-{
+{	
+	//TODO, DOESNT WORK, NEED DO CLEANUP IN END()
+	if (rootScene) rootScene->End();
 	rootScene = allScenes[name];
 	rootScene->Start();
 	return rootScene;
