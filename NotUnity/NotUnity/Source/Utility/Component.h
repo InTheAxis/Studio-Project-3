@@ -1,7 +1,8 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-class GameObj;
+#include "../Node/GameObj.h"
+
 class Component
 {
 public:

@@ -3,10 +3,10 @@
 
 #include "Node.h"
 #include "../Utility/TypeID.h"
-#include "../Utility/Component.h"
 #include "Components.h"
 #include "Scripts.h"
 
+class Component;
 class Transform;
 class GameObj : public Node, public TypeID<GameObj>
 {

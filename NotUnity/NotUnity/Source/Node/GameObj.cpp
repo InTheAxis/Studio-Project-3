@@ -1,5 +1,6 @@
 #include "GameObj.h"
 
+#include "../Utility/Component.h"
 #include "Components/Transform.h"
 
 GameObj::GameObj(std::string name) : Node(name)
