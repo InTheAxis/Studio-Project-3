@@ -161,6 +161,7 @@ MS* MgrGraphics::GetProjStack()
 
 void MgrGraphics::AttachView(Mtx44 * view)
 {
+	if (!view) view = &defaultView;
 	this->view = view;	
 }
 
