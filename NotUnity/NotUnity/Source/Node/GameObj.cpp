@@ -1,6 +1,6 @@
 #include "GameObj.h"
 
-#include "../Utility/Component.h"
+#include "Manager/MgrGameObj.h"
 #include "Components/Transform.h"
 
 GameObj::GameObj(std::string name) : Node(name)
@@ -8,6 +8,7 @@ GameObj::GameObj(std::string name) : Node(name)
 	comps = AddChild<CompContainer>();
 	scripts = comps->AddChild<ScriptContainer>();
 	t = comps->AddChild<Transform>();
+	MgrGameObj::Instance()->RegisterGO(name, this);
 }
 
 GameObj::~GameObj()

@@ -27,9 +27,6 @@ private:
 	MgrGameObj* mgo;
 
 	std::vector<Renderable*>* renderables;
-
-	GameObj* CreateGo(std::string name);
-	GameObj* GetGo(std::string name);
 };
 
 #endif

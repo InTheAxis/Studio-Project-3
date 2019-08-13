@@ -1,8 +1,9 @@
 #include "MgrGameObj.h"
+#include "MgrScene.h"
 #include "../Scene.h"
 #include "../GameObj.h"
 
-MgrGameObj::MgrGameObj(std::string name)  : Manager<MgrGameObj>(name) 
+MgrGameObj::MgrGameObj(std::string name)  : Manager<MgrGameObj>(name)
 {
 }
 
@@ -12,7 +13,7 @@ MgrGameObj::~MgrGameObj()
 
 void MgrGameObj::Start()
 {
-	Node::Start();
+	Node::Start();	
 }
 
 void MgrGameObj::Update(double dt)
@@ -25,24 +26,23 @@ void MgrGameObj::End()
 	Node::End();
 }
 
-GameObj* MgrGameObj::CreateGameObj(std::string name, Scene * ref)
-{	
-	goList[ref][name] = ref->AddChild<GameObj>(name);
-	goList[ref][name]->Start();
-	return goList[ref][name];
-}
-
-GameObj * MgrGameObj::GetGameObj(std::string name, Scene * ref)
-{	
-	if (goList[ref].count(name) > 0)
-		return goList[ref][name];
-	return nullptr;
-}
-
-void MgrGameObj::RegisterRenderable(Renderable * go)
+GameObj * MgrGameObj::RegisterGO(std::string name, GameObj * go)
 {
-	if (go)
-		renderables.emplace_back(go);
+	goList[MgrScene::Instance()->GetCurrScene()][name] = go;
+	return go;
+}
+
+GameObj * MgrGameObj::FindGO(std::string name)
+{
+	if (goList[MgrScene::Instance()->GetCurrScene()].count(name) > 0)
+		return goList[MgrScene::Instance()->GetCurrScene()][name];
+	return nullptr;	
+}
+
+void MgrGameObj::RegisterRenderable(Renderable * r)
+{
+	if (r)
+		renderables.emplace_back(r);
 }
 
 std::vector<Renderable*>* MgrGameObj::GetRenderables()

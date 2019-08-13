@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include "Manager/MgrGraphics.h"
+#include "Manager/MgrScene.h"
 #include "Manager/MgrGameObj.h"
 #include "Components/Camera.h"
 #include "Components/Renderable.h"
@@ -28,6 +29,8 @@ Scene::~Scene()
 
 void Scene::Start()
 {		
+	//set current scene
+	MgrScene::Instance()->SetCurrScene(this);
 	//get singleton references
 	mg = MgrGraphics::Instance();
 	mgo = MgrGameObj::Instance();
@@ -35,15 +38,15 @@ void Scene::Start()
 	renderables = mgo->GetRenderables();
 
 	//create gameobjects
-	CreateGo("mainCam");
-	CreateGo("axes");
-	CreateGo("debug_text");
-	CreateGo("sprite");
+	AddChild<GameObj>("mainCam");
+	AddChild<GameObj>("axes");
+	AddChild<GameObj>("debug_text");
+	AddChild<GameObj>("sprite");
 	//add & set up components and scripts
-	GetGo("mainCam")->AddComp<Camera>()->SetMode(Camera::DEBUG);
-	GetGo("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
-	GetGo("sprite")->AddComp<Sprite>()->SetAnimation(0, 6, 1, true)->SetAnimation(1, 6, 1, true)->SwitchAnimation(0)->PlayAnimation()->AttachMesh(mg->GetCachedMesh("plane"))->AttachMaterial(mg->GetCachedMaterial("anim"));
-	GetGo("debug_text")->AddScript<DebugText>();
+	GetChild<GameObj>("mainCam")->AddComp<Camera>()->SetMode(Camera::DEBUG);
+	GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
+	GetChild<GameObj>("sprite")->AddComp<Sprite>()->SetAnimation(0, 6, 1, true)->SetAnimation(1, 6, 1, true)->SwitchAnimation(0)->PlayAnimation()->AttachMesh(mg->GetCachedMesh("plane"))->AttachMaterial(mg->GetCachedMaterial("anim"));
+	GetChild<GameObj>("debug_text")->AddScript<DebugText>();
 	//attach camera
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
 
@@ -51,10 +54,10 @@ void Scene::Start()
 }
 
 void Scene::Update(double dt)
-{
+{	
 	if (ControllerKeyboard::Instance()->IsKeyPressed(VK_SPACE))
 	{
-		GetGo("sprite")->GetComp<Sprite>()->SwitchAnimation(1)->PlayAnimation();
+		GetChild<GameObj>("sprite")->GetComp<Sprite>()->SwitchAnimation(1)->PlayAnimation();
 	}
 
 	Node::Update(dt);
@@ -72,14 +75,4 @@ void Scene::Render()
 	{
 		r->Render();
 	}
-}
-
-GameObj* Scene::CreateGo(std::string name)
-{
-	return mgo->CreateGameObj(name, this);
-}
-
-GameObj* Scene::GetGo(std::string name)
-{
-	return GetChild<GameObj>(name);
 }

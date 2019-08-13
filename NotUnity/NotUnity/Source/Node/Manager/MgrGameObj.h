@@ -18,10 +18,10 @@ public:
 	virtual void Update(double dt);
 	virtual void End();	
 
-	GameObj* CreateGameObj(std::string name, Scene* ref);
-	GameObj* GetGameObj(std::string name, Scene* ref);
+	GameObj* RegisterGO(std::string name, GameObj* go);
+	GameObj* FindGO(std::string name);
 
-	void RegisterRenderable(Renderable* go);
+	void RegisterRenderable(Renderable* r);
 	std::vector<Renderable*>* GetRenderables();
 protected:
 	MgrGameObj(std::string name = "MgrGameObj");

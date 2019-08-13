@@ -26,7 +26,7 @@ void DebugText::Start()
 void DebugText::Update(double dt) 
 {
 	ss.clear(); ss.str(""); ss.precision(3);
-	ss << "Pos:" << MgrGameObj::Instance()->GetGameObj("mainCam", (Scene*)parent->GetParent()->GetParent()->GetParent())->GetTransform()->translate;
+	ss << "Pos:" << MgrGameObj::Instance()->FindGO("mainCam")->GetTransform()->translate;
 	ss << " | FPS:" << 1.0 / (dt);
 	fps->SetText(ss.str());
 	Node::Update(dt);
