@@ -2,6 +2,7 @@
 #define SPRITE_H
 
 #include "Renderable.h"
+#include "../../Utility/Graphics/Animation.h"
 
 class MgrGraphics;
 class Sprite : public Renderable
@@ -16,20 +17,18 @@ public:
 
 	virtual void Render();
 
-	void SwitchAnimation(int idx);
+	Sprite* SetAnimation(int idx, int numFrames, float animTime, bool repeat);	
+	Sprite* SwitchAnimation(int idx);
+	Sprite* PlayAnimation();
 
 protected:
 	int currFrame;
-	double currTime;
-	int startFrame;
-	int endFrame;
-	bool repeat;
-	double animTime;
-	bool ended;
-
+	double currTime; 
 	float frameTime;
 
 	int selectedAnim;
+
+	Animation* anims[8];
 };
 
 #endif

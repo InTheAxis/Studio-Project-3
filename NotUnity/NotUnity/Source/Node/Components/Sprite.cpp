@@ -6,12 +6,8 @@ Sprite::Sprite(std::string name) : Renderable(name)
 {
 	currFrame = 0;
 	currTime = 0.0;
-	startFrame = 0;
-	endFrame = 5;
-	repeat = true;
-	animTime = 1.f;
-	ended = false;	
 	selectedAnim = 0;
+	SetAnimation(0, 0, 1, false);	
 }
 
 Sprite::~Sprite()
@@ -20,26 +16,25 @@ Sprite::~Sprite()
 
 void Sprite::Start()
 {
-	frameTime = animTime / Math::Max(1, endFrame - startFrame + 1);
 	Renderable::Start();
 }
 
 void Sprite::Update(double dt)
-{	
-	if (!ended)
+{		
+	if (anims[selectedAnim]->play)
 	{
 		currTime += dt;		
-		currFrame = Math::Min(endFrame, startFrame + (int)(currTime / frameTime));
+		currFrame = Math::Min(anims[selectedAnim]->endFrame, anims[selectedAnim]->startFrame + (int)(currTime / frameTime));
 
-		if (currTime >= animTime)
+		if (currTime >= anims[selectedAnim]->animTime)
 		{
-			if (repeat)
+			if (anims[selectedAnim]->repeat)
 			{
 				currTime = 0.f;
-				currFrame = startFrame;
+				currFrame = anims[selectedAnim]->startFrame;
 			}			
 			else
-				ended = true;
+				anims[selectedAnim]->play = false;
 		}
 	}
 
@@ -78,7 +73,32 @@ void Sprite::Render()
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Sprite::SwitchAnimation(int idx)
+Sprite* Sprite::SetAnimation(int idx, int numFrames, float animTime, bool repeat)
+{
+	if (anims[idx] == nullptr)
+		anims[idx] = new Animation(0, numFrames - 1, repeat, animTime, false);
+	else
+	{
+		anims[idx]->startFrame = 0;
+		anims[idx]->endFrame = numFrames - 1;
+		anims[idx]->repeat = repeat;
+		anims[idx]->animTime = animTime;
+		anims[idx]->play = false;
+	}
+	return this;
+}
+
+Sprite* Sprite::SwitchAnimation(int idx)
 {
 	selectedAnim = idx;
+	currFrame = 0;
+	currTime = 0.0;	
+	frameTime = anims[selectedAnim]->animTime / Math::Max(1, anims[selectedAnim]->endFrame - anims[selectedAnim]->startFrame + 1);
+	return this;
+}
+
+Sprite* Sprite::PlayAnimation()
+{
+	anims[selectedAnim]->play = true;
+	return this;
 }
