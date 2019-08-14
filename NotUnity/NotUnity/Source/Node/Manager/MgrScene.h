@@ -16,15 +16,12 @@ public:
 	virtual void Update(double dt);
 	virtual void End();	
 
-	Scene* GetCurrScene() const;
-	void SetCurrScene(Scene* s);
-
+	Scene* GetRoot() const;	
 	Scene* SwitchScene(std::string name);
 protected:
 	MgrScene(std::string name = "MgrScene"); 
 	~MgrScene();
 
-	Scene* currScene;
 	Scene* rootScene;
 
 	std::map<std::string, Scene*> allScenes;

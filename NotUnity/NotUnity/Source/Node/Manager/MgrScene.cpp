@@ -41,14 +41,9 @@ void MgrScene::End()
 	Node::End();
 }
 
-Scene * MgrScene::GetCurrScene() const
+Scene * MgrScene::GetRoot() const
 {
-	return currScene;
-}
-
-void MgrScene::SetCurrScene(Scene * s)
-{
-	currScene = s;
+	return rootScene;
 }
 
 Scene * MgrScene::SwitchScene(std::string name)

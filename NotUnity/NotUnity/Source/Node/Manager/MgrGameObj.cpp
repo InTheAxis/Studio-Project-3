@@ -28,14 +28,14 @@ void MgrGameObj::End()
 
 GameObj * MgrGameObj::RegisterGO(std::string name, GameObj * go)
 {
-	goList[MgrScene::Instance()->GetCurrScene()][name] = go;
+	goList[MgrScene::Instance()->GetRoot()][name] = go;
 	return go;
 }
 
 GameObj * MgrGameObj::FindGO(std::string name)
 {
-	if (goList[MgrScene::Instance()->GetCurrScene()].count(name) > 0)
-		return goList[MgrScene::Instance()->GetCurrScene()][name];
+	if (goList[MgrScene::Instance()->GetRoot()].count(name) > 0)
+		return goList[MgrScene::Instance()->GetRoot()][name];
 	return nullptr;	
 }
 

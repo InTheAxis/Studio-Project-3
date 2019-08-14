@@ -1,6 +1,5 @@
 #include "Scene.h"
 #include "Manager/MgrGraphics.h"
-#include "Manager/MgrScene.h"
 #include "Manager/MgrGameObj.h"
 #include "Components/Renderable.h"
 
@@ -10,8 +9,6 @@ Scene::Scene(std::string name)
 	, mgo(nullptr)
 	, renderables(nullptr)
 {
-	//set current scene
-	MgrScene::Instance()->SetCurrScene(this);
 	//get singleton references
 	mg = MgrGraphics::Instance();
 	mgo = MgrGameObj::Instance();
