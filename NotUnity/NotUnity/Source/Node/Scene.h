@@ -26,7 +26,7 @@ protected:
 	MgrGraphics* mg;
 	MgrGameObj* mgo;
 
-	std::vector<Renderable*>* renderables;
+	std::vector<Renderable*>* renderables;	
 };
 
 #endif

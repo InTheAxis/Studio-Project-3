@@ -42,17 +42,10 @@ void MgrGraphics::Start()
 }
 void MgrGraphics::Update(double dt)
 {
-	glStencilMask(0xFF); //enable writing
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
 	if (ControllerKeyboard::Instance()->IsKeyPressed('0'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	if (ControllerKeyboard::Instance()->IsKeyPressed('1'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	UseShader(DEFAULT);	
-
-	modelStack.LoadIdentity();
 
 	Node::Update(dt);
 }
@@ -64,6 +57,15 @@ void MgrGraphics::End()
 
 void MgrGraphics::PreRender()
 {
+	glStencilMask(0xFF); //enable writing
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	UseShader(DEFAULT);
+	modelStack.LoadIdentity();
+	glLineWidth(3);
+}
+
+void MgrGraphics::SetUniformScene()
+{
 	//constant uniforms across shaders/meshess
 	
 	SetUniform("view", *view);
@@ -74,7 +76,7 @@ void MgrGraphics::UseShader(MgrGraphics::SHADER shader)
 {
 	currShader = shader;
 	glUseProgram(shaderPrograms[currShader]);
-	PreRender();
+	SetUniformScene();
 }
 
 void MgrGraphics::SetUniform(std::string uniform, int i, MgrGraphics::SHADER shader)

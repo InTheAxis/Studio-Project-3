@@ -7,10 +7,12 @@
 #include "../Scripts/DebugText.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "SceneExampleEmpty.h"
+#include "../../Application.h"
 
 MainScene::MainScene(std::string name)
 	: Scene(name)
 {
+	fbo.Init(Application::GetWindowWidth(), Application::GetWindowHeight());
 }
 
 MainScene::~MainScene()
@@ -19,6 +21,11 @@ MainScene::~MainScene()
 
 void MainScene::Start()
 {	
+	//creating quads to render framebuffers	
+	MgrGraphics::Instance()->GetCachedMaterial("fbo")->maps[0] = fbo.GetTexture();
+	AddChild<GameObj>("fbo")->AddComp<Renderable>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("fbo"))->SelectShader(MgrGraphics::SIMPLE);
+	GetChild<GameObj>("fbo")->GetTransform()->scale.Set(2, 2, 1);
+	
 	//add child scenes
 	AddChild<ExampleScene>("example");
 
@@ -55,14 +62,19 @@ void MainScene::End()
 
 void MainScene::Render()
 {		
-	//If got diff render pipeline
-
-	//for (auto r : *renderables)
-	//{
-	//	r->Render();
-	//}
-	
-	//OR
-
-	Scene::Render();
+	fbo.BindForWriting();
+	MgrGraphics::Instance()->PreRender();
+	for (auto r : *renderables)
+	{		
+		if (r != GetChild<GameObj>("fbo")->GetComp<Renderable>())
+			r->Render();
+	}
+	FBO::BindDefault();
+	fbo.BindForReading(GL_TEXTURE0);
+	MgrGraphics::Instance()->PreRender();
+	GetChild<GameObj>("fbo")->GetComp<Renderable>()->Render();
+	/*for (auto r : *renderables)
+	{
+		r->Render();
+	}*/
 }

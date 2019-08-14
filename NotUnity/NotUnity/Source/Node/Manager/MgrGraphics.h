@@ -22,6 +22,7 @@ public:
 	virtual void End();	
 
 	void PreRender();	
+	void SetUniformScene();
 
 	enum SHADER
 	{

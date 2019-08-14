@@ -2,6 +2,7 @@
 #include "Manager/MgrGraphics.h"
 #include "Manager/MgrGameObj.h"
 #include "Components/Renderable.h"
+#include "../Application.h"
 
 Scene::Scene(std::string name) 
 	: Node(name)
@@ -39,6 +40,7 @@ void Scene::Render()
 {		
 	for (auto r : *renderables)
 	{
-		r->Render();
+		if (r->IsActive())
+			r->Render();
 	}
 }
