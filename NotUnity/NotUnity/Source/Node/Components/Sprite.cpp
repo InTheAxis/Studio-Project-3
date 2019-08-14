@@ -2,11 +2,13 @@
 #include "../Manager/MgrGraphics.h"
 #include "../../Utility/Math/MyMath.h"
 
-Sprite::Sprite(std::string name) : Renderable(name)
+Sprite::Sprite(std::string name) 
+	: Renderable(name)
+	, currFrame(0)
+	, currTime(0.0)
+	, selectedAnim(0)
+	, hsv (-1, -1, -1)
 {
-	currFrame = 0;
-	currTime = 0.0;
-	selectedAnim = 0;
 	SetAnimation(0, 0, 1, false);	
 }
 
@@ -68,6 +70,11 @@ void Sprite::Render()
 	}
 	glBindTexture(GL_TEXTURE_2D, material->maps[Material::COLOR0 + selectedAnim]);
 
+	//set uniform for saturation	
+	mgrG->SetUniform("hvs.h", hsv.x);
+	mgrG->SetUniform("hsv.s", hsv.y);
+	mgrG->SetUniform("hsv.v", hsv.z);
+
 	DrawMesh(6, 6 * currFrame);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -101,4 +108,15 @@ Sprite* Sprite::PlayAnimation()
 {
 	anims[selectedAnim]->play = true;
 	return this;
+}
+
+Sprite* Sprite::SetHSV(float hue, float sat, float val)
+{
+	hsv.Set(hue, sat, val);
+	return this;
+}
+
+Vector3 Sprite::GetHSV()
+{
+	return hsv;
 }

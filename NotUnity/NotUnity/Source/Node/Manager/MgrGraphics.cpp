@@ -37,6 +37,7 @@ void MgrGraphics::Start()
 	Debug::Log("Loading shaders...");	
 	shaderPrograms[DEFAULT] = Resource::LoadShaders("shader/default.vert", "shader/unlit.frag");
 	shaderPrograms[SIMPLE] = Resource::LoadShaders("shader/simple.vert", "shader/simple.frag");
+	shaderPrograms[SATURATION] = Resource::LoadShaders("shader/default.vert", "shader/hsv.frag");
 
 	Node::Start();
 }

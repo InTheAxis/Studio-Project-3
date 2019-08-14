@@ -29,6 +29,7 @@ public:
 		CURRENT = -1,
 		DEFAULT = 0,
 		SIMPLE,
+		SATURATION,
 		NUM_SHADERS
 	};
 

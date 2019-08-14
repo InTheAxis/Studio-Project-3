@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\default.vert" />
+    <None Include="Resources\shader\hsv.frag" />
     <None Include="Resources\Shader\simple.frag" />
     <None Include="Resources\Shader\simple.vert" />
     <None Include="Resources\Shader\unlit.frag" />
