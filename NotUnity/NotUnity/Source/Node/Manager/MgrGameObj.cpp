@@ -2,6 +2,7 @@
 #include "MgrScene.h"
 #include "../Scene.h"
 #include "../GameObj.h"
+#include "../Components/Renderable.h"
 
 MgrGameObj::MgrGameObj(std::string name)  : Manager<MgrGameObj>(name)
 {
@@ -42,10 +43,10 @@ GameObj * MgrGameObj::FindGO(std::string name)
 void MgrGameObj::RegisterRenderable(Renderable * r)
 {
 	if (r)
-		renderables.emplace_back(r);
+		renderables[r->GetRenderPass()].emplace_back(r);
 }
 
-std::vector<Renderable*>* MgrGameObj::GetRenderables()
+std::vector<Renderable*>* MgrGameObj::GetRenderables(RENDER_PASS renderPass)
 {
-	return &renderables;
+	return &(renderables[renderPass]);
 }

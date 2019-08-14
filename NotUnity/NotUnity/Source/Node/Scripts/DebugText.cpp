@@ -11,13 +11,13 @@ DebugText::~DebugText()
 }
 
 void DebugText::Start()
-{	
+{		
 	//gameObject->AddComp<Text>(); 
 	//OR
 	fps = AddChild<Text>();	
 	fps->SetGameObj(gameObject);
 
-	gameObject->GetComp<Transform>()->translate.Set(0,3,0);
+	gameObject->GetComp<Transform>()->translate.Set(0, 3, 0);
 	fps->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("text"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("font"));
 	fps->SetSize(0.5f);
 	Node::Start();

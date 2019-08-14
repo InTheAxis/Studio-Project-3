@@ -54,8 +54,11 @@ void main()
 
 float GetSaturation()
 {
-	float sat;
-	sat = vertexPos_cameraspace.x * 0.5; //TODO
+	float sat = 0;
+	float len = length(gl_FragCoord.xy - vec2(650,350));
+	float radius = 500;
+	if (len <= radius)
+		sat = 1 - (len / (radius * 0.3f));
 	return clamp(sat, 0, 1);
 }
 

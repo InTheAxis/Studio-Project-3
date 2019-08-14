@@ -10,6 +10,7 @@ Sprite::Sprite(std::string name)
 	, hsv (-1, -1, -1)
 {
 	SetAnimation(0, 0, 1, false);	
+	renderPass = RENDER_PASS::BLEND;
 }
 
 Sprite::~Sprite()
@@ -100,7 +101,7 @@ Sprite* Sprite::SwitchAnimation(int idx)
 	selectedAnim = idx;
 	currFrame = 0;
 	currTime = 0.0;	
-	frameTime = anims[selectedAnim]->animTime / Math::Max(1, anims[selectedAnim]->endFrame - anims[selectedAnim]->startFrame + 1);
+	frameTime = (float)anims[selectedAnim]->animTime / Math::Max(1, anims[selectedAnim]->endFrame - anims[selectedAnim]->startFrame + 1);
 	return this;
 }
 

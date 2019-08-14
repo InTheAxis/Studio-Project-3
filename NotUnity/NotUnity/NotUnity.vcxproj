@@ -97,6 +97,7 @@
     <ClInclude Include="Source\Utility\WinDebug.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\shader\colorSpot.frag" />
     <None Include="Resources\Shader\default.vert" />
     <None Include="Resources\shader\hsv.frag" />
     <None Include="Resources\Shader\simple.frag" />

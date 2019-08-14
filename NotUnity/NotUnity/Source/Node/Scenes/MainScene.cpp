@@ -12,7 +12,8 @@
 MainScene::MainScene(std::string name)
 	: Scene(name)
 {
-	fbo.Init(Application::GetWindowWidth(), Application::GetWindowHeight());
+	floatFbo[0].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
+	floatFbo[1].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
 }
 
 MainScene::~MainScene()
@@ -22,8 +23,7 @@ MainScene::~MainScene()
 void MainScene::Start()
 {	
 	//creating quads to render framebuffers	
-	MgrGraphics::Instance()->GetCachedMaterial("fbo")->maps[0] = fbo.GetTexture();
-	AddChild<GameObj>("fbo")->AddComp<Renderable>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("fbo"))->SelectShader(MgrGraphics::SIMPLE);
+	AddChild<GameObj>("fbo")->AddComp<Renderable>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("fbo"))->SelectShader(MgrGraphics::SIMPLE)->SetRenderPass(RENDER_PASS::MANUAL);
 	GetChild<GameObj>("fbo")->GetTransform()->scale.Set(2, 2, 1);
 	
 	//add child scenes
@@ -62,19 +62,25 @@ void MainScene::End()
 
 void MainScene::Render()
 {		
-	fbo.BindForWriting();
-	MgrGraphics::Instance()->PreRender();
-	for (auto r : *renderables)
-	{		
-		if (r != GetChild<GameObj>("fbo")->GetComp<Renderable>())
-			r->Render();
-	}
+	MgrGraphics* mgrG = MgrGraphics::Instance();
+	Renderable* fbo = GetChild<GameObj>("fbo")->GetComp<Renderable>();	
+	
+
+	floatFbo[0].BindForWriting();
+	mgrG->PreRender();
+	RenderPass(RENDER_PASS::BLEND);
+
+	floatFbo[1].BindForWriting();
+	floatFbo[0].BindForReading(GL_TEXTURE0);
+	mgrG->GetCachedMaterial("fbo")->maps[0] = floatFbo[0].GetTexture();
+	mgrG->PreRender();	
+	fbo->SelectShader(mgrG->COLOR_SPOT)->Render();
+	RenderPass(RENDER_PASS::HUD);	
+	
 	FBO::BindDefault();
-	fbo.BindForReading(GL_TEXTURE0);
-	MgrGraphics::Instance()->PreRender();
-	GetChild<GameObj>("fbo")->GetComp<Renderable>()->Render();
-	/*for (auto r : *renderables)
-	{
-		r->Render();
-	}*/
+	floatFbo[1].BindForReading(GL_TEXTURE0);
+	mgrG->GetCachedMaterial("fbo")->maps[0] = floatFbo[1].GetTexture();
+	mgrG->PreRender();
+	fbo->SelectShader(mgrG->SIMPLE)->Render();
+	RenderPass(RENDER_PASS::FINAL);	
 }

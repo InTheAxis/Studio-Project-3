@@ -38,7 +38,7 @@ void MgrGraphics::Start()
 	shaderPrograms[DEFAULT] = Resource::LoadShaders("shader/default.vert", "shader/unlit.frag");
 	shaderPrograms[SIMPLE] = Resource::LoadShaders("shader/simple.vert", "shader/simple.frag");
 	shaderPrograms[HSV] = Resource::LoadShaders("shader/default.vert", "shader/hsv.frag");
-	shaderPrograms[COLOR_SPOT] = Resource::LoadShaders("shader/default.vert", "shader/colorSpot.frag");
+	shaderPrograms[COLOR_SPOT] = Resource::LoadShaders("shader/simple.vert", "shader/colorSpot.frag");
 
 	Node::Start();
 }

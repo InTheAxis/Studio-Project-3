@@ -7,9 +7,9 @@
 #include "../Utility/TypeID.h"
 
 class GameObj;
-class Renderable;
 class MgrGameObj;
 class MgrGraphics;
+enum class RENDER_PASS;
 class Scene : public Node, public TypeID<Scene>
 {
 public:
@@ -22,11 +22,11 @@ public:
 
 	virtual void Render();
 
+	void RenderPass(RENDER_PASS rp);
+
 protected:
 	MgrGraphics* mg;
-	MgrGameObj* mgo;
-
-	std::vector<Renderable*>* renderables;	
+	MgrGameObj* mgo;	
 };
 
 #endif

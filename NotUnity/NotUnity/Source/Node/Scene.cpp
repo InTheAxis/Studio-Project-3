@@ -7,14 +7,11 @@
 Scene::Scene(std::string name) 
 	: Node(name)
 	, mg(nullptr)
-	, mgo(nullptr)
-	, renderables(nullptr)
+	, mgo(nullptr)	
 {
 	//get singleton references
 	mg = MgrGraphics::Instance();
-	mgo = MgrGameObj::Instance();
-	//get go list references
-	renderables = mgo->GetRenderables();
+	mgo = MgrGameObj::Instance();		
 }
 
 Scene::~Scene()
@@ -38,7 +35,13 @@ void Scene::End()
 
 void Scene::Render()
 {		
-	for (auto r : *renderables)
+	RenderPass(RENDER_PASS::FINAL);
+}
+
+void Scene::RenderPass(RENDER_PASS rp)
+{
+	std::vector<Renderable*>* temp = mgo->GetRenderables(rp);
+	for (auto r : *temp)
 	{
 		r->Render();
 	}

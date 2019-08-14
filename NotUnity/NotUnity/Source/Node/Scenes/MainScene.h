@@ -17,7 +17,7 @@ public:
 
 	void Render();
 private:
-	FloatFBO fbo;
+	FloatFBO floatFbo[2];
 };
 
 #endif
