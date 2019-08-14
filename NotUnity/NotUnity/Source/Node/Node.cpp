@@ -15,9 +15,8 @@ void Node::Start()
 {	
 	m_lifetime = 0.0;
 
-	for (auto &childNode : m_children)
-		if (childNode.second->IsActive())
-			childNode.second->Start();
+	for (auto &childNode : m_children)		
+		childNode.second->Start();
 }
 
 void Node::Update(double dt)
@@ -34,9 +33,8 @@ void Node::Update(double dt)
 
 void Node::End()
 {
-	for (auto &childNode : m_children)
-		if (childNode.second->IsActive())
-			childNode.second->End();
+	for (auto &childNode : m_children)		
+		childNode.second->End();
 }
 
 void Node::SetName(std::string name)
