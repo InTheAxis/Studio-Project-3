@@ -23,14 +23,8 @@ struct Material
 	sampler2D colorMap[MAX_COLORMAPS];
 };
 uniform Material material;
-struct HSV
-{
-	float h;
-	float s;
-	float v;
-};
-uniform HSV hsv;
 
+float GetSaturation();
 vec3 rgbToHsv(vec3 rgb);
 vec3 hsvToRgb(vec3 hsv);
 
@@ -38,16 +32,6 @@ void main()
 {
 	/**HANDLING TEXTURES**/
 	vec4 baseColor = vec4(0);
-//	int colorCount = 0;
-//	for (int i = 0; i < MAX_COLORMAPS; ++i)
-//	{
-//		if (material.colorMapEnabled[i])
-//		{
-//			baseColor += texture2D(material.colorMap[i], texCoord);
-//			++colorCount;
-//		}
-//	}
-
 	if (material.colorMapEnabled[0])
 		baseColor = texture2D(material.colorMap[0], texCoord);
 	else
@@ -57,12 +41,7 @@ void main()
 
 	//apply hsv changes
 	vec3 targetHsv = rgbToHsv(vec3(color));	
-	if (hsv.h > 0)
-		targetHsv.x = clamp(hsv.h, 0, 360);
-	if (hsv.s >= 0)
-		targetHsv.y = clamp(hsv.s, 0, 1);
-	if (hsv.v >= 0)
-		targetHsv.z = clamp(hsv.v, 0, 1);
+	targetHsv.y = GetSaturation();
 	vec3 newColor = hsvToRgb(targetHsv);
 
 	color.rgb = newColor;
@@ -73,6 +52,12 @@ void main()
 
 
 
+float GetSaturation()
+{
+	float sat;
+	sat = vertexPos_cameraspace.x * 0.5; //TODO
+	return clamp(sat, 0, 1);
+}
 
 vec3 rgbToHsv(vec3 rgb)
 {

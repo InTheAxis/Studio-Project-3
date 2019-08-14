@@ -29,7 +29,8 @@ public:
 		CURRENT = -1,
 		DEFAULT = 0,
 		SIMPLE,
-		SATURATION,
+		HSV,
+		COLOR_SPOT,
 		NUM_SHADERS
 	};
 

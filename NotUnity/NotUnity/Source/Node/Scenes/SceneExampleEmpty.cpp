@@ -24,7 +24,7 @@ void ExampleScene::Start()
 	//GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
 	GetChild<GameObj>("debug_text")->AddScript<DebugText>();	
 
-	AddChild<GameObj>("sat")->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sattest"))->SelectShader(MgrGraphics::SATURATION);
+	AddChild<GameObj>("sat")->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sattest"))->SelectShader(MgrGraphics::HSV);
 	GetChild<GameObj>("sat")->GetComp<Sprite>()->SetHSV(-1, 0, -1);
 
 	Scene::Start();
