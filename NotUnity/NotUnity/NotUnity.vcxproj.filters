@@ -38,6 +38,9 @@
     <Filter Include="Source\Node\Scenes">
       <UniqueIdentifier>{5fb026a7-98cd-4653-bdde-c74a319ce958}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Utility\Graphics\FBO">
+      <UniqueIdentifier>{f86b00fa-ae39-4704-84fc-b638b508656a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -126,6 +129,15 @@
     </ClCompile>
     <ClCompile Include="Source\Node\Scenes\SceneExampleEmpty.cpp">
       <Filter>Source\Node\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Graphics\FBO.cpp">
+      <Filter>Source\Utility\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Graphics\FBO\DepthFBO.cpp">
+      <Filter>Source\Utility\Graphics\FBO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Graphics\FBO\FloatFBO.cpp">
+      <Filter>Source\Utility\Graphics\FBO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,6 +258,15 @@
     <ClInclude Include="Source\Node\Scenes\SceneExampleEmpty.h">
       <Filter>Source\Node\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Utility\Graphics\FBO.h">
+      <Filter>Source\Utility\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Graphics\FBO\DepthFBO.h">
+      <Filter>Source\Utility\Graphics\FBO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Graphics\FBO\FloatFBO.h">
+      <Filter>Source\Utility\Graphics\FBO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\simple.frag">
@@ -259,12 +280,6 @@
     </None>
     <None Include="Resources\Shader\simple.vert">
       <Filter>Resources\Shader</Filter>
-    </None>
-    <None Include="Resources\meshes.resource">
-      <Filter>Resources</Filter>
-    </None>
-    <None Include="Resources\materials.resource">
-      <Filter>Resources</Filter>
     </None>
   </ItemGroup>
 </Project>

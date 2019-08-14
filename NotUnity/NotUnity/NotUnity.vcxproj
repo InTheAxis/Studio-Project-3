@@ -40,6 +40,9 @@
     <ClCompile Include="Source\Node\Scenes\SceneExampleEmpty.cpp" />
     <ClCompile Include="Source\Node\Scripts.cpp" />
     <ClCompile Include="Source\Node\Scripts\DebugText.cpp" />
+    <ClCompile Include="Source\Utility\Graphics\FBO.cpp" />
+    <ClCompile Include="Source\Utility\Graphics\FBO\DepthFBO.cpp" />
+    <ClCompile Include="Source\Utility\Graphics\FBO\FloatFBO.cpp" />
     <ClCompile Include="Source\Utility\Input\ControllerKeyboard.cpp" />
     <ClCompile Include="Source\Utility\Input\ControllerMouse.cpp" />
     <ClCompile Include="Source\Utility\Math\MatrixStack.cpp" />
@@ -72,6 +75,9 @@
     <ClInclude Include="Source\Node\Scripts.h" />
     <ClInclude Include="Source\Node\Scripts\DebugText.h" />
     <ClInclude Include="Source\Utility\Component.h" />
+    <ClInclude Include="Source\Utility\Graphics\FBO.h" />
+    <ClInclude Include="Source\Utility\Graphics\FBO\DepthFBO.h" />
+    <ClInclude Include="Source\Utility\Graphics\FBO\FloatFBO.h" />
     <ClInclude Include="Source\Utility\Graphics\Material.h" />
     <ClInclude Include="Source\Utility\Graphics\Mesh.h" />
     <ClInclude Include="Source\Utility\Graphics\MeshBuilder.h" />
@@ -91,8 +97,6 @@
     <ClInclude Include="Source\Utility\WinDebug.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\materials.resource" />
-    <None Include="Resources\meshes.resource" />
     <None Include="Resources\Shader\default.vert" />
     <None Include="Resources\Shader\simple.frag" />
     <None Include="Resources\Shader\simple.vert" />
