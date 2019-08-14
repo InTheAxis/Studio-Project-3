@@ -47,8 +47,8 @@ void Sprite::End()
 }
 
 void Sprite::Render()
-{
-	if (!mesh || mesh->vao < 1) return;
+{	
+	if (!m_active || !mesh || mesh->vao < 1) return;
 
 	//get handle for MgrGraphics
 	MgrGraphics* mgrG = MgrGraphics::Instance();

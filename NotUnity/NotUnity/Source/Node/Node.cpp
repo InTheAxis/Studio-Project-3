@@ -57,6 +57,8 @@ bool Node::IsActive()
 void Node::ActiveSelf(bool active)
 {
 	m_active = active;
+	for (auto &childNode : m_children)
+		childNode.second->ActiveSelf(active);
 }
 
 double Node::GetTimeAlive()

@@ -40,7 +40,6 @@ void Scene::Render()
 {		
 	for (auto r : *renderables)
 	{
-		if (r->IsActive())
-			r->Render();
+		r->Render();
 	}
 }

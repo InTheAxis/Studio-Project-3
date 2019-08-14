@@ -31,8 +31,8 @@ void Text::End()
 }
 
 void Text::Render()
-{
-	if (!mesh || mesh->vao < 1 || content == "") return;
+{	
+	if (!m_active || !mesh || mesh->vao < 1 || content == "") return;
 
 	glDisable(GL_DEPTH_TEST);
 
