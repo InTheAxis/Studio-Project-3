@@ -281,5 +281,11 @@
     <None Include="Resources\Shader\simple.vert">
       <Filter>Resources\Shader</Filter>
     </None>
+    <None Include="Resources\shader\hsv.frag">
+      <Filter>Resources\Shader</Filter>
+    </None>
+    <None Include="Resources\shader\colorSpot.frag">
+      <Filter>Resources\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

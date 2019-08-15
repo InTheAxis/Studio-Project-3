@@ -8,9 +8,9 @@ Renderable::Renderable(std::string name)
 	, mesh(nullptr)
 	, material(nullptr)
 	, t(nullptr)
-	, shader(MgrGraphics::DEFAULT)
+	, shader(MgrGraphics::DEFAULT)	
+	, renderPass(RENDER_PASS::FINAL)
 {
-	MgrGameObj::Instance()->RegisterRenderable(this);
 }
 
 Renderable::~Renderable()
@@ -18,7 +18,8 @@ Renderable::~Renderable()
 }
 
 void Renderable::Start()
-{
+{	
+	MgrGameObj::Instance()->RegisterRenderable(this);
 	t = gameObject->GetComp<Transform>();
 	Node::Start();
 }
@@ -35,7 +36,7 @@ void Renderable::End()
 
 void Renderable::Render()
 {
-	if (!mesh || mesh->vao < 1) return;
+	if (!m_active || !mesh || mesh->vao < 1) return;
 
 	//get handle for MgrGraphics
 	MgrGraphics* mgrG = MgrGraphics::Instance();
@@ -78,6 +79,17 @@ Renderable * Renderable::SelectShader(MgrGraphics::SHADER shader)
 	return this;
 }
 
+RENDER_PASS Renderable::GetRenderPass() const
+{
+	return renderPass;
+}
+
+Renderable* Renderable::SetRenderPass(RENDER_PASS rp)
+{
+	renderPass = rp;
+	return this;
+}
+
 void Renderable::DrawMesh()
 {
 	DrawMesh(mesh->indexSize, 0);
@@ -85,8 +97,6 @@ void Renderable::DrawMesh()
 
 void Renderable::DrawMesh(unsigned count, unsigned offset)
 {
-	glLineWidth(mesh->drawMode == GL_LINES ? 3.f : 2.f);
-
 	glBindVertexArray(mesh->vao);
 	glDrawElements(mesh->drawMode, count, GL_UNSIGNED_INT, (void*)(offset * sizeof(GLuint)));
 	glBindVertexArray(0);

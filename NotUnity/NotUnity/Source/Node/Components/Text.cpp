@@ -9,6 +9,7 @@ Text::Text(std::string name)
 	, onScreen(true)
 	, align(-1)
 {
+	renderPass = RENDER_PASS::HUD;
 }
 
 Text::~Text()
@@ -31,8 +32,8 @@ void Text::End()
 }
 
 void Text::Render()
-{
-	if (!mesh || mesh->vao < 1 || content == "") return;
+{	
+	if (!m_active || !mesh || mesh->vao < 1 || content == "") return;
 
 	glDisable(GL_DEPTH_TEST);
 

@@ -9,6 +9,7 @@
 class Scene;
 class GameObj;
 class Renderable;
+enum class RENDER_PASS;
 class MgrGameObj : public Manager<MgrGameObj>
 {
 	friend Singleton<MgrGameObj>;
@@ -22,13 +23,13 @@ public:
 	GameObj* FindGO(std::string name);
 
 	void RegisterRenderable(Renderable* r);
-	std::vector<Renderable*>* GetRenderables();
+	std::vector<Renderable*>* GetRenderables(RENDER_PASS renderPass);
 protected:
 	MgrGameObj(std::string name = "MgrGameObj");
 	~MgrGameObj();
 
 	std::map<Scene*, std::map<std::string, GameObj*>> goList;
 
-	std::vector<Renderable*> renderables;
+	std::map<RENDER_PASS, std::vector<Renderable*>> renderables;
 };
 #endif

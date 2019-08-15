@@ -22,12 +22,15 @@ public:
 	virtual void End();	
 
 	void PreRender();	
+	void SetUniformScene();
 
 	enum SHADER
 	{
 		CURRENT = -1,
 		DEFAULT = 0,
 		SIMPLE,
+		HSV,
+		COLOR_SPOT,
 		NUM_SHADERS
 	};
 
