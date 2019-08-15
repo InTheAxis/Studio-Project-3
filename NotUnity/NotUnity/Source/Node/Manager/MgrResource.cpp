@@ -54,4 +54,10 @@ void MgrResource::LoadMaterials()
 	temp = new Material("anim");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/anim.tga");
 	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/anim2.tga");
+
+	temp = new Material("background");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/Background.tga");
+
+	temp = new Material("background2");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/snow.tga");
 }
