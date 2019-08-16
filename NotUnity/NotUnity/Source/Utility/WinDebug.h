@@ -23,18 +23,18 @@
 
 #define ARG_STRIPPER(arg1, arg2, arg3, ...) arg3
 
-#define LOG_1_ARGS(msg) _Log(__LINE__, __FILE__, msg)
-#define LOG_2_ARGS(msg, popup) _Log(__LINE__, __FILE__, msg, popup)
+#define LOG_1_ARGS(msg) _MacroMsg(__LINE__, __FILE__, msg)
+#define LOG_2_ARGS(msg, popup) _MacroMsg(__LINE__, __FILE__, msg, popup)
 #define LOG_MACRO_CHOOSER(...) ARG_STRIPPER(__VA_ARGS__, LOG_2_ARGS, LOG_1_ARGS)
 #define Log(...) LOG_MACRO_CHOOSER(__VA_ARGS__)(__VA_ARGS__)
 
-#define LOGW_1_ARGS(msg) _LogWarning(__LINE__, __FILE__, msg)
-#define LOGW_2_ARGS(msg, popup) _LogWarning(__LINE__, __FILE__, msg, popup)
+#define LOGW_1_ARGS(msg) _MacroWarning(__LINE__, __FILE__, msg)
+#define LOGW_2_ARGS(msg, popup) _MacroLogWarning(__LINE__, __FILE__, msg, popup)
 #define LOGW_MACRO_CHOOSER(...) ARG_STRIPPER(__VA_ARGS__, LOGW_2_ARGS, LOGW_1_ARGS)
 #define LogWarning(...) LOGW_MACRO_CHOOSER(__VA_ARGS__)(__VA_ARGS__)
 
-#define LOGE_1_ARGS(msg) _LogError(__LINE__, __FILE__, msg)
-#define LOGE_2_ARGS(msg, popup) _LogError(__LINE__, __FILE__, msg, popup)
+#define LOGE_1_ARGS(msg) _MacroError(__LINE__, __FILE__, msg)
+#define LOGE_2_ARGS(msg, popup) _MacroLogError(__LINE__, __FILE__, msg, popup)
 #define LOGE_MACRO_CHOOSER(...) ARG_STRIPPER(__VA_ARGS__, LOGE_2_ARGS, LOGE_1_ARGS)
 #define LogError(...) LOGE_MACRO_CHOOSER(__VA_ARGS__)(__VA_ARGS__)
 
@@ -45,24 +45,27 @@ public:
 	Debug() {}
 	~Debug() {}
 
+	//don't call this, call Log
 	template <typename T>
-	inline static void _Log(int line, const char* fileName, T input, bool popup = false)
+	inline static void _MacroMsg(int line, const char* fileName, T input, bool popup = false)
 	{
 		if (popup) SetConsoleTop();		
 		OutputFileInfo(line, fileName);
 		SetColor(1, 1, 1, 1);				
 		std::cout << input << std::endl;
 	}
+	//don't call this, call LogWarning
 	template <typename T>
-	inline static void _LogWarning(int line, const char* fileName, T input, bool popup = true)
+	inline static void _MacroWarning(int line, const char* fileName, T input, bool popup = true)
 	{
 		if (popup) SetConsoleTop();
 		OutputFileInfo(line, fileName);
 		SetColor(1, 1, 0, 1);
 		std::cout << input << std::endl;
 	}
+	//don't call this, call LogError
 	template <typename T>
-	inline static void _LogError(int line, const char* fileName, T input, bool popup = true)
+	inline static void _MacroError(int line, const char* fileName, T input, bool popup = true)
 	{
 		if (popup) SetConsoleTop();
 		OutputFileInfo(line, fileName);
@@ -119,11 +122,11 @@ public:
 	Debug() {}
 	~Debug() {}	
 	template <typename T>
-	inline static void _Log(int line, const char* fileName, T input, bool popup = false) {}
+	inline static void _MacroMsg(int line, const char* fileName, T input, bool popup = false) {}
 	template <typename T>
-	inline static void _LogWarning(int line, const char* fileName, T input, bool popup = true) {}
+	inline static void _MacroWarning(int line, const char* fileName, T input, bool popup = true) {}
 	template <typename T>
-	inline static void _LogError(int line, const char* fileName, T input, bool popup = true) {}
+	inline static void _MacroError(int line, const char* fileName, T input, bool popup = true) {}
 };
 #endif
 
