@@ -8,6 +8,7 @@
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "SceneExampleEmpty.h"
 #include "../../Application.h"
+#include "MapScene.h"
 
 MainScene::MainScene(std::string name)
 	: Scene(name)
@@ -28,6 +29,7 @@ void MainScene::Start()
 	
 	//add child scenes
 	AddChild<ExampleScene>("example");
+	AddChild<MapScene>("MapScene");
 
 	//create gameobjects y
 	AddChild<GameObj>("mainCam");
@@ -40,6 +42,7 @@ void MainScene::Start()
 	//GetChild<GameObj>("sprite")->AddComp<Sprite>()->SetAnimation(0, 6, 1, true)->SetAnimation(1, 6, 1, true)->SwitchAnimation(0)->PlayAnimation()->AttachMesh(mg->GetCachedMesh("plane"))->AttachMaterial(mg->GetCachedMaterial("anim"));
 	//GetChild<GameObj>("debug_text")->AddScript<DebugText>();
 	//attach camera
+	GetChild<MapScene>("MapScene")->setCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
 	//mg->SetProjOrtho();
 
