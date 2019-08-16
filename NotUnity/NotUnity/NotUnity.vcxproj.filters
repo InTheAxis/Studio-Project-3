@@ -196,6 +196,12 @@
     <ClCompile Include="Source\Node\Scripts\Spawner.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Utility\Math\AABB.cpp">
+      <Filter>Source\Utility\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Math\Rect2D.cpp">
+      <Filter>Source\Utility\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -380,6 +386,12 @@
     </ClInclude>
     <ClInclude Include="Source\Node\Scripts\Player.h">
       <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\AABB.h">
+      <Filter>Source\Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Rect2D.h">
+      <Filter>Source\Utility\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

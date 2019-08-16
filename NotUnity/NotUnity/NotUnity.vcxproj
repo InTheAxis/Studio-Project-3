@@ -56,8 +56,10 @@
     <ClCompile Include="Source\Utility\Graphics\FBO\FloatFBO.cpp" />
     <ClCompile Include="Source\Utility\Input\ControllerKeyboard.cpp" />
     <ClCompile Include="Source\Utility\Input\ControllerMouse.cpp" />
+    <ClCompile Include="Source\Utility\Math\AABB.cpp" />
     <ClCompile Include="Source\Utility\Math\MatrixStack.cpp" />
     <ClCompile Include="Source\Utility\Math\Mtx44.cpp" />
+    <ClCompile Include="Source\Utility\Math\Rect2D.cpp" />
     <ClCompile Include="Source\Utility\Math\Spline.cpp" />
     <ClCompile Include="Source\Utility\Math\Splines\Cubic.cpp" />
     <ClCompile Include="Source\Utility\Math\Splines\Exponential.cpp" />
@@ -114,9 +116,11 @@
     <ClInclude Include="Source\Utility\Graphics\Vertex.h" />
     <ClInclude Include="Source\Utility\Input\ControllerKeyboard.h" />
     <ClInclude Include="Source\Utility\Input\ControllerMouse.h" />
+    <ClInclude Include="Source\Utility\Math\AABB.h" />
     <ClInclude Include="Source\Utility\Math\MatrixStack.h" />
     <ClInclude Include="Source\Utility\Math\Mtx44.h" />
     <ClInclude Include="Source\Utility\Math\MyMath.h" />
+    <ClInclude Include="Source\Utility\Math\Rect2D.h" />
     <ClInclude Include="Source\Utility\Math\Spline.h" />
     <ClInclude Include="Source\Utility\Math\Splines\Cubic.h" />
     <ClInclude Include="Source\Utility\Math\Splines\Exponential.h" />
