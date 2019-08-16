@@ -208,6 +208,9 @@
     <ClCompile Include="Source\Node\Scripts\SkillTree.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Node\Scripts\Skill.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -406,6 +409,9 @@
       <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node\Scripts\SkillTree.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scripts\Skill.h">
       <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
   </ItemGroup>

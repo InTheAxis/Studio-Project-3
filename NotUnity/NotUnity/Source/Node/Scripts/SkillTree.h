@@ -28,7 +28,7 @@ private:
 
 	//some exp tracker
 	//amount of skill points
-	//linked list for skill tree
+	//use a node list of skills to represent skill tree
 };
 
 #endif

@@ -51,6 +51,7 @@
     <ClCompile Include="Source\Node\Scripts\DebugText.cpp" />
     <ClCompile Include="Source\Node\Scripts\MapGenerator.cpp" />
     <ClCompile Include="Source\Node\Scripts\Player.cpp" />
+    <ClCompile Include="Source\Node\Scripts\Skill.cpp" />
     <ClCompile Include="Source\Node\Scripts\SkillTree.cpp" />
     <ClCompile Include="Source\Node\Scripts\Spawner.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="Source\Node\Scripts\DebugText.h" />
     <ClInclude Include="Source\Node\Scripts\MapGenerator.h" />
     <ClInclude Include="Source\Node\Scripts\Player.h" />
+    <ClInclude Include="Source\Node\Scripts\Skill.h" />
     <ClInclude Include="Source\Node\Scripts\SkillTree.h" />
     <ClInclude Include="Source\Node\Scripts\Spawner.h" />
     <ClInclude Include="Source\Utility\Component.h" />
