@@ -71,7 +71,7 @@ void MgrGraphics::SetUniformScene()
 	//constant uniforms across shaders/meshess
 	
 	SetUniform("view", *view);
-	SetUniform("proj", projStack.Top());	
+	SetUniform("proj", projStack.Top());
 }
 
 void MgrGraphics::UseShader(MgrGraphics::SHADER shader)

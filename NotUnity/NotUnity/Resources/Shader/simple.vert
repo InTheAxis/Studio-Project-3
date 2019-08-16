@@ -11,15 +11,20 @@ layout(location = 3) in vec2 aVertTexCoord;
 // Output data ; will be interpolated for each fragment.
 out vec4 fragColor;
 out vec2 texCoord;
+out vec3 vertPos_modelSpace;
 
 // Values that stay constant for the whole mesh.
 uniform mat4 model;
 
 void main()
 {
-	gl_Position = model * vec4(aVertPos, 1);
-
 	//pass throughs
 	fragColor = aVertColor;
 	texCoord = aVertTexCoord;
+
+	vec4 temp = model * vec4(aVertPos, 1);
+
+	vertPos_modelSpace = vec3(temp);
+	
+	gl_Position = vec4(temp.xy, -1, 1);	
 }

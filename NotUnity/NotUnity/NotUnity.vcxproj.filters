@@ -139,6 +139,9 @@
     <ClCompile Include="Source\Utility\Graphics\FBO\FloatFBO.cpp">
       <Filter>Source\Utility\Graphics\FBO</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Node\Scripts\ColorSpot.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -266,6 +269,9 @@
     </ClInclude>
     <ClInclude Include="Source\Utility\Graphics\FBO\FloatFBO.h">
       <Filter>Source\Utility\Graphics\FBO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scripts\ColorSpot.h">
+      <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

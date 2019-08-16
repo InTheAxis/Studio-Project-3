@@ -1,18 +1,16 @@
 #version 330 core
 
-//lit.frag but without light and fog stuff
-
 // Interpolated values from the vertex shaders
 in vec4 fragColor;
 in vec2 texCoord;
-in vec3 vertexPos_cameraspace;
-in vec3 vertNormal_cameraspace;
+in vec3 vertPos_modelSpace;
 
 // Ouput data
 out vec4 color;
 
 // constants
-const int MAX_COLORMAPS = 8;
+const int MAX_COLORMAPS = 1;
+const int MAX_POINTS = 2;
 
 // misc uniforms
 struct Material
@@ -22,7 +20,15 @@ struct Material
 	bool colorMapEnabled[MAX_COLORMAPS];
 	sampler2D colorMap[MAX_COLORMAPS];
 };
+struct Point
+{
+	vec3 pos;
+	float radius;
+};
+
 uniform Material material;
+uniform Point pt[MAX_POINTS];
+uniform mat4 view, proj;
 
 float GetSaturation();
 vec3 rgbToHsv(vec3 rgb);
@@ -53,14 +59,34 @@ void main()
 
 
 float GetSaturation()
-{
-	float sat = 0;
-	float len = length(gl_FragCoord.xy - vec2(650,350));
-	float radius = 500;
-	if (len <= radius)
-		sat = 1 - (len / (radius * 0.3f));
+{	
+	float sat = 0; //return value
+	vec4 pointPos_screenSpace, vertPos_worldSpace; //storage for pos in their resp spaces
+	bool inRadius = false; //whether its within any colorspots
+	float smallestRatio = 1; //for "attenuation"
+	for (int i = 0; i < MAX_POINTS; ++i)
+	{
+		//get the points position in screen space, for depth info, only useful for perspective
+		pointPos_screenSpace = proj * view * vec4(pt[i].pos.xyz, 1);
+		pointPos_screenSpace.xyz /= pointPos_screenSpace.w;
+		//project the screen space vertPos back to world space
+		vertPos_worldSpace =  inverse(proj * view) * vec4(vertPos_modelSpace.xy, pointPos_screenSpace.z, 1);
+		vertPos_worldSpace.xyz /= vertPos_worldSpace.w;
+		//find length
+		float len = length(vertPos_worldSpace.xy - pt[i].pos.xy);
+		//get smallest ratio & set the inRadius to true
+		if (len - 0.1f <= pt[i].radius)
+		{
+			float ratio = (len - 0.1f) / pt[i].radius;
+			if (ratio < smallestRatio) smallestRatio = ratio;
+			inRadius = true;
+		}
+	}
+	//set saturation
+	if (inRadius)
+		sat = 1 - smallestRatio;
 	return clamp(sat, 0, 1);
-}
+} 
 
 vec3 rgbToHsv(vec3 rgb)
 {

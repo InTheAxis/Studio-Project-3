@@ -41,6 +41,7 @@ void MainScene::Start()
 	//GetChild<GameObj>("debug_text")->AddScript<DebugText>();
 	//attach camera
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
+	//mg->SetProjOrtho();
 
 	Scene::Start();
 }
@@ -65,7 +66,6 @@ void MainScene::Render()
 	MgrGraphics* mgrG = MgrGraphics::Instance();
 	Renderable* fbo = GetChild<GameObj>("fbo")->GetComp<Renderable>();	
 	
-
 	floatFbo[0].BindForWriting();
 	mgrG->PreRender();
 	RenderPass(RENDER_PASS::BLEND);
@@ -73,14 +73,21 @@ void MainScene::Render()
 	floatFbo[1].BindForWriting();
 	floatFbo[0].BindForReading(GL_TEXTURE0);
 	mgrG->GetCachedMaterial("fbo")->maps[0] = floatFbo[0].GetTexture();
-	mgrG->PreRender();	
+	mgrG->PreRender();
 	fbo->SelectShader(mgrG->COLOR_SPOT)->Render();
-	RenderPass(RENDER_PASS::HUD);	
+	RenderPass(RENDER_PASS::POST_FX);
 	
-	FBO::BindDefault();
+	floatFbo[0].BindForWriting();
 	floatFbo[1].BindForReading(GL_TEXTURE0);
 	mgrG->GetCachedMaterial("fbo")->maps[0] = floatFbo[1].GetTexture();
 	mgrG->PreRender();
 	fbo->SelectShader(mgrG->SIMPLE)->Render();
-	RenderPass(RENDER_PASS::FINAL);	
+	RenderPass(RENDER_PASS::HUD);
+
+	FBO::BindDefault();
+	floatFbo[0].BindForReading(GL_TEXTURE0);
+	mgrG->GetCachedMaterial("fbo")->maps[0] = floatFbo[0].GetTexture();
+	mgrG->PreRender();
+	fbo->SelectShader(mgrG->SIMPLE)->Render();
+	RenderPass(RENDER_PASS::FINAL);
 }
