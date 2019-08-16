@@ -549,6 +549,41 @@ namespace MeshBuilder
 		return mesh;
 	}
 
+	inline Mesh* GenerateLine(const std::string &meshName, const std::vector<Vector3> pts, bool cache = true)
+	{
+		if (MgrGraphics::Instance()->GetCachedMesh(meshName)) return MgrGraphics::Instance()->GetCachedMesh(meshName);
+		Vertex v;
+		std::vector<Vertex> vertex_buffer_data;
+		std::vector<GLuint> index_buffer_data;
+
+		v.color.Set(1, 0, 0, 1);
+		v.normal.Set(0, 1, 0);
+
+		for (unsigned int i = 0; i < pts.size(); ++i)
+		{
+			v.pos = pts[i];
+			v.texCoord.Set(pts[i].x, pts[i].y);
+			vertex_buffer_data.emplace_back(v);
+		}
+	
+		// Calculate the indices 
+		for (unsigned int i = 0; i < vertex_buffer_data.size() - 1; ++i)
+		{
+			index_buffer_data.emplace_back(i);
+			index_buffer_data.emplace_back(i + 1);
+		}
+
+		Mesh *mesh = new Mesh;
+
+		BindVao(mesh, vertex_buffer_data, index_buffer_data);
+
+		mesh->name = meshName;
+		mesh->indexSize = index_buffer_data.size();
+		mesh->drawMode = GL_LINES;
+		if (cache) MgrGraphics::Instance()->CacheMesh(mesh);
+
+		return mesh;
+	}
 };
 
 #endif

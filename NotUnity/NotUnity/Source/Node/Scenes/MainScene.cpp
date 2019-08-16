@@ -8,6 +8,7 @@
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "SceneExampleEmpty.h"
 #include "../../Application.h"
+#include "spawnerScene.h"
 
 MainScene::MainScene(std::string name)
 	: Scene(name)
@@ -28,6 +29,7 @@ void MainScene::Start()
 	
 	//add child scenes
 	AddChild<ExampleScene>("example");
+	AddChild<SpawnerScene>("spawner")->setWave(1);
 
 	//create gameobjects y
 	AddChild<GameObj>("mainCam");
