@@ -20,7 +20,8 @@ void Player::Start()
 {
 	mg = MgrGraphics::Instance();
 	gameObject->GetTransform()->translate.Set(-1, 1, 0);
-	sprite = gameObject->AddComp<Sprite>()
+
+	sprite = AddChild<Sprite>()
 		->SetAnimation(0, 6, 1, 1)
 		->SetAnimation(1, 6, 1, 1)
 		->SetAnimation(2, 6, 1, 1)
@@ -29,6 +30,7 @@ void Player::Start()
 		->SetAnimation(5, 6, 1, 1)
 		->SetAnimation(6, 6, 1, 1)
 		->SetAnimation(7, 6, 1, 1);
+	sprite->SetGameObj(gameObject);
 	sprite->AttachMesh(mg->GetCachedMesh("plane"))->AttachMaterial(mg->GetCachedMaterial("anim"));
 	
 	kinb = gameObject->AddComp<KinemeticBody>();

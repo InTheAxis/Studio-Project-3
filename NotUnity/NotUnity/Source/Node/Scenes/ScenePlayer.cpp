@@ -17,10 +17,8 @@ ScenePlayer::~ScenePlayer()
 void ScenePlayer::Start()
 {
 	//create gameobjects	
-	//AddChild<GameObj>("axes");
 	AddChild<GameObj>("Player");
 	//add & set up components and scripts	
-	//GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
 	GetChild<GameObj>("Player")->AddScript<Player>();
 
 	Scene::Start();

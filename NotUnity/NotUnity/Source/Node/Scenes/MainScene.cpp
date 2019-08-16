@@ -35,6 +35,8 @@ void MainScene::Start()
 	AddChild<ScenePlayer>("Player");
 	AddChild<MapScene>("MapScene");
 
+	AddChild<GameObj>("mainCam");
+	AddChild<GameObj>("axes");
 	//add & set up components and scripts
 	GetChild<GameObj>("mainCam")->AddComp<Camera>()->SetMode(Camera::DEBUG);
 	GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
@@ -76,8 +78,8 @@ void MainScene::Render()
 	mgrG->PreRender();
 	glDepthMask(GL_FALSE); //ignore depth
 	fbo->SelectShader(mgrG->COLOR_SPOT)->Render();
-	RenderPass(RENDER_PASS::POST_FX);
 	glDepthMask(GL_TRUE); // to clear it
+	RenderPass(RENDER_PASS::POST_FX);
 	
 	floatFbo[0].BindForWriting();
 	floatFbo[1].BindForReading(GL_TEXTURE0);
@@ -85,8 +87,8 @@ void MainScene::Render()
 	mgrG->PreRender();
 	glDepthMask(GL_FALSE);
 	fbo->SelectShader(mgrG->SIMPLE)->Render();
-	RenderPass(RENDER_PASS::HUD);
 	glDepthMask(GL_TRUE);
+	RenderPass(RENDER_PASS::HUD);
 
 	FBO::BindDefault();
 	floatFbo[0].BindForReading(GL_TEXTURE0);
@@ -94,5 +96,4 @@ void MainScene::Render()
 	mgrG->PreRender();
 	fbo->SelectShader(mgrG->SIMPLE)->Render();
 	RenderPass(RENDER_PASS::FINAL);
-	
 }
