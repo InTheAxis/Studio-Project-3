@@ -37,6 +37,8 @@ void MgrGraphics::Start()
 	Debug::Log("Loading shaders...");	
 	shaderPrograms[DEFAULT] = Resource::LoadShaders("shader/default.vert", "shader/unlit.frag");
 	shaderPrograms[SIMPLE] = Resource::LoadShaders("shader/simple.vert", "shader/simple.frag");
+	shaderPrograms[HSV] = Resource::LoadShaders("shader/default.vert", "shader/hsv.frag");
+	shaderPrograms[COLOR_SPOT] = Resource::LoadShaders("shader/simple.vert", "shader/colorSpot.frag");
 
 	Node::Start();
 }
@@ -69,7 +71,7 @@ void MgrGraphics::SetUniformScene()
 	//constant uniforms across shaders/meshess
 	
 	SetUniform("view", *view);
-	SetUniform("proj", projStack.Top());	
+	SetUniform("proj", projStack.Top());
 }
 
 void MgrGraphics::UseShader(MgrGraphics::SHADER shader)

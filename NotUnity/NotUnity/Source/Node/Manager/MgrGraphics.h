@@ -29,6 +29,8 @@ public:
 		CURRENT = -1,
 		DEFAULT = 0,
 		SIMPLE,
+		HSV,
+		COLOR_SPOT,
 		NUM_SHADERS
 	};
 
@@ -63,7 +65,7 @@ protected:
 	std::map <int, GLuint> shaderPrograms;
 	std::map<MgrGraphics::SHADER, std::map<std::string, unsigned>> cachedUniforms;
 	std::map<std::string, Mesh*> cachedMeshes;
-	std::map<std::string, Material*> cachedMaterials;
+	std::map<std::string, Material*> cachedMaterials;	
 
 	MS modelStack, projStack;
 	Mtx44* view;

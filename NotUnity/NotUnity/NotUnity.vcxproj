@@ -39,6 +39,7 @@
     <ClCompile Include="Source\Node\Scenes\MainScene.cpp" />
     <ClCompile Include="Source\Node\Scenes\SceneExampleEmpty.cpp" />
     <ClCompile Include="Source\Node\Scripts.cpp" />
+    <ClCompile Include="Source\Node\Scripts\ColorSpot.cpp" />
     <ClCompile Include="Source\Node\Scripts\DebugText.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO\DepthFBO.cpp" />
@@ -73,6 +74,7 @@
     <ClInclude Include="Source\Node\Scenes\MainScene.h" />
     <ClInclude Include="Source\Node\Scenes\SceneExampleEmpty.h" />
     <ClInclude Include="Source\Node\Scripts.h" />
+    <ClInclude Include="Source\Node\Scripts\ColorSpot.h" />
     <ClInclude Include="Source\Node\Scripts\DebugText.h" />
     <ClInclude Include="Source\Utility\Component.h" />
     <ClInclude Include="Source\Utility\Graphics\FBO.h" />
@@ -97,7 +99,9 @@
     <ClInclude Include="Source\Utility\WinDebug.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\shader\colorSpot.frag" />
     <None Include="Resources\Shader\default.vert" />
+    <None Include="Resources\shader\hsv.frag" />
     <None Include="Resources\Shader\simple.frag" />
     <None Include="Resources\Shader\simple.vert" />
     <None Include="Resources\Shader\unlit.frag" />

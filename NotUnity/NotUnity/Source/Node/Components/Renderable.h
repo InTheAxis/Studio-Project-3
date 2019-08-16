@@ -8,6 +8,15 @@
 #include "../../Utility/Graphics/Material.h"
 #include "Transform.h"
 
+enum class RENDER_PASS
+{
+	MANUAL,
+	GEO,
+	POST_FX,
+	HUD,
+	FINAL,
+};
+
 class MgrGraphics;
 class Renderable : public Node, public TypeID<Renderable>, public Component
 {
@@ -25,11 +34,15 @@ public:
 	Renderable* AttachMaterial(Material* material);
 	Renderable* SelectShader(MgrGraphics::SHADER shader);
 
+	RENDER_PASS GetRenderPass() const;
+	Renderable* SetRenderPass(RENDER_PASS rp);
 protected:
 	Mesh* mesh;
 	Material* material;
 	Transform* t;
 	MgrGraphics::SHADER shader;
+	RENDER_PASS renderPass;
+	
 
 	void DrawMesh();
 	void DrawMesh(unsigned count, unsigned offset);

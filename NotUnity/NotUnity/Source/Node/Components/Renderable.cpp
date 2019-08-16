@@ -8,9 +8,9 @@ Renderable::Renderable(std::string name)
 	, mesh(nullptr)
 	, material(nullptr)
 	, t(nullptr)
-	, shader(MgrGraphics::DEFAULT)
+	, shader(MgrGraphics::DEFAULT)	
+	, renderPass(RENDER_PASS::FINAL)
 {
-	MgrGameObj::Instance()->RegisterRenderable(this);
 }
 
 Renderable::~Renderable()
@@ -18,7 +18,8 @@ Renderable::~Renderable()
 }
 
 void Renderable::Start()
-{
+{	
+	MgrGameObj::Instance()->RegisterRenderable(this);
 	t = gameObject->GetComp<Transform>();
 	Node::Start();
 }
@@ -75,6 +76,17 @@ Renderable* Renderable::AttachMaterial(Material* material)
 Renderable * Renderable::SelectShader(MgrGraphics::SHADER shader)
 {
 	this->shader = shader;
+	return this;
+}
+
+RENDER_PASS Renderable::GetRenderPass() const
+{
+	return renderPass;
+}
+
+Renderable* Renderable::SetRenderPass(RENDER_PASS rp)
+{
+	renderPass = rp;
 	return this;
 }
 

@@ -7,13 +7,16 @@
 #include "../Scripts/DebugText.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "SceneExampleEmpty.h"
+#include "ScenePlayer.h"
 #include "../../Application.h"
 #include "spawnerScene.h"
+#include "MapScene.h"
 
 MainScene::MainScene(std::string name)
 	: Scene(name)
 {
-	fbo.Init(Application::GetWindowWidth(), Application::GetWindowHeight());
+	floatFbo[0].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
+	floatFbo[1].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
 }
 
 MainScene::~MainScene()
@@ -23,26 +26,22 @@ MainScene::~MainScene()
 void MainScene::Start()
 {	
 	//creating quads to render framebuffers	
-	MgrGraphics::Instance()->GetCachedMaterial("fbo")->maps[0] = fbo.GetTexture();
-	AddChild<GameObj>("fbo")->AddComp<Renderable>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("fbo"))->SelectShader(MgrGraphics::SIMPLE);
+	AddChild<GameObj>("fbo")->AddComp<Renderable>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("fbo"))->SelectShader(MgrGraphics::SIMPLE)->SetRenderPass(RENDER_PASS::MANUAL);
 	GetChild<GameObj>("fbo")->GetTransform()->scale.Set(2, 2, 1);
 	
 	//add child scenes
 	AddChild<ExampleScene>("example");
 	AddChild<SpawnerScene>("spawner")->setWave(1);
+	AddChild<ScenePlayer>("Player");
+	AddChild<MapScene>("MapScene");
 
-	//create gameobjects y
-	AddChild<GameObj>("mainCam");
-	AddChild<GameObj>("axes");
-	//AddChild<GameObj>("debug_text");
-	AddChild<GameObj>("sprite");
 	//add & set up components and scripts
 	GetChild<GameObj>("mainCam")->AddComp<Camera>()->SetMode(Camera::DEBUG);
 	GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
-	GetChild<GameObj>("sprite")->AddComp<Sprite>()->SetAnimation(0, 6, 1, true)->SetAnimation(1, 6, 1, true)->SwitchAnimation(0)->PlayAnimation()->AttachMesh(mg->GetCachedMesh("plane"))->AttachMaterial(mg->GetCachedMaterial("anim"));
-	//GetChild<GameObj>("debug_text")->AddScript<DebugText>();
 	//attach camera
+	GetChild<MapScene>("MapScene")->setCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
+	//mg->SetProjOrtho();
 
 	Scene::Start();
 }
@@ -51,7 +50,7 @@ void MainScene::Update(double dt)
 {	
 	if (ControllerKeyboard::Instance()->IsKeyPressed(VK_SPACE))
 	{
-		GetChild<GameObj>("sprite")->GetComp<Sprite>()->SwitchAnimation(1)->PlayAnimation();
+		//GetChild<GameObj>("sprite")->GetComp<Sprite>()->SwitchAnimation(1)->PlayAnimation();
 	}
 
 	Scene::Update(dt);	
@@ -64,19 +63,36 @@ void MainScene::End()
 
 void MainScene::Render()
 {		
-	fbo.BindForWriting();
-	MgrGraphics::Instance()->PreRender();
-	for (auto r : *renderables)
-	{		
-		if (r != GetChild<GameObj>("fbo")->GetComp<Renderable>())
-			r->Render();
-	}
+	MgrGraphics* mgrG = MgrGraphics::Instance();
+	Renderable* fbo = GetChild<GameObj>("fbo")->GetComp<Renderable>();	
+	
+	floatFbo[0].BindForWriting();
+	mgrG->PreRender();
+	RenderPass(RENDER_PASS::GEO);
+
+	floatFbo[1].BindForWriting();
+	floatFbo[0].BindForReading(GL_TEXTURE0);
+	mgrG->GetCachedMaterial("fbo")->maps[0] = floatFbo[0].GetTexture();
+	mgrG->PreRender();
+	glDepthMask(GL_FALSE); //ignore depth
+	fbo->SelectShader(mgrG->COLOR_SPOT)->Render();
+	RenderPass(RENDER_PASS::POST_FX);
+	glDepthMask(GL_TRUE); // to clear it
+	
+	floatFbo[0].BindForWriting();
+	floatFbo[1].BindForReading(GL_TEXTURE0);
+	mgrG->GetCachedMaterial("fbo")->maps[0] = floatFbo[1].GetTexture();
+	mgrG->PreRender();
+	glDepthMask(GL_FALSE);
+	fbo->SelectShader(mgrG->SIMPLE)->Render();
+	RenderPass(RENDER_PASS::HUD);
+	glDepthMask(GL_TRUE);
+
 	FBO::BindDefault();
-	fbo.BindForReading(GL_TEXTURE0);
-	MgrGraphics::Instance()->PreRender();
-	GetChild<GameObj>("fbo")->GetComp<Renderable>()->Render();
-	/*for (auto r : *renderables)
-	{
-		r->Render();
-	}*/
+	floatFbo[0].BindForReading(GL_TEXTURE0);
+	mgrG->GetCachedMaterial("fbo")->maps[0] = floatFbo[0].GetTexture();
+	mgrG->PreRender();
+	fbo->SelectShader(mgrG->SIMPLE)->Render();
+	RenderPass(RENDER_PASS::FINAL);
+	
 }
