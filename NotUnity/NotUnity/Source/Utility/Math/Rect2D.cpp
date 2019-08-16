@@ -16,7 +16,7 @@ Rect2D::~Rect2D()
 {
 }
 
-bool Rect2D::isWithin(Vector3 pos, Vector3* penetration)
+bool Rect2D::IsWithin(Vector3 pos, Vector3* penetration)
 {
 
 	bool ret = (pos.x >= min.x && pos.x <= max.x && pos.y <= min.y && pos.y >= max.y);
@@ -32,4 +32,27 @@ bool Rect2D::isWithin(Vector3 pos, Vector3* penetration)
 	}
 
 	return ret;
+}
+
+bool Rect2D::IsOverlap(Rect2D other, Vector3* penetration)
+{	
+	Vector3 pene;
+	Vector3 points[4] =
+	{
+		other.max,
+		other.min,
+		Vector3(other.max.x, other.min.y),
+		Vector3(other.min.x, other.max.y),
+	};
+
+	for (int i = 0; i < 4; ++i)
+	{
+		if (IsWithin(other.max, &pene))
+		{
+			*penetration = pene;
+			return true;
+		}
+	}
+
+	return false;
 }

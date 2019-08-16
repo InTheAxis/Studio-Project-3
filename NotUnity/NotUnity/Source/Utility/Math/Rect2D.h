@@ -10,7 +10,8 @@ public:
 	Rect2D(Vector3 min, Vector3 max);
 	~Rect2D();
 
-	bool isWithin(Vector3 pos, Vector3* penetration = nullptr);
+	bool IsWithin(Vector3 pos, Vector3* penetration = nullptr);
+	bool IsOverlap(Rect2D other, Vector3* penetration = nullptr);
 
 	Vector3 min, max;
 };

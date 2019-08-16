@@ -1,7 +1,7 @@
 #include "AABB.h"
 
 AABB::AABB()
-	: origin(nullptr)
+	: origin(0,0,0)
 	, type(COL_TYPE::CIRCLE)
 	, radius(0)	
 {
@@ -9,19 +9,16 @@ AABB::AABB()
 
 AABB::~AABB()
 {
-	origin = nullptr;
 }
 
-AABB * AABB::SetMode(COL_TYPE type)
+AABB * AABB::SetType(COL_TYPE type)
 {
 	this->type = type;
 	return this;
 }
 
-AABB * AABB::SetOrigin(Vector3 * pos)
+AABB * AABB::SetOrigin(Vector3 pos)
 {
-	if (!pos)
-		Debug::LogWarning("Position is null");
 	origin = pos;
 	return this;
 }
@@ -47,15 +44,62 @@ bool AABB::IsInside(Vector3 pos, Vector3* penetration)
 	bool ret = false;
 	switch (type)
 	{
-	case COL_TYPE::CIRCLE:		
-		ret = ((pos - *origin).LengthSquared() < radius * radius);
-		if (ret) *penetration = (pos - *origin).Normalized() * (radius - (pos - *origin).Length());
-		return ret;
-		break;
-	case COL_TYPE::RECT2D:
-		return rect.isWithin(pos, penetration);
-		break;
+		case COL_TYPE::CIRCLE:		
+		{
+			float len = (pos - origin).Length();
+			ret = (len < radius);
+			if (ret) *penetration = (pos - origin).Normalized() * (radius - len);
+			return ret;
+			break;
+		}
+		case COL_TYPE::RECT2D:
+		{
+			return rect.IsWithin(pos, penetration);
+			break;
+		}
 	}
 	Debug::LogWarning("Invalid COllider type");
 	return ret;
+}
+
+bool AABB::IsOverlap(AABB other, Vector3 * penetration)
+{
+	switch (type)
+	{
+	case COL_TYPE::CIRCLE:
+		if (other.type == COL_TYPE::RECT2D)
+			return InternalOverlap(rect, other, penetration);
+		else if (other.type == COL_TYPE::CIRCLE)
+			return InternalOverlap(other, penetration);
+		break;
+	case COL_TYPE::RECT2D:
+		if (other.type == COL_TYPE::RECT2D)
+			return InternalOverlap(rect, other.rect, penetration);
+		else if (other.type == COL_TYPE::CIRCLE)
+			return InternalOverlap(rect, other, penetration);
+		break;
+	}
+	return false;
+}
+
+bool AABB::InternalOverlap(Rect2D rect, Rect2D other, Vector3 * penetration)
+{
+	return rect.IsOverlap(other, penetration);
+}
+
+bool AABB::InternalOverlap(Rect2D rect, AABB circle, Vector3 * penetration)
+{
+	return false;
+}
+
+bool AABB::InternalOverlap(AABB circle, Vector3 * penetration)
+{
+	Vector3 relDisp = origin - circle.origin;
+	float len = relDisp.Length();
+	if (len < radius + circle.radius)
+	{
+		*penetration = relDisp.Normalized() * (radius + circle.radius - len);
+		return true;
+	}
+	return false;
 }

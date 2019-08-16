@@ -211,6 +211,12 @@
     <ClCompile Include="Source\Node\Scripts\Skill.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Node\Components\Collider.cpp">
+      <Filter>Source\Node\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Manager\MgrCollision.cpp">
+      <Filter>Source\Node\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -413,6 +419,12 @@
     </ClInclude>
     <ClInclude Include="Source\Node\Scripts\Skill.h">
       <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components\Collider.h">
+      <Filter>Source\Node\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\MgrCollision.h">
+      <Filter>Source\Node\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
