@@ -393,6 +393,9 @@
     <ClInclude Include="Source\Utility\Math\Rect2D.h">
       <Filter>Source\Utility\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Utility\Delegate.h">
+      <Filter>Source\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\simple.frag">

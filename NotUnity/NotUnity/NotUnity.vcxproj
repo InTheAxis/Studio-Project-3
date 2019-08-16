@@ -106,6 +106,7 @@
     <ClInclude Include="Source\Node\Scripts\Player.h" />
     <ClInclude Include="Source\Node\Scripts\Spawner.h" />
     <ClInclude Include="Source\Utility\Component.h" />
+    <ClInclude Include="Source\Utility\Delegate.h" />
     <ClInclude Include="Source\Utility\Graphics\Animation.h" />
     <ClInclude Include="Source\Utility\Graphics\FBO.h" />
     <ClInclude Include="Source\Utility\Graphics\FBO\DepthFBO.h" />
