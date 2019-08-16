@@ -41,6 +41,9 @@
     <Filter Include="Source\Utility\Graphics\FBO">
       <UniqueIdentifier>{f86b00fa-ae39-4704-84fc-b638b508656a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Utility\Math\Splines">
+      <UniqueIdentifier>{7e795458-3dee-452e-9c11-5b285b5f6bae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -142,56 +145,56 @@
     <ClCompile Include="Source\Node\Scripts\ColorSpot.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Node\Scripts\AI.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Scripts\MapGenerator.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Scripts\Player.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Scripts\Spawner.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Scenes\MapScene.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Scenes\ScenePlayer.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Scenes\SpawnerScene.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Components\KinemeticBody.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Components\Chunk.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Components\ColliderRender.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Utility\Math\Splines\Logarithm.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Utility\Math\Splines\Quadratic.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Utility\Math\Splines\Reciprocal.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Source\Utility\Math\Spline.cpp">
+      <Filter>Source\Utility\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\Math\Splines\SqReci.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Utility\Math\Splines</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Utility\Math\Splines\Cubic.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Source\Utility\Math\Splines\Reciprocal.cpp">
+      <Filter>Source\Utility\Math\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Math\Splines\Quadratic.cpp">
+      <Filter>Source\Utility\Math\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Math\Splines\Logarithm.cpp">
+      <Filter>Source\Utility\Math\Splines</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\Math\Splines\Exponential.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Utility\Math\Splines</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Utility\Math\Spline.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Source\Utility\Math\Splines\Cubic.cpp">
+      <Filter>Source\Utility\Math\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scenes\SpawnerScene.cpp">
+      <Filter>Source\Node\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scenes\ScenePlayer.cpp">
+      <Filter>Source\Node\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scenes\MapScene.cpp">
+      <Filter>Source\Node\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Components\Chunk.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scripts\AI.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Components\ColliderRender.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Components\KinemeticBody.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scripts\MapGenerator.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scripts\Player.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scripts\Spawner.cpp">
+      <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -324,24 +327,60 @@
     <ClInclude Include="Source\Node\Scripts\ColorSpot.h">
       <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Node\Scripts\AI.h" />
-    <ClInclude Include="Source\Node\Scripts\Spawner.h" />
-    <ClInclude Include="Source\Node\Scripts\MapGenerator.h" />
-    <ClInclude Include="Source\Node\Scripts\Player.h" />
-    <ClInclude Include="Source\Node\Scenes\MapScene.h" />
-    <ClInclude Include="Source\Node\Scenes\ScenePlayer.h" />
-    <ClInclude Include="Source\Node\Scenes\SpawnerScene.h" />
-    <ClInclude Include="Source\Node\Components\KinemeticBody.h" />
-    <ClInclude Include="Source\Node\Components\Chunk.h" />
-    <ClInclude Include="Source\Node\Components\ColliderRender.h" />
-    <ClInclude Include="Source\Utility\Math\Splines\Logarithm.h" />
-    <ClInclude Include="Source\Utility\Math\Splines\Quadratic.h" />
-    <ClInclude Include="Source\Utility\Math\Splines\Reciprocal.h" />
-    <ClInclude Include="Source\Utility\Math\Splines\SqReci.h" />
-    <ClInclude Include="Source\Utility\Math\Splines\Cubic.h" />
-    <ClInclude Include="Source\Utility\Math\Splines\Exponential.h" />
-    <ClInclude Include="Source\Utility\Math\Spline.h" />
-    <ClInclude Include="Source\Utility\Graphics\Animation.h" />
+    <ClInclude Include="Source\Utility\Math\Splines\Cubic.h">
+      <Filter>Source\Utility\Math\Splines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Splines\Exponential.h">
+      <Filter>Source\Utility\Math\Splines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Splines\Logarithm.h">
+      <Filter>Source\Utility\Math\Splines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Splines\Quadratic.h">
+      <Filter>Source\Utility\Math\Splines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Splines\Reciprocal.h">
+      <Filter>Source\Utility\Math\Splines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Splines\SqReci.h">
+      <Filter>Source\Utility\Math\Splines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Spline.h">
+      <Filter>Source\Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Graphics\Animation.h">
+      <Filter>Source\Utility\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scenes\MapScene.h">
+      <Filter>Source\Node\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scenes\ScenePlayer.h">
+      <Filter>Source\Node\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scenes\SpawnerScene.h">
+      <Filter>Source\Node\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scripts\Spawner.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scripts\AI.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components\Chunk.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components\ColliderRender.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components\KinemeticBody.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scripts\MapGenerator.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scripts\Player.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\simple.frag">
