@@ -139,6 +139,9 @@
     <ClCompile Include="Source\Utility\Graphics\FBO\FloatFBO.cpp">
       <Filter>Source\Utility\Graphics\FBO</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Node\Scripts\ColorSpot.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -267,6 +270,9 @@
     <ClInclude Include="Source\Utility\Graphics\FBO\FloatFBO.h">
       <Filter>Source\Utility\Graphics\FBO</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Node\Scripts\ColorSpot.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\simple.frag">
@@ -279,6 +285,12 @@
       <Filter>Resources\Shader</Filter>
     </None>
     <None Include="Resources\Shader\simple.vert">
+      <Filter>Resources\Shader</Filter>
+    </None>
+    <None Include="Resources\shader\hsv.frag">
+      <Filter>Resources\Shader</Filter>
+    </None>
+    <None Include="Resources\shader\colorSpot.frag">
       <Filter>Resources\Shader</Filter>
     </None>
   </ItemGroup>

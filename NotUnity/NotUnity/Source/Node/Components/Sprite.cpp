@@ -2,12 +2,15 @@
 #include "../Manager/MgrGraphics.h"
 #include "../../Utility/Math/MyMath.h"
 
-Sprite::Sprite(std::string name) : Renderable(name)
+Sprite::Sprite(std::string name) 
+	: Renderable(name)
+	, currFrame(0)
+	, currTime(0.0)
+	, selectedAnim(0)
+	, hsv (-1, -1, -1)
 {
-	currFrame = 0;
-	currTime = 0.0;
-	selectedAnim = 0;
 	SetAnimation(0, 0, 1, false);	
+	renderPass = RENDER_PASS::GEO;
 }
 
 Sprite::~Sprite()
@@ -47,8 +50,8 @@ void Sprite::End()
 }
 
 void Sprite::Render()
-{
-	if (!mesh || mesh->vao < 1) return;
+{	
+	if (!m_active || !mesh || mesh->vao < 1) return;
 
 	//get handle for MgrGraphics
 	MgrGraphics* mgrG = MgrGraphics::Instance();
@@ -67,6 +70,11 @@ void Sprite::Render()
 		mgrG->SetUniform(cast.c_str(), material->maps[i] > 0 && i == selectedAnim);
 	}
 	glBindTexture(GL_TEXTURE_2D, material->maps[Material::COLOR0 + selectedAnim]);
+
+	//set uniform for saturation	
+	mgrG->SetUniform("hvs.h", hsv.x);
+	mgrG->SetUniform("hsv.s", hsv.y);
+	mgrG->SetUniform("hsv.v", hsv.z);
 
 	DrawMesh(6, 6 * currFrame);
 
@@ -93,7 +101,7 @@ Sprite* Sprite::SwitchAnimation(int idx)
 	selectedAnim = idx;
 	currFrame = 0;
 	currTime = 0.0;	
-	frameTime = anims[selectedAnim]->animTime / Math::Max(1, anims[selectedAnim]->endFrame - anims[selectedAnim]->startFrame + 1);
+	frameTime = (float)anims[selectedAnim]->animTime / Math::Max(1, anims[selectedAnim]->endFrame - anims[selectedAnim]->startFrame + 1);
 	return this;
 }
 
@@ -101,4 +109,15 @@ Sprite* Sprite::PlayAnimation()
 {
 	anims[selectedAnim]->play = true;
 	return this;
+}
+
+Sprite* Sprite::SetHSV(float hue, float sat, float val)
+{
+	hsv.Set(hue, sat, val);
+	return this;
+}
+
+Vector3 Sprite::GetHSV()
+{
+	return hsv;
 }

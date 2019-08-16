@@ -1,4 +1,5 @@
 #include "FBO.h"
+#include "../../Application.h"
 
 FBO::FBO()
 {
@@ -57,4 +58,10 @@ void FBO::BindForReading(GLenum textureUnit)
 {
 	glActiveTexture(textureUnit);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
+}
+
+void FBO::BindDefault()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, Application::GetWindowWidth(), Application::GetWindowHeight());
 }

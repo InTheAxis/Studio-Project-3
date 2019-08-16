@@ -20,15 +20,18 @@ public:
 	Sprite* SetAnimation(int idx, int numFrames, float animTime, bool repeat);	
 	Sprite* SwitchAnimation(int idx);
 	Sprite* PlayAnimation();
+	
+	Sprite* SetHSV(float hue = -1, float sat = -1, float val = -1);
+	Vector3 GetHSV();
 
 protected:
 	int currFrame;
 	double currTime; 
 	float frameTime;
-
 	int selectedAnim;
-
 	Animation* anims[8];
+
+	Vector3 hsv;
 };
 
 #endif

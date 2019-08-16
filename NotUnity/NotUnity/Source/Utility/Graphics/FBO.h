@@ -21,6 +21,8 @@ public:
 	unsigned GetWidth() {return m_width;}
 	unsigned GetHeight() {return m_height;}
 
+	static void BindDefault();
+
 protected:
     GLuint m_fbo;
 	GLuint m_rbo;

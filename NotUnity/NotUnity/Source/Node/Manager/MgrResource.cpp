@@ -35,15 +35,17 @@ void MgrResource::LoadMeshes()
 
 	MeshBuilder::GenerateAxes("axes", 10, 10, 10);
 	MeshBuilder::GeneratePlane("text", 16, 16);
-	MeshBuilder::GenerateQuad("quad");
+	MeshBuilder::GenerateQuad("quad");	
 	MeshBuilder::GeneratePlane("plane", 1, 6);
 }
 
 void MgrResource::LoadMaterials()
 {
 	//Load your materials in here
-	Material* temp;
 	new Material("default");
+	new Material("fbo");
+
+	Material* temp;
 
 	temp = new Material("placeholder");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/placeholder.tga");
@@ -61,5 +63,12 @@ void MgrResource::LoadMaterials()
 	temp->maps[Material::COLOR6] = Resource::LoadTGA("tga/moveL.tga");
 	temp->maps[Material::COLOR7] = Resource::LoadTGA("tga/moveR.tga");
 
+	temp = new Material("background");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/Background.tga");
 
+	temp = new Material("background2");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/snow.tga");
+
+	temp = new Material("sattest");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/sattest.tga");
 }

@@ -63,7 +63,9 @@ public:
 
 		T* child = ptr ? ptr : new T(key);
 		child->parent = this;
+		child->ActiveSelf(m_active);
 		m_children[key] = static_cast<Node*>(child);
+		
 
 		return GetChild<T>(key);
 	}
