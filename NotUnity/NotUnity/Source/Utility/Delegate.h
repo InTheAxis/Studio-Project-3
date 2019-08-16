@@ -3,6 +3,8 @@
 
 #include <vector>
 
+//for one of any arg type
+
 template <typename T>
 class Delegate
 {
@@ -32,6 +34,38 @@ public:
 	}
 private:
 	std::vector<void(*)(T)> callbacks;
+};
+
+//specialise for void args
+template <>
+class Delegate<void>
+{
+public:
+	Delegate() {}
+	~Delegate() { callbacks.clear(); }
+
+	void operator()()
+	{
+		for (auto f : callbacks)
+			f();
+	}
+	void operator+=(void(*func)())
+	{
+		callbacks.emplace_back(func);
+	}
+	void operator-=(void(*func)())
+	{
+		for (auto it = callbacks.begin(); it != callbacks.end(); ++it)
+		{
+			if (*it == func)
+			{
+				callbacks.erase(it);
+				return;
+			}
+		}
+	}
+private:
+	std::vector<void(*)()> callbacks;
 };
 
 #endif
