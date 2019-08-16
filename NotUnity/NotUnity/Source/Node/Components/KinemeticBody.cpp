@@ -49,18 +49,19 @@ void KinemeticBody::ApplyImpulse(Vector3 impulse)
 
 void KinemeticBody::UpdateSuvat(double dt)
 {
+	float dtf = static_cast<float>(dt);
 	acceleration = force * (1 / mass) + impulse * (1 / mass);
-	velocity += acceleration * dt;
+	velocity += acceleration * dtf;
 	if (useGravity)
 	{
-		velocity += gravScale * gravity * dt;
+		velocity += gravScale * gravity * dtf;
 	}
 	
 	velocity.x = Math::Clamp(velocity.x, -maxVel.x, maxVel.x);
 	velocity.y = Math::Clamp(velocity.y, -maxVel.y, maxVel.y);
 	velocity.z = Math::Clamp(velocity.z, -maxVel.x, maxVel.z);
 
-	gameObject->GetTransform()->translate += velocity * dt;
+	gameObject->GetTransform()->translate += velocity * dtf;
 }
 
 void KinemeticBody::ResetForce()
