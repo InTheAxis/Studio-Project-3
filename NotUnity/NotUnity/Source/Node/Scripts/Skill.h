@@ -27,7 +27,7 @@ private:
 
 	bool unlocked; //whether it is unlocked
 	int cost; //cost of this skill
-	Skill* previous //prev skill to unlock to unlock this
+	Skill* previous; //prev skill to unlock to unlock this
 };
 
 #endif
