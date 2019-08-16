@@ -94,6 +94,8 @@ void MainScene::Render()
 	floatFbo[0].BindForReading(GL_TEXTURE0);
 	mgrG->GetCachedMaterial("fbo")->maps[0] = floatFbo[0].GetTexture();
 	mgrG->PreRender();
+	glDepthMask(GL_FALSE);
 	fbo->SelectShader(mgrG->SIMPLE)->Render();
+	glDepthMask(GL_TRUE);
 	RenderPass(RENDER_PASS::FINAL);
 }
