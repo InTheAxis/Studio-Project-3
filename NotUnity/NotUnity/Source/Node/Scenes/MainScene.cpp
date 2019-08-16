@@ -68,21 +68,25 @@ void MainScene::Render()
 	
 	floatFbo[0].BindForWriting();
 	mgrG->PreRender();
-	RenderPass(RENDER_PASS::BLEND);
+	RenderPass(RENDER_PASS::GEO);
 
 	floatFbo[1].BindForWriting();
 	floatFbo[0].BindForReading(GL_TEXTURE0);
 	mgrG->GetCachedMaterial("fbo")->maps[0] = floatFbo[0].GetTexture();
 	mgrG->PreRender();
+	glDepthMask(GL_FALSE); //ignore depth
 	fbo->SelectShader(mgrG->COLOR_SPOT)->Render();
 	RenderPass(RENDER_PASS::POST_FX);
+	glDepthMask(GL_TRUE); // to clear it
 	
 	floatFbo[0].BindForWriting();
 	floatFbo[1].BindForReading(GL_TEXTURE0);
 	mgrG->GetCachedMaterial("fbo")->maps[0] = floatFbo[1].GetTexture();
 	mgrG->PreRender();
+	glDepthMask(GL_FALSE);
 	fbo->SelectShader(mgrG->SIMPLE)->Render();
 	RenderPass(RENDER_PASS::HUD);
+	glDepthMask(GL_TRUE);
 
 	FBO::BindDefault();
 	floatFbo[0].BindForReading(GL_TEXTURE0);
@@ -90,4 +94,5 @@ void MainScene::Render()
 	mgrG->PreRender();
 	fbo->SelectShader(mgrG->SIMPLE)->Render();
 	RenderPass(RENDER_PASS::FINAL);
+	
 }

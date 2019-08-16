@@ -11,7 +11,7 @@
 enum class RENDER_PASS
 {
 	MANUAL,
-	BLEND,
+	GEO,
 	POST_FX,
 	HUD,
 	FINAL,

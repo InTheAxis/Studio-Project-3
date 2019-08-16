@@ -26,7 +26,7 @@ void ExampleScene::Start()
 	//GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
 	GetChild<GameObj>("debug_text")->AddScript<DebugText>();		
 
-	AddChild<GameObj>("sat")->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sattest"))->SelectShader(MgrGraphics::HSV);
+	AddChild<GameObj>("sat")->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"))->SelectShader(MgrGraphics::HSV);
 	GetChild<GameObj>("sat")->GetComp<Sprite>()->SetHSV(-1, 1, -1)->SetRenderPass(RENDER_PASS::POST_FX);
 	GetChild<GameObj>("sat")->GetTransform()->translate.y = 1.f;
 

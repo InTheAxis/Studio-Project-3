@@ -10,7 +10,7 @@ Sprite::Sprite(std::string name)
 	, hsv (-1, -1, -1)
 {
 	SetAnimation(0, 0, 1, false);	
-	renderPass = RENDER_PASS::BLEND;
+	renderPass = RENDER_PASS::GEO;
 }
 
 Sprite::~Sprite()

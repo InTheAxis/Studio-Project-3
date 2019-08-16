@@ -26,5 +26,5 @@ void main()
 
 	vertPos_modelSpace = vec3(temp);
 	
-	gl_Position = vec4(temp.xy, -1, 1);	
+	gl_Position = temp;	
 }
