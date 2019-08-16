@@ -37,6 +37,14 @@ void Node::End()
 		childNode.second->End();
 }
 
+void Node::OnEnable()
+{
+}
+
+void Node::OnDisable()
+{
+}
+
 void Node::SetName(std::string name)
 {
 	m_name = name;
@@ -55,6 +63,8 @@ bool Node::IsActive()
 void Node::ActiveSelf(bool active)
 {
 	m_active = active;
+	if (active) OnEnable();
+	else OnDisable();
 	for (auto &childNode : m_children)
 		childNode.second->ActiveSelf(active);
 }

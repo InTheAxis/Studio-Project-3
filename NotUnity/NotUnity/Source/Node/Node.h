@@ -11,6 +11,7 @@
 //call the base node start,update and end functions in your deerived class node
 //use constructor for creation, like adding children/default values
 //use Start() for init for refrences and maybe values
+//optional funcs like onEnable to use in derived
 /********************************************
   EXAMPLE USAGE
 
@@ -35,6 +36,14 @@ class Example : public Node, public TypeID<NExample>
 	{
 		Node::End();
 	}
+	virtual void OnEnable()
+	{
+		//subscribe to delegates here
+	}
+	virtual void OnDisable()
+	{
+		//unsubscribe to delegates here
+	}
 };
 ********************************************/
 
@@ -47,6 +56,8 @@ public:
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
+	virtual void OnEnable();
+	virtual void OnDisable();
 
 	void SetName(std::string name);
 	std::string GetName();
