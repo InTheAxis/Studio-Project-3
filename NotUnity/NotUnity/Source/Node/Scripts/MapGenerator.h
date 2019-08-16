@@ -25,5 +25,7 @@ public:
 private:
 	Camera* camera;
 	int mapSize;
-	int offsetBuffer;
+	int offsetBuffer; // displacement > offsetBuffer to spawn the new blocks
+	int offsetX; // increase overtime when chunk gets pop and push to the back
+	int chunkNumber;
 };

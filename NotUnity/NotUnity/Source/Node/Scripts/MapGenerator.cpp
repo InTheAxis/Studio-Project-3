@@ -3,10 +3,12 @@
 #include "../../Node/GameObj.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 
-MapGenerator::MapGenerator(std::string name) : 
+MapGenerator::MapGenerator(std::string name) :
 	Node(name),
 	mapSize(0),
-	offsetBuffer(0)
+	offsetBuffer(0),
+	chunkNumber(0),
+	offsetX(0)
 {
 }
 
@@ -17,7 +19,7 @@ MapGenerator::~MapGenerator()
 void MapGenerator::Start()
 {
 	mapSize = 10;
-	offsetBuffer = 2;
+	offsetBuffer = 7;
 	bool oneTwo = false;
 	for (int i = 0; i < mapSize; ++i)
 	{
@@ -41,13 +43,41 @@ void MapGenerator::Update(double dt)
 {
 	if (camera)
 	{
-		//if (camera->GetParent()->GetChild<Transform>()->translate.x >= 9.0f)
-		//{
-		//	Debug::Log("Poi");
-		//}
-		if (floor(camera->GetParent()->GetChild<Transform>()->translate.x) == 9.0f)
+		if (ControllerKeyboard::Instance()->IsKeyDown('A'))
 		{
-
+			Vector3 oBoA = camera->GetParent()->GetChild<Transform>()->translate - GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate; // take the last chunck pos
+			oBoA.z = 0;
+			float displacement = oBoA.Length();
+			if (displacement < offsetBuffer)
+			{
+				if (chunkNumber == 0)
+				{
+					chunkNumber = mapSize - 1;
+					--offsetX;
+					GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set(offsetX, 0, 0);
+				}
+				else
+				{
+					--chunkNumber;
+					--offsetX;
+					GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set(offsetX, 0, 0);
+				}
+			}
+		}
+		else if (ControllerKeyboard::Instance()->IsKeyDown('D'))
+		{
+			Vector3 oBoA = camera->GetParent()->GetChild<Transform>()->translate - GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate; // take the last chunck pos
+			oBoA.z = 0;
+			float displacement = oBoA.Length();
+			if (displacement > offsetBuffer)
+			{
+				GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set(mapSize + offsetX, 0, 0);
+				++chunkNumber;
+				++offsetX;
+			}
+			// once reach the end of the chunk, get back the first chunk to recaculate
+			if (chunkNumber == mapSize)
+				chunkNumber = 0;
 		}
 	}
 	Node::Update(dt);
