@@ -4,6 +4,7 @@
 
 #include "../Scenes/MainScene.h"
 #include "../Scenes/SceneExampleEmpty.h"
+#include "../Scenes/ScenePlayer.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 
 MgrScene::MgrScene(std::string name) : Manager<MgrScene>(name)
@@ -18,6 +19,7 @@ void MgrScene::LoadScenes()
 {
 	allScenes["default"] = new MainScene;
 	allScenes["example"] = new ExampleScene;
+	allScenes["player"] = new ScenePlayer;
 	
 	SwitchScene("default"); //change this line to your working scene
 }

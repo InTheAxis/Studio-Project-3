@@ -7,6 +7,7 @@
 #include "../Scripts/DebugText.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "SceneExampleEmpty.h"
+#include "ScenePlayer.h"
 
 MainScene::MainScene(std::string name)
 	: Scene(name)
@@ -21,7 +22,7 @@ void MainScene::Start()
 {	
 	//add child scenes
 	AddChild<ExampleScene>("example");
-
+	AddChild<ScenePlayer>("Player");
 	//create gameobjects y
 	AddChild<GameObj>("mainCam");
 	AddChild<GameObj>("axes");

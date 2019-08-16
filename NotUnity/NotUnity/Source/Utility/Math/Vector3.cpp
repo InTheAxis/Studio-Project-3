@@ -88,6 +88,12 @@ bool Vector3::IsZero( void ) const
 	return Math::FIsEqual(x, 0.f) && Math::FIsEqual(y, 0.f) && Math::FIsEqual(z, 0.f);
 }
 
+Vector3 Vector3::Scale(const Vector3 & rhs)
+{
+	Vector3 ret(x * rhs.x, y * rhs.y, z * rhs.z);
+	return ret;
+}
+
 /******************************************************************************/
 /*!
 \brief
