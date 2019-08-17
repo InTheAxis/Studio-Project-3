@@ -16,8 +16,7 @@ void MgrCollision::Start()
 }
 
 void MgrCollision::Update(double dt)
-{		
-	Debug::Log("hey");
+{
 	unsigned size = allColls.size();
 	for (unsigned i = 0; i < size; ++i)
 	{
