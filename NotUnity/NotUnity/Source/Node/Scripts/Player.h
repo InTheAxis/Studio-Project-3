@@ -50,6 +50,7 @@ private:
 
 	Vector3 moveSpeed;
 	int direction;
+	int health;
 
 	double jumpTimer;
 	double attackTimer;

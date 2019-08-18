@@ -29,7 +29,7 @@ protected:
 	double currTime; 
 	float frameTime;
 	int selectedAnim;
-	Animation* anims[8];
+	Animation* anims[11];
 
 	Vector3 hsv;
 };
