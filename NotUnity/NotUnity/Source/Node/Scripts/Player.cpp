@@ -69,7 +69,7 @@ void Player::Update(double dt)
 		{
 			TryChangeState(PLAYER_STATE::ATTACK_R);
 		}
-		if (direction == -1)
+		else if (direction == -1)
 		{
 			TryChangeState(PLAYER_STATE::ATTACK_L);
 		}
