@@ -24,7 +24,8 @@ void MapGenerator::Start()
 	for (int i = 0; i < mapSize; ++i)
 	{
 		AddChild<GameObj>("Chunk" + std::to_string(i))->AddComp<Chunk>();
-		GetChild<GameObj>("Chunk" + std::to_string(i))->GetTransform()->translate.Set(i, 0, 0);
+		GetChild<GameObj>("Chunk" + std::to_string(i))->GetTransform()->translate.Set(i * 40, 0, -1);
+		GetChild<GameObj>("Chunk" + std::to_string(i))->GetTransform()->scale.Set(40, 22.5, 1);
 		GetChild<GameObj>("Chunk" + std::to_string(i))->GetComp<Chunk>()->assignMaterial("background");
 		if (oneTwo)
 		{
@@ -41,7 +42,28 @@ void MapGenerator::Start()
 
 void MapGenerator::Update(double dt)
 {
-	if (camera)
+	if (ControllerKeyboard::Instance()->IsKeyPressed('K'))
+	{
+		for (int i = 0; i < mapSize; ++i)
+		{
+			GetChild<GameObj>("Chunk" + std::to_string(i))->GetTransform()->scale += Vector3(0.1, 0.1, 0);
+		}
+		Debug::Log(GetChild<GameObj>("Chunk" + std::to_string(0))->GetTransform()->scale);
+	}
+	if (ControllerKeyboard::Instance()->IsKeyPressed('L'))
+	{
+		for (int i = 0; i < mapSize; ++i)
+		{
+			GetChild<GameObj>("Chunk" + std::to_string(i))->GetTransform()->scale += Vector3(0.1, 0, 0);
+		}
+		Debug::Log(GetChild<GameObj>("Chunk" + std::to_string(0))->GetTransform()->scale);
+	}
+	if (ControllerKeyboard::Instance()->IsKeyPressed('I'))
+	{
+		GetChild<GameObj>("Chunk1")->GetTransform()->translate += Vector3(0.1, 0, 0);
+		Debug::Log(GetChild<GameObj>("Chunk1")->GetTransform()->translate);
+	}
+	if (!camera)
 	{
 		if (ControllerKeyboard::Instance()->IsKeyDown('A'))
 		{
@@ -54,13 +76,13 @@ void MapGenerator::Update(double dt)
 				{
 					chunkNumber = mapSize - 1;
 					--offsetX;
-					GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set(offsetX, 0, 0);
+					GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set(offsetX + 1, 0, -1);
 				}
 				else
 				{
 					--chunkNumber;
 					--offsetX;
-					GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set(offsetX, 0, 0);
+					GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set(offsetX + 1, 0, -1);
 				}
 			}
 		}
@@ -71,7 +93,7 @@ void MapGenerator::Update(double dt)
 			float displacement = oBoA.Length();
 			if (displacement > offsetBuffer)
 			{
-				GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set(mapSize + offsetX, 0, 0);
+				GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set(mapSize + 1, 0, -1);
 				++chunkNumber;
 				++offsetX;
 			}

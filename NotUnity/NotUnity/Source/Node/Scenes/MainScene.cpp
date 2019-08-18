@@ -30,7 +30,7 @@ void MainScene::Start()
 	GetChild<GameObj>("fbo")->GetTransform()->scale.Set(2, 2, 1);
 	
 	//add child scenes
-	AddChild<ExampleScene>("example");
+	//AddChild<ExampleScene>("example");
 	AddChild<SpawnerScene>("spawner")->setWave(1);
 	AddChild<ScenePlayer>("Player");
 	AddChild<MapScene>("MapScene");
@@ -43,8 +43,7 @@ void MainScene::Start()
 	//attach camera
 	GetChild<MapScene>("MapScene")->setCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
-	//mg->SetProjOrtho();
-
+	mg->SetProjOrtho(128);
 	Scene::Start();
 }
 
