@@ -14,6 +14,7 @@
 
 MainScene::MainScene(std::string name)
 	: Scene(name)
+	, debug(false)
 {
 	floatFbo[0].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
 	floatFbo[1].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
@@ -44,15 +45,16 @@ void MainScene::Start()
 	GetChild<MapScene>("MapScene")->setCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
 	mg->SetProjOrtho(128);
+
 	Scene::Start();
 }
 
 void MainScene::Update(double dt)
 {	
-	if (ControllerKeyboard::Instance()->IsKeyPressed(VK_SPACE))
-	{
-		//GetChild<GameObj>("sprite")->GetComp<Sprite>()->SwitchAnimation(1)->PlayAnimation();
-	}
+	if (ControllerKeyboard::Instance()->IsKeyPressed('2'))
+		debug = true;
+	else if (ControllerKeyboard::Instance()->IsKeyPressed('3'))	
+		debug = false;	
 
 	Scene::Update(dt);	
 }
@@ -96,5 +98,6 @@ void MainScene::Render()
 	glDepthMask(GL_FALSE);
 	fbo->SelectShader(mgrG->SIMPLE)->Render();
 	glDepthMask(GL_TRUE);
-	RenderPass(RENDER_PASS::FINAL);
+	if (debug)
+		RenderPass(RENDER_PASS::FINAL);
 }
