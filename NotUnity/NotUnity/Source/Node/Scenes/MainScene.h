@@ -38,6 +38,7 @@ private:
 	MapScene* map;
 	Sprite* title;
 	Renderable* wasd;
+	GameObj* playerGO;
 
 	bool debug;
 	GAME_STATE gs;

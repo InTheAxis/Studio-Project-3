@@ -21,7 +21,8 @@ public:
 	virtual void Update(double dt);
 	virtual void End();
 
-	void setCamera(Camera* camera);
+	void SetCamera(Camera* camera);
+	Chunk* GetCurrChunk();
 private:
 	Camera* camera;
 	int mapSize;
@@ -32,5 +33,5 @@ private:
 	bool cull;
 	int chunkNumber;
 
-	void cullChunk();
+	void CullChunk();
 };

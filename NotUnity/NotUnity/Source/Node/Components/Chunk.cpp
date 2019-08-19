@@ -88,3 +88,8 @@ void Chunk::AssignMaterial(std::string materialName)
 {
 	material = MgrGraphics::Instance()->GetCachedMaterial(materialName);
 }
+
+Spline* Chunk::GetSpline()
+{
+	return spline;
+}

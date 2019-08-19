@@ -58,14 +58,15 @@ void MainScene::Start()
 	t->scale.Set(1.5f, 1.5f, 1);
 	
 	//attach camera
-	GetChild<MapScene>("MapScene")->setCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
+	GetChild<MapScene>("MapScene")->SetCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
 	mg->SetProjOrtho(128);
 
+	Scene::Start();	
+
 	//init variables
 	spawner->SetWave(1);
-
-	Scene::Start();	
+	playerGO = player->GetPlayer();
 }
 
 void MainScene::Update(double dt)
@@ -74,7 +75,6 @@ void MainScene::Update(double dt)
 	ControllerMouse* m = ControllerMouse::Instance();
 	if (kb->IsKeyPressed('9'))
 		debug = !debug;
-
 
 	switch (gs)
 	{
@@ -95,7 +95,8 @@ void MainScene::Update(double dt)
 		break;
 	}
 
-	spawner->PlayerTrans(player->GetChild<GameObj>("Player")->GetTransform()->translate);
+	spawner->PlayerTrans(playerGO->GetTransform()->translate);
+	player->SetTerrainHeight(map->GetTerrainHeight(playerGO->GetTransform()->translate.x));
 
 	Scene::Update(dt);	
 }

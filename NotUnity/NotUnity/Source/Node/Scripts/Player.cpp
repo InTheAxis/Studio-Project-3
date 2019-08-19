@@ -48,10 +48,13 @@ void Player::Start()
 	currState = nextState = PLAYER_STATE::IDLE_R;
 
 	direction = 1;
-	moveSpeed.Set(10, 15, 0);
+	moveSpeed.Set(10, 25, 0);
 
 	attackTimer = 0.0;
 	jumpTimer = 0.0;
+
+	worldHeight = 0;
+
 	Node::Start();
 }
 
@@ -158,7 +161,7 @@ void Player::Update(double dt)
 	//	}
 	//}
 	
-	if (gameObject->GetTransform()->translate.y >  0) //falling & jumping | gameObject->GetTransform()->translate.y >  worldHeight
+	if (gameObject->GetTransform()->translate.y > worldHeight) //falling & jumping | gameObject->GetTransform()->translate.y >  worldHeight
 	{
 		if (kinb->GetVel().y > 0 && currState != PLAYER_STATE::DYING_L && currState != PLAYER_STATE::DYING_R)
 			TryChangeState(PLAYER_STATE::JUMP);
@@ -167,9 +170,9 @@ void Player::Update(double dt)
 		kinb->useGravity = true;
 		kinb->ApplyForce(input.Scale(Vector3(moveSpeed.x * 0.1f, moveSpeed.y, moveSpeed.z)));
 	}
-	else
+	if (gameObject->GetTransform()->translate.y > worldHeight)
 	{
-		gameObject->GetTransform()->translate.y = 0;
+		gameObject->GetTransform()->translate.y = worldHeight;
 		kinb->ResetVel(0, 1);
 		kinb->useGravity = false;
 		kinb->ApplyForce(input.Scale(moveSpeed));
