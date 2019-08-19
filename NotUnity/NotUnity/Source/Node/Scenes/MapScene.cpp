@@ -23,7 +23,7 @@ void MapScene::Start()
 	//add & set up components and scripts	
 	//GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
 	GetChild<GameObj>("debug_text")->AddScript<DebugText>();	
-	GetChild<GameObj>("MapGenerator")->AddScript<MapGenerator>()->setCamera(camera);
+	GetChild<GameObj>("MapGenerator")->AddScript<MapGenerator>()->SetCamera(camera);
 	Scene::Start();
 }
 

@@ -40,7 +40,7 @@ void MapGenerator::Start()
 			oneTwo = true;
 		}
 	}
-	cullChunk();
+	CullChunk();
 	Node::Start();
 }
 
@@ -60,14 +60,14 @@ void MapGenerator::Update(double dt)
 					chunkNumber = mapSize - 1;
 					--offsetX;
 					GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set((scaleX * offsetX), 0, -1);
-					cullChunk();
+					CullChunk();
 				}
 				else
 				{
 					--chunkNumber;
 					--offsetX;
 					GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set((scaleX * offsetX), 0, -1);
-					cullChunk();
+					CullChunk();
 				}
 			}
 		}
@@ -79,7 +79,7 @@ void MapGenerator::Update(double dt)
 			if (displacement > offsetBuffer)
 			{
 				GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set((mapSize * scaleX) + (offsetX * scaleX), 0, -1); // 10 * 10 (to get the end of the map) + (10 * n)
-				cullChunk();
+				CullChunk();
 				++chunkNumber;
 				++offsetX;
 			}
@@ -97,12 +97,12 @@ void MapGenerator::End()
 	Node::End();
 }
 
-void MapGenerator::setCamera(Camera * camera)
+void MapGenerator::SetCamera(Camera * camera)
 {
 	this->camera = camera;
 }
 
-void MapGenerator::cullChunk()
+void MapGenerator::CullChunk()
 {
 	for (int i = 0; i < mapSize; ++i)
 	{

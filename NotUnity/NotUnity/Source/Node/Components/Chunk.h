@@ -43,6 +43,7 @@ private:
 	Material* material;
 	Transform* t;
 
+	Spline* spline;
 	Vector3 HSV;
 
 	BIOME_TYPE currentBiome;
