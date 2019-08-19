@@ -82,6 +82,21 @@ bool AABB::IsOverlap(AABB other, Vector3 * penetration)
 	return false;
 }
 
+Rect2D AABB::GetRect() const
+{
+	return rect;
+}
+
+COL_TYPE AABB::GetType() const
+{
+	return type;
+}
+
+float AABB::GetRadius() const
+{
+	return radius;
+}
+
 bool AABB::InternalOverlap(Rect2D rect, Rect2D other, Vector3 * penetration)
 {
 	return rect.IsOverlap(other, penetration);
