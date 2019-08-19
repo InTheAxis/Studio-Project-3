@@ -19,17 +19,22 @@ Player::~Player()
 void Player::Start()
 {
 	mg = MgrGraphics::Instance();
+	health = 5;
+
 	gameObject->GetTransform()->translate.Set(-1, 1, 0);
 
 	sprite = AddChild<Sprite>()
-		->SetAnimation(0, 6, 1, 1)
-		->SetAnimation(1, 6, 1, 1)
-		->SetAnimation(2, 6, 1, 1)
-		->SetAnimation(3, 6, 1, 1)
-		->SetAnimation(4, 6, 1, 1)
-		->SetAnimation(5, 6, 1, 1)
-		->SetAnimation(6, 6, 1, 1)
-		->SetAnimation(7, 6, 1, 1);
+		->SetAnimation(0, 8, 0.5f, 1)
+		->SetAnimation(1, 8, 0.5f, 1)
+		->SetAnimation(2, 8, 0.5f, 1)
+		->SetAnimation(3, 8, 0.5f, 1)
+		->SetAnimation(4, 8, 0.5f, 1)
+		->SetAnimation(5, 8, 0.5f, 1)
+		->SetAnimation(6, 8, 0.5f, 1)
+		->SetAnimation(7, 8, 0.5f, 1)
+		->SetAnimation(8, 8, 0.5f, 1)
+		->SetAnimation(9 ,8, 0.5f, 1)
+		->SetAnimation(10, 8, 0.5f, 1);
 	sprite->SetGameObj(gameObject);
 	sprite->AttachMesh(mg->GetCachedMesh("plane"))->AttachMaterial(mg->GetCachedMaterial("anim"));
 	
@@ -54,10 +59,32 @@ void Player::Update(double dt)
 	Vector3 input;
 	float dtf = static_cast<float>(dt);
 	
-	if (direction == 1)
-		TryChangeState(PLAYER_STATE::IDLE_R);
-	else if (direction == -1)
-		TryChangeState(PLAYER_STATE::IDLE_L);
+	//if (direction == 1)
+	//	TryChangeState(PLAYER_STATE::IDLE_R);
+	//else if (direction == -1)
+	//	TryChangeState(PLAYER_STATE::IDLE_L);
+	if (attackTimer > 0)  //Attack Animation with timer 
+	{
+		if (direction == 1)
+		{
+			TryChangeState(PLAYER_STATE::ATTACK_R);
+		}
+		else if (direction == -1)
+		{
+			TryChangeState(PLAYER_STATE::ATTACK_L);
+		}
+	}
+	else
+	{
+		if (direction == 1)
+		{
+			TryChangeState(PLAYER_STATE::IDLE_R);
+		}
+		else if (direction == -1)
+		{
+			TryChangeState(PLAYER_STATE::IDLE_L);
+		}
+	}
 
 	//get directiom to move in
 	if (kb->IsKeyDown(VK_RIGHT))
@@ -73,33 +100,35 @@ void Player::Update(double dt)
 	
 	}
 	// will play the animation when the user has press spacebar but theres a problem when you release it before the animation plays finish. !! need fix
-	if (kb->IsKeyDown(VK_SPACE) && !attackCoolDown)
+	if (kb->IsKeyPressed('R'))
 	{
 		if (direction == 1)
 		{
-			attackTimer += dt;
-			if (attackTimer > 0.5f)
-			{
-				attackCoolDown = true;
-				attackTimer = 0;
-			}
-			TryChangeState(PLAYER_STATE::ATTACK_R);
+			health--;
+			TryChangeState(PLAYER_STATE::HIT_R);
 		}
 		else if (direction == -1)
 		{
-			attackTimer += dt;
-			if (attackTimer > 0.5f)
-			{
-				attackCoolDown = true;
-				attackTimer = 0;
-			}
-			TryChangeState(PLAYER_STATE::ATTACK_L);
+			health--;
+			TryChangeState(PLAYER_STATE::HIT_L);
+		}
+		else
+		{
+			if (direction == 1)
+				TryChangeState(PLAYER_STATE::IDLE_R);
+			else if (direction == -1)
+				TryChangeState(PLAYER_STATE::IDLE_L);
 		}
 	}
-	else
-	{
-		attackCoolDown = false;
+
+	if (kb->IsKeyPressed(VK_SPACE))  // Play Attack Animation 
+	{			
+		attackTimer = 1;
 	}
+	attackTimer -= dt;
+
+	if (attackTimer < 0) 
+		attackTimer = 0;
 	
 	if (kb->IsKeyDown(VK_UP))
 	{
@@ -115,8 +144,8 @@ void Player::Update(double dt)
 	//		TryChangeState(PLAYER_STATE::AIR_ATTACK);
 	//	}
 	//}
-	//falling & jumping
-	if (gameObject->GetTransform()->translate.y >  0)
+	
+	if (gameObject->GetTransform()->translate.y >  0) //falling & jumping
 	{
 		if (kinb->GetVel().y > 0)
 			TryChangeState(PLAYER_STATE::JUMP);
@@ -132,6 +161,8 @@ void Player::Update(double dt)
 		kinb->useGravity = false;
 		kinb->ApplyForce(input.Scale(moveSpeed));
 	}
+	
+	
 
 	if (input.x != 0) //set dir
 		direction = input.x;
@@ -168,6 +199,13 @@ void Player::TryChangeState(PLAYER_STATE state)
 	case PLAYER_STATE::IDLE_R:
 	case PLAYER_STATE::IDLE_L:
 		break;
+	case PLAYER_STATE::ATTACK_L:
+	case PLAYER_STATE::ATTACK_R:
+		
+		break;
+	case PLAYER_STATE::HIT_L:
+	case PLAYER_STATE::HIT_R:
+		break;
 	case PLAYER_STATE::MOVE_L:
 	case PLAYER_STATE::MOVE_R:
 		if (nextState == PLAYER_STATE::FALL || nextState == PLAYER_STATE::JUMP)
@@ -177,10 +215,7 @@ void Player::TryChangeState(PLAYER_STATE state)
 		break;
 	case PLAYER_STATE::FALL:
 		break;
-	case PLAYER_STATE::ATTACK_L:
-		break;
-	case PLAYER_STATE::ATTACK_R:
-		break;
+
 	case PLAYER_STATE::AIR_ATTACK:
 		break;
 
@@ -224,6 +259,12 @@ void Player::ChangeState()
 		break;
 	case PLAYER_STATE::AIR_ATTACK:
 		Debug::Log("I am AIR_ATTACK");
+		break;
+	case PLAYER_STATE::HIT_L:
+		Debug::Log("I am HIT_L");
+		break;
+	case PLAYER_STATE::HIT_R:
+		Debug::Log("I am HIT_R");
 		break;
 	}
 }

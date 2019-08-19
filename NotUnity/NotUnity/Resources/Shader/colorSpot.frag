@@ -9,7 +9,6 @@ in vec3 vertPos_modelSpace;
 out vec4 color;
 
 // constants
-const int MAX_COLORMAPS = 1;
 const int MAX_POINTS = 2;
 
 // misc uniforms
@@ -17,8 +16,8 @@ struct Material
 {
 	vec4 albedo;
 
-	bool colorMapEnabled[MAX_COLORMAPS];
-	sampler2D colorMap[MAX_COLORMAPS];
+	bool colorMapEnabled[1];
+	sampler2D colorMap[1];
 };
 struct Point
 {
@@ -45,12 +44,15 @@ void main()
 	
 	color = material.albedo * baseColor;
 
-	//apply hsv changes
-	vec3 targetHsv = rgbToHsv(vec3(color));	
-	targetHsv.y = GetSaturation();
-	vec3 newColor = hsvToRgb(targetHsv);
+	if (color.r < 0.8 && color.g < 0.8 && color.b < 0.8)
+	{
+		//apply hsv changes
+		vec3 targetHsv = rgbToHsv(vec3(color));	
+		targetHsv.y = GetSaturation();
+		vec3 newColor = hsvToRgb(targetHsv);
+		color.rgb = newColor;
+	}
 
-	color.rgb = newColor;
 
 	if (color.a < 0.01) 
 		discard;
