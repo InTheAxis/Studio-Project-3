@@ -28,5 +28,9 @@ private:
 	int offsetBuffer; // displacement > offsetBuffer to spawn the new blocks
 	int offsetX; // increase overtime when chunk gets pop and push to the back
 	int scaleX;
+	int cullingAmount;
+	bool cull;
 	int chunkNumber;
+
+	void cullChunk();
 };

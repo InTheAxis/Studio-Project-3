@@ -9,7 +9,8 @@ MapGenerator::MapGenerator(std::string name) :
 	offsetBuffer(0),
 	chunkNumber(0),
 	offsetX(0),
-	scaleX(10)
+	scaleX(10),
+	cullingAmount(30)
 {
 }
 
@@ -20,24 +21,26 @@ MapGenerator::~MapGenerator()
 void MapGenerator::Start()
 {
 	mapSize = 10;
-	offsetBuffer = 7;
+	offsetBuffer = 7 * scaleX; // Desire ammount * scale
 	bool oneTwo = false;
 	for (int i = 0; i < mapSize; ++i)
 	{
 		AddChild<GameObj>("Chunk" + std::to_string(i))->AddComp<Chunk>();
 		GetChild<GameObj>("Chunk" + std::to_string(i))->GetTransform()->translate.Set(i * scaleX, 0, -1);
 		GetChild<GameObj>("Chunk" + std::to_string(i))->GetTransform()->scale.Set(scaleX, 5.7f, 1);
-		GetChild<GameObj>("Chunk" + std::to_string(i))->GetComp<Chunk>()->assignMaterial("background");
+		GetChild<GameObj>("Chunk" + std::to_string(i))->GetComp<Chunk>()->assignMaterial("background2");
+		GetChild<GameObj>("Chunk" + std::to_string(i))->GetComp<Chunk>()->assignBiome(BIOME_TYPE::GRASS);
 		if (oneTwo)
 		{
 			oneTwo = false;
-			GetChild<GameObj>("Chunk" + std::to_string(i))->GetComp<Chunk>()->assignMaterial("background2");
+			GetChild<GameObj>("Chunk" + std::to_string(i))->GetComp<Chunk>()->assignMaterial("background");
 		}
 		else
 		{
 			oneTwo = true;
 		}
 	}
+	cullChunk();
 	Node::Start();
 }
 
@@ -57,12 +60,18 @@ void MapGenerator::Update(double dt)
 					chunkNumber = mapSize - 1;
 					--offsetX;
 					GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set((scaleX * offsetX), 0, -1);
+					if (!GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->IsActive())
+						GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->ActiveSelf(true);
+					cullChunk();
 				}
 				else
 				{
 					--chunkNumber;
 					--offsetX;
 					GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set((scaleX * offsetX), 0, -1);
+					if (!GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->IsActive())
+						GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->ActiveSelf(true);
+					cullChunk();
 				}
 			}
 		}
@@ -74,6 +83,9 @@ void MapGenerator::Update(double dt)
 			if (displacement > offsetBuffer)
 			{
 				GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate.Set((mapSize * scaleX) + (offsetX * scaleX), 0, -1); // 10 * 10 (to get the end of the map) + (10 * n)
+				if (!GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->IsActive())
+					GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->ActiveSelf(true);
+				cullChunk();
 				++chunkNumber;
 				++offsetX;
 			}
@@ -82,6 +94,7 @@ void MapGenerator::Update(double dt)
 				chunkNumber = 0;
 		}
 	}
+	
 	Node::Update(dt);
 }
 
@@ -93,4 +106,19 @@ void MapGenerator::End()
 void MapGenerator::setCamera(Camera * camera)
 {
 	this->camera = camera;
+}
+
+void MapGenerator::cullChunk()
+{
+	for (int i = 0; i < mapSize; ++i)
+	{
+		Vector3 oBoA = camera->GetParent()->GetChild<Transform>()->translate - GetChild<GameObj>("Chunk" + std::to_string(i))->GetTransform()->translate; // take the last chunck pos
+		oBoA.z = 0;
+		float displacement = oBoA.Length();
+		if (displacement > cullingAmount)
+		{
+			GetChild<GameObj>("Chunk" + std::to_string(i))->ActiveSelf(false);
+			Debug::Log("Chunk" + std::to_string(i) + " " + std::to_string(GetChild<GameObj>("Chunk" + std::to_string(i))->IsActive()));
+		}
+	}
 }
