@@ -5,9 +5,10 @@
 
 //plain scene to show how to inherit properly
 class ColorSpot;
+class Player;
+class PlayerController;
 class ScenePlayer : public Scene  //alright to inherit because I won't need to Get it
 {
-	ColorSpot* colorSpot;
 public:
 	ScenePlayer(std::string name = "ScenePlayer");
 	~ScenePlayer();
@@ -16,7 +17,13 @@ public:
 	virtual void Update(double dt);
 	virtual void End();
 
+	GameObj* GetPlayer();
+	void SetTerrainHeight(float h);
+
 	void Render();
+protected:
+	ColorSpot* colorSpot;
+	PlayerController* playerScript;
 };
 
 #endif

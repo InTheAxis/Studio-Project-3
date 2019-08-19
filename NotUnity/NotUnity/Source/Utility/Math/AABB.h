@@ -23,6 +23,10 @@ public:
 	bool IsInside(Vector3 pos, Vector3* penetration = nullptr);
 	bool IsOverlap(AABB other, Vector3* penetration = nullptr);
 
+	Rect2D GetRect() const;
+	COL_TYPE GetType() const;
+	float GetRadius() const;
+
 private:
 	Vector3 origin;
 

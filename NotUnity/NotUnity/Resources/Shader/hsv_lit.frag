@@ -58,18 +58,15 @@ void main()
 	
 	//apply hsv changes
 	vec3 targetHsv = rgbToHsv(vec3(color));	
-	if (color.r < 0.8 && color.g < 0.8 && color.b < 0.8)
-	{
-		if (hsv.h > 0)
-			targetHsv.x = clamp(hsv.h, 0, 360);
-		if (hsv.s >= 0 && targetHsv.y > 0.3)
-			targetHsv.y = clamp(hsv.s, 0, 1);
-		if (hsv.v >= 0)
-			targetHsv.z = clamp(hsv.v, 0, 1);
-		vec3 newColor = hsvToRgb(targetHsv);
+	if (hsv.h >= 0)
+		targetHsv.x = hsv.h;
+	if (hsv.s >= 0 && targetHsv.y > 0.3)
+		targetHsv.y = clamp(hsv.s, 0, 1);
+	if (hsv.v >= 0)
+		targetHsv.z = clamp(hsv.v, 0, 1);
+	vec3 newColor = hsvToRgb(targetHsv);
 
-		color.rgb = newColor;
-	}
+	color.rgb = newColor;
 
 	if (color.a < 0.01) 
 		discard;

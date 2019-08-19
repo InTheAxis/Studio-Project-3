@@ -4,8 +4,9 @@
 #include "../Components/Renderable.h"
 #include "../Scripts/DebugText.h"
 #include "../Scripts/Player.h"
+#include "../Scripts/PlayerController.h"
 #include "../Scripts/ColorSpot.h"
-
+#include "../Scripts/SkillTree.h"
 ScenePlayer::ScenePlayer(std::string name)
 	: Scene(name)
 {
@@ -20,9 +21,11 @@ void ScenePlayer::Start()
 	//create gameobjects	
 	AddChild<GameObj>("Player");
 	//add & set up components and scripts	
-	GetChild<GameObj>("Player")->AddScript<Player>();
-	colorSpot = GetChild<GameObj>("Player")->AddComp<ColorSpot>();
+	playerScript = GetChild<GameObj>("Player")->AddScript<PlayerController>();
+	AddChild("SkillTree", SkillTree::Instance());
 	
+	colorSpot = GetChild<GameObj>("Player")->AddComp<ColorSpot>();
+
 	Scene::Start();
 }
 
@@ -50,4 +53,14 @@ void ScenePlayer::Render()
 	//OR
 
 	Scene::Render();
+}
+
+GameObj* ScenePlayer::GetPlayer()
+{
+	return playerScript->GetGameObj();
+}
+
+void ScenePlayer::SetTerrainHeight(float h)
+{
+	playerScript->SetHeight(h);
 }

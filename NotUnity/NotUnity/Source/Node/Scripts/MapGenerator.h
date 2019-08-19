@@ -22,6 +22,7 @@ public:
 	virtual void End();
 
 	void SetCamera(Camera* camera);
+	Chunk* GetCurrChunk();
 private:
 	Camera* camera;
 	int mapSize;

@@ -20,7 +20,8 @@ public:
 
 	void Create(int cost, Skill* previous, bool unlocked); //create a skill, telling me the prev skill to unlock, and whether it starts out unlocked
 	bool Unlock(int* skillPts); //give the func how many points you curr have, it'll minus for you
-
+	bool GetUnlocked(); // get if skill is unlocked already 
+	Skill* GetPrevious();
 private:
 	Skill(std::string name = "Skill");
 	~Skill();

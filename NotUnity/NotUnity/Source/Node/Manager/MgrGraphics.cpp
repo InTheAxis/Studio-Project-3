@@ -35,9 +35,11 @@ void MgrGraphics::Start()
 	SetProjPerspective();
 
 	Debug::Log("Loading shaders...");	
-	shaderPrograms[DEFAULT] = Resource::LoadShaders("shader/default.vert", "shader/unlit.frag");
+	shaderPrograms[UNLIT] = Resource::LoadShaders("shader/default.vert", "shader/unlit.frag");
 	shaderPrograms[SIMPLE] = Resource::LoadShaders("shader/simple.vert", "shader/simple.frag");
-	shaderPrograms[HSV] = Resource::LoadShaders("shader/default.vert", "shader/hsv.frag");
+	shaderPrograms[LIT] = Resource::LoadShaders("shader/default.vert", "shader/lit.frag");
+	shaderPrograms[HSV_LIT] = Resource::LoadShaders("shader/default.vert", "shader/hsv_lit.frag");
+	shaderPrograms[HSV_UNLIT] = Resource::LoadShaders("shader/default.vert", "shader/hsv_unlit.frag");
 	shaderPrograms[COLOR_SPOT] = Resource::LoadShaders("shader/simple.vert", "shader/colorSpot.frag");
 
 	Node::Start();
@@ -61,7 +63,7 @@ void MgrGraphics::PreRender()
 {
 	glStencilMask(0xFF); //enable writing
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	UseShader(DEFAULT);
+	UseShader(UNLIT);
 	modelStack.LoadIdentity();
 	glLineWidth(3);
 }

@@ -9,13 +9,15 @@
 #include "../../Utility/Math/Vector3.h"
 
 class Collider;
-struct ColInfo
+class ColInfo
 {
+public:
 	Collider* other;
 	Vector3 penetration;
 };
 
 class Transform;
+class ColliderRender;
 class Collider : public Node, public TypeID<Collider>, public Component
 {
 public:
@@ -39,6 +41,7 @@ public:
 private:
 	Transform* t;
 	AABB aabb;
+	ColliderRender* cr;
 };
 
 #endif

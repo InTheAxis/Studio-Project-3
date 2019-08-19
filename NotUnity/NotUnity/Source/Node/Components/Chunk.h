@@ -38,10 +38,13 @@ public:
 
 	void AssignBiome(BIOME_TYPE bt);
 	void AssignMaterial(std::string materialName);
+
+	Spline* GetSpline();
 private:
 	Sprite* sprite;
 	Material* material;
 	Transform* t;
+	Spline* spline;
 
 	Spline* spline;
 	Vector3 HSV;

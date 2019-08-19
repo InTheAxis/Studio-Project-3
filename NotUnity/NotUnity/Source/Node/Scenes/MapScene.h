@@ -6,6 +6,7 @@
 
 //plain scene to show how to inherit properly
 
+class MapGenerator;
 class MapScene : public Scene //alright to inherit because I won't need to Get it
 {
 public:
@@ -17,9 +18,11 @@ public:
 	virtual void End();	
 
 	void Render();
-	void setCamera(Camera* camera);
+	void SetCamera(Camera* camera);
+	float GetTerrainHeight(float x);
 private:
 	Camera* camera;
+	MapGenerator* mapGen;
 };
 
 #endif

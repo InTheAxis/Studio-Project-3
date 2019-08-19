@@ -52,9 +52,11 @@
     <ClCompile Include="Source\Node\Scripts\DebugText.cpp" />
     <ClCompile Include="Source\Node\Scripts\MapGenerator.cpp" />
     <ClCompile Include="Source\Node\Scripts\Player.cpp" />
+    <ClCompile Include="Source\Node\Scripts\PlayerController.cpp" />
     <ClCompile Include="Source\Node\Scripts\Skill.cpp" />
     <ClCompile Include="Source\Node\Scripts\SkillTree.cpp" />
     <ClCompile Include="Source\Node\Scripts\Spawner.cpp" />
+    <ClCompile Include="Source\Node\Scripts\Strategy.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO\DepthFBO.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO\FloatFBO.cpp" />
@@ -110,9 +112,11 @@
     <ClInclude Include="Source\Node\Scripts\DebugText.h" />
     <ClInclude Include="Source\Node\Scripts\MapGenerator.h" />
     <ClInclude Include="Source\Node\Scripts\Player.h" />
+    <ClInclude Include="Source\Node\Scripts\PlayerController.h" />
     <ClInclude Include="Source\Node\Scripts\Skill.h" />
     <ClInclude Include="Source\Node\Scripts\SkillTree.h" />
     <ClInclude Include="Source\Node\Scripts\Spawner.h" />
+    <ClInclude Include="Source\Node\Scripts\Strategy.h" />
     <ClInclude Include="Source\Utility\Component.h" />
     <ClInclude Include="Source\Utility\Delegate.h" />
     <ClInclude Include="Source\Utility\Graphics\Animation.h" />
@@ -149,7 +153,9 @@
   <ItemGroup>
     <None Include="Resources\shader\colorSpot.frag" />
     <None Include="Resources\Shader\default.vert" />
-    <None Include="Resources\shader\hsv.frag" />
+    <None Include="Resources\shader\hsv_lit.frag" />
+    <None Include="Resources\shader\hsv_unlit.frag" />
+    <None Include="Resources\shader\lit.frag" />
     <None Include="Resources\Shader\simple.frag" />
     <None Include="Resources\Shader\simple.vert" />
     <None Include="Resources\Shader\unlit.frag" />

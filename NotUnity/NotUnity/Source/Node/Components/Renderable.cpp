@@ -8,7 +8,7 @@ Renderable::Renderable(std::string name)
 	, mesh(nullptr)
 	, material(nullptr)
 	, t(nullptr)
-	, shader(MgrGraphics::DEFAULT)	
+	, shader(MgrGraphics::UNLIT)	
 	, renderPass(RENDER_PASS::FINAL)
 {
 }

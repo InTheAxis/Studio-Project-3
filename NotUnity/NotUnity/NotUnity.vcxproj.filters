@@ -214,6 +214,12 @@
     <ClCompile Include="Source\Node\Manager\MgrCollision.cpp">
       <Filter>Source\Node\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Node\Scripts\Strategy.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scripts\PlayerController.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -420,6 +426,12 @@
     <ClInclude Include="Source\Node\Manager\MgrCollision.h">
       <Filter>Source\Node\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Node\Scripts\Strategy.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scripts\PlayerController.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\simple.frag">
@@ -434,10 +446,16 @@
     <None Include="Resources\Shader\simple.vert">
       <Filter>Resources\Shader</Filter>
     </None>
-    <None Include="Resources\shader\hsv.frag">
+    <None Include="Resources\shader\colorSpot.frag">
       <Filter>Resources\Shader</Filter>
     </None>
-    <None Include="Resources\shader\colorSpot.frag">
+    <None Include="Resources\shader\hsv_unlit.frag">
+      <Filter>Resources\Shader</Filter>
+    </None>
+    <None Include="Resources\shader\hsv_lit.frag">
+      <Filter>Resources\Shader</Filter>
+    </None>
+    <None Include="Resources\shader\lit.frag">
       <Filter>Resources\Shader</Filter>
     </None>
   </ItemGroup>

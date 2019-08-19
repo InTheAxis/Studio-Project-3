@@ -102,6 +102,11 @@ void MapGenerator::SetCamera(Camera * camera)
 	this->camera = camera;
 }
 
+Chunk * MapGenerator::GetCurrChunk()
+{	
+	return GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetComp<Chunk>();
+}
+
 void MapGenerator::CullChunk()
 {
 	for (int i = 0; i < mapSize; ++i)
@@ -112,7 +117,7 @@ void MapGenerator::CullChunk()
 		if (displacement > cullingAmount)
 		{
 			GetChild<GameObj>("Chunk" + std::to_string(i))->ActiveSelf(false);
-			Debug::Log("Chunk" + std::to_string(i) + " " + std::to_string(GetChild<GameObj>("Chunk" + std::to_string(i))->IsActive()));
+			//Debug::Log("Chunk" + std::to_string(i) + " " + std::to_string(GetChild<GameObj>("Chunk" + std::to_string(i))->IsActive()));
 		}
 		else
 		{
