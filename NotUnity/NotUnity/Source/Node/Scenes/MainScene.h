@@ -4,7 +4,12 @@
 #include "../Scene.h"
 
 #include "../../Utility/Graphics/FBO/FloatFBO.h"
+#include "ScenePlayer.h"
+#include "SpawnerScene.h"
+#include "../../Utility/Math/Splines/Cubic.h"
 
+class SpawnerScene;
+class ScenePlayer;
 class MainScene : public Scene //alright to inherit because I won't need to Get it
 {
 public:
@@ -18,6 +23,11 @@ public:
 	void Render();
 private:
 	FloatFBO floatFbo[2];
+
+	SpawnerScene* sceneSpawner;
+	ScenePlayer* scenePlayer;
+	SplineCubic* spCubic;
+	float spc;
 };
 
 #endif

@@ -11,9 +11,7 @@
 #include "../../Utility/Math/Splines/Reciprocal.h"
 #include "../../Utility/Math/Splines/SqReci.h"
 
-//plain scene to show how to inherit properly
-
-class SpawnerScene : public Scene //alright to inherit because I won't need to Get it
+class SpawnerScene : public Scene
 {
 public:
 	SpawnerScene(std::string name = "SpawnerScene");
@@ -24,10 +22,11 @@ public:
 	virtual void End();	
 
 	void Render();
-	void setWave(int wave); //Set starting wave from other scene
+	void SetWave(int wave); //Set starting wave from other scene
+	void PlayerTrans(Vector3 trans);
 private:
-
 	int currentWave;
+	Vector3 fromPlayer;
 };
 
 #endif

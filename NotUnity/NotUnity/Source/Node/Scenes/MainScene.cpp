@@ -30,10 +30,10 @@ void MainScene::Start()
 	GetChild<GameObj>("fbo")->GetTransform()->scale.Set(2, 2, 1);
 	
 	//add child scenes
-	//AddChild<ExampleScene>("example");
-	AddChild<SpawnerScene>("spawner")->setWave(1);
-	AddChild<ScenePlayer>("Player");
 	AddChild<MapScene>("MapScene");
+	scenePlayer = AddChild<ScenePlayer>("Player");
+	sceneSpawner = AddChild<SpawnerScene>("spawner");
+	sceneSpawner->SetWave(1);
 
 	AddChild<GameObj>("mainCam");
 	AddChild<GameObj>("axes");
@@ -43,12 +43,14 @@ void MainScene::Start()
 	//attach camera
 	GetChild<MapScene>("MapScene")->setCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
-	mg->SetProjOrtho(128);
+	//mg->SetProjOrtho(128);
 	Scene::Start();
 }
 
 void MainScene::Update(double dt)
 {	
+	sceneSpawner->PlayerTrans(scenePlayer->GetChild<GameObj>("Player")->GetTransform()->translate);
+	//scenePlayer->SetY(spCubic->Fn(scenePlayer->GetChild<GameObj>("Player")->GetTransform()->translate.x));
 	if (ControllerKeyboard::Instance()->IsKeyPressed(VK_SPACE))
 	{
 		//GetChild<GameObj>("sprite")->GetComp<Sprite>()->SwitchAnimation(1)->PlayAnimation();
