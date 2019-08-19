@@ -9,6 +9,7 @@
 ScenePlayer::ScenePlayer(std::string name)
 	: Scene(name)
 {
+	fromSpline = 0.f;
 }
 
 ScenePlayer::~ScenePlayer()
@@ -24,7 +25,8 @@ void ScenePlayer::Start()
 	AddChild("SkillTree", SkillTree::Instance());
 	
 	colorSpot = GetChild<GameObj>("Player")->AddComp<ColorSpot>();
-	
+	GetChild<GameObj>("Player")->AddScript<Player>()->SetHeight(fromSpline);
+
 	Scene::Start();
 }
 
@@ -52,4 +54,9 @@ void ScenePlayer::Render()
 	//OR
 
 	Scene::Render();
+}
+
+void ScenePlayer::SetY(float trans)
+{
+	fromSpline = trans;
 }

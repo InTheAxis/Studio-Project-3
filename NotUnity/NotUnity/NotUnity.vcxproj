@@ -44,7 +44,6 @@
     <ClCompile Include="Source\Node\Scene.cpp" />
     <ClCompile Include="Source\Node\Scenes\MainScene.cpp" />
     <ClCompile Include="Source\Node\Scenes\MapScene.cpp" />
-    <ClCompile Include="Source\Node\Scenes\SceneExampleEmpty.cpp" />
     <ClCompile Include="Source\Node\Scenes\ScenePlayer.cpp" />
     <ClCompile Include="Source\Node\Scenes\SpawnerScene.cpp" />
     <ClCompile Include="Source\Node\Scripts.cpp" />
@@ -104,7 +103,6 @@
     <ClInclude Include="Source\Node\Scene.h" />
     <ClInclude Include="Source\Node\Scenes\MainScene.h" />
     <ClInclude Include="Source\Node\Scenes\MapScene.h" />
-    <ClInclude Include="Source\Node\Scenes\SceneExampleEmpty.h" />
     <ClInclude Include="Source\Node\Scenes\ScenePlayer.h" />
     <ClInclude Include="Source\Node\Scenes\SpawnerScene.h" />
     <ClInclude Include="Source\Node\Scripts.h" />

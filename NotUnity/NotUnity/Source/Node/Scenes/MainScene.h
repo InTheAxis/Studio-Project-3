@@ -4,6 +4,12 @@
 #include "../Scene.h"
 
 #include "../../Utility/Graphics/FBO/FloatFBO.h"
+#include "ScenePlayer.h"
+#include "SpawnerScene.h"
+
+class SpawnerScene;
+class ScenePlayer;
+class MapScene;
 
 class MainScene : public Scene //alright to inherit because I won't need to Get it
 {
@@ -18,6 +24,11 @@ public:
 	void Render();
 private:
 	FloatFBO floatFbo[2];
+	SpawnerScene* sceneSpawner;
+	ScenePlayer* scenePlayer;
+	MapScene* map;
+
+	bool debug;
 };
 
 #endif

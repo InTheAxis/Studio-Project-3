@@ -6,7 +6,6 @@
 #include "../Components/Sprite.h"
 #include "../Scripts/DebugText.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
-#include "SceneExampleEmpty.h"
 #include "ScenePlayer.h"
 #include "../../Application.h"
 #include "spawnerScene.h"
@@ -14,6 +13,7 @@
 
 MainScene::MainScene(std::string name)
 	: Scene(name)
+	, debug(false)
 {
 	floatFbo[0].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
 	floatFbo[1].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
@@ -30,10 +30,10 @@ void MainScene::Start()
 	GetChild<GameObj>("fbo")->GetTransform()->scale.Set(2, 2, 1);
 	
 	//add child scenes
-	//AddChild<ExampleScene>("example");
-	AddChild<SpawnerScene>("spawner")->setWave(1);
-	AddChild<ScenePlayer>("Player");
 	AddChild<MapScene>("MapScene");
+	scenePlayer = AddChild<ScenePlayer>("Player");
+	sceneSpawner = AddChild<SpawnerScene>("spawner");
+	sceneSpawner->SetWave(1);
 
 	AddChild<GameObj>("mainCam");
 	AddChild<GameObj>("axes");
@@ -44,15 +44,17 @@ void MainScene::Start()
 	GetChild<MapScene>("MapScene")->setCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
 	mg->SetProjOrtho(128);
+
 	Scene::Start();
 }
 
 void MainScene::Update(double dt)
 {	
-	if (ControllerKeyboard::Instance()->IsKeyPressed(VK_SPACE))
-	{
-		//GetChild<GameObj>("sprite")->GetComp<Sprite>()->SwitchAnimation(1)->PlayAnimation();
-	}
+	sceneSpawner->PlayerTrans(scenePlayer->GetChild<GameObj>("Player")->GetTransform()->translate);
+	if (ControllerKeyboard::Instance()->IsKeyPressed('2'))
+		debug = true;
+	else if (ControllerKeyboard::Instance()->IsKeyPressed('3'))	
+		debug = false;	
 
 	Scene::Update(dt);	
 }
@@ -96,5 +98,6 @@ void MainScene::Render()
 	glDepthMask(GL_FALSE);
 	fbo->SelectShader(mgrG->SIMPLE)->Render();
 	glDepthMask(GL_TRUE);
-	RenderPass(RENDER_PASS::FINAL);
+	if (debug)
+		RenderPass(RENDER_PASS::FINAL);
 }

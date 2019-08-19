@@ -158,7 +158,7 @@ void Player::Update(double dt)
 	//	}
 	//}
 	
-	if (gameObject->GetTransform()->translate.y >  0) //falling & jumping
+	if (gameObject->GetTransform()->translate.y >  0) //falling & jumping | gameObject->GetTransform()->translate.y >  worldHeight
 	{
 		if (kinb->GetVel().y > 0 && currState != PLAYER_STATE::DYING_L && currState != PLAYER_STATE::DYING_R)
 			TryChangeState(PLAYER_STATE::JUMP);
@@ -298,3 +298,7 @@ void Player::ChangeState()
 	}
 }
 
+void Player::SetHeight(float groudheight)
+{
+	worldHeight = groudheight;
+}

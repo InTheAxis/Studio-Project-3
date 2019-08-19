@@ -15,8 +15,11 @@ public:
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
+	void SetY(float trans);
 
 	void Render();
+protected:
+	float fromSpline;
 };
 
 #endif

@@ -18,7 +18,10 @@ void Chunk::Start()
 	sprite->SetGameObj(gameObject);
 	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"));
 	sprite->AttachMaterial(material);
-	
+	sprite->SelectShader(MgrGraphics::HSV);
+	sprite->SetRenderPass(RENDER_PASS::POST_FX);
+	sprite->SetHSV(HSV.x, HSV.y, HSV.z);
+	sprite->SetRenderPass(RENDER_PASS::GEO);
 
 	// Spline
 	SplineCubic s1;
@@ -62,13 +65,26 @@ void Chunk::End()
 	Node::End();
 }
 
-Chunk * Chunk::SetBiome(BIOME_TYPE bt)
+void Chunk::AssignBiome(BIOME_TYPE bt)
 {
-	currentBiome = bt;
-	return this;
+	switch (bt)
+	{
+	case BIOME_TYPE::DESERT:
+		HSV.Set(-1, -1, -1);
+		break;
+	case BIOME_TYPE::SNOW:
+		HSV.Set(-1, -1, -1);
+		break;
+	case BIOME_TYPE::GRASS:
+		HSV.Set(-1, -1, -1);
+		break;
+	default:
+		Debug::Log("Broke when assigning biome");
+		break;
+	}
 }
 
-void Chunk::assignMaterial(std::string materialName)
+void Chunk::AssignMaterial(std::string materialName)
 {
 	material = MgrGraphics::Instance()->GetCachedMaterial(materialName);
 }
