@@ -130,9 +130,6 @@
     <ClCompile Include="Source\Node\Scenes\MainScene.cpp">
       <Filter>Source\Node\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Node\Scenes\SceneExampleEmpty.cpp">
-      <Filter>Source\Node\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Utility\Graphics\FBO.cpp">
       <Filter>Source\Utility\Graphics</Filter>
     </ClCompile>
@@ -331,9 +328,6 @@
       <Filter>Source\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node\Scenes\MainScene.h">
-      <Filter>Source\Node\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Node\Scenes\SceneExampleEmpty.h">
       <Filter>Source\Node\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Graphics\FBO.h">

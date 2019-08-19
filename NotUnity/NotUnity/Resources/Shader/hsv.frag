@@ -4,6 +4,7 @@
 
 // Interpolated values from the vertex shaders
 in vec4 fragColor;
+in vec4 fragPos;
 in vec2 texCoord;
 in vec3 vertexPos_cameraspace;
 in vec3 vertNormal_cameraspace;
@@ -12,7 +13,7 @@ in vec3 vertNormal_cameraspace;
 out vec4 color;
 
 // constants
-const int MAX_COLORMAPS = 8;
+const int MAX_COLORMAPS = 11;
 
 // misc uniforms
 struct Material
@@ -54,18 +55,21 @@ void main()
 		baseColor = fragColor;
 	
 	color = material.albedo * baseColor;
-
+	
 	//apply hsv changes
 	vec3 targetHsv = rgbToHsv(vec3(color));	
-	if (hsv.h > 0)
-		targetHsv.x = clamp(hsv.h, 0, 360);
-	if (hsv.s >= 0)
-		targetHsv.y = clamp(hsv.s, 0, 1);
-	if (hsv.v >= 0)
-		targetHsv.z = clamp(hsv.v, 0, 1);
-	vec3 newColor = hsvToRgb(targetHsv);
+	if (color.r < 0.8 && color.g < 0.8 && color.b < 0.8)
+	{
+		if (hsv.h > 0)
+			targetHsv.x = clamp(hsv.h, 0, 360);
+		if (hsv.s >= 0 && targetHsv.y > 0.3)
+			targetHsv.y = clamp(hsv.s, 0, 1);
+		if (hsv.v >= 0)
+			targetHsv.z = clamp(hsv.v, 0, 1);
+		vec3 newColor = hsvToRgb(targetHsv);
 
-	color.rgb = newColor;
+		color.rgb = newColor;
+	}
 
 	if (color.a < 0.01) 
 		discard;

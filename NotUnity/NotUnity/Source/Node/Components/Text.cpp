@@ -9,7 +9,7 @@ Text::Text(std::string name)
 	, onScreen(true)
 	, align(-1)
 {
-	renderPass = RENDER_PASS::HUD;
+	renderPass = RENDER_PASS::FINAL;
 }
 
 Text::~Text()

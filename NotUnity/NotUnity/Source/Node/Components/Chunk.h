@@ -17,15 +17,17 @@
 #include <vector>
 #include "Sprite.h"
 
+enum class BIOME_TYPE
+{
+	DESERT,
+	SNOW,
+	GRASS,
+	TOTAL_BIOME
+};
+
 class Chunk : public Node, public TypeID<Chunk>, public Component
 {
-	enum BIOME_TYPE
-	{
-		DESERT,
-		SNOW,
-		GRASS,
-		TOTAL_BIOME
-	};
+	
 public:
 	Chunk(std::string name = "Chunk");
 	~Chunk();
@@ -34,12 +36,14 @@ public:
 	virtual void Update(double dt);
 	virtual void End();
 
-	Chunk* SetBiome(BIOME_TYPE bt);
-	void assignMaterial(std::string materialName);
+	void AssignBiome(BIOME_TYPE bt);
+	void AssignMaterial(std::string materialName);
 private:
 	Sprite* sprite;
 	Material* material;
 	Transform* t;
+
+	Vector3 HSV;
 
 	BIOME_TYPE currentBiome;
 };

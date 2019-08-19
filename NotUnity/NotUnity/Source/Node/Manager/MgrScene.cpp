@@ -3,7 +3,6 @@
 #include "MgrGraphics.h"
 
 #include "../Scenes/MainScene.h"
-#include "../Scenes/SceneExampleEmpty.h"
 #include "../Scenes/spawnerScene.h"
 #include "../Scenes/ScenePlayer.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
@@ -18,8 +17,7 @@ MgrScene::~MgrScene()
 
 void MgrScene::LoadScenes()
 {
-	allScenes["default"] = new MainScene;
-	allScenes["example"] = new ExampleScene;
+	allScenes["default"] = new MainScene;	
 	allScenes["spawner"] = new SpawnerScene;
 	allScenes["player"] = new ScenePlayer;
 	
