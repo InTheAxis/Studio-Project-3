@@ -17,6 +17,7 @@ public:
 };
 
 class Transform;
+class ColliderRender;
 class Collider : public Node, public TypeID<Collider>, public Component
 {
 public:
@@ -40,6 +41,7 @@ public:
 private:
 	Transform* t;
 	AABB aabb;
+	ColliderRender* cr;
 };
 
 #endif

@@ -46,7 +46,7 @@ public:
 private:
 	KinemeticBody* kinb;
 	Sprite* sprite;
-	Collider* attackRight, attackLeft, attackAir;
+	Collider* attackRight, *attackLeft, *attackAir;
 	Collider* hitbox;
 	
 	P_STATE currState, nextState;

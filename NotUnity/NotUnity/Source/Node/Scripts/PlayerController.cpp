@@ -51,11 +51,24 @@ void PlayerController::Start()
 	kinb->gravScale = 5;
 	kinb->useGravity = false;
 
-	hitbox = AddChild<Collider>();
+	attackRight = AddChild<Collider>("r");
+	attackRight->SetGameObj(gameObject);
+	attackRight->CreateAABB(Vector3(0, -0.5f), Vector3(0.5f, 0.5f));
+	attackRight->isTrigger = true;
+	attackRight->ActiveSelf(false);
+	attackLeft = AddChild<Collider>("l");
+	attackLeft->SetGameObj(gameObject);
+	attackLeft->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0, 0.5f));
+	attackLeft->isTrigger = true;
+	attackLeft->ActiveSelf(false);
+	attackAir = AddChild<Collider>("a");
+	attackAir->SetGameObj(gameObject);
+	attackAir->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0.5f, 0.5f));
+	attackAir->isTrigger = true;
+	attackAir->ActiveSelf(false);
+	hitbox = AddChild<Collider>("h");
 	hitbox->SetGameObj(gameObject);
-	hitbox->CreateAABB(1);
-	hitbox->isTrigger = true;
-	hitbox->OnTrigger += &test;
+	hitbox->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0.5f, 0.5f));	
 
 	currState = nextState = P_STATE::IDLE_R;
 
@@ -192,14 +205,14 @@ void PlayerController::Fall()
 	if (gameObject->GetTransform()->translate.y > worldHeight)
 	{
 		kinb->useGravity = true;
-		if (kinb->GetVel().y < 0)			
+		if (kinb->GetVel().y < -1.f)			
 			TryChangeState(P_STATE::FALL);
 	}
-	else if (OnGround(-0.05f))
+	else if (OnGround())
 	{
 		gameObject->GetTransform()->translate.y = worldHeight;
-		kinb->ResetVel(0, 1);
 		kinb->useGravity = false;
+		kinb->ResetVel(0, 1);
 	}
 }
 
@@ -208,6 +221,9 @@ void PlayerController::Attack(double dt)
 	if (attackTimer <= 0)
 	{
 		attackTimer = 0;
+		attackAir->ActiveSelf(false);
+		attackLeft->ActiveSelf(false);
+		attackRight->ActiveSelf(false);
 		return;
 	}
 	else	
@@ -215,15 +231,18 @@ void PlayerController::Attack(double dt)
 
 	if (!OnGround())
 	{
-		TryChangeState(P_STATE::AIR_ATTACK);
+		TryChangeState(P_STATE::AIR_ATTACK);		
+		attackAir->ActiveSelf(true);
 	}
 	else if (direction == 1)
 	{
 		TryChangeState(P_STATE::ATTACK_R);
+		attackRight->ActiveSelf(true);
 	}
 	else if (direction == -1)
 	{
 		TryChangeState(P_STATE::ATTACK_L);
+		attackLeft->ActiveSelf(true);
 	}
 }
 
