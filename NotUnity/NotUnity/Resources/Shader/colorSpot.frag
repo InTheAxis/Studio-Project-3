@@ -9,7 +9,6 @@ in vec3 vertPos_modelSpace;
 out vec4 color;
 
 // constants
-const int MAX_COLORMAPS = 1;
 const int MAX_POINTS = 2;
 
 // misc uniforms
@@ -17,8 +16,8 @@ struct Material
 {
 	vec4 albedo;
 
-	bool colorMapEnabled[MAX_COLORMAPS];
-	sampler2D colorMap[MAX_COLORMAPS];
+	bool colorMapEnabled[1];
+	sampler2D colorMap[1];
 };
 struct Point
 {
