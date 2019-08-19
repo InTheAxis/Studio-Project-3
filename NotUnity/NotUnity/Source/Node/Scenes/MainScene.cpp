@@ -6,9 +6,9 @@
 #include "../Components/Sprite.h"
 #include "../Scripts/DebugText.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
-#include "ScenePlayer.h"
 #include "../../Application.h"
-#include "spawnerScene.h"
+#include "ScenePlayer.h"
+#include "SpawnerScene.h"
 #include "MapScene.h"
 
 MainScene::MainScene(std::string name)
@@ -60,7 +60,7 @@ void MainScene::Start()
 	mg->SetProjOrtho(128);
 
 	//init variables
-	spawner->setWave(1);
+	spawner->SetWave(1);
 
 	Scene::Start();
 }
@@ -76,6 +76,8 @@ void MainScene::Update(double dt)
 		title->SetHSV(m_lifetime * 300, -1, -1);
 		break;
 	}
+
+	spawner->PlayerTrans(player->GetChild<GameObj>("Player")->GetTransform()->translate);
 
 	Scene::Update(dt);	
 }

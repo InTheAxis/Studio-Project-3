@@ -112,7 +112,7 @@ void MapGenerator::cullChunk()
 		if (displacement > cullingAmount)
 		{
 			GetChild<GameObj>("Chunk" + std::to_string(i))->ActiveSelf(false);
-			Debug::Log("Chunk" + std::to_string(i) + " " + std::to_string(GetChild<GameObj>("Chunk" + std::to_string(i))->IsActive()));
+			//Debug::Log("Chunk" + std::to_string(i) + " " + std::to_string(GetChild<GameObj>("Chunk" + std::to_string(i))->IsActive()));
 		}
 		else
 		{

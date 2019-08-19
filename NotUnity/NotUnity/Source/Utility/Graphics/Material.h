@@ -35,6 +35,8 @@ public:
 		COLOR8,
 		COLOR9,
 		COLOR10,
+		COLOR11,
+		COLOR12,
 		DIFFUSE,
 		SPECULAR,
 		NORMAL,

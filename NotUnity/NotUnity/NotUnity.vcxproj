@@ -55,6 +55,7 @@
     <ClCompile Include="Source\Node\Scripts\Skill.cpp" />
     <ClCompile Include="Source\Node\Scripts\SkillTree.cpp" />
     <ClCompile Include="Source\Node\Scripts\Spawner.cpp" />
+    <ClCompile Include="Source\Node\Scripts\Strategy.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO\DepthFBO.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO\FloatFBO.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="Source\Node\Scripts\Skill.h" />
     <ClInclude Include="Source\Node\Scripts\SkillTree.h" />
     <ClInclude Include="Source\Node\Scripts\Spawner.h" />
+    <ClInclude Include="Source\Node\Scripts\Strategy.h" />
     <ClInclude Include="Source\Utility\Component.h" />
     <ClInclude Include="Source\Utility\Delegate.h" />
     <ClInclude Include="Source\Utility\Graphics\Animation.h" />

@@ -4,6 +4,7 @@
 #include "../Scene.h"
 
 #include "../../Utility/Graphics/FBO/FloatFBO.h"
+
 class SpawnerScene;
 class ScenePlayer;
 class MapScene;
@@ -29,7 +30,7 @@ public:
 	void Render();
 private:
 	FloatFBO floatFbo[2];
-	
+
 	//refrences
 	SpawnerScene* spawner;
 	ScenePlayer* player;

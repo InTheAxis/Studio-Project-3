@@ -3,8 +3,9 @@
 #include "../GameObj.h"
 #include "../Components/Renderable.h"
 #include "../Scripts/Spawner.h"
+#include "../Scenes/ScenePlayer.h"
 
-SpawnerScene::SpawnerScene(std::string name) : Scene(name), currentWave(0)
+SpawnerScene::SpawnerScene(std::string name) : Scene(name), currentWave(0), fromPlayer(0.f, 0.f, 0.f)
 {
 }
 
@@ -13,39 +14,41 @@ SpawnerScene::~SpawnerScene()
 }
 
 void SpawnerScene::Start()
-{	
-	//create gameobjects
-
-	SplineCubic s1;
-	SplineExpo s2;
-	SplineLogarithm s3;
-	SplineQuadratic s4;
-	SplineReciprocal s5;
-	SplineSqReci s6;
+{
+	//SplineCubic s1;
+	//SplineExpo s2;
+	//SplineLogarithm s3;
+	//SplineQuadratic s4;
+	//SplineReciprocal s5;
+	//SplineSqReci s6;
 
 	//AddChild<GameObj>("SpCubic")->AddComp<ColliderRender>()->AttachPoints(s1.GetSamplePts())->AttachMaterial(mg->GetCachedMaterial("default"));
-	//GetChild<GameObj>("SpCubic")->GetTransform()->translate.Set(0, 0, 0);
+	//GetChild<GameObj>("SpCubic")->GetTransform()->translate.Set(0, 1, 0);
 	//AddChild<GameObj>("SpExpo")->AddComp<ColliderRender>()->AttachPoints(s2.GetSamplePts())->AttachMaterial(mg->GetCachedMaterial("default"));
-	//GetChild<GameObj>("SpExpo")->GetTransform()->translate.Set(1, -0.355f, 0);
+	//GetChild<GameObj>("SpExpo")->GetTransform()->translate.Set(1, -1.355f, 0);
 	//AddChild<GameObj>("SpLoga")->AddComp<ColliderRender>()->AttachPoints(s3.GetSamplePts())->AttachMaterial(mg->GetCachedMaterial("default"));
-	//GetChild<GameObj>("SpLoga")->GetTransform()->translate.Set(1.4f, 2.3f, 0);
+	//GetChild<GameObj>("SpLoga")->GetTransform()->translate.Set(1.4f, 3.3f, 0);
 	//AddChild<GameObj>("SpQuad")->AddComp<ColliderRender>()->AttachPoints(s4.GetSamplePts())->AttachMaterial(mg->GetCachedMaterial("default"));
-	//GetChild<GameObj>("SpQuad")->GetTransform()->translate.Set(2.4f, 2.25f, 0);
-	//AddChild<GameObj>("SpReci")->AddComp<ColliderRender>()->AttachPoints(s5.GetSamplePts())->AttachMaterial(mg->GetCachedMaterial("default")); 
-	//GetChild<GameObj>("SpReci")->GetTransform()->translate.Set(3.4f, 0, 0);
-	//AddChild<GameObj>("SpSqReci")->AddComp<ColliderRender>()->AttachPoints(s6.GetSamplePts())->AttachMaterial(mg->GetCachedMaterial("default")); 
-	//GetChild<GameObj>("SpSqReci")->GetTransform()->translate.Set(4.4f, -3.5f, 0);
-	
-	AddChild<GameObj>("SpawnerGO")->GetTransform()->translate.Set(1, 2, 0);
-	GetChild<GameObj>("SpawnerGO")->AddScript<Spawner>()->setWave(currentWave);
+	//GetChild<GameObj>("SpQuad")->GetTransform()->translate.Set(2.4f, 3.25f, 0);
+	//AddChild<GameObj>("SpReci")->AddComp<ColliderRender>()->AttachPoints(s5.GetSamplePts())->AttachMaterial(mg->GetCachedMaterial("default"));
+	//GetChild<GameObj>("SpReci")->GetTransform()->translate.Set(3.4f, 1, 0);
+	//AddChild<GameObj>("SpSqReci")->AddComp<ColliderRender>()->AttachPoints(s6.GetSamplePts())->AttachMaterial(mg->GetCachedMaterial("default"));
+	//GetChild<GameObj>("SpSqReci")->GetTransform()->translate.Set(4.4f, -4.5f, 0);
 
+	//AddChild<GameObj>("SpawnerGO")->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"))->SelectShader(MgrGraphics::HSV);
+	AddChild<GameObj>("SpawnerGO")->AddComp<Sprite>();
+	GetChild<GameObj>("SpawnerGO")->AddScript<Spawner>()->SetWave(currentWave);
 	Scene::Start();
 }
 
 void SpawnerScene::Update(double dt)
-{	
+{
+	int spawnRangeX = Math::RandIntMinMax(-20, 20);
+	int spawnRangeY = Math::RandIntMinMax(-4, 4);
+	GetChild<GameObj>("SpawnerGO")->GetTransform()->translate.Set(fromPlayer.x + spawnRangeX, fromPlayer.y + spawnRangeY, fromPlayer.z);
+	GetChild<GameObj>("SpawnerGO")->GetScript<Spawner>()->SetPlayerTrans(fromPlayer);
 	Scene::Update(dt);
-} 
+}
 
 void SpawnerScene::End()
 {
@@ -53,20 +56,25 @@ void SpawnerScene::End()
 }
 
 void SpawnerScene::Render()
-{		
+{
 	//If got diff render pipeline
 
 	//for (auto r : *renderables)
 	//{
 	//	r->Render();
 	//}
-	
+
 	//OR
 
 	Scene::Render();
 }
 
-void SpawnerScene::setWave(int wave)
+void SpawnerScene::SetWave(int wave)
 {
 	currentWave = wave;
+}
+
+void SpawnerScene::PlayerTrans(Vector3 trans)
+{
+	fromPlayer = trans;
 }

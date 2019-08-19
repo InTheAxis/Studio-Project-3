@@ -40,6 +40,7 @@ public:
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
+	void SetHeight(float groudheight);
 	
 private:
 	MgrGraphics* mg;
@@ -59,6 +60,7 @@ private:
 
 	void TryChangeState(PLAYER_STATE state);
 	void ChangeState();
+	float worldHeight;
 };
 
 #endif

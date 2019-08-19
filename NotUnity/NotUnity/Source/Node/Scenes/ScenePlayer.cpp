@@ -5,10 +5,11 @@
 #include "../Scripts/DebugText.h"
 #include "../Scripts/Player.h"
 #include "../Scripts/ColorSpot.h"
-
+#include "../Scripts/SkillTree.h"
 ScenePlayer::ScenePlayer(std::string name)
 	: Scene(name)
 {
+	fromSpline = 0.f;
 }
 
 ScenePlayer::~ScenePlayer()
@@ -21,8 +22,11 @@ void ScenePlayer::Start()
 	AddChild<GameObj>("Player");
 	//add & set up components and scripts	
 	GetChild<GameObj>("Player")->AddScript<Player>();
-	colorSpot = GetChild<GameObj>("Player")->AddComp<ColorSpot>();
+	AddChild("SkillTree", SkillTree::Instance());
 	
+	colorSpot = GetChild<GameObj>("Player")->AddComp<ColorSpot>();
+	GetChild<GameObj>("Player")->AddScript<Player>()->SetHeight(fromSpline);
+
 	Scene::Start();
 }
 
@@ -50,4 +54,9 @@ void ScenePlayer::Render()
 	//OR
 
 	Scene::Render();
+}
+
+void ScenePlayer::SetY(float trans)
+{
+	fromSpline = trans;
 }
