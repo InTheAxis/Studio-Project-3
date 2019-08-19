@@ -4,7 +4,7 @@
 #include "../../Node/Components/Sprite.h"
 #include "../../Node/Components/KinemeticBody.h"
 #include "../../Utility/Input//ControllerKeyboard.h"
-
+#include "../../Node/Scripts/SkillTree.h"
 
 Player::Player(std::string name) 
 	: Node(name)
@@ -34,7 +34,9 @@ void Player::Start()
 		->SetAnimation(7, 8, 0.5f, 1)
 		->SetAnimation(8, 8, 0.5f, 1)
 		->SetAnimation(9 ,8, 0.5f, 1)
-		->SetAnimation(10, 8, 0.5f, 1);
+		->SetAnimation(10, 8, 0.5f, 1)
+		->SetAnimation(11, 8, 0.5f, 1)
+		->SetAnimation(12, 8, 0.5f, 1);
 	sprite->SetGameObj(gameObject);
 	sprite->AttachMesh(mg->GetCachedMesh("plane"))->AttachMaterial(mg->GetCachedMaterial("anim"));
 	
@@ -68,11 +70,15 @@ void Player::Update(double dt)
 		if (direction == 1)
 		{
 			TryChangeState(PLAYER_STATE::ATTACK_R);
+			
 		}
 		else if (direction == -1)
 		{
 			TryChangeState(PLAYER_STATE::ATTACK_L);
+			
 		}
+		input = Vector3();
+		
 	}
 	else
 	{
@@ -87,13 +93,13 @@ void Player::Update(double dt)
 	}
 
 	//get directiom to move in
-	if (kb->IsKeyDown(VK_RIGHT))
+	if (kb->IsKeyDown(VK_RIGHT) && currState != PLAYER_STATE::ATTACK_L && currState != PLAYER_STATE::ATTACK_R && currState != PLAYER_STATE::DYING_L && currState != PLAYER_STATE::DYING_R)
 	{
 		input.x = 1;
 		TryChangeState(PLAYER_STATE::MOVE_R);
 		
 	}
-	if (kb->IsKeyDown(VK_LEFT))
+	if (kb->IsKeyDown(VK_LEFT) && currState != PLAYER_STATE::ATTACK_L && currState != PLAYER_STATE::ATTACK_R && currState != PLAYER_STATE::DYING_L && currState != PLAYER_STATE::DYING_R)
 	{
 		input.x = -1;
 		TryChangeState(PLAYER_STATE::MOVE_L);
@@ -119,6 +125,13 @@ void Player::Update(double dt)
 			else if (direction == -1)
 				TryChangeState(PLAYER_STATE::IDLE_L);
 		}
+	}
+	if (health <= 0)
+	{
+		if (direction == 1)
+			TryChangeState(PLAYER_STATE::DYING_R);
+		if (direction == -1)
+			TryChangeState(PLAYER_STATE::DYING_L);
 	}
 
 	if (kb->IsKeyPressed(VK_SPACE))  // Play Attack Animation 
@@ -147,7 +160,7 @@ void Player::Update(double dt)
 	
 	if (gameObject->GetTransform()->translate.y >  0) //falling & jumping
 	{
-		if (kinb->GetVel().y > 0)
+		if (kinb->GetVel().y > 0 && currState != PLAYER_STATE::DYING_L && currState != PLAYER_STATE::DYING_R)
 			TryChangeState(PLAYER_STATE::JUMP);
 		else
 			TryChangeState(PLAYER_STATE::FALL);
@@ -162,7 +175,11 @@ void Player::Update(double dt)
 		kinb->ApplyForce(input.Scale(moveSpeed));
 	}
 	
-	
+	if (kb->IsKeyPressed('E')) // To change to on enemy killed
+	{
+		SkillTree::Instance()->ExpGained(2);
+		
+	}
 
 	if (input.x != 0) //set dir
 		direction = input.x;
@@ -218,6 +235,11 @@ void Player::TryChangeState(PLAYER_STATE state)
 
 	case PLAYER_STATE::AIR_ATTACK:
 		break;
+	
+	case PLAYER_STATE::DYING_L:
+	case PLAYER_STATE::DYING_R:
+		break;
+
 
 	}
 	this->nextState = state;
@@ -266,6 +288,13 @@ void Player::ChangeState()
 	case PLAYER_STATE::HIT_R:
 		Debug::Log("I am HIT_R");
 		break;
+	case PLAYER_STATE::DYING_L:
+		Debug::Log("I am DYING_L");
+		break;
+	case PLAYER_STATE::DYING_R:
+		Debug::Log("I am DYING_R");
+		break;
+
 	}
 }
 

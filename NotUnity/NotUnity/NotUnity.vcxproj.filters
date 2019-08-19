@@ -217,6 +217,9 @@
     <ClCompile Include="Source\Node\Manager\MgrCollision.cpp">
       <Filter>Source\Node\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="SceneSkill.cpp">
+      <Filter>Source\Node\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -425,6 +428,9 @@
     </ClInclude>
     <ClInclude Include="Source\Node\Manager\MgrCollision.h">
       <Filter>Source\Node\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneSkill.h">
+      <Filter>Source\Node\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

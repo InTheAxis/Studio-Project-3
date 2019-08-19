@@ -48,3 +48,13 @@ bool Skill::Unlock(int* skillPts)
 
 	return false;
 }
+
+bool Skill::GetUnlocked()
+{
+	return unlocked;
+}
+
+Skill * Skill::GetPrevious()
+{
+	return previous;
+}

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SceneSkill.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Node\Components.cpp" />
@@ -78,6 +79,7 @@
     <ClCompile Include="Source\Utility\Math\Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SceneSkill.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Node\Components.h" />
     <ClInclude Include="Source\Node\Components\Axis.h" />

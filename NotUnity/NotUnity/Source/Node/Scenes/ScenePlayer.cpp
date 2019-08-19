@@ -5,7 +5,7 @@
 #include "../Scripts/DebugText.h"
 #include "../Scripts/Player.h"
 #include "../Scripts/ColorSpot.h"
-
+#include "../Scripts/SkillTree.h"
 ScenePlayer::ScenePlayer(std::string name)
 	: Scene(name)
 {
@@ -21,6 +21,8 @@ void ScenePlayer::Start()
 	AddChild<GameObj>("Player");
 	//add & set up components and scripts	
 	GetChild<GameObj>("Player")->AddScript<Player>();
+	AddChild("SkillTree", SkillTree::Instance());
+	
 	colorSpot = GetChild<GameObj>("Player")->AddComp<ColorSpot>();
 	
 	Scene::Start();

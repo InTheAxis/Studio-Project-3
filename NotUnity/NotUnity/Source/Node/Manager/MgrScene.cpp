@@ -23,6 +23,7 @@ void MgrScene::LoadScenes()
 	allScenes["spawner"] = new SpawnerScene;
 	allScenes["player"] = new ScenePlayer;
 	
+	
 	SwitchScene("default"); //change this line to your working scene
 }
 
