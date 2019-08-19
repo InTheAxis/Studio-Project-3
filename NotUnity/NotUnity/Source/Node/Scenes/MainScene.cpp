@@ -6,7 +6,6 @@
 #include "../Components/Sprite.h"
 #include "../Scripts/DebugText.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
-#include "SceneExampleEmpty.h"
 #include "ScenePlayer.h"
 #include "../../Application.h"
 #include "spawnerScene.h"
@@ -31,7 +30,6 @@ void MainScene::Start()
 	GetChild<GameObj>("fbo")->GetTransform()->scale.Set(2, 2, 1);
 	
 	//add child scenes
-	//AddChild<ExampleScene>("example");
 	AddChild<SpawnerScene>("spawner")->setWave(1);
 	AddChild<ScenePlayer>("Player");
 	AddChild<MapScene>("MapScene");
