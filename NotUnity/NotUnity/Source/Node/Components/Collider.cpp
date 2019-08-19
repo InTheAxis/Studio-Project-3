@@ -1,6 +1,7 @@
 #include "Collider.h"
 
 #include "../Components/Transform.h"
+#include "../Components/Transform.h"
 #include "../Manager/MgrCollision.h"
 
 Collider::Collider(std::string name) 

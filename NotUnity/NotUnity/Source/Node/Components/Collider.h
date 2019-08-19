@@ -9,8 +9,9 @@
 #include "../../Utility/Math/Vector3.h"
 
 class Collider;
-struct ColInfo
+class ColInfo
 {
+public:
 	Collider* other;
 	Vector3 penetration;
 };

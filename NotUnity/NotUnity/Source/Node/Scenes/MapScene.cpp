@@ -58,7 +58,7 @@ void MapScene::SetCamera(Camera * camera)
 
 float MapScene::GetTerrainHeight(float x)
 {
-	return x / 2.f - 1;
+	return x / 5.f - 1;
 	Spline* s = mapGen->GetCurrChunk()->GetSpline();
 	if (s)
 		return s->Fn(x + mapGen->GetCurrChunk()->GetGameObj()->GetTransform()->translate.x);

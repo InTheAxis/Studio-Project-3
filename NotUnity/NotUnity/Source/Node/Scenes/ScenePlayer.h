@@ -6,6 +6,7 @@
 //plain scene to show how to inherit properly
 class ColorSpot;
 class Player;
+class PlayerController;
 class ScenePlayer : public Scene  //alright to inherit because I won't need to Get it
 {
 public:
@@ -22,7 +23,7 @@ public:
 	void Render();
 protected:
 	ColorSpot* colorSpot;
-	Player* playerScript;
+	PlayerController* playerScript;
 };
 
 #endif

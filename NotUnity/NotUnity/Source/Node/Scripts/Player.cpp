@@ -170,7 +170,7 @@ void Player::Update(double dt)
 		kinb->useGravity = true;
 		kinb->ApplyForce(input.Scale(Vector3(moveSpeed.x * 0.1f, moveSpeed.y, moveSpeed.z)));
 	}
-	if (gameObject->GetTransform()->translate.y > worldHeight)
+	else
 	{
 		gameObject->GetTransform()->translate.y = worldHeight;
 		kinb->ResetVel(0, 1);

@@ -217,6 +217,9 @@
     <ClCompile Include="Source\Node\Scripts\Strategy.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Node\Scripts\PlayerController.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -424,6 +427,9 @@
       <Filter>Source\Node\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node\Scripts\Strategy.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scripts\PlayerController.h">
       <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
