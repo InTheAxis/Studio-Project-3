@@ -9,6 +9,7 @@ class SpawnerScene;
 class ScenePlayer;
 class MapScene;
 class Sprite;
+class Renderable;
 class MainScene : public Scene //alright to inherit because I won't need to Get it
 {
 	enum GAME_STATE
@@ -36,6 +37,7 @@ private:
 	ScenePlayer* player;
 	MapScene* map;
 	Sprite* title;
+	Renderable* wasd;
 
 	bool debug;
 	GAME_STATE gs;

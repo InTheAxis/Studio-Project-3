@@ -6,6 +6,7 @@
 #include "../Components/Sprite.h"
 #include "../Scripts/DebugText.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
+#include "../../Utility/Input/ControllerMouse.h"
 #include "../../Application.h"
 #include "ScenePlayer.h"
 #include "SpawnerScene.h"
@@ -43,16 +44,18 @@ void MainScene::Start()
 
 	//add & set up components and scripts
 	GetChild<GameObj>("mainCam")->AddComp<Camera>()->SetMode(Camera::DEBUG);
+	GetChild<GameObj>("mainCam")->GetTransform()->translate.z = 1;
 	GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
 	title = GetChild<GameObj>("title")->AddComp<Sprite>();
 	title->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("title"))->SelectShader(MgrGraphics::HSV_UNLIT)->SetRenderPass(RENDER_PASS::HUD);
-	GetChild<GameObj>("wasd")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("wasd"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
+	wasd = GetChild<GameObj>("wasd")->AddComp<Renderable>();
+	wasd->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("wasd"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
 	Transform* t = GetChild<GameObj>("title")->GetTransform();
 	t->translate.Set(0, 2, 0);
 	t->scale.Set(3, 3, 1);
 	t = GetChild<GameObj>("wasd")->GetTransform();
 	t->translate.Set(-3, 1, 0);
-	t->scale.Set(3, 3, 1);
+	t->scale.Set(1.5f, 1.5f, 1);
 	
 	//attach camera
 	GetChild<MapScene>("MapScene")->setCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
@@ -62,18 +65,33 @@ void MainScene::Start()
 	//init variables
 	spawner->SetWave(1);
 
-	Scene::Start();
+	Scene::Start();	
 }
 
 void MainScene::Update(double dt)
 {	
-	if (ControllerKeyboard::Instance()->IsKeyPressed('9'))
+	ControllerKeyboard* kb = ControllerKeyboard::Instance();
+	ControllerMouse* m = ControllerMouse::Instance();
+	if (kb->IsKeyPressed('9'))
 		debug = !debug;
+
 
 	switch (gs)
 	{
-	case GAME_STATE::MENU:
+	case MENU:
 		title->SetHSV(m_lifetime * 300, -1, -1);
+		if (kb->IsKeyPressed('W') || kb->IsKeyPressed('A') || kb->IsKeyPressed('S') || kb->IsKeyPressed('D'))
+			ChangeGameState(TUTO);
+		break;
+	case TUTO:
+		if (m->IsButtonPressed(0))
+			ChangeGameState(GAMEPLAY);
+		break;
+	case GAMEPLAY:
+		break;
+	case LOSE:
+		break;
+	case WIN:
 		break;
 	}
 
@@ -123,4 +141,42 @@ void MainScene::Render()
 	glDepthMask(GL_TRUE);
 	if (debug)
 		RenderPass(RENDER_PASS::FINAL);
+}
+
+void MainScene::ChangeGameState(GAME_STATE gs)
+{
+	switch (this->gs)
+	{
+	case MENU:
+		title->ActiveSelf(false);
+		wasd->ActiveSelf(false);
+		break;
+	case TUTO:
+		break;
+	case GAMEPLAY:
+		//turn off spawner
+		break;
+	case LOSE:
+		break;
+	case WIN:
+		break;
+	}
+
+	switch (gs)
+	{
+	case MENU:
+		title->ActiveSelf(true);
+		wasd->ActiveSelf(true);
+		break;
+	case TUTO:
+		break;
+	case GAMEPLAY:
+		//turn on spawner
+		break;
+	case LOSE:
+		break;
+	case WIN:
+		break;			
+	}
+	this->gs = gs;
 }
