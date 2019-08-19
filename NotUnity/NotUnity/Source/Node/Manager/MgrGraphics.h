@@ -27,9 +27,11 @@ public:
 	enum SHADER
 	{
 		CURRENT = -1,
-		DEFAULT = 0,
+		UNLIT = 0,
 		SIMPLE,
-		HSV,
+		LIT,
+		HSV_LIT,
+		HSV_UNLIT,
 		COLOR_SPOT,
 		NUM_SHADERS
 	};

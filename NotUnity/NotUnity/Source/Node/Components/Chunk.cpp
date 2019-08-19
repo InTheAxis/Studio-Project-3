@@ -18,7 +18,7 @@ void Chunk::Start()
 	sprite->SetGameObj(gameObject);
 	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"));
 	sprite->AttachMaterial(material);
-	sprite->SelectShader(MgrGraphics::HSV);
+	sprite->SelectShader(MgrGraphics::HSV_UNLIT);
 	sprite->SetRenderPass(RENDER_PASS::POST_FX);
 	sprite->SetHSV(HSV.x, HSV.y, HSV.z);
 	sprite->SetRenderPass(RENDER_PASS::GEO);

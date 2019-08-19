@@ -24,6 +24,7 @@ struct Material
 	sampler2D colorMap[MAX_COLORMAPS];
 };
 uniform Material material;
+uniform mat4 model;
 
 void main()
 {
@@ -48,4 +49,15 @@ void main()
 
 	if (color.a < 0.01) 
 		discard;
+
+	/**HANDLING LIGHT**/
+	vec3 pos = vec3(model[3][0],model[3][1],model[3][2]);
+	vec3 lightDir = normalize(vec3(1,1,0)) * 0.5;
+	vec3 lightPos = pos + lightDir;
+
+	if (length(lightPos.xy - fragPos.xy) > 0.7)
+	{
+		color.rgb *= 0.9;
+	}
+
 }

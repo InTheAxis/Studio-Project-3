@@ -434,10 +434,16 @@
     <None Include="Resources\Shader\simple.vert">
       <Filter>Resources\Shader</Filter>
     </None>
-    <None Include="Resources\shader\hsv.frag">
+    <None Include="Resources\shader\colorSpot.frag">
       <Filter>Resources\Shader</Filter>
     </None>
-    <None Include="Resources\shader\colorSpot.frag">
+    <None Include="Resources\shader\hsv_unlit.frag">
+      <Filter>Resources\Shader</Filter>
+    </None>
+    <None Include="Resources\shader\hsv_lit.frag">
+      <Filter>Resources\Shader</Filter>
+    </None>
+    <None Include="Resources\shader\lit.frag">
       <Filter>Resources\Shader</Filter>
     </None>
   </ItemGroup>

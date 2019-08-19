@@ -73,4 +73,10 @@ void MgrResource::LoadMaterials()
 
 	temp = new Material("sattest");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/sattest.tga");
+
+	temp = new Material("title");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/title.tga");
+
+	temp = new Material("wasd");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/wasd.tga");
 }

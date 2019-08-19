@@ -14,6 +14,7 @@
 MainScene::MainScene(std::string name)
 	: Scene(name)
 	, debug(false)
+	, gs (MENU)
 {
 	floatFbo[0].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
 	floatFbo[1].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
@@ -30,29 +31,51 @@ void MainScene::Start()
 	GetChild<GameObj>("fbo")->GetTransform()->scale.Set(2, 2, 1);
 	
 	//add child scenes
-	AddChild<SpawnerScene>("spawner")->setWave(1);
-	AddChild<ScenePlayer>("Player");
-	AddChild<MapScene>("MapScene");
+	spawner = AddChild<SpawnerScene>("spawner");
+	player = AddChild<ScenePlayer>("Player");
+	map = AddChild<MapScene>("MapScene");
 
+	//add gameobjects
 	AddChild<GameObj>("mainCam");
 	AddChild<GameObj>("axes");
+	AddChild<GameObj>("title");
+	AddChild<GameObj>("wasd");
+
 	//add & set up components and scripts
 	GetChild<GameObj>("mainCam")->AddComp<Camera>()->SetMode(Camera::DEBUG);
 	GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
+	title = GetChild<GameObj>("title")->AddComp<Sprite>();
+	title->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("title"))->SelectShader(MgrGraphics::HSV_UNLIT)->SetRenderPass(RENDER_PASS::HUD);
+	GetChild<GameObj>("wasd")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("wasd"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
+	Transform* t = GetChild<GameObj>("title")->GetTransform();
+	t->translate.Set(0, 2, 0);
+	t->scale.Set(3, 3, 1);
+	t = GetChild<GameObj>("wasd")->GetTransform();
+	t->translate.Set(-3, 1, 0);
+	t->scale.Set(3, 3, 1);
+	
 	//attach camera
 	GetChild<MapScene>("MapScene")->setCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
 	mg->SetProjOrtho(128);
+
+	//init variables
+	spawner->setWave(1);
 
 	Scene::Start();
 }
 
 void MainScene::Update(double dt)
 {	
-	if (ControllerKeyboard::Instance()->IsKeyPressed('2'))
-		debug = true;
-	else if (ControllerKeyboard::Instance()->IsKeyPressed('3'))	
-		debug = false;	
+	if (ControllerKeyboard::Instance()->IsKeyPressed('9'))
+		debug = !debug;
+
+	switch (gs)
+	{
+	case GAME_STATE::MENU:
+		title->SetHSV(m_lifetime * 300, -1, -1);
+		break;
+	}
 
 	Scene::Update(dt);	
 }

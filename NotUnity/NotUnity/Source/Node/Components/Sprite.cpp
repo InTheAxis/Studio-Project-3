@@ -72,7 +72,7 @@ void Sprite::Render()
 	glBindTexture(GL_TEXTURE_2D, material->maps[Material::COLOR0 + selectedAnim]);
 
 	//set uniform for saturation	
-	mgrG->SetUniform("hvs.h", hsv.x);
+	mgrG->SetUniform("hsv.h", hsv.x);
 	mgrG->SetUniform("hsv.s", hsv.y);
 	mgrG->SetUniform("hsv.v", hsv.z);
 
