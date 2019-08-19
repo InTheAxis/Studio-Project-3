@@ -8,6 +8,7 @@ layout(location = 3) in vec2 aVertTexCoord;
 
 // Output data ; will be interpolated for each fragment.
 out vec4 fragColor;
+out vec3 fragPos;
 out vec2 texCoord;
 out vec3 vertexPos_cameraspace;
 out vec3 vertNormal_cameraspace;
@@ -17,11 +18,14 @@ uniform mat4 model, view, proj;
 
 void main()
 {
-	gl_Position = proj * view * model * vec4(aVertPos, 1);	
-	vertexPos_cameraspace = (view * model * vec4(aVertPos, 1)).xyz;		
+	vec4 temp =  model * vec4(aVertPos, 1);
+
+	gl_Position = proj * view * temp;
+	vertexPos_cameraspace = (view * temp).xyz;		
 	vertNormal_cameraspace = (transpose(inverse(view * model)) * vec4(aVertNormal, 0)).xyz;
 	
 	//pass throughs
 	fragColor = aVertColor;
+	fragPos =  vec3(temp);
 	texCoord = aVertTexCoord;
 }

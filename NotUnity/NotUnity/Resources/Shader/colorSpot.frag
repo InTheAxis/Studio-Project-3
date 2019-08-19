@@ -44,15 +44,14 @@ void main()
 	
 	color = material.albedo * baseColor;
 
-	if (color.r < 0.8 && color.g < 0.8 && color.b < 0.8)
+	//apply hsv changes
+	vec3 targetHsv = rgbToHsv(vec3(color));	
+	if (targetHsv.y > 0.3)
 	{
-		//apply hsv changes
-		vec3 targetHsv = rgbToHsv(vec3(color));	
 		targetHsv.y = GetSaturation();
 		vec3 newColor = hsvToRgb(targetHsv);
-		color.rgb = newColor;
-	}
-
+		color.rgb = newColor;	
+	} 
 
 	if (color.a < 0.01) 
 		discard;
