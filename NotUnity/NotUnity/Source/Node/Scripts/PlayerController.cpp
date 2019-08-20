@@ -336,8 +336,7 @@ void PlayerController::TakeDamage(int dmg)
 	else
 		hitTimer = 0.3f;
 }
-
-void PlayerController::DamageDealt()
+int PlayerController::DamageDealt()
 {
 	return damage;
 }

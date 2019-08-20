@@ -44,7 +44,7 @@ public:
 	
 	PlayerController* SetTerrain(Spline * s);	
 	void TakeDamage(int dmg);	
-	void DamageDealt();
+	int DamageDealt();
 private:
 	KinemeticBody* kinb;
 	Sprite* sprite;
