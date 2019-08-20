@@ -11,6 +11,9 @@
 #include "../Components.h"
 
 class KinemeticBody;
+class Collider;
+class ColInfo;
+class Sprite;
 class Projectile : public Node, public TypeID<Projectile>, public Component
 {
 public:
@@ -21,11 +24,18 @@ public:
 	virtual void Update(double dt);
 	virtual void End();	
 
+	void OnEnable();
+	void OnDisable();
+
 	void Discharge(Vector3 origin, Vector3 vel);
+
+	friend void OnHit(ColInfo info);
 
 private:
 	Transform* t;	
 	KinemeticBody* kinb;
+	Sprite* sprite;
+	Collider* coll;
 };
 
 #endif

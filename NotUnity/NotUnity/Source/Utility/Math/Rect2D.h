@@ -14,6 +14,7 @@ public:
 	bool IsOverlap(Rect2D other, Vector3* penetration = nullptr);
 
 	Vector3 min, max;
+	Vector3 center;
 };
 
 #endif

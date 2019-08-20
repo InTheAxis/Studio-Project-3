@@ -20,6 +20,7 @@ AABB * AABB::SetType(COL_TYPE type)
 AABB * AABB::SetOrigin(Vector3 pos)
 {
 	origin = pos;
+	rect.center = pos;
 	return this;
 }
 
@@ -104,6 +105,20 @@ bool AABB::InternalOverlap(Rect2D rect, Rect2D other, Vector3 * penetration)
 
 bool AABB::InternalOverlap(Rect2D rect, AABB circle, Vector3 * penetration)
 {
+	Vector3 relDisp = rect.center + rect.max - circle.origin;
+	float len = relDisp.Length();
+	if (len < circle.radius)
+	{
+		//*penetration = relDisp.Normalized() * (circle.radius - len);
+		return true;
+	}
+	relDisp = rect.center + rect.min - circle.origin;
+	len = relDisp.Length();
+	if (len < circle.radius)
+	{
+		//*penetration = relDisp.Normalized() * (circle.radius - len);
+		return true;
+	}
 	return false;
 }
 

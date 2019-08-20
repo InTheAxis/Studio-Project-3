@@ -56,6 +56,7 @@ void Collider::CheckCollision(Collider * coll)
 	ColInfo info;
 	if (aabb.IsOverlap(coll->aabb, &pene))
 	{
+		info.coll = this;
 		info.other = coll;
 		info.penetration = pene;
 		if (isTrigger)
@@ -63,6 +64,7 @@ void Collider::CheckCollision(Collider * coll)
 		else
 			OnCollide(info);
 
+		info.coll = coll;
 		info.other = this;
 		info.penetration = -pene;
 		if (coll->isTrigger)
