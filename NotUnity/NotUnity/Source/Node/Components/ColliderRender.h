@@ -1,5 +1,5 @@
-#ifndef ColiderRender_H
-#define ColliderRender_H
+#ifndef COL_RENDER_H
+#define COL_RENDER_H
 
 #include "Renderable.h"
 
