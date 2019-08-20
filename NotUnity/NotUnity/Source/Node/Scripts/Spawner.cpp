@@ -4,7 +4,6 @@
 
 Spawner::Spawner(std::string name)
 	: Node(name)
-	, wave(DEFAULT)
 	, enemyCount(0)
 	, interval(0.f)
 	, poolCount(20)
@@ -131,8 +130,7 @@ void Spawner::SpawnEnemy(std::string waveOne)
 		int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
 		offset.x = sign * (3 + Math::RandFloatMinMax(0, 2));
 
-		sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
-		offset.y = sign * (1 + Math::RandFloatMinMax(0, 1));
+		offset.y = (1 + Math::RandFloatMinMax(0, 3));
 
 		go->GetTransform()->translate = spawnerPos + offset;
 		go->ActiveSelf(true);
