@@ -69,7 +69,7 @@ void MainScene::Start()
 	Scene::Start();	
 
 	//init variables
-	spawner->SetWave(1);
+	spawner->SetWave(0);
 	playerGO = player->GetPlayer();
 }
 
@@ -106,7 +106,7 @@ void MainScene::Update(double dt)
 	}
 
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);
-	player->SetTerrainHeight(0);//map->GetTerrainHeight(playerGO->GetTransform()->translate.x));
+	player->SetTerrain(map->GetTerrain());
 
 	Scene::Update(dt);	
 }
@@ -165,7 +165,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 	case TUTO:
 		break;
 	case GAMEPLAY:
-		//turn off spawner
+		spawner->SetWave(0);
 		break;
 	case LOSE:
 		break;
@@ -182,7 +182,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 	case TUTO:
 		break;
 	case GAMEPLAY:
-		//turn on spawner
+		spawner->SetWave(1);
 		break;
 	case LOSE:
 		break;

@@ -21,24 +21,13 @@ MapGenerator::~MapGenerator()
 void MapGenerator::Start()
 {
 	mapSize = 10;
-	offsetBuffer = 1 * scaleX; // Desire ammount * scale
-	bool oneTwo = false;
+	offsetBuffer = 1 * scaleX; // Desire ammount * scale	
 	for (int i = 0; i < mapSize; ++i)
 	{
 		AddChild<GameObj>("Chunk" + std::to_string(i))->AddComp<Chunk>();
 		GetChild<GameObj>("Chunk" + std::to_string(i))->GetTransform()->translate.Set(i * scaleX, 0, -1);
-		GetChild<GameObj>("Chunk" + std::to_string(i))->GetTransform()->scale.Set(scaleX, 5.7f, 1);
-		GetChild<GameObj>("Chunk" + std::to_string(i))->GetComp<Chunk>()->AssignMaterial("background2");
-		GetChild<GameObj>("Chunk" + std::to_string(i))->GetComp<Chunk>()->AssignBiome(BIOME_TYPE::GRASS);
-		if (oneTwo)
-		{
-			oneTwo = false;
-			GetChild<GameObj>("Chunk" + std::to_string(i))->GetComp<Chunk>()->AssignMaterial("background");
-		}
-		else
-		{
-			oneTwo = true;
-		}
+		GetChild<GameObj>("Chunk" + std::to_string(i))->GetTransform()->scale.Set(scaleX, 5.7f, 1);		
+		GetChild<GameObj>("Chunk" + std::to_string(i))->GetComp<Chunk>()->AssignBiome(BIOME_TYPE::GRASS);		
 	}
 	CullChunk();
 	Node::Start();
@@ -117,7 +106,6 @@ void MapGenerator::CullChunk()
 		if (displacement > cullingAmount)
 		{
 			GetChild<GameObj>("Chunk" + std::to_string(i))->ActiveSelf(false);
-			//Debug::Log("Chunk" + std::to_string(i) + " " + std::to_string(GetChild<GameObj>("Chunk" + std::to_string(i))->IsActive()));
 		}
 		else
 		{

@@ -63,7 +63,7 @@ GameObj* ScenePlayer::GetPlayer()
 	return playerScript->GetGameObj();
 }
 
-void ScenePlayer::SetTerrainHeight(float h)
+void ScenePlayer::SetTerrain(Spline* s)
 {
-	playerScript->SetHeight(h);
+	playerScript->SetTerrain(s);
 }

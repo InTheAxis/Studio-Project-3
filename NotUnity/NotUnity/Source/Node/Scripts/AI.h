@@ -8,7 +8,9 @@
 #include "../Components.h"
 #include "../Components/Sprite.h"
 #include "../Scripts.h"
-#include "../Scripts/Strategy.h"
+//#include "../Scripts/Strategy.h"
+#include "../../Utility/Strategy/Strategy.h"
+#include "../../Utility/Strategy/StrategyOne.h"
 
 class AI : public Node, public TypeID<AI>, public Component
 {
@@ -19,14 +21,16 @@ public:
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
+
 	void SetPlayerTrans(Vector3 trans);
-	//void Move();
-	void SetHealth(int health);
+	void SetHealth(float health);
 	float GetHealth();
-	void SetAtkSpeed(int atkSpeed);
+	void SetAtkSpeed(float atkSpeed);
 	float GetAtkSpeed();
-	void SetDamage(int damage);
+	void SetDamage(float damage);
 	float GetDamage();
+	void ChangeStrategy(Strategy* newStrategy, bool remove);
+	bool IsDead();
 
 private:
 
@@ -40,11 +44,17 @@ private:
 		WAVEFIVE,
 	};
 
-	std::string EnemyNames; //Use to pass to and from different functions
+	std::string enemyNames;
 	Vector3 playerTrans;
 	float health;
 	float atkSpeed;
 	float damage;
+	float worldHeight;
+	Strategy* strategy;
+	KinemeticBody* kineB;
+	Vector3 direction;
+	int enemyCount;
+	bool dead;
 };
 
 #endif

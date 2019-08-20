@@ -21,12 +21,16 @@ public:
 	virtual void Update(double dt);
 	virtual void End();	
 
+	void OnEnable();
+	void OnDisable();
+
 	void Render();
 	void SetWave(int wave); //Set starting wave from other scene
 	void PlayerTrans(Vector3 trans);
 private:
 	int currentWave;
 	Vector3 fromPlayer;
+	GameObj* SpawnerGO;
 };
 
 #endif

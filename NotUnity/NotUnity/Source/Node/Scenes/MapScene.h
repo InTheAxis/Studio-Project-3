@@ -7,6 +7,7 @@
 //plain scene to show how to inherit properly
 
 class MapGenerator;
+class Spline;
 class MapScene : public Scene //alright to inherit because I won't need to Get it
 {
 public:
@@ -19,7 +20,7 @@ public:
 
 	void Render();
 	void SetCamera(Camera* camera);
-	float GetTerrainHeight(float x);
+	Spline* GetTerrain();
 private:
 	Camera* camera;
 	MapGenerator* mapGen;

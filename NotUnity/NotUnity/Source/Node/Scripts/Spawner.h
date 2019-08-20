@@ -20,25 +20,14 @@ public:
 	virtual void Update(double dt);
 	virtual void End();
 
-	void SetWave(int waved); //Set starting wave from SpawnerScene
-
-	//Init Enemies for different waves
-	void EnemyWaveOne(std::string waveOne);
-	void EnemyWaveTwo(std::string waveTwo);
-	void EnemyWaveThree(std::string waveThree);
-	void EnemyWaveFour(std::string waveFour);
-	void EnemyWaveFive(std::string waveFive);
-
-	void SetEnemiesActive(std::string names, int maxEneCount, float time); //Update enemies
+	void SetSpawnerWave(int waved);
 	void SetPlayerTrans(Vector3 trans);
-	void AIMove(std::string names, int maxEneCount);
-	int GetEnemyCount();
-	void SetEnemyCount(int enemyCount);
 
 private:
-	int enemyCount; //Current enemies that are alive
-	int MAX_ENEMY_COUNT; //Max number of enemies of that particular wave
-	float interval; //Time interval per enemy spawn
+	int enemyCount;
+	int waveCount;
+	int poolCount;
+	float interval;
 
 	enum Wave //Use to activate the enemies in that wave
 	{
@@ -50,10 +39,23 @@ private:
 		WAVEFIVE,
 	};
 
-	int wave; //Current wave number
-	std::string EnemyNames; //Use to pass to and from different functions
-	bool doneOne; //To state wave 1
+	int wave;
+	std::string EnemyNames; 
+	bool doneOne; 
 	Vector3 playerTrans;
+
+	int enemyLeft;
+	bool canSpawn;
+
+	//Init Enemies for different waves
+	void CreateEnemies(std::string waveOne);
+	void SpawnEnemy(std::string waveOne);
+	void GetEnemyCount(std::string waveOne);
+
+	void UpdatePlayerPosToAI(std::string names);
+	void SetEnemyCount(int enemyCount);
+
+	bool IsWaveDone();
 };
 
 #endif
