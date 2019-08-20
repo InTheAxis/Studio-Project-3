@@ -29,19 +29,8 @@ private:
 	int poolCount;
 	float interval;
 
-	enum Wave //Use to activate the enemies in that wave
-	{
-		DEFAULT,
-		WAVEONE,
-		WAVETWO,
-		WAVETHREE,
-		WAVEFOUR,
-		WAVEFIVE,
-	};
-
 	int wave;
 	std::string EnemyNames; 
-	bool doneOne; 
 	Vector3 playerTrans;
 
 	int enemyLeft;

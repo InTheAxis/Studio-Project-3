@@ -25,8 +25,6 @@ public:
 	void SetPlayerTrans(Vector3 trans);
 	void SetHealth(float health);
 	float GetHealth();
-	void SetAtkSpeed(float atkSpeed);
-	float GetAtkSpeed();
 	void SetDamage(float damage);
 	float GetDamage();
 	void ChangeStrategy(Strategy* newStrategy, bool remove);
@@ -34,27 +32,17 @@ public:
 
 private:
 
-	enum Wave //Use to activate the enemies in that wave
-	{
-		DEFAULT,
-		WAVEONE,
-		WAVETWO,
-		WAVETHREE,
-		WAVEFOUR,
-		WAVEFIVE,
-	};
-
-	std::string enemyNames;
 	Vector3 playerTrans;
 	float health;
-	float atkSpeed;
 	float damage;
 	float worldHeight;
-	Strategy* strategy;
-	KinemeticBody* kineB;
+
 	Vector3 direction;
 	int enemyCount;
 	bool dead;
+
+	Strategy* strategy;
+	KinemeticBody* kineB;
 };
 
 #endif

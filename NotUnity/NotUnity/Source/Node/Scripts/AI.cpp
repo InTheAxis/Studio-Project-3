@@ -3,7 +3,7 @@
 #include "../../Node/GameObj.h"
 #include"../Scripts/Spawner.h"
 
-AI::AI(std::string name) : Node(name), playerTrans(0.f, 0.f, 0.f), health(0.f), atkSpeed(0.f), 
+AI::AI(std::string name) : Node(name), playerTrans(0.f, 0.f, 0.f), health(0.f), 
 damage(0.f),strategy(nullptr), direction(0.f,0.f,0.f), worldHeight(0.f), dead(false)
 {
 }
@@ -100,16 +100,6 @@ void AI::SetHealth(float health)
 float AI::GetHealth()
 {
 	return health;
-}
-
-void AI::SetAtkSpeed(float atkSpeed)
-{
-	this->atkSpeed = atkSpeed;
-}
-
-float AI::GetAtkSpeed()
-{
-	return atkSpeed;
 }
 
 void AI::SetDamage(float damage)
