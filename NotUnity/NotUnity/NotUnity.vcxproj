@@ -53,6 +53,7 @@
     <ClCompile Include="Source\Node\Scripts\MapGenerator.cpp" />
     <ClCompile Include="Source\Node\Scripts\Player.cpp" />
     <ClCompile Include="Source\Node\Scripts\PlayerController.cpp" />
+    <ClCompile Include="Source\Node\Scripts\Projectile.cpp" />
     <ClCompile Include="Source\Node\Scripts\Skill.cpp" />
     <ClCompile Include="Source\Node\Scripts\SkillTree.cpp" />
     <ClCompile Include="Source\Node\Scripts\Spawner.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="Source\Node\Scripts\MapGenerator.h" />
     <ClInclude Include="Source\Node\Scripts\Player.h" />
     <ClInclude Include="Source\Node\Scripts\PlayerController.h" />
+    <ClInclude Include="Source\Node\Scripts\Projectile.h" />
     <ClInclude Include="Source\Node\Scripts\Skill.h" />
     <ClInclude Include="Source\Node\Scripts\SkillTree.h" />
     <ClInclude Include="Source\Node\Scripts\Spawner.h" />
