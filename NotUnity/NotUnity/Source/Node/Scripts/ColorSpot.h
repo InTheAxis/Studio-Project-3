@@ -8,7 +8,6 @@
 #include "../../Utility/Component.h"
 #include "../Scripts.h"
 #include "../Components.h"
-#include "../Components/Renderable.h"
 
 class ColorSpot : public Node, public TypeID<ColorSpot>, public Component
 {
