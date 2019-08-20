@@ -4,7 +4,7 @@
 
 // Interpolated values from the vertex shaders
 in vec4 fragColor;
-in vec4 fragPos;
+in vec3 fragPos;
 in vec2 texCoord;
 in vec3 vertexPos_cameraspace;
 in vec3 vertNormal_cameraspace;
