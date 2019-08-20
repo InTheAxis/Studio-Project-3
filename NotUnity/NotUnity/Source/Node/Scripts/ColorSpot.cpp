@@ -2,6 +2,7 @@
 #include "../Manager/MgrGameObj.h"
 #include "../Manager/MgrGraphics.h"
 #include "../../Node/GameObj.h"
+#include "../../Node/Components/Transform.h"
 
 ColorSpot::ColorSpot(std::string name) 
 	: Node(name)
