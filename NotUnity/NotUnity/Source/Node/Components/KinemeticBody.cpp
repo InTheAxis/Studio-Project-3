@@ -50,7 +50,7 @@ void KinemeticBody::ApplyImpulse(Vector3 impulse)
 void KinemeticBody::UpdateSuvat(double dt)
 {
 	float dtf = static_cast<float>(dt);
-	acceleration = force * (1 / mass) + impulse * (1 / mass);
+	acceleration = force * (1 / mass) + impulse;
 	velocity += acceleration * dtf;
 	if (useGravity)
 	{
