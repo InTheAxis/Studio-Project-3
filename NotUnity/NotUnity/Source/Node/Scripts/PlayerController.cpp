@@ -8,6 +8,7 @@
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Utility/Input/ControllerMouse.h"
 #include "../../Node/Scripts/SkillTree.h"
+#include "../../Node/Scripts/Achievements.h"
 
 PlayerController::PlayerController(std::string name)
 	: Node(name)
@@ -78,6 +79,7 @@ void PlayerController::Start()
 	worldHeight = 0;
 	health = 5;
 
+	walking = false;
 	Node::Start();
 }
 
@@ -90,17 +92,37 @@ void PlayerController::Update(double dt)
 	
 	//get input
 	if (kb->IsKeyDown(VK_LEFT) && CanMove())
+	{
 		input.x = -1;
+		walking = true;
+	}
 	else if (kb->IsKeyDown(VK_RIGHT) && CanMove())
+	{
 		input.x = 1;
+		walking = true;
+	}
 	else
+	{
 		input.x = 0;
+		walking = false;
+	}
+	if (walking)
+	{
+		Achievements::Instance()->GetWalkTime(0.1);
+	}
+
 	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown(VK_UP)) && (jumpTimer > 0 || (OnGround() && CanMove())) && jumpTimer < 0.3)
+	{
+		Achievements::Instance()->GetJumpTimes(1);
 		jumpTimer += dt;
+	}
 	else
 		jumpTimer = 0;
 	if ((m->IsButtonPressed(0) || kb->IsKeyPressed('Z')) && !attackTimer)
+	{
+		Achievements::Instance()->GetAttacTimes(1);
 		attackTimer = 0.3f;
+	}
 
 	if (kb->IsKeyPressed(VK_LCONTROL))
 		TakeDamage(1);
@@ -176,9 +198,20 @@ void PlayerController::Move(float inputX)
 {
 	kinb->ApplyForce(Vector3(inputX * moveSpeed.x * (OnGround() ? 1 : 0.3f), 0, 0));
 	if (direction > 0)
+	{
 		TryChangeState(P_STATE::MOVE_R);
+		/*walking = true;*/
+	}
 	else if (direction < 0)
+	{
 		TryChangeState(P_STATE::MOVE_L);
+		/*walking = true;*/
+	}
+
+	/*if (walking == true)
+	{
+		Achievements::Instance()->GetWalkTime(1);
+	}*/
 }
 
 void PlayerController::Friction()
@@ -233,11 +266,13 @@ void PlayerController::Attack(double dt)
 	{
 		TryChangeState(P_STATE::AIR_ATTACK);		
 		attackAir->ActiveSelf(true);
+		
 	}
 	else if (direction == 1)
 	{
 		TryChangeState(P_STATE::ATTACK_R);
 		attackRight->ActiveSelf(true);
+	
 	}
 	else if (direction == -1)
 	{
@@ -292,6 +327,11 @@ void PlayerController::TakeDamage(int dmg)
 		deadTimer = 5;
 	else
 		hitTimer = 0.3f;
+}
+
+void PlayerController::DamageDealt()
+{
+	return damage;
 }
 
 void PlayerController::PrintState()

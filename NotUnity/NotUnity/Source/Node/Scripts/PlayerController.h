@@ -43,6 +43,7 @@ public:
 	
 	void SetHeight(float groudheight);
 	void TakeDamage(int dmg);	
+	void DamageDealt();
 private:
 	KinemeticBody* kinb;
 	Sprite* sprite;
@@ -56,6 +57,8 @@ private:
 	double jumpTimer, attackTimer, hitTimer, deadTimer;
 	float worldHeight;	
 	int health;
+	int damage;
+	bool walking;
 	
 
 	void TryChangeState(P_STATE state);
