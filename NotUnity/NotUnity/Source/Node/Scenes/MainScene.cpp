@@ -106,7 +106,7 @@ void MainScene::Update(double dt)
 	}
 
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);
-	player->SetTerrainHeight(0);//map->GetTerrainHeight(playerGO->GetTransform()->translate.x));
+	player->SetTerrain(map->GetTerrain());
 
 	Scene::Update(dt);	
 }

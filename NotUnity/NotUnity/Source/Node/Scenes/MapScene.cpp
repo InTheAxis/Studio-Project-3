@@ -23,7 +23,8 @@ void MapScene::Start()
 	//add & set up components and scripts	
 	//GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
 	GetChild<GameObj>("debug_text")->AddScript<DebugText>();	
-	GetChild<GameObj>("MapGenerator")->AddScript<MapGenerator>()->SetCamera(camera);
+	mapGen = GetChild<GameObj>("MapGenerator")->AddScript<MapGenerator>();
+	mapGen->SetCamera(camera);
 	Scene::Start();
 }
 
@@ -56,10 +57,7 @@ void MapScene::SetCamera(Camera * camera)
 	this->camera = camera;
 }
 
-float MapScene::GetTerrainHeight(float x)
-{
-	return x / 5.f - 1;
-	Spline* s = mapGen->GetCurrChunk()->GetSpline();
-	if (s)
-		return s->Fn(x + mapGen->GetCurrChunk()->GetGameObj()->GetTransform()->translate.x);
+Spline * MapScene::GetTerrain()
+{	
+	return mapGen->GetCurrChunk()->GetSpline();
 }

@@ -31,6 +31,7 @@ class KinemeticBody;
 class Sprite;
 class ColInfo;
 class Collider;
+class Spline;
 class PlayerController : public Node, public TypeID<PlayerController>, public Component
 {
 public:
@@ -41,25 +42,27 @@ public:
 	virtual void Update(double dt);
 	virtual void End();
 	
-	void SetHeight(float groudheight);
+	PlayerController* SetTerrain(Spline * s);	
 	void TakeDamage(int dmg);	
 private:
 	KinemeticBody* kinb;
 	Sprite* sprite;
 	Collider* attackRight, *attackLeft, *attackAir;
 	Collider* hitbox;
+	Spline* terrain;
 	
 	P_STATE currState, nextState;
 
 	Vector3 moveSpeed;
 	int direction;
-	double jumpTimer, attackTimer, hitTimer, deadTimer;
-	float worldHeight;	
+	double jumpTimer, attackTimer, hitTimer, deadTimer;	
 	int health;
 	
 
 	void TryChangeState(P_STATE state);
 	void ChangeState();
+
+	float GetTerrainHeight();
 
 	bool CanMove();
 	bool OnGround(float offset = 0, bool exact = false);
@@ -67,6 +70,7 @@ private:
 	void Friction();
 	void Jump();
 	void Fall();
+	void Constrain();
 	void Attack(double dt);
 	void Die(double dt);
 	void Hit(double dt);
