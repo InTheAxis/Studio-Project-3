@@ -20,11 +20,11 @@ void MgrCollision::Update(double dt)
 	unsigned size = allColls.size();
 	for (unsigned i = 0; i < size; ++i)
 	{
-		if (!allColls[i]->IsActive())
+		if (!(allColls[i]->IsActive()))
 			continue;
-		for (unsigned j = i + 1; j < size - 1; ++j)
+		for (unsigned j = i + 1; j < size; ++j)
 		{
-			if (!allColls[j]->IsActive())
+			if (!(allColls[j]->IsActive()))
 				continue;
 			allColls[i]->CheckCollision(allColls[j]);			
 		}

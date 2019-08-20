@@ -5,6 +5,7 @@
 #include "../Components/Camera.h"
 #include "../Components/Sprite.h"
 #include "../Scripts/DebugText.h"
+#include "../Scripts/Projectile.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Utility/Input/ControllerMouse.h"
 #include "../../Application.h"
@@ -62,6 +63,9 @@ void MainScene::Start()
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
 	mg->SetProjOrtho(128);
 
+	AddChild<GameObj>("pew");
+	GetChild<GameObj>("pew")->AddScript<Projectile>();
+
 	Scene::Start();	
 
 	//init variables
@@ -75,6 +79,12 @@ void MainScene::Update(double dt)
 	ControllerMouse* m = ControllerMouse::Instance();
 	if (kb->IsKeyPressed('9'))
 		debug = !debug;
+
+	if (kb->IsKeyPressed('8'))
+	{
+		GetChild<GameObj>("pew")->GetScript<Projectile>()->Discharge(Vector3(0, 0, 0), Vector3(1, 0, 0));
+		GetChild<GameObj>("pew")->GetScript<Projectile>()->ActiveSelf(true);
+	}
 
 	switch (gs)
 	{
@@ -96,7 +106,7 @@ void MainScene::Update(double dt)
 	}
 
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);
-	player->SetTerrainHeight(map->GetTerrainHeight(playerGO->GetTransform()->translate.x));
+	player->SetTerrainHeight(0);//map->GetTerrainHeight(playerGO->GetTransform()->translate.x));
 
 	Scene::Update(dt);	
 }

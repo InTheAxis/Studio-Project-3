@@ -12,6 +12,7 @@ class Collider;
 class ColInfo
 {
 public:
+	Collider* coll;
 	Collider* other;
 	Vector3 penetration;
 };
