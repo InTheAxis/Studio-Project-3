@@ -47,6 +47,8 @@ private:
 	Transform* t;
 	Vector3 HSV;
 
+	int currAnimIdx;
+
 	BIOME_TYPE currentBiome;
 };
 
