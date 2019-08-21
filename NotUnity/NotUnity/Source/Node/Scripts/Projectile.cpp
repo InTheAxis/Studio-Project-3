@@ -11,7 +11,10 @@
 void OnHit(ColInfo info)
 {
 	if (info.other->GetGameObj()->GetScript<PlayerController>())
+	{
 		info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
+		info.coll->GetGameObj()->ActiveSelf(false);
+	}
 }
 
 
