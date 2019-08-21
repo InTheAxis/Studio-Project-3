@@ -49,7 +49,7 @@ void PlayerController::Start()
 	
 	kinb = AddChild<KinemeticBody>();
 	kinb->SetGameObj(gameObject);
-	kinb->maxVel.Set(2, 2, 0);
+	kinb->maxVel.Set(1, 1, 0);
 	kinb->frictionCoeff = 5;
 	kinb->gravScale = 5;
 	kinb->useGravity = false;
@@ -81,6 +81,8 @@ void PlayerController::Start()
 	health = 5;
 
 	walking = false;
+
+	Achievements::Instance()->setKnibRefrence(kinb);
 	Node::Start();
 }
 
@@ -92,12 +94,12 @@ void PlayerController::Update(double dt)
 	float dtf = static_cast<float>(dt);
 	
 	//get input
-	if (kb->IsKeyDown(VK_LEFT) && CanMove())
+	if (kb->IsKeyDown('A') && CanMove())
 	{
 		input.x = -1;
 		walking = true;
 	}
-	else if (kb->IsKeyDown(VK_RIGHT) && CanMove())
+	else if (kb->IsKeyDown('D') && CanMove())
 	{
 		input.x = 1;
 		walking = true;
@@ -112,7 +114,7 @@ void PlayerController::Update(double dt)
 		Achievements::Instance()->GetWalkTime(0.1);
 	}
 
-	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown(VK_UP)) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
+	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
 	{
 		Achievements::Instance()->GetJumpTimes(1);
 		jumpTimer += dt;
@@ -123,6 +125,10 @@ void PlayerController::Update(double dt)
 	{
 		Achievements::Instance()->GetAttacTimes(1);
 		attackTimer = 0.3f;
+	}
+	if (kb->IsKeyPressed('Q')) // TO BE PUT IN ENEMYSIDE TO DETECT IF ENEMY IS DEAD 
+	{
+		Achievements::Instance()->GetEnemyKilled(1);
 	}
 
 	if (kb->IsKeyPressed(VK_LCONTROL))
@@ -159,6 +165,10 @@ void PlayerController::Update(double dt)
 
 
 	ChangeState();
+
+	// achievemets
+	// kinb->maxVel.Set(Achievements::Instance()->maxValX, Achievements::Instance()->maxValY, 0);
+	Debug::Log(kinb->maxVel);
 	
 	Node::Update(dt);
 }
@@ -201,12 +211,11 @@ bool PlayerController::OnGround(float offset, bool exact)
 
 void PlayerController::Move(float inputX)
 {
-	kinb->ApplyForce(Vector3(inputX * moveSpeed.x * (OnGround() ? 1 : 0.3f), 0, 0));
+	//if (Achievements::Instance()->walkAch(true))
+	//	speedincrease = 10;
+	kinb->ApplyForce(Vector3(inputX * moveSpeed.x /*+ speedincrease*/ * (OnGround() ? 1 : 0.3f), 0, 0));
 	if (direction > 0)
-	{
 		TryChangeState(P_STATE::MOVE_R);
-		/*walking = true;*/
-	}
 	else if (direction < 0)
 		TryChangeState(P_STATE::MOVE_L);	
 }
@@ -330,6 +339,7 @@ PlayerController * PlayerController::SetTerrain(Spline * s)
 
 void PlayerController::TakeDamage(int dmg)
 {
+
 	health -= dmg;
 	if (health <= 0)
 		deadTimer = 5;
@@ -338,6 +348,8 @@ void PlayerController::TakeDamage(int dmg)
 }
 int PlayerController::DamageDealt()
 {
+	if (Achievements::Instance()->attackAch(true))
+		damage = 2;
 	return damage;
 }
 

@@ -26,7 +26,7 @@ void ScenePlayer::Start()
 	playerScript = GetChild<GameObj>("Player")->AddScript<PlayerController>();
 	AddChild("SkillTree", SkillTree::Instance());
 	AddChild("Achievement", Achievements::Instance());
-	
+
 	colorSpot = GetChild<GameObj>("Player")->AddComp<ColorSpot>();
 
 	Scene::Start();

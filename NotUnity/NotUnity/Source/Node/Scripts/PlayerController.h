@@ -57,8 +57,10 @@ private:
 	Vector3 moveSpeed;
 	int direction;
 	double jumpTimer, attackTimer, hitTimer, deadTimer;	
-	int health;
+	int health, healthINC;
 	int damage;
+    int speedincrease;
+
 	bool walking;
 	
 

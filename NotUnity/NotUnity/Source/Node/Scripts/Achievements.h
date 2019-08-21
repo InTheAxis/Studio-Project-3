@@ -8,7 +8,7 @@
 #include "../Components.h"
 #include "../../Utility/Delegate.h"
 #include "../../Utility/Singleton.h"
-
+class KinemeticBody;
 class Achievements : public Node, public TypeID<Achievements>, public Component, public Singleton<Achievements>
 {
 	friend Singleton<Achievements>;
@@ -19,9 +19,7 @@ public:
 	virtual void End();
 
 	//make a bunch of delegates which are what the player will do to unlock achievements
-
 	//in main scene or something else, attach the effect to the delegate
-
 	//call the delegates when the thing happens i.e. PlayerDie when player dies
 	//Delegate are call back pointers
 	//Delegate<void> WalkTimer; // Walk for a certain amount of time and gain more movement speed
@@ -35,25 +33,38 @@ public:
 	// Attacking 10 times gains you more damage
 	int GetAttacTimes(int at);
 	int attackTimes;
-	bool attackAch;
-
-	// Killing 10 enemies and gain hp
-	int GetEnemyKilled();
-	int enemyKilled;
-	bool enemyAch;
+	bool attackAch(bool AA);
+	bool attackAch2(bool AA);
 
 	// Jumping 10 times gains you 
 	int GetJumpTimes(int jt);
 	int jumpTimes;
-	bool jumpAch;
+	bool jumpAch(bool JA);
+	bool jumpAch2(bool JA);
 
+	//Get walk time 
 	double GetWalkTime(double wt);
 	double walkTime;
-	bool walkAch;
+	bool walkAch(bool WA);
+	bool walkAch2(bool WA);
+	float maxValX;
+	float maxValY;
+
 	
+	// Killing 10 enemies and gain hp
+	int GetEnemyKilled(int ek);
+	int enemyKilled;
+	bool enemyAch(bool EA);
+
+
+	void ReadTextFile();
+	void WriteTextFile();
+	void setKnibRefrence(KinemeticBody* knib);
 private:
 	Achievements(std::string name = "Achievements");
 	~Achievements();
+
+	KinemeticBody* knibReference; // get set private variable !!!
 };
 
 #endif

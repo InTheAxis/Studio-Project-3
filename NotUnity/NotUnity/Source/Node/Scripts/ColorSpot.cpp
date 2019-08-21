@@ -6,7 +6,7 @@
 
 ColorSpot::ColorSpot(std::string name) 
 	: Node(name)
-	, radius(5)
+	, radius(1)
 {
 }
 

@@ -13,10 +13,10 @@ float SplineMountain::Fn(float x)
 {
 	float relX = x + offset;
 
-	if (relX < -3 || relX  > 3)
-		return -2;
+	if (relX < -6 || relX  > 6)
+		return -5;
 
-	return 0.333f * (-relX * relX) + 1;
+	return 0.19f * (-relX * relX) + 2.2f;
 }
 
 void SplineMountain::SetOffset(float offset)
