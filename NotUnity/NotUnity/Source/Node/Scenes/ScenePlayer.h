@@ -21,7 +21,7 @@ public:
 	GameObj* GetPlayer();
 	void SetTerrain(Spline* s);
 
-	void Render();
+	void Render();	
 protected:
 	ColorSpot* colorSpot;
 	PlayerController* playerScript;

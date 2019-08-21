@@ -44,6 +44,8 @@ private:
 	bool debug;
 	GAME_STATE gs;
 
+	double winTimer;
+
 	void ChangeGameState(GAME_STATE gs);
 };
 
