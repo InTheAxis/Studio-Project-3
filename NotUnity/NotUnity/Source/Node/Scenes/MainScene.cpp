@@ -92,7 +92,7 @@ void MainScene::Update(double dt)
 			ChangeGameState(GAMEPLAY);
 		break;
 	case GAMEPLAY:
-		if (spawner->GetEnemyKilled() >= 20)	
+		if (spawner->GetEnemyKilled() >= 3)	
 			ChangeGameState(WIN);	
 		else if (playerGO->GetScript<PlayerController>()->IsDead())
 			ChangeGameState(LOSE);	

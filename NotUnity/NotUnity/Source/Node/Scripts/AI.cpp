@@ -12,7 +12,10 @@ void AIOnHit(ColInfo info)
 	if (info.other->GetGameObj()->GetScript<Projectile>())
 		return;
 	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
-	info.coll->GetGameObj()->GetScript<AI>()->sat = 0;
+	{
+		info.coll->GetGameObj()->GetScript<AI>()->health--;
+		info.coll->GetGameObj()->GetTransform()->translate += info.penetration;
+	}
 }
 
 void AIOnAttack(ColInfo info)
@@ -23,7 +26,7 @@ void AIOnAttack(ColInfo info)
 AI::AI(std::string name) 
 	: Node(name)
 	, playerTrans(0.f, 0.f, 0.f)
-	, health(0.f)
+	, health(3.f)
 	, damage(0.f)
 	, strategy(nullptr)
 	, direction(0.f,0.f,0.f)
@@ -143,6 +146,8 @@ void AI::Update(double dt)
 	}
 	else
 		dead = false;
+
+	sat = Math::Max(0.f,  health / 3.f);
 
 	sprite->SetHSV(-1, sat, -1);
 

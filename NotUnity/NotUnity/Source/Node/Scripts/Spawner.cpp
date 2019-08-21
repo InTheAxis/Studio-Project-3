@@ -72,7 +72,13 @@ void Spawner::SetTerrain(Spline * s)
 
 int Spawner::GetEnemiesKilled()
 {
-	return Math::Min(waveCount - enemyCount, poolCount);
+	int c = 0;
+	for (int i = 0; i < poolCount; ++i)
+	{
+		if (enemyPool[i]->GetScript<AI>()->IsDead())
+			++c;
+	}
+	return c;
 }
 
 void Spawner::Reset()
@@ -81,7 +87,9 @@ void Spawner::Reset()
 	{
 		enemyPool[i]->ActiveSelf(false);
 		enemyPool[i]->GetScript<AI>()->SetSaturation(1);
+		enemyPool[i]->GetScript<AI>()->SetHealth(3);
 	}
+	waveCount = enemyCount = 0;	
 }
 
 void Spawner::UpdatePlayerPosToAI(std::string names)
@@ -109,7 +117,7 @@ void Spawner::CreateEnemies(std::string waveOne)
 	{
 		enemyPool[i] = gameObject->AddChild<GameObj>(waveOne + std::to_string(i));
 		enemyPool[i]->ActiveSelf(false);
-		enemyPool[i]->AddScript<AI>()->SetHealth(10.f);
+		enemyPool[i]->AddScript<AI>()->SetHealth(3);
 		enemyPool[i]->GetScript<AI>()->ResetBullets();
 	}
 }
