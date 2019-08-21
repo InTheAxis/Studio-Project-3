@@ -45,6 +45,7 @@ private:
 	float health;
 	float damage;
 	float sat;
+	float interval;
 
 	Vector3 direction;
 	int enemyCount;
