@@ -13,6 +13,7 @@ public:
 	~SplineMountain();
 
 	virtual float Fn(float x);
+	virtual void SetOffset(float offset);
 	virtual Vector3 Normal(float x);
 
 private:

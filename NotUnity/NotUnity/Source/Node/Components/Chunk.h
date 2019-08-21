@@ -19,6 +19,7 @@ enum class BIOME_TYPE
 
 class Sprite;
 class Spline;
+class SplineMountain;
 class Chunk : public Node, public TypeID<Chunk>, public Component
 {
 	
