@@ -9,7 +9,7 @@ MapGenerator::MapGenerator(std::string name) :
 	offsetBuffer(0),
 	chunkNumber(0),
 	offsetX(0),
-	scaleX(10),
+	scaleX(20),
 	cullingAmount(30)
 {
 }
@@ -33,7 +33,7 @@ void MapGenerator::Start()
 		chunkGO[i] = AddChild<GameObj>("Chunk" + std::to_string(i));
 		chunkGO[i]->AddComp<Chunk>()->SetSpline(spline);
 		chunkGO[i]->GetTransform()->translate.Set(i * scaleX, 0, -1);
-		chunkGO[i]->GetTransform()->scale.Set(scaleX, 10.f, 1);
+		chunkGO[i]->GetTransform()->scale.Set(scaleX, scaleX, 1);
 	}
 	CullChunk();
 	Node::Start();

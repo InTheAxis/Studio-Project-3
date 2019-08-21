@@ -93,7 +93,9 @@ void AI::Start()
 
 void AI::Update(double dt)
 { 
-	direction = (playerTrans - gameObject->GetTransform()->translate).Normalized();
+	direction = (playerTrans - gameObject->GetTransform()->translate);
+	if (!direction.IsZero())
+		direction.Normalize();
 
 	strategy->SetDest(playerTrans.x, playerTrans.y);
 	if (strategy->Update(playerTrans, gameObject->GetTransform()->translate, dt))

@@ -92,12 +92,12 @@ void PlayerController::Update(double dt)
 	float dtf = static_cast<float>(dt);
 	
 	//get input
-	if (kb->IsKeyDown(VK_LEFT) && CanMove())
+	if (kb->IsKeyDown('A') && CanMove())
 	{
 		input.x = -1;
 		walking = true;
 	}
-	else if (kb->IsKeyDown(VK_RIGHT) && CanMove())
+	else if (kb->IsKeyDown('D') && CanMove())
 	{
 		input.x = 1;
 		walking = true;
@@ -112,7 +112,7 @@ void PlayerController::Update(double dt)
 		Achievements::Instance()->GetWalkTime(0.1);
 	}
 
-	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown(VK_UP)) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
+	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
 	{
 		Achievements::Instance()->GetJumpTimes(1);
 		jumpTimer += dt;
