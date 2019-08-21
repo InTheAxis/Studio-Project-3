@@ -21,6 +21,10 @@ public:
 	void Render();
 	void SetCamera(Camera* camera);
 	Spline* GetTerrain();
+
+	void ChangeToSaturated();
+	void ChangeToDeSat();
+
 private:
 	Camera* camera;
 	MapGenerator* mapGen;
