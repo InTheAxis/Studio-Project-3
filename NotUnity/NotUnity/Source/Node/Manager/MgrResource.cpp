@@ -70,8 +70,8 @@ void MgrResource::LoadMaterials()
 
 	temp = new Material("background");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/bg_mt.tga");
-	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/bg_snow.tga");
-	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/bg_des.tga");
+	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/bg_mt.tga");
+	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/bg_mt.tga");
 
 	temp = new Material("sattest");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/sattest.tga");

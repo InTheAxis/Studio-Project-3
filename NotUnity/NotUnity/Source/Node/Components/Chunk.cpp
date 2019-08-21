@@ -51,6 +51,7 @@ void Chunk::Start()
 	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"));
 	sprite->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("background"));
 	sprite->SwitchAnimation(0)->PlayAnimation();
+	sprite->SelectShader(MgrGraphics::HSV_UNLIT);
 	//sprite->SelectShader(MgrGraphics::HSV_UNLIT);
 	//sprite->SetRenderPass(RENDER_PASS::POST_FX);
 	//sprite->SetRenderPass(RENDER_PASS::GEO);

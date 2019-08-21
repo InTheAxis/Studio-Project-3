@@ -39,9 +39,10 @@ void MapGenerator::Start()
 	}
 	CullChunk();
 
-	sky = AddChild<GameObj>("Sky");
-	sky->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sky"))->SetRenderPass(RENDER_PASS::GEO);
-	sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;
+	//sky = AddChild<GameObj>("Sky");
+	//sky->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sky"))->SetRenderPass(RENDER_PASS::GEO);
+	//sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;
+	//sky->GetTransform()->scale.Set(30, 30, 1);
 	Node::Start();
 }
 
@@ -49,7 +50,7 @@ void MapGenerator::Update(double dt)
 {
 	if (camera)
 	{
-		sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;
+		//sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;
 
 		if (ControllerKeyboard::Instance()->IsKeyDown(VK_LEFT) || ControllerKeyboard::Instance()->IsKeyDown('A'))
 		{
