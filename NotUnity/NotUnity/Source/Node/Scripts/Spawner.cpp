@@ -35,7 +35,7 @@ void Spawner::Update(double dt)
 
 	GetEnemyCount("e1");
 
-	if (enemyCount < 1)
+	if (enemyCount < 10)
 		interval += 1.f * static_cast<float>(dt);
 	else
 		interval = 0;
@@ -94,7 +94,6 @@ void Spawner::CreateEnemies(std::string waveOne)
 	for (unsigned int i = 0; i < poolCount; ++i)
 	{
 		enemyPool[i] = gameObject->AddChild<GameObj>(waveOne + std::to_string(i));
-		enemyPool[i]->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"));
 		enemyPool[i]->ActiveSelf(false);
 		enemyPool[i]->AddScript<AI>()->SetHealth(10.f);
 		enemyPool[i]->GetScript<AI>()->ResetBullets();
