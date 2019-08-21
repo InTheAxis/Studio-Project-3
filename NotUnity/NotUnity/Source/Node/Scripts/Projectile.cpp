@@ -6,9 +6,12 @@
 #include "../../Node/Components/KinemeticBody.h"
 #include "../../Node/Components/Sprite.h"
 #include "../../Node/Components/Collider.h"
+#include "../../Node/Scripts/PlayerController.h"
 
 void OnHit(ColInfo info)
 {
+	if (info.other->GetGameObj()->GetScript<PlayerController>())
+		info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
 }
 
 
