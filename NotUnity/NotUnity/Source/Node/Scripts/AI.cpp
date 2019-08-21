@@ -14,7 +14,6 @@ void AIOnHit(ColInfo info)
 	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
 	{
 		info.coll->GetGameObj()->GetScript<AI>()->health--;
-		info.coll->GetGameObj()->GetTransform()->translate += info.penetration;
 	}
 }
 
@@ -22,6 +21,9 @@ void AIOnAttack(ColInfo info)
 {
 	//if (info.other->GetGameObj()->GetScript<PlayerController>())
 	//	info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
+
+	if (info.other->GetGameObj()->GetScript<PlayerController>())
+		info.coll->GetGameObj()->GetTransform()->translate +=  info.penetration;
 }
 AI::AI(std::string name) 
 	: Node(name)
@@ -85,12 +87,12 @@ void AI::Start()
 	Vector3 scale = gameObject->GetTransform()->scale;
 	coll = AddChild<Collider>("c");
 	coll->SetGameObj(gameObject);
-	coll->CreateAABB(Vector3(-scale.x * 0.5f, -scale.y * 0.5f), Vector3(scale.x * 0.5f, scale.y * 0.5f));
+	coll->CreateAABB(0.7f);
 	
 	trigger = AddChild<Collider>("t");
 	trigger->SetGameObj(gameObject);
 	trigger->isTrigger = true;
-	trigger->CreateAABB(Vector3(-scale.x * 0.5f, -scale.y * 0.5f), Vector3(scale.x * 0.5f, scale.y * 0.5f));
+	trigger->CreateAABB(0.7f);
 
 	Node::Start();
 }
@@ -212,6 +214,14 @@ void AI::ResetBullets()
 void AI::SetSaturation(float sat)
 {
 	this->sat = sat;
+}
+
+void AI::Reset()
+{
+	health = 3;
+	sat = 1;
+	dead = false;
+	ResetBullets();
 }
 
 float AI::GetWorldHeight()

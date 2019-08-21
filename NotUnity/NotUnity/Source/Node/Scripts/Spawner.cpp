@@ -40,7 +40,10 @@ void Spawner::Update(double dt)
 	else
 		interval = 0;
 	if (interval >= 1.5f)
+	{
 		SpawnEnemy("e1");
+		interval = 0;
+	}
 
 	UpdatePlayerPosToAI("e1");
 
@@ -86,8 +89,7 @@ void Spawner::Reset()
 	for (int i = 0; i < poolCount; ++i)
 	{
 		enemyPool[i]->ActiveSelf(false);
-		enemyPool[i]->GetScript<AI>()->SetSaturation(1);
-		enemyPool[i]->GetScript<AI>()->SetHealth(3);
+		enemyPool[i]->GetScript<AI>()->Reset();
 	}
 	waveCount = enemyCount = 0;	
 }
@@ -132,16 +134,15 @@ void Spawner::SpawnEnemy(std::string waveOne)
 			continue;
 
 		int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
-		offset.x = sign * (3 + Math::RandFloatMinMax(0, 2));
+		offset.x = sign * (1 + Math::RandFloatMinMax(0, 2));
 
 		offset.y = (1 + Math::RandFloatMinMax(0, 3));
 
 		enemyPool[i]->GetTransform()->translate = spawnerPos + offset;
 		enemyPool[i]->ActiveSelf(true);
-		enemyPool[i]->GetScript<AI>()->ResetBullets();
+		enemyPool[i]->GetScript<AI>()->Reset();
 
 		++waveCount;
-		interval = 0;
 		return;
 	}
 }

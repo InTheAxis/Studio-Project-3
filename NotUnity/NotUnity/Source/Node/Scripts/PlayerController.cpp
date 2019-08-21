@@ -54,22 +54,22 @@ void PlayerController::Start()
 
 	attackRight = AddChild<Collider>("r");
 	attackRight->SetGameObj(gameObject);
-	attackRight->CreateAABB(Vector3(0, -0.5f), Vector3(0.5f, 0.5f));
+	attackRight->CreateAABB(0.7f);
 	attackRight->isTrigger = true;
 	attackRight->ActiveSelf(false);
 	attackLeft = AddChild<Collider>("l");
 	attackLeft->SetGameObj(gameObject);
-	attackLeft->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0, 0.5f));
+	attackLeft->CreateAABB(0.7f);
 	attackLeft->isTrigger = true;
 	attackLeft->ActiveSelf(false);
 	attackAir = AddChild<Collider>("a");
 	attackAir->SetGameObj(gameObject);
-	attackAir->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0.5f, 0.5f));
+	attackAir->CreateAABB(0.7f);
 	attackAir->isTrigger = true;
 	attackAir->ActiveSelf(false);
 	hitbox = AddChild<Collider>("h");
 	hitbox->SetGameObj(gameObject);
-	hitbox->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0.5f, 0.5f));	
+	hitbox->CreateAABB(0.4f);	
 
 	Reset();
 

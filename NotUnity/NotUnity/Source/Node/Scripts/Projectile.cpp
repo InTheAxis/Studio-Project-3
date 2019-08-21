@@ -49,7 +49,7 @@ void Projectile::Start()
 	kinb = AddChild<KinemeticBody>();
 	kinb->SetGameObj(gameObject);
 	kinb->useGravity = false;
-	kinb->maxVel.Set(10, 10, 0);
+	kinb->maxVel.Set(3, 3, 0);
 
 	sprite = AddChild<Sprite>();
 	sprite->SetGameObj(gameObject);
@@ -57,7 +57,7 @@ void Projectile::Start()
 
 	coll = AddChild<Collider>();
 	coll->SetGameObj(gameObject);
-	coll->CreateAABB(Vector3(-size * 0.5f, -size * 0.5f), Vector3(size * 0.5f, size * 0.5f));
+	coll->CreateAABB(size * 0.5f);
 	Node::Start();
 }
 
