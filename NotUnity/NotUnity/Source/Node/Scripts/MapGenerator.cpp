@@ -2,7 +2,7 @@
 #include "../Manager/MgrGameObj.h"
 #include "../../Node/GameObj.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
-#include "../../Utility/Math/Spline.h"
+#include "../../Utility/Math/Splines/Mountain.h"
 #include "../GameObj.h"
 MapGenerator::MapGenerator(std::string name) :
 	Node(name),
@@ -28,7 +28,7 @@ void MapGenerator::Start()
 	offsetBuffer = 1 * scaleX; // Desire ammount * scale
 	for (int i = 0; i < mapSize; ++i)
 	{
-		spline = new Spline;
+		spline = new SplineMountain;
 		spline->SetOffset(i * -scaleX);
 		chunkGO[i] = AddChild<GameObj>("Chunk" + std::to_string(i));
 		chunkGO[i]->AddComp<Chunk>()->SetSpline(spline);

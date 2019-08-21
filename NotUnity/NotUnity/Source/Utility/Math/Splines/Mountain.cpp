@@ -13,10 +13,10 @@ float SplineMountain::Fn(float x)
 {
 	float relX = x + offset;
 
-	if (relX < -1 || relX  > 1)
-		return -3;
+	if (relX < -3 || relX  > 3)
+		return -2;
 
-	return -relX * relX - 2;
+	return 0.333f * (-relX * relX) + 1;
 }
 
 Vector3 SplineMountain::Normal(float x)
