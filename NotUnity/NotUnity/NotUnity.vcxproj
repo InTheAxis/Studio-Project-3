@@ -67,12 +67,7 @@
     <ClCompile Include="Source\Utility\Math\Mtx44.cpp" />
     <ClCompile Include="Source\Utility\Math\Rect2D.cpp" />
     <ClCompile Include="Source\Utility\Math\Spline.cpp" />
-    <ClCompile Include="Source\Utility\Math\Splines\Cubic.cpp" />
-    <ClCompile Include="Source\Utility\Math\Splines\Exponential.cpp" />
-    <ClCompile Include="Source\Utility\Math\Splines\Logarithm.cpp" />
-    <ClCompile Include="Source\Utility\Math\Splines\Quadratic.cpp" />
-    <ClCompile Include="Source\Utility\Math\Splines\Reciprocal.cpp" />
-    <ClCompile Include="Source\Utility\Math\Splines\SqReci.cpp" />
+    <ClCompile Include="Source\Utility\Math\Splines\Mountain.cpp" />
     <ClCompile Include="Source\Utility\Math\Stopwatch.cpp" />
     <ClCompile Include="Source\Utility\Math\Vector2.cpp" />
     <ClCompile Include="Source\Utility\Math\Vector3.cpp" />
@@ -137,12 +132,7 @@
     <ClInclude Include="Source\Utility\Math\MyMath.h" />
     <ClInclude Include="Source\Utility\Math\Rect2D.h" />
     <ClInclude Include="Source\Utility\Math\Spline.h" />
-    <ClInclude Include="Source\Utility\Math\Splines\Cubic.h" />
-    <ClInclude Include="Source\Utility\Math\Splines\Exponential.h" />
-    <ClInclude Include="Source\Utility\Math\Splines\Logarithm.h" />
-    <ClInclude Include="Source\Utility\Math\Splines\Quadratic.h" />
-    <ClInclude Include="Source\Utility\Math\Splines\Reciprocal.h" />
-    <ClInclude Include="Source\Utility\Math\Splines\SqReci.h" />
+    <ClInclude Include="Source\Utility\Math\Splines\Mountain.h" />
     <ClInclude Include="Source\Utility\Math\Stopwatch.h" />
     <ClInclude Include="Source\Utility\Math\Vector2.h" />
     <ClInclude Include="Source\Utility\Math\Vector3.h" />

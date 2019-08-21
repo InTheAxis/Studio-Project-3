@@ -11,7 +11,6 @@ Spawner::Spawner(std::string name)
 	, enemyLeft(0)
 	, waveCount(0)
 	, wave(0)
-	, canSpawn(false)
 {
 }
 
@@ -36,7 +35,7 @@ void Spawner::Update(double dt)
 
 	GetEnemyCount("e1");
 
-	if (enemyCount < 10)
+	if (enemyCount < 1)
 		interval += 1.f * static_cast<float>(dt);
 	else
 		interval = 0;
@@ -98,6 +97,7 @@ void Spawner::CreateEnemies(std::string waveOne)
 		enemyPool[i]->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"));
 		enemyPool[i]->ActiveSelf(false);
 		enemyPool[i]->AddScript<AI>()->SetHealth(10.f);
+		enemyPool[i]->GetScript<AI>()->ResetBullets();
 	}
 }
 
@@ -117,6 +117,7 @@ void Spawner::SpawnEnemy(std::string waveOne)
 
 		enemyPool[i]->GetTransform()->translate = spawnerPos + offset;
 		enemyPool[i]->ActiveSelf(true);
+		enemyPool[i]->GetScript<AI>()->ResetBullets();
 
 		++waveCount;
 		interval = 0;

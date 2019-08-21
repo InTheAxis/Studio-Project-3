@@ -148,24 +148,6 @@
     <ClCompile Include="Source\Utility\Math\Spline.cpp">
       <Filter>Source\Utility\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Utility\Math\Splines\SqReci.cpp">
-      <Filter>Source\Utility\Math\Splines</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Utility\Math\Splines\Reciprocal.cpp">
-      <Filter>Source\Utility\Math\Splines</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Utility\Math\Splines\Quadratic.cpp">
-      <Filter>Source\Utility\Math\Splines</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Utility\Math\Splines\Logarithm.cpp">
-      <Filter>Source\Utility\Math\Splines</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Utility\Math\Splines\Exponential.cpp">
-      <Filter>Source\Utility\Math\Splines</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Utility\Math\Splines\Cubic.cpp">
-      <Filter>Source\Utility\Math\Splines</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Node\Scenes\SpawnerScene.cpp">
       <Filter>Source\Node\Scenes</Filter>
     </ClCompile>
@@ -228,6 +210,9 @@
     </ClCompile>
     <ClCompile Include="Source\Utility\Strategy\Strategy.cpp">
       <Filter>Source\Utility\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Math\Splines\Mountain.cpp">
+      <Filter>Source\Utility\Math\Splines</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -357,24 +342,6 @@
     <ClInclude Include="Source\Node\Scripts\ColorSpot.h">
       <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Utility\Math\Splines\Cubic.h">
-      <Filter>Source\Utility\Math\Splines</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Utility\Math\Splines\Exponential.h">
-      <Filter>Source\Utility\Math\Splines</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Utility\Math\Splines\Logarithm.h">
-      <Filter>Source\Utility\Math\Splines</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Utility\Math\Splines\Quadratic.h">
-      <Filter>Source\Utility\Math\Splines</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Utility\Math\Splines\Reciprocal.h">
-      <Filter>Source\Utility\Math\Splines</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Utility\Math\Splines\SqReci.h">
-      <Filter>Source\Utility\Math\Splines</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Utility\Math\Spline.h">
       <Filter>Source\Utility\Math</Filter>
     </ClInclude>
@@ -446,6 +413,9 @@
     </ClInclude>
     <ClInclude Include="Source\Utility\Strategy\Strategy.h">
       <Filter>Source\Utility\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Math\Splines\Mountain.h">
+      <Filter>Source\Utility\Math\Splines</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
