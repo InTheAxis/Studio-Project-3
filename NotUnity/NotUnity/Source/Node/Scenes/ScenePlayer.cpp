@@ -7,6 +7,7 @@
 #include "../Scripts/PlayerController.h"
 #include "../Scripts/ColorSpot.h"
 #include "../Scripts/SkillTree.h"
+#include "../../Node/Scripts/Achievements.h"
 ScenePlayer::ScenePlayer(std::string name)
 	: Scene(name)
 {
@@ -20,9 +21,11 @@ void ScenePlayer::Start()
 {
 	//create gameobjects	
 	AddChild<GameObj>("Player");
+	
 	//add & set up components and scripts	
 	playerScript = GetChild<GameObj>("Player")->AddScript<PlayerController>();
 	AddChild("SkillTree", SkillTree::Instance());
+	AddChild("Achievement", Achievements::Instance());
 	
 	colorSpot = GetChild<GameObj>("Player")->AddComp<ColorSpot>();
 

@@ -57,7 +57,6 @@
     <ClCompile Include="Source\Node\Scripts\Skill.cpp" />
     <ClCompile Include="Source\Node\Scripts\SkillTree.cpp" />
     <ClCompile Include="Source\Node\Scripts\Spawner.cpp" />
-    <ClCompile Include="Source\Node\Scripts\Strategy.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO\DepthFBO.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO\FloatFBO.cpp" />
@@ -78,6 +77,8 @@
     <ClCompile Include="Source\Utility\Math\Vector2.cpp" />
     <ClCompile Include="Source\Utility\Math\Vector3.cpp" />
     <ClCompile Include="Source\Utility\Math\Vector4.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\Strategy.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\StrategyOne.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
@@ -118,7 +119,6 @@
     <ClInclude Include="Source\Node\Scripts\Skill.h" />
     <ClInclude Include="Source\Node\Scripts\SkillTree.h" />
     <ClInclude Include="Source\Node\Scripts\Spawner.h" />
-    <ClInclude Include="Source\Node\Scripts\Strategy.h" />
     <ClInclude Include="Source\Utility\Component.h" />
     <ClInclude Include="Source\Utility\Delegate.h" />
     <ClInclude Include="Source\Utility\Graphics\Animation.h" />
@@ -149,15 +149,17 @@
     <ClInclude Include="Source\Utility\Math\Vector4.h" />
     <ClInclude Include="Source\Utility\Resource.h" />
     <ClInclude Include="Source\Utility\Singleton.h" />
+    <ClInclude Include="Source\Utility\Strategy\Strategy.h" />
+    <ClInclude Include="Source\Utility\Strategy\StrategyOne.h" />
     <ClInclude Include="Source\Utility\TypeID.h" />
     <ClInclude Include="Source\Utility\WinDebug.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\shader\colorSpot.frag" />
+    <None Include="Resources\Shader\colorSpot.frag" />
     <None Include="Resources\Shader\default.vert" />
-    <None Include="Resources\shader\hsv_lit.frag" />
-    <None Include="Resources\shader\hsv_unlit.frag" />
-    <None Include="Resources\shader\lit.frag" />
+    <None Include="Resources\Shader\hsv_lit.frag" />
+    <None Include="Resources\Shader\hsv_unlit.frag" />
+    <None Include="Resources\Shader\lit.frag" />
     <None Include="Resources\Shader\simple.frag" />
     <None Include="Resources\Shader\simple.vert" />
     <None Include="Resources\Shader\unlit.frag" />

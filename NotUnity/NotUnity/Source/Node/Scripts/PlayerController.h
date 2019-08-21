@@ -44,6 +44,7 @@ public:
 	
 	PlayerController* SetTerrain(Spline * s);	
 	void TakeDamage(int dmg);	
+	int DamageDealt();
 private:
 	KinemeticBody* kinb;
 	Sprite* sprite;
@@ -57,6 +58,8 @@ private:
 	int direction;
 	double jumpTimer, attackTimer, hitTimer, deadTimer;	
 	int health;
+	int damage;
+	bool walking;
 	
 
 	void TryChangeState(P_STATE state);
