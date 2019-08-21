@@ -7,10 +7,12 @@
 #include "../../Node/Components/Collider.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Utility/Input/ControllerMouse.h"
+#include "../../Utility/Math/Spline.h"
 #include "../../Node/Scripts/SkillTree.h"
 
 PlayerController::PlayerController(std::string name)
 	: Node(name)
+	, terrain(nullptr)
 {
 }
 
@@ -74,8 +76,7 @@ void PlayerController::Start()
 
 	moveSpeed.Set(10, 30, 0);
 	direction = 1;
-	jumpTimer = attackTimer = hitTimer = deadTimer = 0.0;
-	worldHeight = 0;
+	jumpTimer = attackTimer = hitTimer = deadTimer = 0.0;	
 	health = 5;
 
 	Node::Start();
@@ -95,7 +96,7 @@ void PlayerController::Update(double dt)
 		input.x = 1;
 	else
 		input.x = 0;
-	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown(VK_UP)) && (jumpTimer > 0 || (OnGround() && CanMove())) && jumpTimer < 0.3)
+	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown(VK_UP)) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
 		jumpTimer += dt;
 	else
 		jumpTimer = 0;
@@ -109,15 +110,19 @@ void PlayerController::Update(double dt)
 		direction = input.x;
 
 	//apply movement
-	if (OnGround())
+	if (OnGround(0.1f))
 	{
 		if (!input.x || !CanMove())
 			Friction();
-		else 
+		else
 			Move(input.x);
 	}
+
 	if (jumpTimer > 0)
 		Jump();
+	else
+		Constrain();
+
 	Fall();
 
 	kinb->UpdateSuvat(dt);
@@ -167,9 +172,9 @@ bool PlayerController::CanMove()
 bool PlayerController::OnGround(float offset, bool exact)
 {
 	if (exact)
-		return Math::FIsEqual(gameObject->GetTransform()->translate.y, worldHeight + offset);
+		return Math::FIsEqual(gameObject->GetTransform()->translate.y, GetTerrainHeight() + offset);
 	//else
-	return (gameObject->GetTransform()->translate.y <= worldHeight + offset);
+	return (gameObject->GetTransform()->translate.y <= GetTerrainHeight() + offset);
 }
 
 void PlayerController::Move(float inputX)
@@ -178,7 +183,7 @@ void PlayerController::Move(float inputX)
 	if (direction > 0)
 		TryChangeState(P_STATE::MOVE_R);
 	else if (direction < 0)
-		TryChangeState(P_STATE::MOVE_L);
+		TryChangeState(P_STATE::MOVE_L);	
 }
 
 void PlayerController::Friction()
@@ -202,18 +207,24 @@ void PlayerController::Jump()
 
 void PlayerController::Fall()
 {
-	if (gameObject->GetTransform()->translate.y > worldHeight)
+	if (gameObject->GetTransform()->translate.y > GetTerrainHeight())
 	{
 		kinb->useGravity = true;
-		if (kinb->GetVel().y < -1.f)			
+		if (kinb->GetVel().y < -1.f)
 			TryChangeState(P_STATE::FALL);
 	}
 	else if (OnGround())
-	{
-		gameObject->GetTransform()->translate.y = worldHeight;
+	{		
+		gameObject->GetTransform()->translate.y = GetTerrainHeight();
 		kinb->useGravity = false;
 		kinb->ResetVel(0, 1);
 	}
+}
+
+void PlayerController::Constrain()
+{	
+	if (OnGround() || gameObject->GetTransform()->translate.y < GetTerrainHeight() + 0.1f)
+		gameObject->GetTransform()->translate.y = GetTerrainHeight();	
 }
 
 void PlayerController::Attack(double dt)
@@ -229,7 +240,7 @@ void PlayerController::Attack(double dt)
 	else	
 		attackTimer -= dt;
 
-	if (!OnGround())
+	if (!OnGround(0.1f))
 	{
 		TryChangeState(P_STATE::AIR_ATTACK);		
 		attackAir->ActiveSelf(true);
@@ -278,11 +289,16 @@ void PlayerController::Hit(double dt)
 		TryChangeState(P_STATE::HIT_L);
 }
 
-void PlayerController::SetHeight(float groudheight)
+float PlayerController::GetTerrainHeight()
 {
-	if (gameObject->GetTransform()->translate.y < groudheight)
-		gameObject->GetTransform()->translate.y = groudheight;
-	worldHeight = groudheight;
+	return gameObject->GetTransform()->translate.x * 0.25f;
+	return terrain->Fn(gameObject->GetTransform()->translate.x);
+}
+
+PlayerController * PlayerController::SetTerrain(Spline * s)
+{
+	terrain = s;
+	return this;
 }
 
 void PlayerController::TakeDamage(int dmg)

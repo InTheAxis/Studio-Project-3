@@ -2,6 +2,7 @@
 #define SCENE_PLAYER_H
 
 #include "../Scene.h"
+#include "../../Utility/Math/Spline.h"
 
 //plain scene to show how to inherit properly
 class ColorSpot;
@@ -18,7 +19,7 @@ public:
 	virtual void End();
 
 	GameObj* GetPlayer();
-	void SetTerrainHeight(float h);
+	void SetTerrain(Spline* s);
 
 	void Render();
 protected:
