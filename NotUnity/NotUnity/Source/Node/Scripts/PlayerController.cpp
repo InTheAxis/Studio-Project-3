@@ -168,7 +168,7 @@ void PlayerController::Update(double dt)
 
 	// achievemets
 	// kinb->maxVel.Set(Achievements::Instance()->maxValX, Achievements::Instance()->maxValY, 0);
-	Debug::Log(kinb->maxVel);
+	// Debug::Log(kinb->maxVel);
 	
 	Node::Update(dt);
 }
