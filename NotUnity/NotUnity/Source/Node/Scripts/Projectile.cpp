@@ -57,7 +57,7 @@ void Projectile::Start()
 
 	coll = AddChild<Collider>();
 	coll->SetGameObj(gameObject);
-	coll->CreateAABB(size * 0.5f);
+	coll->CreateAABB(size);
 	Node::Start();
 }
 

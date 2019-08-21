@@ -28,6 +28,8 @@ void test(ColInfo info)
 
 void PlayerController::Start()
 {
+	gameObject->GetTransform()->translate.Set(-1, 1, 0);
+
 	sprite = AddChild<Sprite>()
 		->SetAnimation(0, 8, 0.5f, 1)
 		->SetAnimation(1, 8, 0.5f, 1)
@@ -351,9 +353,7 @@ bool PlayerController::IsDead()
 
 void PlayerController::Reset()
 {
-	gameObject->GetTransform()->translate.Set(-1, 1, 0);
-
-	currState = nextState = P_STATE::IDLE_R;
+	//gameObject->GetTransform()->translate.Set(-1, 1, 0);
 
 	moveSpeed.Set(10, 30, 0);
 	direction = 1;
@@ -361,6 +361,9 @@ void PlayerController::Reset()
 	health = 20;
 
 	walking = false;
+
+	TryChangeState(P_STATE::IDLE_R);
+	ChangeState();
 }
 
 void PlayerController::PrintState()

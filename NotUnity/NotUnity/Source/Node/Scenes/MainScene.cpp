@@ -55,10 +55,10 @@ void MainScene::Start()
 	wasd = GetChild<GameObj>("wasd")->AddComp<Renderable>();
 	wasd->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("wasd"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
 	Transform* t = GetChild<GameObj>("title")->GetTransform();
-	t->translate.Set(0, 2, 0);
-	t->scale.Set(3, 3, 1);
+	t->translate.Set(0, 6, 0);
+	t->scale.Set(4, 4, 1);
 	t = GetChild<GameObj>("wasd")->GetTransform();
-	t->translate.Set(-3, 1, 0);
+	t->translate.Set(-2.5f, 3, 0);
 	t->scale.Set(1.5f, 1.5f, 1);
 	
 	//attach camera
@@ -184,7 +184,9 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 	case MENU:
 		title->ActiveSelf(true);
 		wasd->ActiveSelf(true);
-		//reset pos of everything
+		title->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(0, 3, 0);
+		wasd->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-2.5f, 0, 0);
+
 		//map->ResetPos();
 		playerGO->GetScript<PlayerController>()->Reset();
 		spawner->Reset();
