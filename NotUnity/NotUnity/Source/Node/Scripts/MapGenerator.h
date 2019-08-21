@@ -38,6 +38,8 @@ private:
 	Spline* spline;
 
 	GameObj* chunkGO[mapSize];
+	GameObj* sky;
+
 
 	void CullChunk();
 };
