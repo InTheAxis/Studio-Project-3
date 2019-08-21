@@ -13,7 +13,7 @@ public:
 
 	virtual int CalDest(Vector3 dest, Vector3 enemyPos);
 	virtual void Attack();
-	virtual void Update(Vector3& dest, Vector3& enemyPos, double dt);
+	virtual bool Update(Vector3& dest, Vector3& enemyPos, double dt);
 
 	virtual void SetDest(float x, float y) = 0;
 	virtual float GetDestX() = 0;

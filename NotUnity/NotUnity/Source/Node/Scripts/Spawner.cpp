@@ -6,10 +6,12 @@ Spawner::Spawner(std::string name)
 	: Node(name)
 	, enemyCount(0)
 	, interval(0.f)
-	, poolCount(20)
 	, EnemyNames("")
 	, playerTrans(0.f, 0.f, 0.f)
 	, enemyLeft(0)
+	, waveCount(0)
+	, wave(0)
+	, canSpawn(false)
 {
 }
 
@@ -35,7 +37,7 @@ void Spawner::Update(double dt)
 	GetEnemyCount("e1");
 
 	if (enemyCount < 10)
-		interval += 1.f * dt;
+		interval += 1.f * static_cast<float>(dt);
 	else
 		interval = 0;
 	if (interval >= 1.5f)
@@ -43,8 +45,6 @@ void Spawner::Update(double dt)
 
 	UpdatePlayerPosToAI("e1");
 
-	//int left = MAX_ENEMY_COUNT - enemyCount;
-	//Debug::Log("EC: " + std::to_string(enemyCount) + " | MEC: " + std::to_string(MAX_ENEMY_COUNT) + " | Left: " + std::to_string(left) + " | EC Name: " + EnemyNames);
 	Node::Update(dt);
 }
 
@@ -58,31 +58,17 @@ void Spawner::SetSpawnerWave(int waved)
 	wave = waved;
 }
 
-//void Spawner::SetEnemiesActive(std::string names, int maxEneCount, float time)
-//{
-//	interval += 1.f * time;
-//
-//	for (int i = 0; i < maxEneCount; ++i)
-//	{
-//		if (interval >= 1.5f && enemyCount < 10 && enemyLeft > 0)
-//		{
-//			if (gameObject->GetChild<GameObj>(names + std::to_string(i))->IsActive())
-//				continue;
-//
-//			gameObject->GetChild<GameObj>(names + std::to_string(i))->GetTransform()->translate = gameObject->GetTransform()->translate;
-//			gameObject->GetChild<GameObj>(names + std::to_string(i))->ActiveSelf(true);
-//			enemyCount++;
-//			enemyLeft--;
-//			interval = 0;
-//			doneOne = true;
-//		}
-//	}
-//	Debug::Log(std::to_string(enemyCount) + ", " + std::to_string(enemyLeft));
-//}
-
 void Spawner::SetPlayerTrans(Vector3 trans)
 {
 	playerTrans = trans;
+}
+
+void Spawner::SetTerrain(Spline * s)
+{
+	for (int i = 0; i < poolCount; ++i)
+	{
+		enemyPool[i]->GetScript<AI>()->SetTerrain(s);
+	}
 }
 
 void Spawner::UpdatePlayerPosToAI(std::string names)
@@ -106,25 +92,22 @@ bool Spawner::IsWaveDone()
 
 void Spawner::CreateEnemies(std::string waveOne)
 {
-	GameObj* go;
 	for (unsigned int i = 0; i < poolCount; ++i)
 	{
-		go = gameObject->AddChild<GameObj>(waveOne + std::to_string(i));
-		go->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim")); 
-		go->ActiveSelf(false);
-		go->AddScript<AI>()->SetHealth(10.f);
+		enemyPool[i] = gameObject->AddChild<GameObj>(waveOne + std::to_string(i));
+		enemyPool[i]->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"));
+		enemyPool[i]->ActiveSelf(false);
+		enemyPool[i]->AddScript<AI>()->SetHealth(10.f);
 	}
 }
 
 void Spawner::SpawnEnemy(std::string waveOne)
 {
-	GameObj* go;
 	Vector3 spawnerPos = gameObject->GetTransform()->translate;
 	Vector3 offset;
 	for (int i = 0; i < poolCount; ++i)
 	{
-		go = gameObject->GetChild<GameObj>(waveOne + std::to_string(i));
-		if (go->IsActive())
+		if (enemyPool[i]->IsActive())
 			continue;
 
 		int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
@@ -132,9 +115,8 @@ void Spawner::SpawnEnemy(std::string waveOne)
 
 		offset.y = (1 + Math::RandFloatMinMax(0, 3));
 
-		go->GetTransform()->translate = spawnerPos + offset;
-		go->ActiveSelf(true);
-
+		enemyPool[i]->GetTransform()->translate = spawnerPos + offset;
+		enemyPool[i]->ActiveSelf(true);
 
 		++waveCount;
 		interval = 0;

@@ -3,6 +3,7 @@
 
 #include "../Scene.h"
 #include "../Components/Sprite.h"
+#include "../../Utility/Math/Spline.h"
 
 class SpawnerScene : public Scene
 {
@@ -20,6 +21,7 @@ public:
 	void Render();
 	void SetWave(int wave); //Set starting wave from other scene
 	void PlayerTrans(Vector3 trans);
+	void SetTerrain(Spline* s);
 private:
 	int currentWave;
 	Vector3 fromPlayer;

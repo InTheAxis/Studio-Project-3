@@ -13,8 +13,15 @@ public:
 
 	virtual float Fn(float x);
 	virtual Vector3 Normal(float x);
+	virtual void SetScale(float scale);
+	virtual void SetOffset(float offset);
 
 	std::vector<Vector3> GetSamplePts();
+
+private:
+	float scale;
+	float offset;
+
 };
 
 #endif

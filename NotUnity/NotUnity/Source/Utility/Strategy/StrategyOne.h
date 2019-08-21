@@ -11,7 +11,7 @@ public:
 	StrategyOne();
 	~StrategyOne();
 
-	void Update(Vector3& dest, Vector3& enemyPos, double dt);
+	bool Update(Vector3& dest, Vector3& enemyPos, double dt);
 	void Attack();
 
 	void SetDest(float x, float y);
