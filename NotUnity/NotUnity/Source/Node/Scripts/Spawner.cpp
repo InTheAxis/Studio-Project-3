@@ -70,6 +70,11 @@ void Spawner::SetTerrain(Spline * s)
 	}
 }
 
+int Spawner::GetEnemiesKilled()
+{
+	return Math::Min(waveCount - enemyCount, poolCount);
+}
+
 void Spawner::UpdatePlayerPosToAI(std::string names)
 {
 	for (int i = 0; i < poolCount; ++i)

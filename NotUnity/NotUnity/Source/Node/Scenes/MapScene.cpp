@@ -62,3 +62,13 @@ Spline * MapScene::GetTerrain()
 {	
 	return mapGen->GetCurrChunk()->GetSpline();
 }
+
+void MapScene::ChangeToSaturated()
+{
+	//change all chunks to render pass post fx, and set hsv to 1
+}
+
+void MapScene::ChangeToDeSat()
+{
+	//change all chunks to render pass geo
+}

@@ -90,9 +90,9 @@ void MainScene::Update(double dt)
 			ChangeGameState(GAMEPLAY);
 		break;
 	case GAMEPLAY:
-		break;
-	case LOSE:
-		break;
+		if (spawner->GetEnemyKilled() >= 20)	
+			ChangeGameState(WIN);				
+		break;	
 	case WIN:
 		break;
 	}
@@ -162,9 +162,8 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 	case GAMEPLAY:
 		spawner->SetWave(0);
 		break;
-	case LOSE:
-		break;
 	case WIN:
+
 		break;
 	}
 
@@ -178,8 +177,6 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		break;
 	case GAMEPLAY:
 		spawner->SetWave(1);
-		break;
-	case LOSE:
 		break;
 	case WIN:
 		break;			

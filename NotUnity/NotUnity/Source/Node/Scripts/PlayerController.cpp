@@ -78,7 +78,7 @@ void PlayerController::Start()
 	moveSpeed.Set(10, 30, 0);
 	direction = 1;
 	jumpTimer = attackTimer = hitTimer = deadTimer = 0.0;	
-	health = 5;
+	health = 20;
 
 	walking = false;
 
@@ -167,8 +167,7 @@ void PlayerController::Update(double dt)
 	ChangeState();
 
 	// achievemets
-	// kinb->maxVel.Set(Achievements::Instance()->maxValX, Achievements::Instance()->maxValY, 0);
-	// Debug::Log(kinb->maxVel);
+	// kinb->maxVel.Set(Achievements::Instance()->maxValX, Achievements::Instance()->maxValY, 0);	
 	
 	Node::Update(dt);
 }
