@@ -56,6 +56,7 @@ void MapGenerator::Update(double dt)
 					chunkNumber = mapSize - 1;
 					--offsetX;
 					chunkGO[chunkNumber]->GetTransform()->translate.Set((scaleX * offsetX), 0, -1);
+					chunkGO[chunkNumber]->GetComp<Chunk>()->GetSpline()->SetOffset((-scaleX * offsetX));
 					CullChunk();
 				}
 				else
@@ -63,6 +64,7 @@ void MapGenerator::Update(double dt)
 					--chunkNumber;
 					--offsetX;
 					chunkGO[chunkNumber]->GetTransform()->translate.Set((scaleX * offsetX), 0, -1);
+					chunkGO[chunkNumber]->GetComp<Chunk>()->GetSpline()->SetOffset((-scaleX * offsetX));
 					CullChunk();
 				}
 			}
@@ -76,6 +78,7 @@ void MapGenerator::Update(double dt)
 			if (displacement > offsetBuffer)
 			{
 				chunkGO[chunkNumber]->GetTransform()->translate.Set((mapSize * scaleX) + (offsetX * scaleX), 0, -1);
+				chunkGO[chunkNumber]->GetComp<Chunk>()->GetSpline()->SetOffset((-scaleX * offsetX));
 				CullChunk();
 				++chunkNumber;
 				++offsetX;
@@ -111,6 +114,7 @@ Chunk * MapGenerator::GetCurrChunk()
 		float displacement = oBoA.Length();
 		if (displacement <= scaleX * 0.5f)
 		{
+			Debug::Log("ChunkGO : " + std::to_string(i));
 			return chunkGO[i]->GetComp<Chunk>();
 		}
 		
