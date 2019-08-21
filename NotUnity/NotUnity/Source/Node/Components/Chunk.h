@@ -34,8 +34,9 @@ public:
 	virtual void Update(double dt);
 	virtual void End();
 
-	void AssignBiome(BIOME_TYPE bt);	
-
+	void AssignBiome(BIOME_TYPE bt);
+	
+	void SetSpline(Spline* spline);
 	Spline* GetSpline();
 private:
 	Sprite* sprite;
