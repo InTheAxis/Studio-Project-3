@@ -5,6 +5,7 @@
 #include "../Scripts/DebugText.h"
 #include "../Scripts/MapGenerator.h"
 #include "../../Utility/Math/Spline.h"
+#include "../Components/Sprite.h"
 
 MapScene::MapScene(std::string name)
 	: Scene(name)
@@ -66,9 +67,17 @@ Spline * MapScene::GetTerrain()
 void MapScene::ChangeToSaturated()
 {
 	//change all chunks to render pass post fx, and set hsv to 1
+	for (int i = 0; i < mapGen->mapSize; ++i)
+	{
+		mapGen->chunkGO[i]->GetComp<Chunk>()->sprite->SetHSV(-1, 1, -1)->SetRenderPass(RENDER_PASS::POST_FX);
+	}
 }
 
 void MapScene::ChangeToDeSat()
 {
 	//change all chunks to render pass geo
+	for (int i = 0; i < mapGen->mapSize; ++i)
+	{
+		mapGen->chunkGO[i]->GetComp<Chunk>()->sprite->SetRenderPass(RENDER_PASS::GEO);
+	}
 }

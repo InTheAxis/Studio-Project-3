@@ -39,8 +39,8 @@ public:
 	
 	void SetSpline(Spline* spline);
 	Spline* GetSpline();
-private:
 	Sprite* sprite;
+private:
 	Spline* spline;
 
 	Transform* t;
