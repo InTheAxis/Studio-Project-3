@@ -23,6 +23,7 @@ public:
 	GameObj* FindGO(std::string name);
 
 	void RegisterRenderable(Renderable* r);
+	void UnRegisterRenderable(Renderable* r);
 	std::vector<Renderable*>* GetRenderables(RENDER_PASS renderPass);
 protected:
 	MgrGameObj(std::string name = "MgrGameObj");

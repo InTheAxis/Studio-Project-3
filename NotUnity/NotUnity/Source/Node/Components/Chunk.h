@@ -39,9 +39,10 @@ public:
 	
 	void SetSpline(Spline* spline);
 	Spline* GetSpline();
-	Sprite* sprite;
+	Sprite* GetSprite();
 private:
 	Spline* spline;
+	Sprite* sprite;
 
 	Transform* t;
 	Vector3 HSV;

@@ -106,3 +106,8 @@ Spline* Chunk::GetSpline()
 {
 	return spline;
 }
+
+Sprite * Chunk::GetSprite()
+{
+	return sprite;
+}

@@ -34,7 +34,7 @@ void MapGenerator::Start()
 		spline->SetOffset(i * -scaleX);
 		chunkGO[i] = AddChild<GameObj>("Chunk" + std::to_string(i));
 		chunkGO[i]->AddComp<Chunk>()->SetSpline(spline);
-		chunkGO[i]->GetTransform()->translate.Set(i * scaleX, 0, -1);
+		chunkGO[i]->GetTransform()->translate.Set(i * scaleX, 0, -5);
 		chunkGO[i]->GetTransform()->scale.Set(scaleX, scaleX, 1);
 	}
 	CullChunk();
@@ -125,6 +125,13 @@ Chunk * MapGenerator::GetCurrChunk()
 			return chunkGO[i]->GetComp<Chunk>();
 		}
 	}
+}
+
+GameObj * MapGenerator::GetChunkGO(int idx)
+{
+	if (idx < mapSize && idx >= 0)
+		return chunkGO[idx];
+	return nullptr;
 }
 
 void MapGenerator::CullChunk()

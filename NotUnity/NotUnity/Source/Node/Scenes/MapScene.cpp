@@ -1,6 +1,7 @@
 #include "MapScene.h"
 
 #include "../GameObj.h"
+#include "../Manager/MgrGameObj.h"
 #include "../Components/Renderable.h"
 #include "../Scripts/DebugText.h"
 #include "../Scripts/MapGenerator.h"
@@ -67,17 +68,26 @@ Spline * MapScene::GetTerrain()
 void MapScene::ChangeToSaturated()
 {
 	//change all chunks to render pass post fx, and set hsv to 1
+	Sprite* s;
 	for (int i = 0; i < mapGen->mapSize; ++i)
 	{
-		mapGen->chunkGO[i]->GetComp<Chunk>()->sprite->SetHSV(-1, 1, -1)->SetRenderPass(RENDER_PASS::POST_FX);
+		s = mapGen->GetChunkGO(i)->GetComp<Chunk>()->GetSprite();
+		s->SetHSV(-1, 1, -1);
+		MgrGameObj::Instance()->UnRegisterRenderable(s);
+		s->SetRenderPass(RENDER_PASS::POST_FX);
+		MgrGameObj::Instance()->RegisterRenderable(s);
 	}
 }
 
 void MapScene::ChangeToDeSat()
 {
 	//change all chunks to render pass geo
+	Sprite* s;	
 	for (int i = 0; i < mapGen->mapSize; ++i)
 	{
-		mapGen->chunkGO[i]->GetComp<Chunk>()->sprite->SetRenderPass(RENDER_PASS::GEO);
+		s = mapGen->GetChunkGO(i)->GetComp<Chunk>()->GetSprite();
+		MgrGameObj::Instance()->UnRegisterRenderable(s);
+		s->SetRenderPass(RENDER_PASS::GEO);
+		MgrGameObj::Instance()->RegisterRenderable(s);
 	}
 }

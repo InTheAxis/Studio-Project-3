@@ -318,6 +318,8 @@ void PlayerController::Hit(double dt)
 float PlayerController::GetTerrainHeight()
 {
 	//return 0;// gameObject->GetTransform()->translate.x;
+	if (!terrain)
+		Debug::LogError("Terrain missing :(");
 	return terrain->Fn(gameObject->GetTransform()->translate.x);
 }
 
