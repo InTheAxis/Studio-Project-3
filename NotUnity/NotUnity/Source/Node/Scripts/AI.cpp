@@ -105,7 +105,7 @@ void AI::Update(double dt)
 
 	}
 
-	if (interval >= 1.5f)
+	if (interval >= 3.f)
 	{
 		Projectile* p = GetProjectile();
 		if (p)
@@ -115,7 +115,7 @@ void AI::Update(double dt)
 		}
 	}
 
-	if ((playerTrans - gameObject->GetTransform()->translate).LengthSquared() > 5.f)
+	if ((playerTrans - gameObject->GetTransform()->translate).LengthSquared() > 3.f)
 			kineB->ApplyForce(direction);
 	else
 		kineB->ResetVel(1, 0);
@@ -134,7 +134,7 @@ void AI::Update(double dt)
 	kineB->UpdateSuvat(dt);
 	kineB->ResetForce();
 
-	if (health < 0)
+	if (health <= 0)
 	{
 		gameObject->ActiveSelf(false);
 		health = 0;
