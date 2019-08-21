@@ -38,14 +38,14 @@ void MainScene::Start()
 	map = AddChild<MapScene>("MapScene");
 
 	//add gameobjects
-	AddChild<GameObj>("mainCam");
+	mainCam = AddChild<GameObj>("mainCam");
 	AddChild<GameObj>("axes");
 	AddChild<GameObj>("title");
 	AddChild<GameObj>("wasd");
 
 	//add & set up components and scripts
-	GetChild<GameObj>("mainCam")->AddComp<Camera>()->SetMode(Camera::DEBUG);
-	GetChild<GameObj>("mainCam")->GetTransform()->translate.z = 1;
+	mainCam->AddComp<Camera>()->SetMode(Camera::CUSTOM);
+	mainCam->GetTransform()->translate.z = 1;
 	GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
 	title = GetChild<GameObj>("title")->AddComp<Sprite>();
 	title->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("title"))->SelectShader(MgrGraphics::HSV_UNLIT)->SetRenderPass(RENDER_PASS::HUD);
@@ -61,7 +61,7 @@ void MainScene::Start()
 	//attach camera
 	GetChild<MapScene>("MapScene")->SetCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
-	//mg->SetProjOrtho(128);
+	mg->SetProjOrtho(128);
 
 	Scene::Start();	
 
@@ -96,6 +96,8 @@ void MainScene::Update(double dt)
 		break;
 	}
 
+	mainCam->GetTransform()->translate = playerGO->GetTransform()->translate;
+	mainCam->GetTransform()->translate.z = 1;
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);
 	spawner->SetTerrain(map->GetTerrain());
 	player->SetTerrain(map->GetTerrain());

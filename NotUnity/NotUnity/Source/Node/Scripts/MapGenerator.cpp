@@ -29,7 +29,7 @@ void MapGenerator::Start()
 	for (int i = 0; i < mapSize; ++i)
 	{
 		spline = new Spline;
-		spline->SetOffset(i * scaleX);
+		spline->SetOffset(i * -scaleX);
 		chunkGO[i] = AddChild<GameObj>("Chunk" + std::to_string(i));
 		chunkGO[i]->AddComp<Chunk>()->SetSpline(spline);
 		chunkGO[i]->GetTransform()->translate.Set(i * scaleX, 0, -1);
@@ -43,9 +43,10 @@ void MapGenerator::Update(double dt)
 {
 	if (camera)
 	{
-		if (ControllerKeyboard::Instance()->IsKeyDown('A'))
+		if (ControllerKeyboard::Instance()->IsKeyDown(VK_LEFT))
 		{
 			Vector3 oBoA = camera->GetParent()->GetChild<Transform>()->translate - chunkGO[chunkNumber]->GetTransform()->translate; /*GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate;*/ // take the last chunck pos
+			oBoA.y = 0;
 			oBoA.z = 0;
 			float displacement = oBoA.Length();
 			if (displacement < offsetBuffer)
@@ -66,9 +67,10 @@ void MapGenerator::Update(double dt)
 				}
 			}
 		}
-		else if (ControllerKeyboard::Instance()->IsKeyDown('D'))
+		else if (ControllerKeyboard::Instance()->IsKeyDown(VK_RIGHT))
 		{
 			Vector3 oBoA = camera->GetParent()->GetChild<Transform>()->translate - chunkGO[chunkNumber]->GetTransform()->translate; // take the last chunck pos
+			oBoA.y = 0;
 			oBoA.z = 0;
 			float displacement = oBoA.Length();
 			if (displacement > offsetBuffer)
@@ -99,7 +101,20 @@ void MapGenerator::SetCamera(Camera * camera)
 
 Chunk * MapGenerator::GetCurrChunk()
 {
-	return chunkGO[chunkNumber]->GetComp<Chunk>();
+	Vector3 oBoA;
+	for (int i = 0; i < mapSize; ++i)
+	{
+		oBoA = camera->GetParent()->GetChild<Transform>()->translate - chunkGO[i]->GetTransform()->translate;
+		//Debug::Log(camera->GetParent()->GetChild<Transform>()->translate);
+		oBoA.y = 0;
+		oBoA.z = 0;
+		float displacement = oBoA.Length();
+		if (displacement <= scaleX * 0.5f)
+		{
+			return chunkGO[i]->GetComp<Chunk>();
+		}
+		
+	}
 }
 
 void MapGenerator::CullChunk()
@@ -107,6 +122,7 @@ void MapGenerator::CullChunk()
 	for (int i = 0; i < mapSize; ++i)
 	{
 		Vector3 oBoA = camera->GetParent()->GetChild<Transform>()->translate - chunkGO[i]->GetTransform()->translate; // take the last chunck pos
+		oBoA.y = 0;
 		oBoA.z = 0;
 		float displacement = oBoA.Length();
 		if (displacement > cullingAmount)

@@ -39,6 +39,7 @@ private:
 	Sprite* title;
 	Renderable* wasd;
 	GameObj* playerGO;
+	GameObj* mainCam;
 
 	bool debug;
 	GAME_STATE gs;

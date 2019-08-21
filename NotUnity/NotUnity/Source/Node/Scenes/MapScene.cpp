@@ -58,7 +58,7 @@ void MapScene::SetCamera(Camera * camera)
 	this->camera = camera;
 }
 
-Spline * MapScene::GetTerrain()
+Spline * MapScene::GetTerrain()	
 {	
 	return mapGen->GetCurrChunk()->GetSpline();
 }

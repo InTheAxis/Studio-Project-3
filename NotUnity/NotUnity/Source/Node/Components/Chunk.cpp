@@ -5,7 +5,7 @@
 #include "../Components/Sprite.h"
 #include "../Components/ColliderRender.h"
 
-Chunk::Chunk(std::string name) : Node(name)
+Chunk::Chunk(std::string name) : Node(name), HSV(-1,-1,-1)
 {	
 }
 

@@ -318,7 +318,7 @@ void PlayerController::Hit(double dt)
 
 float PlayerController::GetTerrainHeight()
 {
-	return 0;// gameObject->GetTransform()->translate.x;
+	//return 0;// gameObject->GetTransform()->translate.x;
 	return terrain->Fn(gameObject->GetTransform()->translate.x);
 }
 
