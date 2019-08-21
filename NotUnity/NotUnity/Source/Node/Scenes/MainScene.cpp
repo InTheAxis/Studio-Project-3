@@ -44,6 +44,7 @@ void MainScene::Start()
 	AddChild<GameObj>("wasd");
 
 	//add & set up components and scripts
+	//mainCam->AddComp<Camera>()->SetMode(Camera::DEBUG);
 	mainCam->AddComp<Camera>()->SetMode(Camera::CUSTOM);
 	mainCam->GetTransform()->translate.z = 1;
 	GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
@@ -61,7 +62,7 @@ void MainScene::Start()
 	//attach camera
 	GetChild<MapScene>("MapScene")->SetCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
-	mg->SetProjOrtho(128);
+	mg->SetProjOrtho(88);
 
 	Scene::Start();	
 
