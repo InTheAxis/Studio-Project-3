@@ -12,6 +12,7 @@
 #include "../../Utility/Strategy/StrategyOne.h"
 #include "../../Utility/Math/Spline.h"
 
+class Projectile;
 class AI : public Node, public TypeID<AI>, public Component
 {
 public:
@@ -39,12 +40,15 @@ private:
 	Vector3 direction;
 	int enemyCount;
 	bool dead;
+	const static int ammoCount = 3;
 
 	Strategy* strategy;
 	KinemeticBody* kineB;
 	Spline* s;
+	Projectile* projectile[ammoCount];
 
 	float GetWorldHeight();
+	Projectile* GetProjectile();
 };
 
 #endif

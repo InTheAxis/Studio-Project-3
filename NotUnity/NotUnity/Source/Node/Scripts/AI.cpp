@@ -32,8 +32,11 @@ void AI::Start()
 	kineB->gravScale = 5;
 	kineB->useGravity = false;
 
-	AddChild<GameObj>("bull");
-	GetChild<GameObj>("bull")->AddScript<Projectile>();
+	for (int i = 0; i < ammoCount; ++i)
+	{
+		projectile[i] = AddChild<GameObj>("bull" + std::to_string(i))->AddScript<Projectile>();
+		projectile[i]->GetGameObj()->ActiveSelf(false);
+	}
 
 	if (strategy == NULL)
 		ChangeStrategy(new StrategyOne(), false);
@@ -42,8 +45,8 @@ void AI::Start()
 }
 
 void AI::Update(double dt)
-{
-	direction = playerTrans - gameObject->GetTransform()->translate;
+{ 
+	direction = (playerTrans - gameObject->GetTransform()->translate).Normalized();
 
 	strategy->SetDest(playerTrans.x, playerTrans.y);
 	if (strategy->Update(playerTrans, gameObject->GetTransform()->translate, dt))
@@ -52,36 +55,21 @@ void AI::Update(double dt)
 	}
 	if (ControllerKeyboard::Instance()->IsKeyPressed('7'))
 	{
-		GetChild<GameObj>("bull")->GetScript<Projectile>()->Discharge(Vector3(0, 0, 0), Vector3(1, 0, 0));
- 		GetChild<GameObj>("bull")->GetScript<Projectile>()->ActiveSelf(true);
+		Projectile* p = GetProjectile();
+		if (p)
+		{
+			p->Discharge(gameObject->GetTransform()->translate, direction * 10);
+			p->GetGameObj()->ActiveSelf(true);
+		}
 	}
-	if (direction.LengthSquared() > 1)
-	{
-		kineB->ApplyForce(direction);
+	kineB->ApplyForce(direction);
 
-		if (direction.x * kineB->GetVel().x < 0.f || Math::FIsEqual(kineB->GetVel().x, 0.f))
-			kineB->ResetVel(1, 0);
-		else
-			kineB->ApplyForce(Vector3(-direction.x * kineB->mass * kineB->frictionCoeff, 0, 0));
-	}
+	if (direction.x * kineB->GetVel().x < 0.f || Math::FIsEqual(kineB->GetVel().x, 0.f))
+		kineB->ResetVel(1, 0);
 	else
-	{
-		//if (kineB->GetVel().x < 0)
-		//	kineB->ResetVel(1, 0);
-		//else if (Math::FIsEqual(kineB->GetVel().x, 0))
-		//	kineB->ResetVel(1, 0);
-		//else
-		//	kineB->ApplyForce(kineB->frictionCoeff * kineB->mass * 0.1f);
+		kineB->ApplyForce(Vector3(-direction.x * kineB->mass * kineB->frictionCoeff, 0, 0));
 
-		//if (direction.x * kineB->GetVel().x < 0.f || Math::FIsEqual(kineB->GetVel().x, 0.f))
-		//	kineB->ResetVel(1, 0);
-		//else
-		//	kineB->ApplyForce(Vector3(-direction.x * kineB->mass * kineB->frictionCoeff, 0, 0));
-		
-		health -= 1;
-	}
-
-	if (gameObject->GetTransform()->translate.y > GetWorldHeight())
+	if (gameObject->GetTransform()->translate.y > GetWorldHeight() + 1)
 	{
 		kineB->useGravity = true;
 	}
@@ -157,6 +145,16 @@ float AI::GetWorldHeight()
 {
 	//return gameObject->GetTransform()->translate.x;
 	return s->Fn(gameObject->GetTransform()->translate.x);
+}
+
+Projectile * AI::GetProjectile()
+{
+	for (int i = 0; i < ammoCount; ++i)
+	{
+		if (!projectile[i]->IsActive())
+  			return projectile[i];
+	}
+	return nullptr;
 }
 
 void AI::SetPlayerTrans(Vector3 trans)

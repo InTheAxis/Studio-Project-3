@@ -57,7 +57,7 @@ void Achievements::Start()
 
 void Achievements::Update(double dt)
 {
-	Debug::Log(walkTime);
+	//Debug::Log(walkTime);
 	AchievementCheck();
 	Node::Update(dt);
 }
