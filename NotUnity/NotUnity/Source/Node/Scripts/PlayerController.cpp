@@ -71,7 +71,7 @@ void PlayerController::Start()
 	hitbox->SetGameObj(gameObject);
 	hitbox->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0.5f, 0.5f));	
 
-	ResetPos();
+	Reset();
 
 	Achievements::Instance()->setKnibRefrence(kinb);
 	Node::Start();
@@ -329,11 +329,10 @@ PlayerController * PlayerController::SetTerrain(Spline * s)
 
 void PlayerController::TakeDamage(int dmg)
 {
-
 	health -= dmg;
-	if (health <= 0)
+	if (health <= 0 && deadTimer <= 0)
 		deadTimer = 5;
-	else
+	else if (hitTimer <= 0)
 		hitTimer = 0.3f;
 }
 int PlayerController::DamageDealt()
@@ -343,7 +342,12 @@ int PlayerController::DamageDealt()
 	return damage;
 }
 
-void PlayerController::ResetPos()
+bool PlayerController::IsDead()
+{
+	return deadTimer > 0;
+}
+
+void PlayerController::Reset()
 {
 	gameObject->GetTransform()->translate.Set(-1, 1, 0);
 

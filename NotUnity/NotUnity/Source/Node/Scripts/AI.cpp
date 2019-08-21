@@ -113,6 +113,7 @@ void AI::Update(double dt)
 			p->Discharge(gameObject->GetTransform()->translate, direction * 10);
 			p->GetGameObj()->ActiveSelf(true);
 		}
+		interval = 0;
 	}
 
 	if ((playerTrans - gameObject->GetTransform()->translate).LengthSquared() > 3.f)
@@ -201,6 +202,11 @@ void AI::ResetBullets()
 		if (projectile[i])
 			projectile[i]->GetGameObj()->ActiveSelf(false);
 	}
+}
+
+void AI::SetSaturation(float sat)
+{
+	this->sat = sat;
 }
 
 float AI::GetWorldHeight()

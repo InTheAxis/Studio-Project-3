@@ -75,12 +75,21 @@ int Spawner::GetEnemiesKilled()
 	return Math::Min(waveCount - enemyCount, poolCount);
 }
 
+void Spawner::Reset()
+{
+	for (int i = 0; i < poolCount; ++i)
+	{
+		enemyPool[i]->ActiveSelf(false);
+		enemyPool[i]->GetScript<AI>()->SetSaturation(1);
+	}
+}
+
 void Spawner::UpdatePlayerPosToAI(std::string names)
 {
 	for (int i = 0; i < poolCount; ++i)
 	{
-		if (gameObject->GetChild<GameObj>(names + std::to_string(i))->IsActive())
-			gameObject->GetChild<GameObj>(names + std::to_string(i))->GetScript<AI>()->SetPlayerTrans(playerTrans);
+		if (enemyPool[i]->IsActive())
+			enemyPool[i]->GetScript<AI>()->SetPlayerTrans(playerTrans);
 	}
 }
 

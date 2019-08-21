@@ -37,7 +37,7 @@ public:
 	bool IsDead();
 	AI* SetTerrain(Spline* s);
 	void ResetBullets();
-
+	void SetSaturation(float sat);
 
 
 private:

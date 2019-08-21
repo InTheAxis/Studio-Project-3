@@ -46,7 +46,8 @@ public:
 	void TakeDamage(int dmg);	
 	int DamageDealt();
 
-	void ResetPos();
+	bool IsDead();
+	void Reset();
 
 private:
 	KinemeticBody* kinb;

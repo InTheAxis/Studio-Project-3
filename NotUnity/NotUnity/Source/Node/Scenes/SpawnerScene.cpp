@@ -75,6 +75,11 @@ void SpawnerScene::SetTerrain(Spline* s)
 	SpawnerGO->GetScript<Spawner>()->SetTerrain(s);
 }
 
+void SpawnerScene::Reset()
+{
+	SpawnerGO->GetScript<Spawner>()->Reset();
+}
+
 int SpawnerScene::GetEnemyKilled()
 {
 	return SpawnerGO->GetScript<Spawner>()->GetEnemiesKilled();

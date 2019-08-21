@@ -27,6 +27,8 @@ public:
 
 	int GetEnemiesKilled();
 	bool GetBossKilled();
+	
+	void Reset();
 
 private:
 	int enemyCount;

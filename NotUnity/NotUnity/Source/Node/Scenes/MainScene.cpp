@@ -93,8 +93,14 @@ void MainScene::Update(double dt)
 		break;
 	case GAMEPLAY:
 		if (spawner->GetEnemyKilled() >= 20)	
-			ChangeGameState(WIN);				
-		break;	
+			ChangeGameState(WIN);	
+		else if (playerGO->GetScript<PlayerController>()->IsDead())
+			ChangeGameState(LOSE);	
+		break;
+	case LOSE:
+		if (!playerGO->GetScript<PlayerController>()->IsDead())
+			ChangeGameState(MENU);
+		break;
 	case WIN:
 		if (m_lifetime > winTimer + 3)
 			ChangeGameState(MENU);
@@ -166,6 +172,8 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 	case GAMEPLAY:
 		spawner->SetWave(0);
 		break;
+	case LOSE:
+		break;
 	case WIN:
 		map->ChangeToDeSat();
 		break;
@@ -178,12 +186,15 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		wasd->ActiveSelf(true);
 		//reset pos of everything
 		//map->ResetPos();
-		playerGO->GetScript<PlayerController>()->ResetPos();
+		playerGO->GetScript<PlayerController>()->Reset();
+		spawner->Reset();
 		break;
 	case TUTO:
 		break;
 	case GAMEPLAY:
 		spawner->SetWave(1);
+		break;
+	case LOSE:		
 		break;
 	case WIN:
 		map->ChangeToSaturated();
