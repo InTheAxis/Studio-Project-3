@@ -32,6 +32,7 @@ AI::AI(std::string name)
 	, kineB(nullptr)
 	, s(nullptr)
 	, sat(1)
+	, interval(0)
 {
 }
 
@@ -93,6 +94,7 @@ void AI::Start()
 
 void AI::Update(double dt)
 { 
+	interval += 1.f * static_cast<float>(dt);
 	direction = (playerTrans - gameObject->GetTransform()->translate);
 	if (!direction.IsZero())
 		direction.Normalize();
@@ -103,24 +105,22 @@ void AI::Update(double dt)
 
 	}
 
-	//if (ControllerKeyboard::Instance()->IsKeyPressed('7'))
-	//{
+	if (interval >= 1.5f)
+	{
 		Projectile* p = GetProjectile();
 		if (p)
 		{
 			p->Discharge(gameObject->GetTransform()->translate, direction * 10);
 			p->GetGameObj()->ActiveSelf(true);
 		}
-	//}
+	}
 
-	kineB->ApplyForce(direction);
-
-	if (direction.x * kineB->GetVel().x < 0.f || Math::FIsEqual(kineB->GetVel().x, 0.f))
-		kineB->ResetVel(1, 0);
+	if ((playerTrans - gameObject->GetTransform()->translate).LengthSquared() > 5.f)
+			kineB->ApplyForce(direction);
 	else
-		kineB->ApplyForce(Vector3(-direction.x * kineB->mass * kineB->frictionCoeff, 0, 0));
+		kineB->ResetVel(1, 0);
 
-	if (gameObject->GetTransform()->translate.y > GetWorldHeight() + 1)
+	if (gameObject->GetTransform()->translate.y > GetWorldHeight() + 0.1f)
 	{
 		kineB->useGravity = true;
 	}
