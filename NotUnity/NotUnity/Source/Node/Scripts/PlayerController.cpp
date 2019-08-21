@@ -28,8 +28,6 @@ void test(ColInfo info)
 
 void PlayerController::Start()
 {
-	gameObject->GetTransform()->translate.Set(-1, 1, 0);
-
 	sprite = AddChild<Sprite>()
 		->SetAnimation(0, 8, 0.5f, 1)
 		->SetAnimation(1, 8, 0.5f, 1)
@@ -73,14 +71,7 @@ void PlayerController::Start()
 	hitbox->SetGameObj(gameObject);
 	hitbox->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0.5f, 0.5f));	
 
-	currState = nextState = P_STATE::IDLE_R;
-
-	moveSpeed.Set(10, 30, 0);
-	direction = 1;
-	jumpTimer = attackTimer = hitTimer = deadTimer = 0.0;	
-	health = 20;
-
-	walking = false;
+	ResetPos();
 
 	Achievements::Instance()->setKnibRefrence(kinb);
 	Node::Start();
@@ -350,6 +341,20 @@ int PlayerController::DamageDealt()
 	if (Achievements::Instance()->attackAch(true))
 		damage = 2;
 	return damage;
+}
+
+void PlayerController::ResetPos()
+{
+	gameObject->GetTransform()->translate.Set(-1, 1, 0);
+
+	currState = nextState = P_STATE::IDLE_R;
+
+	moveSpeed.Set(10, 30, 0);
+	direction = 1;
+	jumpTimer = attackTimer = hitTimer = deadTimer = 0.0;
+	health = 20;
+
+	walking = false;
 }
 
 void PlayerController::PrintState()

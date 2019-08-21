@@ -12,11 +12,13 @@
 #include "ScenePlayer.h"
 #include "SpawnerScene.h"
 #include "MapScene.h"
+#include "../Scripts/PlayerController.h"
 
 MainScene::MainScene(std::string name)
 	: Scene(name)
 	, debug(false)
 	, gs (MENU)
+	, winTimer(0)
 {
 	floatFbo[0].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
 	floatFbo[1].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
@@ -94,6 +96,8 @@ void MainScene::Update(double dt)
 			ChangeGameState(WIN);				
 		break;	
 	case WIN:
+		if (m_lifetime > winTimer + 3)
+			ChangeGameState(MENU);
 		break;
 	}
 
@@ -163,7 +167,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		spawner->SetWave(0);
 		break;
 	case WIN:
-
+		map->ChangeToDeSat();
 		break;
 	}
 
@@ -172,6 +176,9 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 	case MENU:
 		title->ActiveSelf(true);
 		wasd->ActiveSelf(true);
+		//reset pos of everything
+		//map->ResetPos();
+		playerGO->GetScript<PlayerController>()->ResetPos();
 		break;
 	case TUTO:
 		break;
@@ -179,6 +186,8 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		spawner->SetWave(1);
 		break;
 	case WIN:
+		map->ChangeToSaturated();
+		winTimer = m_lifetime;
 		break;			
 	}
 	this->gs = gs;
