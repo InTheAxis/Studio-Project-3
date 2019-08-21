@@ -29,7 +29,10 @@ void Projectile::OnEnable()
 
 void Projectile::OnDisable()
 {
-	coll->OnCollide -= OnHit;	
+	if (coll)
+		coll->OnCollide -= OnHit;	
+	if (kinb)
+		kinb->ResetVel(1, 1);
 }
 
 void Projectile::Start()
@@ -41,6 +44,7 @@ void Projectile::Start()
 	kinb = AddChild<KinemeticBody>();
 	kinb->SetGameObj(gameObject);
 	kinb->useGravity = false;
+	kinb->maxVel.Set(10, 10, 0);
 
 	sprite = AddChild<Sprite>();
 	sprite->SetGameObj(gameObject);
@@ -54,7 +58,10 @@ void Projectile::Start()
 
 void Projectile::Update(double dt)
 {
+	if (m_lifetime > 5)
+		gameObject->ActiveSelf(false);
 	kinb->UpdateSuvat(dt);
+	Debug::Log(kinb->GetVel());
 	Node::Update(dt);
 }
 

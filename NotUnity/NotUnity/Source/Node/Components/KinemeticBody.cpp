@@ -5,7 +5,6 @@ KinemeticBody::KinemeticBody(std::string name) : Node(name)
 {
 	acceleration.SetZero();
 	force.SetZero();
-	impulse.SetZero();
 	velocity.SetZero();
 	gravity.Set(0, -1, 0);
 	
@@ -44,13 +43,13 @@ void KinemeticBody::ApplyForce(Vector3 force)
 
 void KinemeticBody::ApplyImpulse(Vector3 impulse)
 {
-	this->impulse = impulse;
+	this->velocity = impulse;
 }
 
 void KinemeticBody::UpdateSuvat(double dt)
 {
 	float dtf = static_cast<float>(dt);
-	acceleration = force * (1 / mass) + impulse;
+	acceleration = force * (1 / mass);
 	velocity += acceleration * dtf;
 	if (useGravity)
 	{
