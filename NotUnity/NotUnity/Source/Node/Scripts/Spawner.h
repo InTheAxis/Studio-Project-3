@@ -9,6 +9,7 @@
 #include "../Components/Sprite.h"
 #include "../Scripts.h"
 #include "../Scripts/AI.h"
+#include "../../Utility/Math/Spline.h"
 
 class Spawner : public Node, public TypeID<Spawner>, public Component
 {
@@ -22,11 +23,11 @@ public:
 
 	void SetSpawnerWave(int waved);
 	void SetPlayerTrans(Vector3 trans);
+	void SetTerrain(Spline* s);
 
 private:
 	int enemyCount;
 	int waveCount;
-	int poolCount;
 	float interval;
 
 	int wave;
@@ -35,6 +36,9 @@ private:
 
 	int enemyLeft;
 	bool canSpawn;
+	
+	const int poolCount = 20;
+	GameObj* enemyPool[20];
 
 	//Init Enemies for different waves
 	void CreateEnemies(std::string waveOne);

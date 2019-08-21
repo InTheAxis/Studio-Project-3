@@ -17,6 +17,7 @@ void Strategy::Attack()
 {
 }
 
-void Strategy::Update(Vector3 & dest, Vector3 & enemyPos, double dt)
+bool Strategy::Update(Vector3 & dest, Vector3 & enemyPos, double dt)
 {
+	return true;
 }

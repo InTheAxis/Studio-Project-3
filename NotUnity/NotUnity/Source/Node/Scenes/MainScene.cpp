@@ -61,10 +61,7 @@ void MainScene::Start()
 	//attach camera
 	GetChild<MapScene>("MapScene")->SetCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
-	mg->SetProjOrtho(128);
-
-	AddChild<GameObj>("pew");
-	GetChild<GameObj>("pew")->AddScript<Projectile>();
+	//mg->SetProjOrtho(128);
 
 	Scene::Start();	
 
@@ -79,12 +76,6 @@ void MainScene::Update(double dt)
 	ControllerMouse* m = ControllerMouse::Instance();
 	if (kb->IsKeyPressed('9'))
 		debug = !debug;
-
-	if (kb->IsKeyPressed('8'))
-	{
-		GetChild<GameObj>("pew")->GetScript<Projectile>()->Discharge(Vector3(0, 0, 0), Vector3(1, 0, 0));
-		GetChild<GameObj>("pew")->GetScript<Projectile>()->ActiveSelf(true);
-	}
 
 	switch (gs)
 	{
@@ -106,6 +97,7 @@ void MainScene::Update(double dt)
 	}
 
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);
+	spawner->SetTerrain(map->GetTerrain());
 	player->SetTerrain(map->GetTerrain());
 
 	Scene::Update(dt);	

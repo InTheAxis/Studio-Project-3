@@ -1,6 +1,8 @@
 #include "Spline.h"
 
-Spline::Spline()
+Spline::Spline() 
+	: scale(1)
+	, offset(0)
 {
 }
 
@@ -10,7 +12,7 @@ Spline::~Spline()
 
 float Spline::Fn(float x)
 {
-	return x;
+	return x * scale + offset;
 }
 
 Vector3 Spline::Normal(float x)
@@ -31,4 +33,14 @@ std::vector<Vector3> Spline::GetSamplePts()
 	//temp = Normal(0.5f);
 	//ret.emplace_back(temp);
 	return ret;
+}
+
+void Spline::SetScale(float scale)
+{
+	this->scale = scale;
+}
+
+void Spline::SetOffset(float offset)
+{
+	this->offset = offset;
 }

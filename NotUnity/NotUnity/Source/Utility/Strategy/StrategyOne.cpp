@@ -8,7 +8,7 @@ StrategyOne::~StrategyOne()
 {
 }
 
-void StrategyOne::Update(Vector3& dest, Vector3& enemyPos, double dt)
+bool StrategyOne::Update(Vector3& dest, Vector3& enemyPos, double dt)
 {
 	int distanceHeroToEnemy = CalDest(dest, enemyPos);
 
@@ -25,12 +25,15 @@ void StrategyOne::Update(Vector3& dest, Vector3& enemyPos, double dt)
 	switch(currentState)
 	{
 	case ATTACK:
+		return true;
 		break;
 	case REPEL:
+		return false;
 		break;
 	default: //IDLE
 		break;
 	}
+	return false;
 }
 
 void StrategyOne::Attack()

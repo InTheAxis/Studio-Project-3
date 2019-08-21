@@ -8,9 +8,9 @@
 #include "../Components.h"
 #include "../Components/Sprite.h"
 #include "../Scripts.h"
-//#include "../Scripts/Strategy.h"
 #include "../../Utility/Strategy/Strategy.h"
 #include "../../Utility/Strategy/StrategyOne.h"
+#include "../../Utility/Math/Spline.h"
 
 class AI : public Node, public TypeID<AI>, public Component
 {
@@ -29,13 +29,12 @@ public:
 	float GetDamage();
 	void ChangeStrategy(Strategy* newStrategy, bool remove);
 	bool IsDead();
+	AI* SetTerrain(Spline* s);
 
 private:
-
 	Vector3 playerTrans;
 	float health;
 	float damage;
-	float worldHeight;
 
 	Vector3 direction;
 	int enemyCount;
@@ -43,6 +42,9 @@ private:
 
 	Strategy* strategy;
 	KinemeticBody* kineB;
+	Spline* s;
+
+	float GetWorldHeight();
 };
 
 #endif

@@ -1,10 +1,21 @@
 #include "AI.h"
 #include "../Manager/MgrGraphics.h"
+#include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Node/GameObj.h"
-#include"../Scripts/Spawner.h"
+#include "../Scripts/Spawner.h"
+#include "Projectile.h"
 
-AI::AI(std::string name) : Node(name), playerTrans(0.f, 0.f, 0.f), health(0.f), 
-damage(0.f),strategy(nullptr), direction(0.f,0.f,0.f), worldHeight(0.f), dead(false)
+AI::AI(std::string name) 
+	: Node(name)
+	, playerTrans(0.f, 0.f, 0.f)
+	, health(0.f)
+	, damage(0.f)
+	, strategy(nullptr)
+	, direction(0.f,0.f,0.f)
+	, dead(false)
+	, enemyCount(0)
+	, kineB(nullptr)
+	, s(nullptr)
 {
 }
 
@@ -20,6 +31,12 @@ void AI::Start()
 	kineB->frictionCoeff = 0.2f;
 	kineB->gravScale = 5;
 	kineB->useGravity = false;
+
+	AddChild<GameObj>("bull");
+	GetChild<GameObj>("bull")->AddScript<Projectile>();
+
+	if (strategy == NULL)
+		ChangeStrategy(new StrategyOne(), false);
 	
 	Node::Start();
 }
@@ -28,15 +45,16 @@ void AI::Update(double dt)
 {
 	direction = playerTrans - gameObject->GetTransform()->translate;
 
-	if (strategy == NULL)
-		ChangeStrategy(new StrategyOne(), false);
-
-	if (strategy != NULL)
+	strategy->SetDest(playerTrans.x, playerTrans.y);
+	if (strategy->Update(playerTrans, gameObject->GetTransform()->translate, dt))
 	{
-		strategy->SetDest(playerTrans.x, playerTrans.y);
-		strategy->Update(playerTrans, gameObject->GetTransform()->translate, dt);
-	}
 
+	}
+	if (ControllerKeyboard::Instance()->IsKeyPressed('7'))
+	{
+		GetChild<GameObj>("bull")->GetScript<Projectile>()->Discharge(Vector3(0, 0, 0), Vector3(1, 0, 0));
+ 		GetChild<GameObj>("bull")->GetScript<Projectile>()->ActiveSelf(true);
+	}
 	if (direction.LengthSquared() > 1)
 	{
 		kineB->ApplyForce(direction);
@@ -63,19 +81,16 @@ void AI::Update(double dt)
 		health -= 1;
 	}
 
-	if (gameObject->GetTransform()->translate.y > worldHeight)
+	if (gameObject->GetTransform()->translate.y > GetWorldHeight())
 	{
 		kineB->useGravity = true;
 	}
 	else
 	{
-		gameObject->GetTransform()->translate.y = worldHeight;
+		gameObject->GetTransform()->translate.y = GetWorldHeight();
 		kineB->useGravity = false;
 		kineB->ResetVel(0, 1);
 	}
-
-	//if (direction.LengthSquared() <= 0)
-	//	Debug::Log("die");
 
 	kineB->UpdateSuvat(dt);
 	kineB->ResetForce();
@@ -130,6 +145,18 @@ void AI::ChangeStrategy(Strategy* newStrategy, bool remove)
 bool AI::IsDead()
 {
 	return dead;
+}
+
+AI* AI::SetTerrain(Spline * s)
+{
+	this->s = s;
+	return this;
+}
+
+float AI::GetWorldHeight()
+{
+	//return gameObject->GetTransform()->translate.x;
+	return s->Fn(gameObject->GetTransform()->translate.x);
 }
 
 void AI::SetPlayerTrans(Vector3 trans)
