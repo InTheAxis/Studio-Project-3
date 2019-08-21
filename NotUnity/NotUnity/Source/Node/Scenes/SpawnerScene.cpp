@@ -74,3 +74,8 @@ void SpawnerScene::SetTerrain(Spline* s)
 {
 	SpawnerGO->GetScript<Spawner>()->SetTerrain(s);
 }
+
+int SpawnerScene::GetEnemyKilled()
+{
+	return SpawnerGO->GetScript<Spawner>()->GetEnemiesKilled();
+}
