@@ -47,16 +47,16 @@ AI::~AI()
 
 void AI::OnEnable()
 {
-	coll->OnCollide += AIOnHit;
-	trigger->OnTrigger += AIOnAttack;
+	coll->OnCollideEnter += AIOnHit;
+	trigger->OnTriggerEnter += AIOnAttack;
 }
 
 void AI::OnDisable()
 {
 	if (coll)
-		coll->OnCollide -= AIOnHit;
+		coll->OnCollideEnter -= AIOnHit;
 	if (trigger)
-		trigger->OnTrigger -= AIOnAttack;
+		trigger->OnTriggerEnter -= AIOnAttack;
 }
 
 void AI::Start()
@@ -87,12 +87,12 @@ void AI::Start()
 	Vector3 scale = gameObject->GetTransform()->scale;
 	coll = AddChild<Collider>("c");
 	coll->SetGameObj(gameObject);
-	coll->CreateAABB(0.7f);
+	coll->CreateAABB(0.5f);
 	
 	trigger = AddChild<Collider>("t");
 	trigger->SetGameObj(gameObject);
 	trigger->isTrigger = true;
-	trigger->CreateAABB(0.7f);
+	trigger->CreateAABB(0.5f);
 
 	Node::Start();
 }

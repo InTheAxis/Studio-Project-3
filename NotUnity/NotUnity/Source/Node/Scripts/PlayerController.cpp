@@ -71,7 +71,7 @@ void PlayerController::Start()
 	attackAir->ActiveSelf(false);
 	hitbox = AddChild<Collider>("h");
 	hitbox->SetGameObj(gameObject);
-	hitbox->CreateAABB(0.4f);	
+	hitbox->CreateAABB(0.5f);	
 
 	Reset();
 

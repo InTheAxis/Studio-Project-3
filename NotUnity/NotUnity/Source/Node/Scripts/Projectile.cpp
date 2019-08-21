@@ -29,13 +29,13 @@ Projectile::~Projectile()
 
 void Projectile::OnEnable()
 {
-	coll->OnCollide += OnHit;
+	coll->OnCollideEnter += OnHit;
 }
 
 void Projectile::OnDisable()
 {
 	if (coll)
-		coll->OnCollide -= OnHit;	
+		coll->OnCollideEnter -= OnHit;
 	if (kinb)
 		kinb->ResetVel(1, 1);
 }

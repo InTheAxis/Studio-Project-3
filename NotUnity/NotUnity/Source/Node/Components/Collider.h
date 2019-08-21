@@ -34,8 +34,12 @@ public:
 
 	void CheckCollision(Collider* coll);
 
-	Delegate<ColInfo> OnCollide; //pass in other collider
-	Delegate<ColInfo> OnTrigger; //pass in other collider
+	Delegate<ColInfo> OnCollideEnter; //pass in other collider
+	Delegate<ColInfo> OnTriggerEnter; //pass in other collider
+	Delegate<ColInfo> OnCollideStay; //pass in other collider
+	Delegate<ColInfo> OnTriggerStay; //pass in other collider
+	Delegate<ColInfo> OnCollideExit; //pass in other collider
+	Delegate<ColInfo> OnTriggerExit; //pass in other collider
 
 	bool isTrigger;
 
@@ -43,6 +47,9 @@ private:
 	Transform* t;
 	AABB aabb;
 	ColliderRender* cr;
+
+	bool collided;
+	bool triggered;
 };
 
 #endif
