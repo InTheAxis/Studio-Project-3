@@ -38,14 +38,14 @@ void MainScene::Start()
 	map = AddChild<MapScene>("MapScene");
 
 	//add gameobjects
-	AddChild<GameObj>("mainCam");
+	mainCam = AddChild<GameObj>("mainCam");
 	AddChild<GameObj>("axes");
 	AddChild<GameObj>("title");
 	AddChild<GameObj>("wasd");
 
 	//add & set up components and scripts
-	GetChild<GameObj>("mainCam")->AddComp<Camera>()->SetMode(Camera::DEBUG);
-	GetChild<GameObj>("mainCam")->GetTransform()->translate.z = 1;
+	mainCam->AddComp<Camera>()->SetMode(Camera::CUSTOM);
+	mainCam->GetTransform()->translate.z = 1;
 	GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
 	title = GetChild<GameObj>("title")->AddComp<Sprite>();
 	title->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("title"))->SelectShader(MgrGraphics::HSV_UNLIT)->SetRenderPass(RENDER_PASS::HUD);
@@ -63,9 +63,6 @@ void MainScene::Start()
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
 	mg->SetProjOrtho(128);
 
-	AddChild<GameObj>("pew");
-	GetChild<GameObj>("pew")->AddScript<Projectile>();
-
 	Scene::Start();	
 
 	//init variables
@@ -79,12 +76,6 @@ void MainScene::Update(double dt)
 	ControllerMouse* m = ControllerMouse::Instance();
 	if (kb->IsKeyPressed('9'))
 		debug = !debug;
-
-	if (kb->IsKeyPressed('8'))
-	{
-		GetChild<GameObj>("pew")->GetScript<Projectile>()->Discharge(Vector3(0, 0, 0), Vector3(1, 0, 0));
-		GetChild<GameObj>("pew")->GetScript<Projectile>()->ActiveSelf(true);
-	}
 
 	switch (gs)
 	{
@@ -105,7 +96,10 @@ void MainScene::Update(double dt)
 		break;
 	}
 
+	mainCam->GetTransform()->translate = playerGO->GetTransform()->translate;
+	mainCam->GetTransform()->translate.z = 1;
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);
+	spawner->SetTerrain(map->GetTerrain());
 	player->SetTerrain(map->GetTerrain());
 
 	Scene::Update(dt);	

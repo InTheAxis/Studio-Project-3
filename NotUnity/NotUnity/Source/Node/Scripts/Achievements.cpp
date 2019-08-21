@@ -169,7 +169,7 @@ void Achievements::Start()
 
 void Achievements::Update(double dt)
 {
-	//LifeTimeAttack = attackTimes
+
 	WriteTextFile();
 	AchievementCheck();
 	Node::Update(dt);

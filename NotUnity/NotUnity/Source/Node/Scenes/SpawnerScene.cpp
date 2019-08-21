@@ -5,7 +5,11 @@
 #include "../Scripts/Spawner.h"
 #include "../Scenes/ScenePlayer.h"
 
-SpawnerScene::SpawnerScene(std::string name) : Scene(name), currentWave(0), fromPlayer(0.f, 0.f, 0.f)
+SpawnerScene::SpawnerScene(std::string name) 
+	: Scene(name)
+	, currentWave(0)
+	, fromPlayer(0.f, 0.f, 0.f)
+	, SpawnerGO(nullptr)
 {
 }
 
@@ -23,9 +27,6 @@ void SpawnerScene::Start()
 
 void SpawnerScene::Update(double dt)
 {
-	//int spawnRangeX = Math::RandIntMinMax(-20, 20);
-	//int spawnRangeY = Math::RandIntMinMax(-4, 4);
-	//SpawnerGO->GetTransform()->translate.Set(fromPlayer.x + spawnRangeX, fromPlayer.y, fromPlayer.z);
 	SpawnerGO->GetTransform()->translate.Set(fromPlayer.x, 0);
 	SpawnerGO->GetScript<Spawner>()->SetPlayerTrans(fromPlayer);
 	SpawnerGO->GetScript<Spawner>()->SetSpawnerWave(currentWave);
@@ -67,4 +68,9 @@ void SpawnerScene::SetWave(int wave)
 void SpawnerScene::PlayerTrans(Vector3 trans)
 {
 	fromPlayer = trans;
+}
+
+void SpawnerScene::SetTerrain(Spline* s)
+{
+	SpawnerGO->GetScript<Spawner>()->SetTerrain(s);
 }

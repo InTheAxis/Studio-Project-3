@@ -38,7 +38,6 @@ private:
 	Vector3 acceleration;
 	Vector3 gravity;
 	Vector3 force;
-	Vector3 impulse;
 };
 
 #endif

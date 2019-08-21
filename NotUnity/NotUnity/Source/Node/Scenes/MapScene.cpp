@@ -4,6 +4,7 @@
 #include "../Components/Renderable.h"
 #include "../Scripts/DebugText.h"
 #include "../Scripts/MapGenerator.h"
+#include "../../Utility/Math/Spline.h"
 
 MapScene::MapScene(std::string name)
 	: Scene(name)
@@ -57,7 +58,7 @@ void MapScene::SetCamera(Camera * camera)
 	this->camera = camera;
 }
 
-Spline * MapScene::GetTerrain()
+Spline * MapScene::GetTerrain()	
 {	
 	return mapGen->GetCurrChunk()->GetSpline();
 }

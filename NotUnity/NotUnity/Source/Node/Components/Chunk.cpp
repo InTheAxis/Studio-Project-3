@@ -5,7 +5,7 @@
 #include "../Components/Sprite.h"
 #include "../Components/ColliderRender.h"
 
-Chunk::Chunk(std::string name) : Node(name)
+Chunk::Chunk(std::string name) : Node(name), HSV(-1,-1,-1)
 {	
 }
 
@@ -33,8 +33,7 @@ void Chunk::Start()
 	sprite->SetRenderPass(RENDER_PASS::GEO);
 	sprite->SetHSV(HSV.x, HSV.y, HSV.z);
 	
-	spline = new Spline;
-	AddChild<GameObj>("Spline")->AddComp<ColliderRender>()->AttachPoints(spline->GetSamplePts())->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("default"))->SetGameObj(gameObject);
+	AddChild<GameObj>("Spline")->AddComp<ColliderRender>()->AttachPoints(spline->GetSamplePts())->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("placeholder"))->SetGameObj(gameObject);
 
 	Node::Start();
 }
@@ -71,6 +70,11 @@ void Chunk::AssignBiome(BIOME_TYPE bt)
 		Debug::Log("Broke when assigning biome");
 		break;
 	}
+}
+
+void Chunk::SetSpline(Spline * spline)
+{
+	this->spline = spline;
 }
 
 Spline* Chunk::GetSpline()
