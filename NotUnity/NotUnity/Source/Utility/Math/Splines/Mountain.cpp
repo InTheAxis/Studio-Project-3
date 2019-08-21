@@ -19,6 +19,11 @@ float SplineMountain::Fn(float x)
 	return 0.19f * (-relX * relX) + 2.2f;
 }
 
+void SplineMountain::SetOffset(float offset)
+{
+	this->offset = offset;
+}
+
 Vector3 SplineMountain::Normal(float x)
 {
 	return Vector3(-2, (x* x *x), 0).Normalized();

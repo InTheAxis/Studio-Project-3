@@ -114,7 +114,6 @@ Chunk * MapGenerator::GetCurrChunk()
 		float displacement = oBoA.Length();
 		if (displacement <= scaleX * 0.5f)
 		{
-			Debug::Log("ChunkGO : " + std::to_string(i));
 			return chunkGO[i]->GetComp<Chunk>();
 		}
 		

@@ -24,15 +24,19 @@ void Chunk::OnDisable()
 void Chunk::Start()
 {
 	// background
-	sprite = AddChild<Sprite>();
+	sprite = AddChild<Sprite>()
+		->SetAnimation(0, 1, 0.5f, 1)
+		->SetAnimation(1, 1, 0.5f, 1);
 	sprite->SetGameObj(gameObject);
 	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"));
 	sprite->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("background"));
+	sprite->SwitchAnimation(1)->PlayAnimation();
 	sprite->SelectShader(MgrGraphics::HSV_UNLIT);
 	sprite->SetRenderPass(RENDER_PASS::POST_FX);
 	sprite->SetRenderPass(RENDER_PASS::GEO);
 	sprite->SetHSV(HSV.x, HSV.y, HSV.z);
-	
+
+
 	AddChild<GameObj>("Spline")->AddComp<ColliderRender>()->AttachPoints(spline->GetSamplePts())->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("placeholder"))->SetGameObj(gameObject);
 
 	Node::Start();
