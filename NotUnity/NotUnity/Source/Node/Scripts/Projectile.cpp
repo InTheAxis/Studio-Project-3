@@ -9,7 +9,6 @@
 
 void OnHit(ColInfo info)
 {
-	info.coll->GetGameObj()->ActiveSelf(false);
 }
 
 
@@ -61,7 +60,6 @@ void Projectile::Update(double dt)
 	if (m_lifetime > 5)
 		gameObject->ActiveSelf(false);
 	kinb->UpdateSuvat(dt);
-	Debug::Log(kinb->GetVel());
 	Node::Update(dt);
 }
 

@@ -4,7 +4,20 @@
 #include "../../Node/GameObj.h"
 #include "../Scripts/Spawner.h"
 #include "Projectile.h"
+#include "../../Node/Components/Collider.h"
+#include "../Scripts/PlayerController.h"
 
+void AIOnHit(ColInfo info)
+{
+	//info.coll->GetGameObj()->ActiveSelf(false);
+}
+
+void AIOnAttack(ColInfo info)
+{
+	//info.other->GetGameObj()->
+	//if (info.other->GetGameObj()->GetScript<PlayerController>())
+		//info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
+}
 AI::AI(std::string name) 
 	: Node(name)
 	, playerTrans(0.f, 0.f, 0.f)
@@ -21,6 +34,21 @@ AI::AI(std::string name)
 
 AI::~AI()
 {
+}
+
+void AI::OnEnable()
+{
+	coll->OnCollide += AIOnHit;
+	coll->OnTrigger += AIOnAttack;
+}
+
+void AI::OnDisable()
+{
+	if (coll)
+	{
+		coll->OnCollide -= AIOnHit;
+		coll->OnTrigger -= AIOnAttack;
+	}
 }
 
 void AI::Start()
@@ -41,6 +69,12 @@ void AI::Start()
 	if (strategy == NULL)
 		ChangeStrategy(new StrategyOne(), false);
 	
+	Vector3 scale = gameObject->GetTransform()->scale;
+	coll = AddChild<Collider>();
+	coll->SetGameObj(gameObject);
+	coll->isTrigger = true;
+	coll->CreateAABB(Vector3(-scale.x * 0.5f, -scale.y * 0.5f), Vector3(scale.x * 0.5f, scale.y * 0.5f));
+
 	Node::Start();
 }
 
@@ -53,6 +87,7 @@ void AI::Update(double dt)
 	{
 
 	}
+
 	if (ControllerKeyboard::Instance()->IsKeyPressed('7'))
 	{
 		Projectile* p = GetProjectile();
@@ -62,6 +97,7 @@ void AI::Update(double dt)
 			p->GetGameObj()->ActiveSelf(true);
 		}
 	}
+
 	kineB->ApplyForce(direction);
 
 	if (direction.x * kineB->GetVel().x < 0.f || Math::FIsEqual(kineB->GetVel().x, 0.f))
@@ -105,12 +141,12 @@ float AI::GetHealth()
 	return health;
 }
 
-void AI::SetDamage(float damage)
+void AI::SetDamageDealt(float damage)
 {
 	this->damage = damage;
 }
 
-float AI::GetDamage()
+float AI::GetDamageDealt()
 {
 	return damage;
 }
@@ -139,6 +175,15 @@ AI* AI::SetTerrain(Spline * s)
 {
 	this->s = s;
 	return this;
+}
+
+void AI::ResetBullets()
+{
+	for (int i = 0; i < ammoCount; ++i)
+	{
+		if (projectile[i])
+			projectile[i]->GetGameObj()->ActiveSelf(false);
+	}
 }
 
 float AI::GetWorldHeight()

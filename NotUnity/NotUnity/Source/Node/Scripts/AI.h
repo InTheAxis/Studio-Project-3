@@ -13,6 +13,8 @@
 #include "../../Utility/Math/Spline.h"
 
 class Projectile;
+class Collider;
+class ColInfo;
 class AI : public Node, public TypeID<AI>, public Component
 {
 public:
@@ -23,14 +25,20 @@ public:
 	virtual void Update(double dt);
 	virtual void End();
 
+	void OnEnable();
+	void OnDisable();
+
 	void SetPlayerTrans(Vector3 trans);
 	void SetHealth(float health);
 	float GetHealth();
-	void SetDamage(float damage);
-	float GetDamage();
+	void SetDamageDealt(float damage);
+	float GetDamageDealt();
 	void ChangeStrategy(Strategy* newStrategy, bool remove);
 	bool IsDead();
 	AI* SetTerrain(Spline* s);
+	void ResetBullets();
+
+
 
 private:
 	Vector3 playerTrans;
@@ -46,9 +54,13 @@ private:
 	KinemeticBody* kineB;
 	Spline* s;
 	Projectile* projectile[ammoCount];
+	Collider* coll;
 
 	float GetWorldHeight();
 	Projectile* GetProjectile();
+
+	friend void AIOnHit(ColInfo info);
+	friend void AIOnAttack(ColInfo info);
 };
 
 #endif

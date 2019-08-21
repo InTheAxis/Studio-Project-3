@@ -20,14 +20,15 @@ void Collider::Start()
 	t = gameObject->GetTransform();
 	cr = AddChild<ColliderRender>();
 	cr->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("default"))->SetGameObj(gameObject);
+	std::vector<Vector3> temp{ aabb.GetRect().max, aabb.GetRect().min };
+	cr->AttachPoints(temp);
 	Node::Start();
 }
 
 void Collider::Update(double dt)
 {
 	aabb.SetOrigin(t->translate);
-	std::vector<Vector3> temp{ aabb.GetRect().max, aabb.GetRect().min };
-	cr->AttachPoints(temp);
+
 	Node::Update(dt);
 }
 
