@@ -44,6 +44,7 @@ private:
 	Vector3 playerTrans;
 	float health;
 	float damage;
+	float sat;
 
 	Vector3 direction;
 	int enemyCount;
@@ -54,7 +55,8 @@ private:
 	KinemeticBody* kineB;
 	Spline* s;
 	Projectile* projectile[ammoCount];
-	Collider* coll;
+	Collider* coll, *trigger;
+	Sprite* sprite;
 
 	float GetWorldHeight();
 	Projectile* GetProjectile();

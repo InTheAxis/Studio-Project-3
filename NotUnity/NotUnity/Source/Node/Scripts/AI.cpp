@@ -9,14 +9,16 @@
 
 void AIOnHit(ColInfo info)
 {
-	//info.coll->GetGameObj()->ActiveSelf(false);
+	if (info.other->GetGameObj()->GetScript<Projectile>())
+		return;
+	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
+	info.coll->GetGameObj()->GetScript<AI>()->sat = 0;
 }
 
 void AIOnAttack(ColInfo info)
 {
-	//info.other->GetGameObj()->
 	//if (info.other->GetGameObj()->GetScript<PlayerController>())
-		//info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
+	//	info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
 }
 AI::AI(std::string name) 
 	: Node(name)
@@ -29,6 +31,7 @@ AI::AI(std::string name)
 	, enemyCount(0)
 	, kineB(nullptr)
 	, s(nullptr)
+	, sat(1)
 {
 }
 
@@ -39,20 +42,26 @@ AI::~AI()
 void AI::OnEnable()
 {
 	coll->OnCollide += AIOnHit;
-	coll->OnTrigger += AIOnAttack;
+	trigger->OnTrigger += AIOnAttack;
 }
 
 void AI::OnDisable()
 {
 	if (coll)
-	{
 		coll->OnCollide -= AIOnHit;
-		coll->OnTrigger -= AIOnAttack;
-	}
+	if (trigger)
+		trigger->OnTrigger -= AIOnAttack;
 }
 
 void AI::Start()
 {
+	sprite = AddChild<Sprite>();
+	sprite->SetGameObj(gameObject);
+	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))
+		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"))
+		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX);
+
+
 	kineB = AddChild<KinemeticBody>();
 	kineB->SetGameObj(gameObject);
 	kineB->maxVel.Set(2, 2, 0);
@@ -70,10 +79,14 @@ void AI::Start()
 		ChangeStrategy(new StrategyOne(), false);
 	
 	Vector3 scale = gameObject->GetTransform()->scale;
-	coll = AddChild<Collider>();
+	coll = AddChild<Collider>("c");
 	coll->SetGameObj(gameObject);
-	coll->isTrigger = true;
 	coll->CreateAABB(Vector3(-scale.x * 0.5f, -scale.y * 0.5f), Vector3(scale.x * 0.5f, scale.y * 0.5f));
+	
+	trigger = AddChild<Collider>("t");
+	trigger->SetGameObj(gameObject);
+	trigger->isTrigger = true;
+	trigger->CreateAABB(Vector3(-scale.x * 0.5f, -scale.y * 0.5f), Vector3(scale.x * 0.5f, scale.y * 0.5f));
 
 	Node::Start();
 }
@@ -88,15 +101,15 @@ void AI::Update(double dt)
 
 	}
 
-	if (ControllerKeyboard::Instance()->IsKeyPressed('7'))
-	{
+	//if (ControllerKeyboard::Instance()->IsKeyPressed('7'))
+	//{
 		Projectile* p = GetProjectile();
 		if (p)
 		{
 			p->Discharge(gameObject->GetTransform()->translate, direction * 10);
 			p->GetGameObj()->ActiveSelf(true);
 		}
-	}
+	//}
 
 	kineB->ApplyForce(direction);
 
@@ -127,6 +140,8 @@ void AI::Update(double dt)
 	}
 	else
 		dead = false;
+
+	sprite->SetHSV(-1, sat, -1);
 
 	Node::Update(dt);
 }
