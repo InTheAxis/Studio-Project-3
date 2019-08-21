@@ -89,6 +89,9 @@ void MgrResource::LoadMaterials()
 	temp = new Material("wasd");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/wasd.tga");
 
+	temp = new Material("lmb");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/lmb.tga");
+
 	temp = new Material("sky");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/sky.tga");
 }

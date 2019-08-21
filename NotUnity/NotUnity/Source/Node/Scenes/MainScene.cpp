@@ -44,6 +44,7 @@ void MainScene::Start()
 	AddChild<GameObj>("axes");
 	AddChild<GameObj>("title");
 	AddChild<GameObj>("wasd");
+	AddChild<GameObj>("lmb");
 
 	//add & set up components and scripts
 	//mainCam->AddComp<Camera>()->SetMode(Camera::DEBUG);
@@ -54,6 +55,9 @@ void MainScene::Start()
 	title->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("title"))->SelectShader(MgrGraphics::HSV_UNLIT)->SetRenderPass(RENDER_PASS::HUD);
 	wasd = GetChild<GameObj>("wasd")->AddComp<Renderable>();
 	wasd->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("wasd"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
+	lmb = GetChild<GameObj>("lmb")->AddComp<Renderable>();
+	lmb->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("lmb"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
+	lmb->ActiveSelf(false);
 	Transform* t = GetChild<GameObj>("title")->GetTransform();
 	t->translate.Set(0, 6, 0);
 	t->scale.Set(4, 4, 1);
@@ -90,6 +94,7 @@ void MainScene::Update(double dt)
 	case TUTO:
 		if (m->IsButtonPressed(0))
 			ChangeGameState(GAMEPLAY);
+		lmb->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-2.f, 0, 0);
 		break;
 	case GAMEPLAY:
 		if (spawner->GetEnemyKilled() >= 3)	
@@ -168,6 +173,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		wasd->ActiveSelf(false);
 		break;
 	case TUTO:
+		lmb->ActiveSelf(false);
 		break;
 	case GAMEPLAY:
 		spawner->SetWave(0);
@@ -192,6 +198,8 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		spawner->Reset();
 		break;
 	case TUTO:
+		lmb->ActiveSelf(true);	
+		lmb->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-2.f, 0, 0);
 		break;
 	case GAMEPLAY:
 		spawner->SetWave(1);
