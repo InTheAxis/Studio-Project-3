@@ -86,8 +86,9 @@ void MapGenerator::Update(double dt)
 			float displacement = oBoA.Length();
 			if (displacement > offsetBuffer)
 			{
+				Debug::Log("chunkGO " + std::to_string(chunkNumber));
 				chunkGO[chunkNumber]->GetTransform()->translate.Set((mapSize * scaleX) + (offsetX * scaleX), 0, -1);
-				chunkGO[chunkNumber]->GetComp<Chunk>()->GetSpline()->SetOffset((-scaleX * offsetX));
+				chunkGO[chunkNumber]->GetComp<Chunk>()->GetSpline()->SetOffset((mapSize * -scaleX) + (offsetX * -scaleX));
 				CullChunk();
 				++chunkNumber;
 				++offsetX;
