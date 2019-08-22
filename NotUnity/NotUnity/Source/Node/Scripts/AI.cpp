@@ -13,7 +13,19 @@ void AIOnHit(ColInfo info)
 		return;
 	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
 	{
-		info.coll->GetGameObj()->GetScript<AI>()->health--;
+		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
+		if (ai->m_lifetime > ai->bounceTime + 0.5)
+		{
+			ai->bounceTime = ai->m_lifetime;
+			ai->health--;
+
+			if (ai->health <= 0)
+			{
+				ai->gameObject->ActiveSelf(false);
+				ai->health = 0;
+				ai->dead = true;
+			}
+		}
 	}
 }
 
@@ -22,8 +34,8 @@ void AIOnAttack(ColInfo info)
 	//if (info.other->GetGameObj()->GetScript<PlayerController>())
 	//	info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
 
-	if (info.other->GetGameObj()->GetScript<PlayerController>())
-		info.coll->GetGameObj()->GetTransform()->translate +=  info.penetration;
+	//if (info.other->GetGameObj()->GetScript<PlayerController>())
+	//	info.coll->GetGameObj()->GetTransform()->translate +=  info.penetration;
 }
 AI::AI(std::string name) 
 	: Node(name)
@@ -38,6 +50,7 @@ AI::AI(std::string name)
 	, s(nullptr)
 	, sat(1)
 	, interval(0)
+	, bounceTime(0)
 {
 }
 
@@ -47,14 +60,14 @@ AI::~AI()
 
 void AI::OnEnable()
 {
-	coll->OnCollideEnter += AIOnHit;
+	coll->OnCollideStay += AIOnHit;
 	trigger->OnTriggerEnter += AIOnAttack;
 }
 
 void AI::OnDisable()
 {
 	if (coll)
-		coll->OnCollideEnter -= AIOnHit;
+		coll->OnCollideStay -= AIOnHit;
 	if (trigger)
 		trigger->OnTriggerEnter -= AIOnAttack;
 }
@@ -140,15 +153,6 @@ void AI::Update(double dt)
 	kineB->UpdateSuvat(dt);
 	kineB->ResetForce();
 
-	if (health <= 0)
-	{
-		gameObject->ActiveSelf(false);
-		health = 0;
-		dead = true;
-	}
-	else
-		dead = false;
-
 	sat = Math::Max(0.f,  health / 3.f);
 
 	sprite->SetHSV(-1, sat, -1);
@@ -221,6 +225,7 @@ void AI::Reset()
 	health = 3;
 	sat = 1;
 	dead = false;
+	bounceTime = 0;
 	ResetBullets();
 }
 

@@ -55,9 +55,9 @@ void main()
 	vec3 lightDir = normalize(vec3(1,1,0)) * 0.5;
 	vec3 lightPos = pos + lightDir;
 
-	if (length(lightPos.xy - fragPos.xy) > 0.7)
+	if (length(lightPos.xy - fragPos.xy) > 0.7 * model[2][2])
 	{
-		color.rgb *= 0.9;
+		color.rgb *= 0.5;
 	}
 
 }

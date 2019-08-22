@@ -80,7 +80,8 @@ int Spawner::GetEnemiesKilled()
 	{
 		if (enemyPool[i]->GetScript<AI>()->IsDead())
 			++c;
-	}
+	}	
+	Debug::Log(c);
 	return c;
 }
 
@@ -130,7 +131,7 @@ void Spawner::SpawnEnemy(std::string waveOne)
 	Vector3 offset;
 	for (int i = 0; i < poolCount; ++i)
 	{
-		if (enemyPool[i]->IsActive())
+		if (enemyPool[i]->IsActive() || enemyPool[i]->GetScript<AI>()->IsDead())
 			continue;
 
 		int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
