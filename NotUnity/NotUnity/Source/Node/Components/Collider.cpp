@@ -7,6 +7,8 @@
 Collider::Collider(std::string name) 
 	: Node(name)
 	, isTrigger(false)
+	, collided(false)
+	, triggered(false)
 {
 	MgrCollision::Instance()->RegisterColl(this);
 }
@@ -18,10 +20,10 @@ Collider::~Collider()
 void Collider::Start()
 {
 	t = gameObject->GetTransform();
-	cr = AddChild<ColliderRender>();
-	cr->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("default"))->SetGameObj(gameObject);
-	std::vector<Vector3> temp{ aabb.GetRect().max, aabb.GetRect().min };
-	cr->AttachPoints(temp);
+	//cr = AddChild<ColliderRender>();
+	//cr->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("default"))->SetGameObj(gameObject);
+	//std::vector<Vector3> temp{ aabb.GetRect().max, aabb.GetRect().min };
+	//cr->AttachPoints(temp);
 	Node::Start();
 }
 
@@ -61,16 +63,67 @@ void Collider::CheckCollision(Collider * coll)
 		info.other = coll;
 		info.penetration = pene;
 		if (isTrigger)
-			OnTrigger(info);
+		{
+			OnTriggerStay(info);
+			if (!triggered)
+			{
+				triggered = true;
+				OnTriggerEnter(info);
+			}
+		}
 		else
-			OnCollide(info);
+		{
+			OnCollideStay(info);
+			if (!collided)
+			{
+				collided = true;
+				OnCollideEnter(info);				
+			}
+		}
 
 		info.coll = coll;
 		info.other = this;
 		info.penetration = -pene;
 		if (coll->isTrigger)
-			coll->OnTrigger(info);
+		{
+			coll->OnTriggerStay(info);
+			if (!coll->triggered)
+			{
+				coll->triggered = true;
+				coll->OnTriggerEnter(info);				
+			}
+		}
 		else
-			coll->OnCollide(info);
+		{
+			coll->OnCollideStay(info);
+			if (!coll->collided)
+			{
+				coll->collided = true;
+				coll->OnCollideEnter(info);
+			}
+		}
+	}
+	else
+	{
+		info.coll = this;
+		info.other = coll;
+		info.penetration = pene;
+		if (triggered)
+			OnTriggerExit(info);
+		if (collided)
+			OnCollideExit(info);
+
+		info.coll = coll;
+		info.other = this;
+		info.penetration = -pene;
+		if (coll->collided)
+			coll->OnCollideExit(info);
+		if (coll->triggered)
+			coll->OnTriggerExit(info);
+
+		collided = false;
+		triggered = false;
+		coll->collided = false;
+		coll->triggered = false;
 	}
 }

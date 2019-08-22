@@ -4,6 +4,7 @@
 #include "../Components/Renderable.h"
 #include "../Scripts/Spawner.h"
 #include "../Scenes/ScenePlayer.h"
+#include "../Scripts/Achievements.h"
 
 SpawnerScene::SpawnerScene(std::string name) 
 	: Scene(name)
@@ -73,4 +74,15 @@ void SpawnerScene::PlayerTrans(Vector3 trans)
 void SpawnerScene::SetTerrain(Spline* s)
 {
 	SpawnerGO->GetScript<Spawner>()->SetTerrain(s);
+}
+
+void SpawnerScene::Reset()
+{
+	SpawnerGO->GetScript<Spawner>()->Reset();
+}
+
+int SpawnerScene::GetEnemyKilled()
+{
+
+	return SpawnerGO->GetScript<Spawner>()->GetEnemiesKilled();
 }

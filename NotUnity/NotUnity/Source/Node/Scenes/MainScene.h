@@ -38,11 +38,14 @@ private:
 	MapScene* map;
 	Sprite* title;
 	Renderable* wasd;
+	Renderable* lmb;
 	GameObj* playerGO;
 	GameObj* mainCam;
 
 	bool debug;
 	GAME_STATE gs;
+
+	double winTimer;
 
 	void ChangeGameState(GAME_STATE gs);
 };

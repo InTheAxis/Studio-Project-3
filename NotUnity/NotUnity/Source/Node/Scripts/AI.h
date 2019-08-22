@@ -37,14 +37,16 @@ public:
 	bool IsDead();
 	AI* SetTerrain(Spline* s);
 	void ResetBullets();
+	void SetSaturation(float sat);
 
-
+	void Reset();
 
 private:
 	Vector3 playerTrans;
 	float health;
 	float damage;
 	float sat;
+	float interval;
 
 	Vector3 direction;
 	int enemyCount;

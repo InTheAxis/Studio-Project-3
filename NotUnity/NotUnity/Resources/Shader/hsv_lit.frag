@@ -13,7 +13,7 @@ in vec3 vertNormal_cameraspace;
 out vec4 color;
 
 // constants
-const int MAX_COLORMAPS = 11;
+const int MAX_COLORMAPS = 13;
 
 // misc uniforms
 struct Material
@@ -60,7 +60,7 @@ void main()
 	vec3 targetHsv = rgbToHsv(vec3(color));	
 	if (hsv.h >= 0)
 		targetHsv.x = hsv.h;
-	if (hsv.s >= 0 && targetHsv.y > 0.3)
+	if (hsv.s >= 0 && targetHsv.y > 0.2)
 		targetHsv.y = clamp(hsv.s, 0, 1);
 	if (hsv.v >= 0)
 		targetHsv.z = clamp(hsv.v, 0, 1);

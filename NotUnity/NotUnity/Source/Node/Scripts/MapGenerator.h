@@ -25,9 +25,11 @@ public:
 
 	void SetCamera(Camera* camera);
 	Chunk* GetCurrChunk();
+
+	const static int mapSize = 10;
+	GameObj* GetChunkGO(int idx);
 private:
 	Camera* camera;
-	const static int mapSize = 10;
 	int offsetBuffer; // displacement > offsetBuffer to spawn the new blocks
 	int offsetX; // increase overtime when chunk gets pop and push to the back
 	int scaleX;
@@ -38,6 +40,8 @@ private:
 	Spline* spline;
 
 	GameObj* chunkGO[mapSize];
+	GameObj* sky;
+
 
 	void CullChunk();
 };

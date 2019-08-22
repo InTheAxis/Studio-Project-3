@@ -6,9 +6,15 @@
 #include "../../Node/Components/KinemeticBody.h"
 #include "../../Node/Components/Sprite.h"
 #include "../../Node/Components/Collider.h"
+#include "../../Node/Scripts/PlayerController.h"
 
 void OnHit(ColInfo info)
 {
+	if (info.other->GetGameObj()->GetScript<PlayerController>())
+	{
+		info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
+		info.coll->GetGameObj()->ActiveSelf(false);
+	}
 }
 
 
@@ -23,13 +29,13 @@ Projectile::~Projectile()
 
 void Projectile::OnEnable()
 {
-	coll->OnCollide += OnHit;
+	coll->OnCollideEnter += OnHit;
 }
 
 void Projectile::OnDisable()
 {
 	if (coll)
-		coll->OnCollide -= OnHit;	
+		coll->OnCollideEnter -= OnHit;
 	if (kinb)
 		kinb->ResetVel(1, 1);
 }
@@ -43,7 +49,7 @@ void Projectile::Start()
 	kinb = AddChild<KinemeticBody>();
 	kinb->SetGameObj(gameObject);
 	kinb->useGravity = false;
-	kinb->maxVel.Set(10, 10, 0);
+	kinb->maxVel.Set(3, 3, 0);
 
 	sprite = AddChild<Sprite>();
 	sprite->SetGameObj(gameObject);
@@ -51,7 +57,7 @@ void Projectile::Start()
 
 	coll = AddChild<Collider>();
 	coll->SetGameObj(gameObject);
-	coll->CreateAABB(Vector3(-size * 0.5f, -size * 0.5f), Vector3(size * 0.5f, size * 0.5f));
+	coll->CreateAABB(size);
 	Node::Start();
 }
 

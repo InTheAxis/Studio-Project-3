@@ -22,6 +22,9 @@ public:
 	void SetWave(int wave); //Set starting wave from other scene
 	void PlayerTrans(Vector3 trans);
 	void SetTerrain(Spline* s);
+	void Reset();
+
+	int GetEnemyKilled();
 private:
 	int currentWave;
 	Vector3 fromPlayer;

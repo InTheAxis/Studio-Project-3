@@ -12,11 +12,13 @@
 #include "ScenePlayer.h"
 #include "SpawnerScene.h"
 #include "MapScene.h"
+#include "../Scripts/PlayerController.h"
 
 MainScene::MainScene(std::string name)
 	: Scene(name)
 	, debug(false)
 	, gs (MENU)
+	, winTimer(0)
 {
 	floatFbo[0].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
 	floatFbo[1].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
@@ -42,6 +44,7 @@ void MainScene::Start()
 	AddChild<GameObj>("axes");
 	AddChild<GameObj>("title");
 	AddChild<GameObj>("wasd");
+	AddChild<GameObj>("lmb");
 
 	//add & set up components and scripts
 	//mainCam->AddComp<Camera>()->SetMode(Camera::DEBUG);
@@ -52,11 +55,14 @@ void MainScene::Start()
 	title->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("title"))->SelectShader(MgrGraphics::HSV_UNLIT)->SetRenderPass(RENDER_PASS::HUD);
 	wasd = GetChild<GameObj>("wasd")->AddComp<Renderable>();
 	wasd->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("wasd"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
+	lmb = GetChild<GameObj>("lmb")->AddComp<Renderable>();
+	lmb->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("lmb"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
+	lmb->ActiveSelf(false);
 	Transform* t = GetChild<GameObj>("title")->GetTransform();
-	t->translate.Set(0, 2, 0);
-	t->scale.Set(3, 3, 1);
+	t->translate.Set(0, 6, 0);
+	t->scale.Set(4, 4, 1);
 	t = GetChild<GameObj>("wasd")->GetTransform();
-	t->translate.Set(-3, 1, 0);
+	t->translate.Set(-2.5f, 3, 0);
 	t->scale.Set(1.5f, 1.5f, 1);
 	
 	//attach camera
@@ -88,12 +94,21 @@ void MainScene::Update(double dt)
 	case TUTO:
 		if (m->IsButtonPressed(0))
 			ChangeGameState(GAMEPLAY);
+		lmb->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-2.f, 0, 0);
 		break;
 	case GAMEPLAY:
+		if (spawner->GetEnemyKilled() >= 3)	
+			ChangeGameState(WIN);	
+		else if (playerGO->GetScript<PlayerController>()->IsDead())
+			ChangeGameState(LOSE);	
 		break;
 	case LOSE:
+		if (!playerGO->GetScript<PlayerController>()->IsDead())
+			ChangeGameState(MENU);
 		break;
 	case WIN:
+		if (m_lifetime > winTimer + 3)
+			ChangeGameState(MENU);
 		break;
 	}
 
@@ -158,6 +173,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		wasd->ActiveSelf(false);
 		break;
 	case TUTO:
+		lmb->ActiveSelf(false);
 		break;
 	case GAMEPLAY:
 		spawner->SetWave(0);
@@ -165,6 +181,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 	case LOSE:
 		break;
 	case WIN:
+		map->ChangeToDeSat();
 		break;
 	}
 
@@ -173,15 +190,25 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 	case MENU:
 		title->ActiveSelf(true);
 		wasd->ActiveSelf(true);
+		title->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(0, 3, 0);
+		wasd->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-2.5f, 0, 0);
+
+		//map->ResetPos();
+		playerGO->GetScript<PlayerController>()->Reset();
+		spawner->Reset();
 		break;
 	case TUTO:
+		lmb->ActiveSelf(true);	
+		lmb->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-2.f, 0, 0);
 		break;
 	case GAMEPLAY:
 		spawner->SetWave(1);
 		break;
-	case LOSE:
+	case LOSE:		
 		break;
 	case WIN:
+		map->ChangeToSaturated();
+		winTimer = m_lifetime;
 		break;			
 	}
 	this->gs = gs;

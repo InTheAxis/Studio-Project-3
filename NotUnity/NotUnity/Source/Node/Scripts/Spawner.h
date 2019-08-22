@@ -25,6 +25,11 @@ public:
 	void SetPlayerTrans(Vector3 trans);
 	void SetTerrain(Spline* s);
 
+	int GetEnemiesKilled();
+	bool GetBossKilled();
+	
+	void Reset();
+
 private:
 	int enemyCount;
 	int waveCount;

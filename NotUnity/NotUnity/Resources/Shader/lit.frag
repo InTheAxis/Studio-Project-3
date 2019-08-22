@@ -13,7 +13,7 @@ in vec3 vertNormal_cameraspace;
 out vec4 color;
 
 // constants
-const int MAX_COLORMAPS = 11;
+const int MAX_COLORMAPS = 13;
 
 // misc uniforms
 struct Material

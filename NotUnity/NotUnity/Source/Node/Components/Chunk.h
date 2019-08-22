@@ -19,6 +19,7 @@ enum class BIOME_TYPE
 
 class Sprite;
 class Spline;
+class SplineMountain;
 class Chunk : public Node, public TypeID<Chunk>, public Component
 {
 	
@@ -38,12 +39,15 @@ public:
 	
 	void SetSpline(Spline* spline);
 	Spline* GetSpline();
+	Sprite* GetSprite();
 private:
-	Sprite* sprite;
 	Spline* spline;
+	Sprite* sprite;
 
 	Transform* t;
 	Vector3 HSV;
+
+	int currAnimIdx;
 
 	BIOME_TYPE currentBiome;
 };

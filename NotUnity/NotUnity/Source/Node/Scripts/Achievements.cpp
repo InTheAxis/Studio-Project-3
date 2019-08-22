@@ -11,6 +11,7 @@ void Achievements::AchievementCheck()
 	if (attackTimes >= 10)
 	{
 		attackAch(true);
+
 		if (attackAch(true) && attackTimes >= 50)
 			attackAch2(true);
 	}
@@ -21,8 +22,13 @@ void Achievements::AchievementCheck()
 			knibReference->maxVel.y = 1.3;
 		}
 		jumpAch(true);
-		if (jumpAch(true) && jumpTimes >= 50)
-			jumpAch2(true);
+		if (jumpAch(true) && jumpTimes >= 100)
+		{
+			if (knibReference->IsActive())
+			{
+				knibReference->maxVel.y = 1.6;
+			}
+		}
 	}
 	if (walkTime >= 10)
 	{
@@ -32,12 +38,18 @@ void Achievements::AchievementCheck()
 		}
 		walkAch(true);
 		if (walkAch(true) && walkTime >= 200)
-			walkAch2(true);
+		{
+			if (knibReference->IsActive())
+			{
+				knibReference->maxVel.x = 1.6;
+			}
+		}
 	}
 	if (enemyKilled >= 10)
 	{
 		enemyAch(true);
-		
+			
+		/*if(enemyKilled >=)*/
 	}
 }
 
@@ -65,7 +77,7 @@ int Achievements::GetJumpTimes(int jt)
 
 bool Achievements::jumpAch(bool JA)
 {
-	return false;
+	return JA;
 }
 
 bool Achievements::jumpAch2(bool JA)
@@ -94,6 +106,10 @@ int Achievements::GetEnemyKilled(int ek)
 	enemyKilled += ek;
 	return enemyKilled;
 }
+void Achievements::SetEnenmyKilled(int ek)
+{
+	enemyKilled = ek;
+}
 
 bool Achievements::enemyAch(bool EA)
 {
@@ -107,22 +123,29 @@ void Achievements::ReadTextFile()
 
 	if (Print.is_open())
 	{
-		while (/*std::getline(stats , line)*/std::getline(Print,line))
+		while (std::getline(Print,line))
 		{
-			int ID = line.find(","); //find , finds ,
+			int ID = line.find(","); //find , 
 			std::string tmp = line.substr(ID + 1);
 			int Cord = tmp.find(","); //cord after this
+			std::string tmp2 = tmp.substr(Cord + 1);
+			int Coord = tmp2.find(",");
+			std::string tmp3 = tmp2.substr(Coord + 1);
+
 			std::string attack = line.substr(0, ID);
+
 			std::string jump = tmp.substr(0, Cord);
-			std::string walkTimer = tmp.substr(Cord + 1);
-			std::string enemyKILL = tmp.substr(Cord + 1);
-				 
+
+			std::string walkTimer = tmp2.substr(Coord + 1);
+
+			std::string enemyKILL = tmp3;				 
 
 
 			this->attackTimes = std::stoi(attack);
 			this->jumpTimes = std::stoi(jump);
 			this->walkTime = std::stoi(walkTimer);
 			this->enemyKilled = std::stoi(enemyKILL);
+
 		}
 		Print.close();
 	}
@@ -135,13 +158,30 @@ void Achievements::WriteTextFile()
 	std::ofstream Write("Resources/LifeTimeStats.txt");
 	if (Write.is_open())
 	{
-		int ID = line.find(",");
+	/*	int ID = line.find(",");
 		std::string tmp = line.substr(ID + 1);
 		int Cord = tmp.find(",");
 		std::string attack = line.substr(0, ID);
 		std::string jump = tmp.substr(0, Cord);
 		std::string walkTimer = tmp.substr(Cord + 1);
 		std::string enemyKILL = tmp.substr(Cord + 1);
+*/
+		//int ID = line.find(","); //find , finds ,
+		//std::string tmp = line.substr(ID + 1);
+		//int Cord = tmp.find(","); //cord after this
+		//std::string tmp2 = line.substr(Cord + 1);
+
+		int ID = line.find(","); //find , 
+		std::string tmp = line.substr(ID + 1);
+		int Cord = tmp.find(","); //cord after this
+		std::string tmp2 = tmp.substr(Cord + 1);
+		int Coord = tmp2.find(",");
+		std::string tmp3 = tmp2.substr(Coord + 1);
+
+		std::string attack = line.substr(0, ID);
+		std::string jump = tmp.substr(0, Cord);
+		std::string walkTimer = tmp2.substr(Coord + 1);
+		std::string enemyKILL = tmp3;
 
 		Write << attackTimes << "," << jumpTimes << "," << walkTime << "," << enemyKilled;
 		
@@ -173,6 +213,7 @@ void Achievements::Update(double dt)
 {
 
 	WriteTextFile();
+	// Debug::Log(enemyKilled);
 	AchievementCheck();
 	Node::Update(dt);
 }

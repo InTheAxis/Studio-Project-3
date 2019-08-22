@@ -56,31 +56,25 @@ void PlayerController::Start()
 
 	attackRight = AddChild<Collider>("r");
 	attackRight->SetGameObj(gameObject);
-	attackRight->CreateAABB(Vector3(0, -0.5f), Vector3(0.5f, 0.5f));
+	attackRight->CreateAABB(0.7f);
 	attackRight->isTrigger = true;
 	attackRight->ActiveSelf(false);
 	attackLeft = AddChild<Collider>("l");
 	attackLeft->SetGameObj(gameObject);
-	attackLeft->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0, 0.5f));
+	attackLeft->CreateAABB(0.7f);
 	attackLeft->isTrigger = true;
 	attackLeft->ActiveSelf(false);
 	attackAir = AddChild<Collider>("a");
 	attackAir->SetGameObj(gameObject);
-	attackAir->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0.5f, 0.5f));
+	attackAir->CreateAABB(0.7f);
 	attackAir->isTrigger = true;
 	attackAir->ActiveSelf(false);
 	hitbox = AddChild<Collider>("h");
 	hitbox->SetGameObj(gameObject);
-	hitbox->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0.5f, 0.5f));	
+	hitbox->CreateAABB(0.5f);	
 
-	currState = nextState = P_STATE::IDLE_R;
-
-	moveSpeed.Set(10, 30, 0);
-	direction = 1;
-	jumpTimer = attackTimer = hitTimer = deadTimer = 0.0;	
-	health = 5;
-
-	walking = false;
+	addHealth = false;
+	Reset();
 
 	Achievements::Instance()->setKnibRefrence(kinb);
 	Node::Start();
@@ -159,6 +153,16 @@ void PlayerController::Update(double dt)
 	//apply attacks
 	Attack(dt);
 
+	if (Achievements::Instance()->enemyAch(true) && addHealth == false)
+	{
+		SetHealth(30);
+		addHealth = true;
+	}
+	else
+		addHealth = true;
+
+	Debug::Log(health);
+	
 	//apply damage
 	Hit(dt);
 	Die(dt);
@@ -167,8 +171,7 @@ void PlayerController::Update(double dt)
 	ChangeState();
 
 	// achievemets
-	// kinb->maxVel.Set(Achievements::Instance()->maxValX, Achievements::Instance()->maxValY, 0);
-	Debug::Log(kinb->maxVel);
+	// kinb->maxVel.Set(Achievements::Instance()->maxValX, Achievements::Instance()->maxValY, 0);	
 	
 	Node::Update(dt);
 }
@@ -338,6 +341,8 @@ void PlayerController::Hit(double dt)
 float PlayerController::GetTerrainHeight()
 {
 	//return 0;// gameObject->GetTransform()->translate.x;
+	if (!terrain)
+		Debug::LogError("Terrain missing :(");
 	return terrain->Fn(gameObject->GetTransform()->translate.x);
 }
 
@@ -349,11 +354,10 @@ PlayerController * PlayerController::SetTerrain(Spline * s)
 
 void PlayerController::TakeDamage(int dmg)
 {
-
 	health -= dmg;
-	if (health <= 0)
+	if (health <= 0 && deadTimer <= 0)
 		deadTimer = 5;
-	else
+	else if (hitTimer <= 0)
 		hitTimer = 0.3f;
 }
 int PlayerController::DamageDealt()
@@ -361,6 +365,26 @@ int PlayerController::DamageDealt()
 	if (Achievements::Instance()->attackAch(true))
 		damage = 2;
 	return damage;
+}
+
+bool PlayerController::IsDead()
+{
+	return deadTimer > 0;
+}
+
+void PlayerController::Reset()
+{
+	//gameObject->GetTransform()->translate.Set(-1, 1, 0);
+
+	moveSpeed.Set(10, 30, 0);
+	direction = 1;
+	jumpTimer = attackTimer = hitTimer = deadTimer = 0.0;
+	health = 20;
+
+	walking = false;
+
+	TryChangeState(P_STATE::IDLE_R);
+	ChangeState();
 }
 
 void PlayerController::PrintState()

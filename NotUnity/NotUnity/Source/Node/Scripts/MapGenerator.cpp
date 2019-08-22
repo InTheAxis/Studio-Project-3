@@ -4,12 +4,14 @@
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Utility/Math/Splines/Mountain.h"
 #include "../GameObj.h"
+#include "../Components/Sprite.h"
+
 MapGenerator::MapGenerator(std::string name) :
 	Node(name),
 	offsetBuffer(0),
 	chunkNumber(0),
 	offsetX(0),
-	scaleX(20),
+	scaleX(15),
 	cullingAmount(30)
 {
 }
@@ -32,10 +34,15 @@ void MapGenerator::Start()
 		spline->SetOffset(i * -scaleX);
 		chunkGO[i] = AddChild<GameObj>("Chunk" + std::to_string(i));
 		chunkGO[i]->AddComp<Chunk>()->SetSpline(spline);
-		chunkGO[i]->GetTransform()->translate.Set(i * scaleX, 0, -1);
+		chunkGO[i]->GetTransform()->translate.Set(i * scaleX, 0, -5);
 		chunkGO[i]->GetTransform()->scale.Set(scaleX, scaleX, 1);
 	}
 	CullChunk();
+
+	//sky = AddChild<GameObj>("Sky");
+	//sky->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sky"))->SetRenderPass(RENDER_PASS::GEO);
+	//sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;
+	//sky->GetTransform()->scale.Set(30, 30, 1);
 	Node::Start();
 }
 
@@ -43,7 +50,9 @@ void MapGenerator::Update(double dt)
 {
 	if (camera)
 	{
-		if (ControllerKeyboard::Instance()->IsKeyDown(VK_LEFT))
+		//sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;
+
+		if (ControllerKeyboard::Instance()->IsKeyDown(VK_LEFT) || ControllerKeyboard::Instance()->IsKeyDown('A'))
 		{
 			Vector3 oBoA = camera->GetParent()->GetChild<Transform>()->translate - chunkGO[chunkNumber]->GetTransform()->translate; /*GetChild<GameObj>("Chunk" + std::to_string(chunkNumber))->GetTransform()->translate;*/ // take the last chunck pos
 			oBoA.y = 0;
@@ -69,7 +78,7 @@ void MapGenerator::Update(double dt)
 				}
 			}
 		}
-		else if (ControllerKeyboard::Instance()->IsKeyDown(VK_RIGHT))
+		else if (ControllerKeyboard::Instance()->IsKeyDown(VK_RIGHT) || ControllerKeyboard::Instance()->IsKeyDown('D'))
 		{
 			Vector3 oBoA = camera->GetParent()->GetChild<Transform>()->translate - chunkGO[chunkNumber]->GetTransform()->translate; // take the last chunck pos
 			oBoA.y = 0;
@@ -108,17 +117,21 @@ Chunk * MapGenerator::GetCurrChunk()
 	for (int i = 0; i < mapSize; ++i)
 	{
 		oBoA = camera->GetParent()->GetChild<Transform>()->translate - chunkGO[i]->GetTransform()->translate;
-		//Debug::Log(camera->GetParent()->GetChild<Transform>()->translate);
 		oBoA.y = 0;
 		oBoA.z = 0;
 		float displacement = oBoA.Length();
 		if (displacement <= scaleX * 0.5f)
 		{
-			Debug::Log("ChunkGO : " + std::to_string(i));
 			return chunkGO[i]->GetComp<Chunk>();
 		}
-		
 	}
+}
+
+GameObj * MapGenerator::GetChunkGO(int idx)
+{
+	if (idx < mapSize && idx >= 0)
+		return chunkGO[idx];
+	return nullptr;
 }
 
 void MapGenerator::CullChunk()

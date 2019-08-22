@@ -1,6 +1,7 @@
 #include "Spawner.h"
 #include "../Manager/MgrGraphics.h"
 #include "../../Node/GameObj.h"
+#include "Achievements.h"
 
 Spawner::Spawner(std::string name)
 	: Node(name)
@@ -40,7 +41,10 @@ void Spawner::Update(double dt)
 	else
 		interval = 0;
 	if (interval >= 1.5f)
+	{
 		SpawnEnemy("e1");
+		interval = 0;
+	}
 
 	UpdatePlayerPosToAI("e1");
 
@@ -70,12 +74,34 @@ void Spawner::SetTerrain(Spline * s)
 	}
 }
 
+int Spawner::GetEnemiesKilled()
+{
+	int c = 0;
+	for (int i = 0; i < poolCount; ++i)
+	{
+		if (enemyPool[i]->GetScript<AI>()->IsDead())
+			++c;
+	}
+	Achievements::Instance()->GetEnemyKilled(c);
+	return c;
+}
+
+void Spawner::Reset()
+{
+	for (int i = 0; i < poolCount; ++i)
+	{
+		enemyPool[i]->ActiveSelf(false);
+		enemyPool[i]->GetScript<AI>()->Reset();
+	}
+	waveCount = enemyCount = 0;	
+}
+
 void Spawner::UpdatePlayerPosToAI(std::string names)
 {
 	for (int i = 0; i < poolCount; ++i)
 	{
-		if (gameObject->GetChild<GameObj>(names + std::to_string(i))->IsActive())
-			gameObject->GetChild<GameObj>(names + std::to_string(i))->GetScript<AI>()->SetPlayerTrans(playerTrans);
+		if (enemyPool[i]->IsActive())
+			enemyPool[i]->GetScript<AI>()->SetPlayerTrans(playerTrans);
 	}
 }
 
@@ -95,7 +121,7 @@ void Spawner::CreateEnemies(std::string waveOne)
 	{
 		enemyPool[i] = gameObject->AddChild<GameObj>(waveOne + std::to_string(i));
 		enemyPool[i]->ActiveSelf(false);
-		enemyPool[i]->AddScript<AI>()->SetHealth(10.f);
+		enemyPool[i]->AddScript<AI>()->SetHealth(3);
 		enemyPool[i]->GetScript<AI>()->ResetBullets();
 	}
 }
@@ -110,16 +136,15 @@ void Spawner::SpawnEnemy(std::string waveOne)
 			continue;
 
 		int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
-		offset.x = sign * (3 + Math::RandFloatMinMax(0, 2));
+		offset.x = sign * (1 + Math::RandFloatMinMax(0, 2));
 
 		offset.y = (1 + Math::RandFloatMinMax(0, 3));
 
 		enemyPool[i]->GetTransform()->translate = spawnerPos + offset;
 		enemyPool[i]->ActiveSelf(true);
-		enemyPool[i]->GetScript<AI>()->ResetBullets();
+		enemyPool[i]->GetScript<AI>()->Reset();
 
 		++waveCount;
-		interval = 0;
 		return;
 	}
 }

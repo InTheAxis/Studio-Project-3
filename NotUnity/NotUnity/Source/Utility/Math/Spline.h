@@ -13,7 +13,7 @@ public:
 
 	virtual float Fn(float x);
 	virtual Vector3 Normal(float x);
-	void SetOffset(float offset);
+	virtual void SetOffset(float offset);
 
 	std::vector<Vector3> GetSamplePts();
 

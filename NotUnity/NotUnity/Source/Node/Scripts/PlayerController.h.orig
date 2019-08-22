@@ -46,11 +46,12 @@ public:
 	void TakeDamage(int dmg);	
 	int DamageDealt();
 
+<<<<<<< HEAD
+	void SetHealth(int h);
+=======
 	bool IsDead();
 	void Reset();
-
-
-	void SetHealth(int h);
+>>>>>>> 88daac672c8905c1274db43ec89703b575794a96
 
 private:
 	KinemeticBody* kinb;
@@ -77,7 +78,6 @@ private:
 	float GetTerrainHeight();
 
 	bool CanMove();
-	bool addHealth;
 	bool OnGround(float offset = 0, bool exact = false);
 	
 	int	GetHealth();

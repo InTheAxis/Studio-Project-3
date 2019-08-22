@@ -54,6 +54,7 @@ public:
 	
 	// Killing 10 enemies and gain hp
 	int GetEnemyKilled(int ek);
+	void SetEnenmyKilled(int ek);
 	int enemyKilled;
 	bool enemyAch(bool EA);
 

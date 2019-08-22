@@ -46,6 +46,18 @@ void MgrGameObj::RegisterRenderable(Renderable * r)
 		renderables[r->GetRenderPass()].emplace_back(r);
 }
 
+void MgrGameObj::UnRegisterRenderable(Renderable * r)
+{
+	for (auto it = renderables[r->GetRenderPass()].begin(); it != renderables[r->GetRenderPass()].end(); ++it)
+	{
+		if (*it == r)
+		{
+			renderables[r->GetRenderPass()].erase(it);
+			return;
+		}
+	}
+}
+
 std::vector<Renderable*>* MgrGameObj::GetRenderables(RENDER_PASS renderPass)
 {
 	return &(renderables[renderPass]);

@@ -27,7 +27,7 @@ void KinemeticBody::Start()
 void KinemeticBody::Update(double dt)
 {
 	UpdateSuvat(dt);
-
+	//Debug::Log(maxVel);
 	Node::Update(dt);
 }
 
