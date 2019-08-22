@@ -33,6 +33,7 @@ void MgrGraphics::Start()
 	view = &defaultView;
 	projStack.LoadIdentity();
 	SetProjPerspective();
+	lightDir.Set(1, 1, 0, 1);
 
 	Debug::Log("Loading shaders...");	
 	shaderPrograms[UNLIT] = Resource::LoadShaders("shader/default.vert", "shader/unlit.frag");
@@ -74,6 +75,7 @@ void MgrGraphics::SetUniformScene()
 	
 	SetUniform("view", *view);
 	SetUniform("proj", projStack.Top());
+	SetUniform("lightDir", lightDir);
 }
 
 void MgrGraphics::UseShader(MgrGraphics::SHADER shader)
@@ -185,4 +187,10 @@ void MgrGraphics::SetProjOrtho(float size, float farVal, float nearVal)
 	float scaleSizeY = Application::GetWindowHalfHeight() / size;
 	temp.SetToOrtho(-scaleSizeX, scaleSizeX, -scaleSizeY, scaleSizeY, nearVal, farVal);
 	projStack.LoadMatrix(temp);
+}
+
+void MgrGraphics::SetDirLight(bool enabled, Vector3 pos)
+{
+	if (pos != NULL)
+		lightDir.Set(pos.x, pos.y, pos.z, enabled);
 }

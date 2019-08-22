@@ -75,6 +75,8 @@ void MainScene::Start()
 	//init variables
 	spawner->SetWave(0);
 	playerGO = player->GetPlayer();
+	
+	lightAngle = 0.f;
 }
 
 void MainScene::Update(double dt)
@@ -117,6 +119,9 @@ void MainScene::Update(double dt)
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);
 	spawner->SetTerrain(map->GetTerrain());
 	player->SetTerrain(map->GetTerrain());
+
+	lightAngle = cosf((float)m_lifetime * 2) * Math::PI * 0.1f - 1.75f;
+	MgrGraphics::Instance()->SetDirLight(true, Vector3(cosf(lightAngle), sinf(lightAngle), 0));
 
 	Scene::Update(dt);	
 }

@@ -43,7 +43,9 @@ void PlayerController::Start()
 		->SetAnimation(9 ,8, 0.5f, 1)
 		->SetAnimation(10, 8, 0.5f, 1)
 		->SetAnimation(11, 8, 0.5f, 1)
-		->SetAnimation(12, 8, 0.5f, 1);
+		->SetAnimation(12, 8, 0.5f, 1)
+		->SwitchAnimation(0)
+		->PlayAnimation();
 	sprite->SetGameObj(gameObject);
 	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"));
 	sprite->SetHSV(-1,1,-1)->SetRenderPass(RENDER_PASS::POST_FX)->SelectShader(MgrGraphics::HSV_LIT);

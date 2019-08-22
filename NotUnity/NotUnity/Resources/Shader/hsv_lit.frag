@@ -32,6 +32,7 @@ struct HSV
 };
 uniform HSV hsv;
 uniform mat4 model;
+uniform vec4 lightDir;
 
 vec3 rgbToHsv(vec3 rgb);
 vec3 hsvToRgb(vec3 hsv);
@@ -74,8 +75,7 @@ void main()
 
 	/**HANDLING LIGHT**/
 	vec3 pos = vec3(model[3][0],model[3][1],model[3][2]);
-	vec3 lightDir = normalize(vec3(1,1,0)) * 0.5;
-	vec3 lightPos = pos + lightDir;
+	vec3 lightPos = pos + normalize(vec3(-lightDir)) * 0.5f;
 
 	if (length(lightPos.xy - fragPos.xy) > 0.7 * model[2][2])
 	{
