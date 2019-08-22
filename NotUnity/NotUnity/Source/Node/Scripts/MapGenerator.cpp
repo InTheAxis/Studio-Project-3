@@ -39,10 +39,12 @@ void MapGenerator::Start()
 	}
 	CullChunk();
 
-	//sky = AddChild<GameObj>("Sky");
-	//sky->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sky"))->SetRenderPass(RENDER_PASS::GEO);
-	//sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;
-	//sky->GetTransform()->scale.Set(30, 30, 1);
+	sky = AddChild<GameObj>("Sky");
+	sky->AddComp<Sprite>()
+		->SetHSV(-1,1,-1)->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sky"))
+		->SetRenderPass(RENDER_PASS::GEO)->SelectShader(MgrGraphics::HSV_UNLIT);
+	sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;
+	sky->GetTransform()->scale.Set(15, 15, 1);	
 	Node::Start();
 }
 
@@ -50,7 +52,10 @@ void MapGenerator::Update(double dt)
 {
 	if (camera)
 	{
-		//sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;
+		sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;		
+		sky->GetTransform()->translate.z = -10;		
+		sky->GetTransform()->translate.y -= 1;		
+
 
 		if (ControllerKeyboard::Instance()->IsKeyDown(VK_LEFT) || ControllerKeyboard::Instance()->IsKeyDown('A'))
 		{
@@ -86,9 +91,8 @@ void MapGenerator::Update(double dt)
 			float displacement = oBoA.Length();
 			if (displacement > offsetBuffer)
 			{
-				Debug::Log("chunkGO " + std::to_string(chunkNumber));
 				chunkGO[chunkNumber]->GetTransform()->translate.Set((mapSize * scaleX) + (offsetX * scaleX), 0, -1);
-				chunkGO[chunkNumber]->GetComp<Chunk>()->GetSpline()->SetOffset((mapSize * -scaleX) + (offsetX * -scaleX));
+				chunkGO[chunkNumber]->GetComp<Chunk>()->GetSpline()->SetOffset((-scaleX * offsetX));
 				CullChunk();
 				++chunkNumber;
 				++offsetX;
@@ -133,6 +137,11 @@ GameObj * MapGenerator::GetChunkGO(int idx)
 	if (idx < mapSize && idx >= 0)
 		return chunkGO[idx];
 	return nullptr;
+}
+
+GameObj * MapGenerator::GetSky()
+{
+	return sky;
 }
 
 void MapGenerator::CullChunk()

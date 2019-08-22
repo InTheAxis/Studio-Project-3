@@ -57,6 +57,9 @@ void main()
 	
 	color = material.albedo * baseColor;
 	
+	if (color.a < 0.01) 
+		discard;
+
 	//apply hsv changes
 	vec3 targetHsv = rgbToHsv(vec3(color));	
 	if (hsv.h >= 0)
@@ -68,9 +71,6 @@ void main()
 	vec3 newColor = hsvToRgb(targetHsv);
 
 	color.rgb = newColor;
-
-	if (color.a < 0.01) 
-		discard;
 
 	/**HANDLING LIGHT**/
 	vec3 pos = vec3(model[3][0],model[3][1],model[3][2]);

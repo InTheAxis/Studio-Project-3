@@ -56,6 +56,9 @@ void main()
 	
 	color = material.albedo * baseColor;
 
+	if (color.a < 0.01) 
+		discard;
+
 	//apply hsv changes
 	vec3 targetHsv = rgbToHsv(vec3(color));	
 	if (hsv.h >= 0)
