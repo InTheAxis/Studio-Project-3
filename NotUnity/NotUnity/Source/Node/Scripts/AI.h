@@ -48,6 +48,8 @@ private:
 	float sat;
 	float interval;
 
+	double bounceTime;
+
 	Vector3 direction;
 	int enemyCount;
 	bool dead;
