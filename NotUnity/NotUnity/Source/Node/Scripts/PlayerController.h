@@ -32,7 +32,6 @@ class Sprite;
 class ColInfo;
 class Collider;
 class Spline;
-class Projectile;
 class PlayerController : public Node, public TypeID<PlayerController>, public Component
 {
 public:
@@ -67,7 +66,7 @@ private:
     int speedincrease;
 
 	bool walking;
-	int mouseClickCount;
+	
 
 	void TryChangeState(P_STATE state);
 	void ChangeState();
@@ -86,10 +85,6 @@ private:
 	void Hit(double dt);
 
 	void PrintState();
-
-	const static int pAmmoCount = 3;
-	Projectile* projectile[pAmmoCount];
-	Projectile* GetProjectile();
 };
 
 #endif
