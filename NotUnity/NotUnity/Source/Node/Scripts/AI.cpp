@@ -76,8 +76,11 @@ void AI::Start()
 {
 	sprite = AddChild<Sprite>();
 	sprite->SetGameObj(gameObject);
-	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))
-		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"))
+	sprite->SetAnimation(0, 8, 0.5f, 1)
+		->SwitchAnimation(0)
+		->PlayAnimation()
+		->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))
+		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy"))
 		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX);
 
 
