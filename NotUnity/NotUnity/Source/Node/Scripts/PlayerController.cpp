@@ -10,6 +10,7 @@
 #include "../../Utility/Math/Spline.h"
 #include "../../Node/Scripts/SkillTree.h"
 #include "../../Node/Scripts/Achievements.h"
+#include "Projectile.h"
 
 PlayerController::PlayerController(std::string name)
 	: Node(name)
@@ -72,8 +73,14 @@ void PlayerController::Start()
 	hitbox = AddChild<Collider>("h");
 	hitbox->SetGameObj(gameObject);
 	hitbox->CreateAABB(0.5f);	
-
+	mouseClickCount = 0;
 	Reset();
+
+	for (int i = 0; i < pAmmoCount; ++i)
+	{
+		projectile[i] = AddChild<GameObj>("pbull" + std::to_string(i))->AddScript<Projectile>();
+		projectile[i]->GetGameObj()->ActiveSelf(false);
+	}
 
 	Achievements::Instance()->setKnibRefrence(kinb);
 	Node::Start();
@@ -156,6 +163,17 @@ void PlayerController::Update(double dt)
 	Hit(dt);
 	Die(dt);
 
+	if (mouseClickCount >= 5 && m->IsButtonPressed(0))
+	{
+		Projectile* p = GetProjectile();
+		if (p)
+		{
+			p->Discharge(gameObject->GetTransform()->translate + direction, Vector3(direction, 0,0)* 10);
+			p->GetGameObj()->ActiveSelf(true);
+		}
+	}
+	else if (mouseClickCount < 5 && m->IsButtonPressed(0))
+		mouseClickCount++;
 
 	ChangeState();
 
@@ -410,4 +428,14 @@ void PlayerController::PrintState()
 		Debug::Log("I am DYING_R");
 		break;
 	}
+}
+
+Projectile * PlayerController::GetProjectile()
+{
+	for (int i = 0; i < pAmmoCount; ++i)
+	{
+		if (!projectile[i]->IsActive())
+			return projectile[i];
+	}
+	return nullptr;
 }
