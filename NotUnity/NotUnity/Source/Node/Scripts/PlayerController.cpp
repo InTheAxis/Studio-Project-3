@@ -28,7 +28,7 @@ void test(ColInfo info)
 
 void PlayerController::Start()
 {
-	gameObject->GetTransform()->translate.Set(-1, 1, 0);
+	gameObject->GetTransform()->translate.Set(-1, 1, 0.1f);
 
 	sprite = AddChild<Sprite>()
 		->SetAnimation(0, 8, 0.5f, 1)

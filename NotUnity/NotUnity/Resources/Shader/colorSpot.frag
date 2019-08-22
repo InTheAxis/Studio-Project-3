@@ -67,6 +67,9 @@ float GetSaturation()
 	float smallestRatio = 1; //for "attenuation"
 	for (int i = 0; i < MAX_POINTS; ++i)
 	{
+		if (pt[i].pos.z <= 0)
+			break;
+
 		//get the points position in screen space, for depth info, only useful for perspective
 		pointPos_screenSpace = proj * view * vec4(pt[i].pos.xyz, 1);
 		pointPos_screenSpace.xyz /= pointPos_screenSpace.w;
