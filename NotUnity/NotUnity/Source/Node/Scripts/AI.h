@@ -37,8 +37,9 @@ public:
 	bool IsDead();
 	AI* SetTerrain(Spline* s);
 	void ResetBullets();
+	void SetSaturation(float sat);
 
-
+	void Reset();
 
 private:
 	Vector3 playerTrans;

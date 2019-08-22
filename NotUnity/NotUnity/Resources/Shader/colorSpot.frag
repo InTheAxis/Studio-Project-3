@@ -46,7 +46,7 @@ void main()
 
 	//apply hsv changes
 	vec3 targetHsv = rgbToHsv(vec3(color));	
-	if (targetHsv.y > 0.3)
+	if (targetHsv.y > 0.1)
 	{
 		targetHsv.y = GetSaturation();
 		vec3 newColor = hsvToRgb(targetHsv);

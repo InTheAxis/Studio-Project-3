@@ -12,18 +12,23 @@ void AIOnHit(ColInfo info)
 	if (info.other->GetGameObj()->GetScript<Projectile>())
 		return;
 	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
-	info.coll->GetGameObj()->GetScript<AI>()->sat = 0;
+	{
+		info.coll->GetGameObj()->GetScript<AI>()->health--;
+	}
 }
 
 void AIOnAttack(ColInfo info)
 {
 	//if (info.other->GetGameObj()->GetScript<PlayerController>())
 	//	info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
+
+	if (info.other->GetGameObj()->GetScript<PlayerController>())
+		info.coll->GetGameObj()->GetTransform()->translate +=  info.penetration;
 }
 AI::AI(std::string name) 
 	: Node(name)
 	, playerTrans(0.f, 0.f, 0.f)
-	, health(0.f)
+	, health(3.f)
 	, damage(0.f)
 	, strategy(nullptr)
 	, direction(0.f,0.f,0.f)
@@ -42,16 +47,16 @@ AI::~AI()
 
 void AI::OnEnable()
 {
-	coll->OnCollide += AIOnHit;
-	trigger->OnTrigger += AIOnAttack;
+	coll->OnCollideEnter += AIOnHit;
+	trigger->OnTriggerEnter += AIOnAttack;
 }
 
 void AI::OnDisable()
 {
 	if (coll)
-		coll->OnCollide -= AIOnHit;
+		coll->OnCollideEnter -= AIOnHit;
 	if (trigger)
-		trigger->OnTrigger -= AIOnAttack;
+		trigger->OnTriggerEnter -= AIOnAttack;
 }
 
 void AI::Start()
@@ -82,12 +87,12 @@ void AI::Start()
 	Vector3 scale = gameObject->GetTransform()->scale;
 	coll = AddChild<Collider>("c");
 	coll->SetGameObj(gameObject);
-	coll->CreateAABB(Vector3(-scale.x * 0.5f, -scale.y * 0.5f), Vector3(scale.x * 0.5f, scale.y * 0.5f));
+	coll->CreateAABB(0.5f);
 	
 	trigger = AddChild<Collider>("t");
 	trigger->SetGameObj(gameObject);
 	trigger->isTrigger = true;
-	trigger->CreateAABB(Vector3(-scale.x * 0.5f, -scale.y * 0.5f), Vector3(scale.x * 0.5f, scale.y * 0.5f));
+	trigger->CreateAABB(0.5f);
 
 	Node::Start();
 }
@@ -105,7 +110,7 @@ void AI::Update(double dt)
 
 	}
 
-	if (interval >= 1.5f)
+	if (interval >= 3.f)
 	{
 		Projectile* p = GetProjectile();
 		if (p)
@@ -113,9 +118,10 @@ void AI::Update(double dt)
 			p->Discharge(gameObject->GetTransform()->translate, direction * 10);
 			p->GetGameObj()->ActiveSelf(true);
 		}
+		interval = 0;
 	}
 
-	if ((playerTrans - gameObject->GetTransform()->translate).LengthSquared() > 5.f)
+	if ((playerTrans - gameObject->GetTransform()->translate).LengthSquared() > 3.f)
 			kineB->ApplyForce(direction);
 	else
 		kineB->ResetVel(1, 0);
@@ -134,7 +140,7 @@ void AI::Update(double dt)
 	kineB->UpdateSuvat(dt);
 	kineB->ResetForce();
 
-	if (health < 0)
+	if (health <= 0)
 	{
 		gameObject->ActiveSelf(false);
 		health = 0;
@@ -142,6 +148,8 @@ void AI::Update(double dt)
 	}
 	else
 		dead = false;
+
+	sat = Math::Max(0.f,  health / 3.f);
 
 	sprite->SetHSV(-1, sat, -1);
 
@@ -201,6 +209,19 @@ void AI::ResetBullets()
 		if (projectile[i])
 			projectile[i]->GetGameObj()->ActiveSelf(false);
 	}
+}
+
+void AI::SetSaturation(float sat)
+{
+	this->sat = sat;
+}
+
+void AI::Reset()
+{
+	health = 3;
+	sat = 1;
+	dead = false;
+	ResetBullets();
 }
 
 float AI::GetWorldHeight()

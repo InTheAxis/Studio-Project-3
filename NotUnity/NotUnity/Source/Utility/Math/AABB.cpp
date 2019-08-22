@@ -128,7 +128,11 @@ bool AABB::InternalOverlap(AABB circle, Vector3 * penetration)
 	float len = relDisp.Length();
 	if (len < radius + circle.radius)
 	{
-		*penetration = relDisp.Normalized() * (radius + circle.radius - len);
+		if (Math::FIsEqual(len, 0))
+			*penetration = Vector3(1, 0, 0) * -0.5f * (radius + circle.radius);
+		else
+			*penetration = relDisp.Normalized() * (radius + circle.radius - len);
+
 		return true;
 	}
 	return false;

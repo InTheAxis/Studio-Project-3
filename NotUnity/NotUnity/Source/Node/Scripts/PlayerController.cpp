@@ -28,6 +28,8 @@ void test(ColInfo info)
 
 void PlayerController::Start()
 {
+	gameObject->GetTransform()->translate.Set(-1, 1, 0);
+
 	sprite = AddChild<Sprite>()
 		->SetAnimation(0, 8, 0.5f, 1)
 		->SetAnimation(1, 8, 0.5f, 1)
@@ -54,24 +56,24 @@ void PlayerController::Start()
 
 	attackRight = AddChild<Collider>("r");
 	attackRight->SetGameObj(gameObject);
-	attackRight->CreateAABB(Vector3(0, -0.5f), Vector3(0.5f, 0.5f));
+	attackRight->CreateAABB(0.7f);
 	attackRight->isTrigger = true;
 	attackRight->ActiveSelf(false);
 	attackLeft = AddChild<Collider>("l");
 	attackLeft->SetGameObj(gameObject);
-	attackLeft->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0, 0.5f));
+	attackLeft->CreateAABB(0.7f);
 	attackLeft->isTrigger = true;
 	attackLeft->ActiveSelf(false);
 	attackAir = AddChild<Collider>("a");
 	attackAir->SetGameObj(gameObject);
-	attackAir->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0.5f, 0.5f));
+	attackAir->CreateAABB(0.7f);
 	attackAir->isTrigger = true;
 	attackAir->ActiveSelf(false);
 	hitbox = AddChild<Collider>("h");
 	hitbox->SetGameObj(gameObject);
-	hitbox->CreateAABB(Vector3(-0.5f, -0.5f), Vector3(0.5f, 0.5f));	
+	hitbox->CreateAABB(0.5f);	
 
-	ResetPos();
+	Reset();
 
 	Achievements::Instance()->setKnibRefrence(kinb);
 	Node::Start();
@@ -318,6 +320,8 @@ void PlayerController::Hit(double dt)
 float PlayerController::GetTerrainHeight()
 {
 	//return 0;// gameObject->GetTransform()->translate.x;
+	if (!terrain)
+		Debug::LogError("Terrain missing :(");
 	return terrain->Fn(gameObject->GetTransform()->translate.x);
 }
 
@@ -329,11 +333,10 @@ PlayerController * PlayerController::SetTerrain(Spline * s)
 
 void PlayerController::TakeDamage(int dmg)
 {
-
 	health -= dmg;
-	if (health <= 0)
+	if (health <= 0 && deadTimer <= 0)
 		deadTimer = 5;
-	else
+	else if (hitTimer <= 0)
 		hitTimer = 0.3f;
 }
 int PlayerController::DamageDealt()
@@ -343,11 +346,14 @@ int PlayerController::DamageDealt()
 	return damage;
 }
 
-void PlayerController::ResetPos()
+bool PlayerController::IsDead()
 {
-	gameObject->GetTransform()->translate.Set(-1, 1, 0);
+	return deadTimer > 0;
+}
 
-	currState = nextState = P_STATE::IDLE_R;
+void PlayerController::Reset()
+{
+	//gameObject->GetTransform()->translate.Set(-1, 1, 0);
 
 	moveSpeed.Set(10, 30, 0);
 	direction = 1;
@@ -355,6 +361,9 @@ void PlayerController::ResetPos()
 	health = 20;
 
 	walking = false;
+
+	TryChangeState(P_STATE::IDLE_R);
+	ChangeState();
 }
 
 void PlayerController::PrintState()

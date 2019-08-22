@@ -38,6 +38,7 @@ private:
 	MapScene* map;
 	Sprite* title;
 	Renderable* wasd;
+	Renderable* lmb;
 	GameObj* playerGO;
 	GameObj* mainCam;
 

@@ -37,6 +37,7 @@ void MgrResource::LoadMeshes()
 	MeshBuilder::GeneratePlane("text", 16, 16);
 	MeshBuilder::GenerateQuad("quad");	
 	MeshBuilder::GeneratePlane("plane", 1, 8);
+	MeshBuilder::GeneratePlane("bg", 1, 1);
 }
 
 void MgrResource::LoadMaterials()
@@ -69,9 +70,15 @@ void MgrResource::LoadMaterials()
 	temp->maps[Material::COLOR12] = Resource::LoadTGA("tga/fall.tga");
 
 	temp = new Material("background");
-	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/bg_mt.tga");
-	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/bg_mt.tga");
-	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/bg_mt.tga");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/bg_snow.tga");
+	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/bg_snow.tga");
+	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/bg_snow.tga");
+	temp->maps[Material::COLOR3] = Resource::LoadTGA("tga/bg_mt.tga");
+	temp->maps[Material::COLOR4] = Resource::LoadTGA("tga/bg_mt.tga");
+	temp->maps[Material::COLOR5] = Resource::LoadTGA("tga/bg_mt.tga");
+	temp->maps[Material::COLOR6] = Resource::LoadTGA("tga/bg_des.tga");
+	temp->maps[Material::COLOR7] = Resource::LoadTGA("tga/bg_des.tga");
+	temp->maps[Material::COLOR8] = Resource::LoadTGA("tga/bg_des.tga");
 
 	temp = new Material("sattest");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/sattest.tga");
@@ -81,6 +88,9 @@ void MgrResource::LoadMaterials()
 
 	temp = new Material("wasd");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/wasd.tga");
+
+	temp = new Material("lmb");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/lmb.tga");
 
 	temp = new Material("sky");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/sky.tga");

@@ -15,7 +15,6 @@ class GameObj;
 
 class MapGenerator : public Node, public TypeID<MapGenerator>,public Component
 {
-	const static int mapSize = 10;
 public:
 	MapGenerator(std::string name = "MapGenerator");
 	~MapGenerator();
@@ -27,7 +26,8 @@ public:
 	void SetCamera(Camera* camera);
 	Chunk* GetCurrChunk();
 
-	GameObj* chunkGO[mapSize];
+	const static int mapSize = 10;
+	GameObj* GetChunkGO(int idx);
 private:
 	Camera* camera;
 	int offsetBuffer; // displacement > offsetBuffer to spawn the new blocks
@@ -39,7 +39,7 @@ private:
 
 	Spline* spline;
 
-
+	GameObj* chunkGO[mapSize];
 	GameObj* sky;
 
 

@@ -37,6 +37,7 @@ public:
 		COLOR10,
 		COLOR11,
 		COLOR12,
+		COLOR13,
 		DIFFUSE,
 		SPECULAR,
 		NORMAL,

@@ -13,7 +13,7 @@ in vec3 vertNormal_cameraspace;
 out vec4 color;
 
 // constants
-const int MAX_COLORMAPS = 11;
+const int MAX_COLORMAPS = 13;
 
 // misc uniforms
 struct Material
@@ -39,28 +39,28 @@ void main()
 {
 	/**HANDLING TEXTURES**/
 	vec4 baseColor = vec4(0);
-//	int colorCount = 0;
-//	for (int i = 0; i < MAX_COLORMAPS; ++i)
-//	{
-//		if (material.colorMapEnabled[i])
-//		{
-//			baseColor += texture2D(material.colorMap[i], texCoord);
-//			++colorCount;
-//		}
-//	}
+	int colorCount = 0;
+	for (int i = 0; i < MAX_COLORMAPS; ++i)
+	{
+		if (material.colorMapEnabled[i])
+		{
+			baseColor += texture2D(material.colorMap[i], texCoord);
+			++colorCount;
+		}
+	}
 
-	if (material.colorMapEnabled[0])
-		baseColor = texture2D(material.colorMap[0], texCoord);
+	if (colorCount > 0)
+		baseColor = baseColor / colorCount;
 	else
 		baseColor = fragColor;
 	
 	color = material.albedo * baseColor;
-	
+
 	//apply hsv changes
 	vec3 targetHsv = rgbToHsv(vec3(color));	
 	if (hsv.h >= 0)
 		targetHsv.x = hsv.h;
-	if (hsv.s >= 0 && targetHsv.y > 0.3)
+	if (hsv.s >= 0 && targetHsv.y > 0.05)
 		targetHsv.y = clamp(hsv.s, 0, 1);
 	if (hsv.v >= 0)
 		targetHsv.z = clamp(hsv.v, 0, 1);
