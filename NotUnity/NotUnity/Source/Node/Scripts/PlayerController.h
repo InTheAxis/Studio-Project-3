@@ -45,6 +45,9 @@ public:
 	PlayerController* SetTerrain(Spline * s);	
 	void TakeDamage(int dmg);	
 	int DamageDealt();
+
+	void SetHealth(int h);
+
 private:
 	KinemeticBody* kinb;
 	Sprite* sprite;
@@ -57,7 +60,7 @@ private:
 	Vector3 moveSpeed;
 	int direction;
 	double jumpTimer, attackTimer, hitTimer, deadTimer;	
-	int health, healthINC;
+	int health;
 	int damage;
     int speedincrease;
 
@@ -71,6 +74,8 @@ private:
 
 	bool CanMove();
 	bool OnGround(float offset = 0, bool exact = false);
+	
+	int	GetHealth();
 	void Move(float inputX);
 	void Friction();
 	void Jump();

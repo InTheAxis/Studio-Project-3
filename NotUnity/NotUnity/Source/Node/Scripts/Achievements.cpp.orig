@@ -4,7 +4,6 @@
 #include <fstream>
 #include <sstream>
 #include "../../Node/Components/KinemeticBody.h"
-#include "../../Node/Scripts/PlayerController.h"
 
 void Achievements::AchievementCheck()
 {
@@ -37,7 +36,6 @@ void Achievements::AchievementCheck()
 	if (enemyKilled >= 10)
 	{
 		enemyAch(true);
-		
 	}
 }
 
@@ -171,8 +169,12 @@ void Achievements::Start()
 
 void Achievements::Update(double dt)
 {
-
+<<<<<<< HEAD
+	//LifeTimeAttack = attackTimes
 	WriteTextFile();
+=======
+	//Debug::Log(walkTime);
+>>>>>>> b4b2742649f5912ca6da184e8d1041b16bc4bec7
 	AchievementCheck();
 	Node::Update(dt);
 }

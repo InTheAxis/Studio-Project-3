@@ -9,6 +9,7 @@
 #include "../../Utility/Delegate.h"
 #include "../../Utility/Singleton.h"
 class KinemeticBody;
+class PlayerController;
 class Achievements : public Node, public TypeID<Achievements>, public Component, public Singleton<Achievements>
 {
 	friend Singleton<Achievements>;

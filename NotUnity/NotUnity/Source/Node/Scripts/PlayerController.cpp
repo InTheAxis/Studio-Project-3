@@ -209,10 +209,20 @@ bool PlayerController::OnGround(float offset, bool exact)
 	return (gameObject->GetTransform()->translate.y <= GetTerrainHeight() + offset);
 }
 
+void PlayerController::SetHealth(int h)
+{
+	health = h;
+
+}
+
+int PlayerController::GetHealth()
+{
+	return health; 
+}
+
 void PlayerController::Move(float inputX)
 {
-	//if (Achievements::Instance()->walkAch(true))
-	//	speedincrease = 10;
+
 	kinb->ApplyForce(Vector3(inputX * moveSpeed.x /*+ speedincrease*/ * (OnGround() ? 1 : 0.3f), 0, 0));
 	if (direction > 0)
 		TryChangeState(P_STATE::MOVE_R);
