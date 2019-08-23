@@ -97,7 +97,9 @@ void AI::Start()
 		projectile[i]->GetGameObj()->ActiveSelf(false);
 	}
 
-	if (strategy == NULL)
+	if (gameObject->GetName()[0] == 'e' && strategy == NULL)
+		ChangeStrategy(new StrategyOne(), false);
+	if (gameObject->GetName()[0] == 'b' && strategy == NULL)
 		ChangeStrategy(new StrategyOne(), false);
 	
 	Vector3 scale = gameObject->GetTransform()->scale;
@@ -121,12 +123,9 @@ void AI::Update(double dt)
 		direction.Normalize();
 
 	strategy->SetDest(playerTrans.x, playerTrans.y);
-	if (strategy->Update(playerTrans, gameObject->GetTransform()->translate, dt))
-	{
+	strategy->Update(playerTrans, gameObject->GetTransform()->translate, dt);
 
-	}
-
-	if (interval >= 3.f)
+	if (strategy->Attack() && interval >= 3.f)
 	{
 		Projectile* p = GetProjectile();
 		if (p)

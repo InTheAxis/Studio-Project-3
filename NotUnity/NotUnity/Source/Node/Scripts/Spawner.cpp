@@ -21,6 +21,7 @@ Spawner::~Spawner()
 void Spawner::Start()
 {
 	CreateEnemies("e1");
+	CreateBoss("boss");
 
 	Node::Start();
 }
@@ -39,6 +40,7 @@ void Spawner::Update(double dt)
 		interval += 1.f * static_cast<float>(dt);
 	else
 		interval = 0;
+
 	if (interval >= 3.f)
 	{
 		SpawnEnemy("e1");
@@ -46,6 +48,9 @@ void Spawner::Update(double dt)
 	}
 
 	UpdatePlayerPosToAI("e1");
+
+	if (GetEnemiesKilled() >= 5 && !GetBossKilled())
+		SpawnBoss("eboss");
 
 	Node::Update(dt);
 }
@@ -60,6 +65,11 @@ void Spawner::SetSpawnerWave(int waved)
 	wave = waved;
 }
 
+int Spawner::GetSpawnerWave()
+{
+	return wave;
+}
+
 void Spawner::SetPlayerTrans(Vector3 trans)
 {
 	playerTrans = trans;
@@ -70,7 +80,8 @@ void Spawner::SetTerrain(Spline * s)
 	for (int i = 0; i < poolCount; ++i)
 	{
 		enemyPool[i]->GetScript<AI>()->SetTerrain(s);
-	}
+		boss->GetScript<AI>()->SetTerrain(s);
+	}	
 }
 
 int Spawner::GetEnemiesKilled()
@@ -85,6 +96,14 @@ int Spawner::GetEnemiesKilled()
 	return c;
 }
 
+bool Spawner::GetBossKilled()
+{
+	if (boss->GetScript<AI>()->IsDead())
+		return true;
+	else
+		return false;
+}
+
 void Spawner::Reset()
 {
 	for (int i = 0; i < poolCount; ++i)
@@ -92,7 +111,21 @@ void Spawner::Reset()
 		enemyPool[i]->ActiveSelf(false);
 		enemyPool[i]->GetScript<AI>()->Reset();
 	}
+	boss->ActiveSelf(false);
+	boss->GetScript<AI>()->Reset();
 	waveCount = enemyCount = 0;	
+}
+
+void Spawner::NewWave()
+{
+	for (int i = 0; i < poolCount; ++i)
+	{
+		enemyPool[i]->ActiveSelf(false);
+		enemyPool[i]->GetScript<AI>()->Reset();
+	}
+	boss->ActiveSelf(false);
+	boss->GetScript<AI>()->Reset();
+	enemyCount = 0;
 }
 
 void Spawner::UpdatePlayerPosToAI(std::string names)
@@ -102,6 +135,9 @@ void Spawner::UpdatePlayerPosToAI(std::string names)
 		if (enemyPool[i]->IsActive())
 			enemyPool[i]->GetScript<AI>()->SetPlayerTrans(playerTrans);
 	}
+
+	if (boss->IsActive())
+		boss->GetScript<AI>()->SetPlayerTrans(playerTrans);
 }
 
 void Spawner::SetEnemyCount(int enemyCount)
@@ -112,6 +148,32 @@ void Spawner::SetEnemyCount(int enemyCount)
 bool Spawner::IsWaveDone()
 {
 	return waveCount > poolCount;
+}
+
+void Spawner::CreateBoss(std::string bosStage)
+{
+	boss = gameObject->AddChild<GameObj>(bosStage);
+	boss->ActiveSelf(false);
+	boss->AddScript<AI>()->SetHealth(3);
+	boss->GetScript<AI>()->ResetBullets();
+	boss->GetTransform()->scale.Set(2.f, 2.f, 2.f);
+}
+
+void Spawner::SpawnBoss(std::string bosStage)
+{
+	Vector3 spawnerPos = gameObject->GetTransform()->translate;
+	Vector3 offset;
+
+	if (boss->IsActive())
+		return;
+
+	int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
+	offset.x = sign * (1 + Math::RandFloatMinMax(0, 2));
+	offset.y = (1 + Math::RandFloatMinMax(0, 3));
+
+	boss->GetTransform()->translate = spawnerPos + offset;
+	boss->ActiveSelf(true);
+	boss->GetScript<AI>()->Reset();
 }
 
 void Spawner::CreateEnemies(std::string waveOne)

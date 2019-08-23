@@ -99,10 +99,13 @@ void MainScene::Update(double dt)
 		lmb->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-2.f, 0, 0);
 		break;
 	case GAMEPLAY:
-		if (spawner->GetEnemyKilled() >= 3)	
-			ChangeGameState(WIN);	
+		if (spawner->GetEnemyKilled() >= 5 && spawner->GetBossKilled())
+		{
+			spawner->SetWave(spawner->GetSpawnerWave() + 1);
+			spawner->NewWave();
+		}
 		else if (playerGO->GetScript<PlayerController>()->IsDead())
-			ChangeGameState(LOSE);	
+			ChangeGameState(LOSE);
 		break;
 	case LOSE:
 		if (!playerGO->GetScript<PlayerController>()->IsDead())
@@ -113,7 +116,7 @@ void MainScene::Update(double dt)
 			ChangeGameState(MENU);
 		break;
 	}
-
+	Debug::Log(spawner->GetSpawnerWave());
 	mainCam->GetTransform()->translate = playerGO->GetTransform()->translate;
 	mainCam->GetTransform()->translate.z = 1;
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);

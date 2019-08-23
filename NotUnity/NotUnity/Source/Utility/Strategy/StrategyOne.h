@@ -11,8 +11,8 @@ public:
 	StrategyOne();
 	~StrategyOne();
 
-	bool Update(Vector3& dest, Vector3& enemyPos, double dt);
-	void Attack();
+	void Update(Vector3& dest, Vector3& enemyPos, double dt);
+	bool Attack();
 
 	void SetDest(float x, float y);
 	float GetDestX();
@@ -28,8 +28,8 @@ public:
 
 	enum STATE_RANGE
 	{
-		STATE_ATTACK = 25,
-		STATE_REPEL = 2
+		STATE_ATTACK = 50,
+		STATE_REPEL = 1,
 	};
 
 	StrategyOne::CURRENT_STATE GetState();
@@ -37,5 +37,6 @@ public:
 
 private:
 	StrategyOne::CURRENT_STATE currentState;
+	bool shouldAttack;
 };
 #endif

@@ -22,6 +22,7 @@ public:
 	virtual void End();
 
 	void SetSpawnerWave(int waved);
+	int GetSpawnerWave();
 	void SetPlayerTrans(Vector3 trans);
 	void SetTerrain(Spline* s);
 
@@ -29,6 +30,7 @@ public:
 	bool GetBossKilled();
 	
 	void Reset();
+	void NewWave();
 
 private:
 	int enemyCount;
@@ -44,6 +46,7 @@ private:
 	
 	const int poolCount = 20;
 	GameObj* enemyPool[20];
+	GameObj* boss;
 
 	//Init Enemies for different waves
 	void CreateEnemies(std::string waveOne);
@@ -54,6 +57,8 @@ private:
 	void SetEnemyCount(int enemyCount);
 
 	bool IsWaveDone();
+	void CreateBoss(std::string bosStage);
+	void SpawnBoss(std::string bosStage);
 };
 
 #endif

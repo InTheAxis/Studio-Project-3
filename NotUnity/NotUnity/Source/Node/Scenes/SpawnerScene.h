@@ -25,6 +25,9 @@ public:
 	void Reset();
 
 	int GetEnemyKilled();
+	int GetSpawnerWave();
+	bool GetBossKilled();
+	void NewWave();
 private:
 	int currentWave;
 	Vector3 fromPlayer;
