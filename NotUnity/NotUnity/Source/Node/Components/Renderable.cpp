@@ -49,7 +49,7 @@ void Renderable::Render()
 
 	//set uniforms for material
 	mgrG->SetUniform("material.albedo", material->albedo);
-	for (int i = 0; i <= Material::COLOR7; ++i)
+	for (int i = 0; i <= Material::COLOR13; ++i)
 	{
 		std::string cast = "material.colorMapEnabled[" + std::to_string(i) + "]";
 		mgrG->SetUniform(cast.c_str(), material->maps[i] > 0);

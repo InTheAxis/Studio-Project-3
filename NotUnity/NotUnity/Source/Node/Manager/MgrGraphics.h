@@ -58,6 +58,9 @@ public:
 	void AttachView(Mtx44* view);
 	void SetProjPerspective(float fov = 45.f, float farVal = 10000.f, float nearVal = 0.01f);
 	void SetProjOrtho(float size = 100, float farVal = 10000.f, float nearVal = 0.01f);
+
+	void SetDirLight(bool enabled, Vector3 pos = NULL);
+
 protected:
 	MgrGraphics(std::string name = "MgrGraphics"); 
 	~MgrGraphics();
@@ -72,6 +75,8 @@ protected:
 	MS modelStack, projStack;
 	Mtx44* view;
 	Mtx44 defaultView; // if no camera attached
+
+	Vector4 lightDir; // w component to enable or disable
 
 	unsigned GetUniLoc(std::string uniform, MgrGraphics::SHADER shader);
 };

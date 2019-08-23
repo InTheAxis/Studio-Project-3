@@ -6,7 +6,7 @@
 Spawner::Spawner(std::string name)
 	: Node(name)
 	, enemyCount(0)
-	, interval(0.f)
+	, interval(1.f)
 	, EnemyNames("")
 	, playerTrans(0.f, 0.f, 0.f)
 	, enemyLeft(0)
@@ -40,7 +40,7 @@ void Spawner::Update(double dt)
 		interval += 1.f * static_cast<float>(dt);
 	else
 		interval = 0;
-	if (interval >= 1.5f)
+	if (interval >= 3.f)
 	{
 		SpawnEnemy("e1");
 		interval = 0;
@@ -132,7 +132,7 @@ void Spawner::SpawnEnemy(std::string waveOne)
 	Vector3 offset;
 	for (int i = 0; i < poolCount; ++i)
 	{
-		if (enemyPool[i]->IsActive())
+		if (enemyPool[i]->IsActive() || enemyPool[i]->GetScript<AI>()->IsDead())
 			continue;
 
 		int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);

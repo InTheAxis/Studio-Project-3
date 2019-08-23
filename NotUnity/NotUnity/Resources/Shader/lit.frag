@@ -25,6 +25,7 @@ struct Material
 };
 uniform Material material;
 uniform mat4 model;
+uniform vec4 lightDir;
 
 void main()
 {
@@ -52,12 +53,11 @@ void main()
 
 	/**HANDLING LIGHT**/
 	vec3 pos = vec3(model[3][0],model[3][1],model[3][2]);
-	vec3 lightDir = normalize(vec3(1,1,0)) * 0.5;
-	vec3 lightPos = pos + lightDir;
+	vec3 lightPos = pos + normalize(vec3(-lightDir)) * 0.5f;
 
-	if (length(lightPos.xy - fragPos.xy) > 0.7)
+	if (length(lightPos.xy - fragPos.xy) > 0.7 * model[2][2])
 	{
-		color.rgb *= 0.9;
+		color.rgb *= 0.5;
 	}
 
 }

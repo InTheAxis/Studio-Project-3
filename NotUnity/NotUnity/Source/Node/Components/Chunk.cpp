@@ -15,25 +15,7 @@ Chunk::~Chunk()
 
 void Chunk::OnEnable()
 {
-	//if (sprite != nullptr)
-	//{
-	//	int randomInt = Math::RandIntMinMax(0, 2);
-	//	switch (randomInt)
-	//	{
-	//	case 0:
-	//		sprite->SwitchAnimation(randomInt)->PlayAnimation();
-	//		break;
-	//	case 1:
-	//		sprite->SwitchAnimation(randomInt)->PlayAnimation();
-	//		break;
-	//	case 2:
-	//		sprite->SwitchAnimation(randomInt)->PlayAnimation();
-	//		break;
-	//	default:
-	//		sprite->SwitchAnimation(0)->PlayAnimation();
-	//		break;
-	//	}
-	//}
+	
 }
 
 void Chunk::OnDisable()

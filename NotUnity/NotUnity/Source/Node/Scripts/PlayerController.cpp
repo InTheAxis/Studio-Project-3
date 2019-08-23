@@ -28,7 +28,7 @@ void test(ColInfo info)
 
 void PlayerController::Start()
 {
-	gameObject->GetTransform()->translate.Set(-1, 1, 0);
+	gameObject->GetTransform()->translate.Set(-1, 1, 0.1f);
 
 	sprite = AddChild<Sprite>()
 		->SetAnimation(0, 8, 0.5f, 1)
@@ -43,9 +43,12 @@ void PlayerController::Start()
 		->SetAnimation(9 ,8, 0.5f, 1)
 		->SetAnimation(10, 8, 0.5f, 1)
 		->SetAnimation(11, 8, 0.5f, 1)
-		->SetAnimation(12, 8, 0.5f, 1);
+		->SetAnimation(12, 8, 0.5f, 1)
+		->SwitchAnimation(0)
+		->PlayAnimation();
 	sprite->SetGameObj(gameObject);
 	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"));
+	sprite->SetHSV(-1,1,-1)->SetRenderPass(RENDER_PASS::POST_FX)->SelectShader(MgrGraphics::HSV_LIT);
 	
 	kinb = AddChild<KinemeticBody>();
 	kinb->SetGameObj(gameObject);
@@ -66,7 +69,7 @@ void PlayerController::Start()
 	attackLeft->ActiveSelf(false);
 	attackAir = AddChild<Collider>("a");
 	attackAir->SetGameObj(gameObject);
-	attackAir->CreateAABB(0.7f);
+	attackAir->CreateAABB(0.8f);
 	attackAir->isTrigger = true;
 	attackAir->ActiveSelf(false);
 	hitbox = AddChild<Collider>("h");

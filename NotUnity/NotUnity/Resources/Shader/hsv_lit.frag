@@ -31,6 +31,8 @@ struct HSV
 	float v;
 };
 uniform HSV hsv;
+uniform mat4 model;
+uniform vec4 lightDir;
 
 vec3 rgbToHsv(vec3 rgb);
 vec3 hsvToRgb(vec3 hsv);
@@ -39,23 +41,26 @@ void main()
 {
 	/**HANDLING TEXTURES**/
 	vec4 baseColor = vec4(0);
-//	int colorCount = 0;
-//	for (int i = 0; i < MAX_COLORMAPS; ++i)
-//	{
-//		if (material.colorMapEnabled[i])
-//		{
-//			baseColor += texture2D(material.colorMap[i], texCoord);
-//			++colorCount;
-//		}
-//	}
+	int colorCount = 0;
+	for (int i = 0; i < MAX_COLORMAPS; ++i)
+	{
+		if (material.colorMapEnabled[i])
+		{
+			baseColor += texture2D(material.colorMap[i], texCoord);
+			++colorCount;
+		}
+	}
 
-	if (material.colorMapEnabled[0])
-		baseColor = texture2D(material.colorMap[0], texCoord);
+	if (colorCount > 0)
+		baseColor = baseColor / colorCount;
 	else
 		baseColor = fragColor;
 	
 	color = material.albedo * baseColor;
 	
+	if (color.a < 0.01) 
+		discard;
+
 	//apply hsv changes
 	vec3 targetHsv = rgbToHsv(vec3(color));	
 	if (hsv.h >= 0)
@@ -68,8 +73,14 @@ void main()
 
 	color.rgb = newColor;
 
-	if (color.a < 0.01) 
-		discard;
+	/**HANDLING LIGHT**/
+	vec3 pos = vec3(model[3][0],model[3][1],model[3][2]);
+	vec3 lightPos = pos + normalize(vec3(-lightDir)) * 0.5f;
+
+	if (length(lightPos.xy - fragPos.xy) > 0.7 * model[2][2])
+	{
+		color.rgb *= 0.5;
+	}
 }
 
 

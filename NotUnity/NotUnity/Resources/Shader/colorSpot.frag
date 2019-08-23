@@ -44,6 +44,9 @@ void main()
 	
 	color = material.albedo * baseColor;
 
+	if (color.a < 0.01) 
+		discard;
+
 	//apply hsv changes
 	vec3 targetHsv = rgbToHsv(vec3(color));	
 	if (targetHsv.y > 0.1)
@@ -52,9 +55,6 @@ void main()
 		vec3 newColor = hsvToRgb(targetHsv);
 		color.rgb = newColor;	
 	} 
-
-	if (color.a < 0.01) 
-		discard;
 }
 
 
@@ -67,6 +67,9 @@ float GetSaturation()
 	float smallestRatio = 1; //for "attenuation"
 	for (int i = 0; i < MAX_POINTS; ++i)
 	{
+		if (pt[i].pos.z <= 0)
+			break;
+
 		//get the points position in screen space, for depth info, only useful for perspective
 		pointPos_screenSpace = proj * view * vec4(pt[i].pos.xyz, 1);
 		pointPos_screenSpace.xyz /= pointPos_screenSpace.w;

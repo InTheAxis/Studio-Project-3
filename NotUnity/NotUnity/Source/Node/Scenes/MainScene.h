@@ -46,6 +46,7 @@ private:
 	GAME_STATE gs;
 
 	double winTimer;
+	float lightAngle;	
 
 	void ChangeGameState(GAME_STATE gs);
 };
