@@ -137,8 +137,8 @@ void Spawner::NewWave()
 void Spawner::UpdateColorSpots()
 {
 	for (int i = 0; i < poolCount; ++i)
-		enemyPool[i]->GetScript<ColorSpot>()->SetUniform(i + 1); //cuz player reserves 0
-	boss->GetScript<ColorSpot>()->SetUniform(poolCount + 1);
+		enemyPool[i]->GetScript<AI>()->GetColorSpot()->SetUniform(i + 1); //cuz player reserves 0
+	boss->GetScript<AI>()->GetColorSpot()->SetUniform(poolCount + 1);
 }
 
 void Spawner::UpdatePlayerPosToAI(std::string names)
@@ -165,9 +165,7 @@ void Spawner::CreateBoss(std::string bosStage)
 {
 	boss = gameObject->AddChild<GameObj>(bosStage);
 	boss->ActiveSelf(false);
-	boss->AddScript<AI>()->SetHealth(3);
-	boss->AddScript<ColorSpot>();
-	boss->GetScript<AI>()->ResetBullets();
+	boss->AddScript<AI>()->SetHealth(3);	
 	boss->GetTransform()->scale.Set(2.f, 2.f, 2.f);
 }
 
@@ -196,8 +194,7 @@ void Spawner::CreateEnemies(std::string waveOne)
 	{
 		enemyPool[i] = gameObject->AddChild<GameObj>(waveOne + std::to_string(i));
 		enemyPool[i]->ActiveSelf(false);
-		enemyPool[i]->AddScript<AI>()->SetHealth(3);
-		enemyPool[i]->AddScript<ColorSpot>();		
+		enemyPool[i]->AddScript<AI>()->SetHealth(3);	
 	}
 }
 

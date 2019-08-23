@@ -15,6 +15,8 @@
 class Projectile;
 class Collider;
 class ColInfo;
+class ColorSpot;
+class Transform;
 class AI : public Node, public TypeID<AI>, public Component
 {
 public:
@@ -36,10 +38,12 @@ public:
 	void ChangeStrategy(Strategy* newStrategy, bool remove);
 	bool IsDead();
 	AI* SetTerrain(Spline* s);
-	void ResetBullets();
-	void SetSaturation(float sat);
+	void SetSaturation(float sat);	
+	ColorSpot* GetColorSpot() const;	
 
 	void Reset();
+	void ResetBullets();
+	void ResetColorSpots();
 
 private:
 	Vector3 playerTrans;
@@ -55,12 +59,14 @@ private:
 	bool dead;
 	const static int ammoCount = 3;
 
+	Transform* t;
 	Strategy* strategy;
 	KinemeticBody* kineB;
 	Spline* s;
 	Projectile* projectile[ammoCount];
 	Collider* coll, *trigger;
 	Sprite* sprite;
+	ColorSpot* colorSpot;
 
 	float GetWorldHeight();
 	Projectile* GetProjectile();
