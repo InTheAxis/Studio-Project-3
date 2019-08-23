@@ -16,6 +16,8 @@ Camera::Camera(std::string name)
 
 Camera::~Camera()
 {
+	t = nullptr;
+	axis = nullptr;
 }
 
 void Camera::Start()
@@ -54,8 +56,6 @@ void Camera::Update(double dt)
 
 void Camera::End()
 {
-	t = nullptr;
-	axis = nullptr;
 	Node::End();
 }
 

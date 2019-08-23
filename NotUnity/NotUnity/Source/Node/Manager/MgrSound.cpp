@@ -16,10 +16,13 @@ MgrSound::MgrSound(std::string name)
 
 MgrSound::~MgrSound()
 {
+	listenerPos = nullptr;
+	listenerView = nullptr;
 	sounds.clear();
+	volume.clear();
 	if (soundEngine)
 	{
-		delete soundEngine;
+		soundEngine->drop();
 		soundEngine = nullptr;
 	}
 }

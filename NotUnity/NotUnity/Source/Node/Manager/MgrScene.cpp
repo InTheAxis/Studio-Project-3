@@ -13,6 +13,13 @@ MgrScene::MgrScene(std::string name) : Manager<MgrScene>(name)
 
 MgrScene::~MgrScene()
 {
+	rootScene = nullptr;
+	for (auto s : allScenes)
+	{
+		if (s.second)
+			delete s.second;
+		s.second = nullptr;
+	}
 }
 
 void MgrScene::LoadScenes()

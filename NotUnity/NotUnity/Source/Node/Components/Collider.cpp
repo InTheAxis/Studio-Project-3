@@ -16,6 +16,8 @@ Collider::Collider(std::string name)
 
 Collider::~Collider()
 {
+	t = nullptr;
+	cr = nullptr;
 }
 
 void Collider::Start()
@@ -37,8 +39,6 @@ void Collider::Update(double dt)
 
 void Collider::End()
 {
-	t = nullptr;	
-	cr = nullptr;
 	Node::End();
 }
 
