@@ -86,3 +86,18 @@ int SpawnerScene::GetEnemyKilled()
 
 	return SpawnerGO->GetScript<Spawner>()->GetEnemiesKilled();
 }
+
+int SpawnerScene::GetSpawnerWave()
+{
+	return SpawnerGO->GetScript<Spawner>()->GetSpawnerWave();
+}
+
+bool SpawnerScene::GetBossKilled()
+{
+	return SpawnerGO->GetScript<Spawner>()->GetBossKilled();
+}
+
+void SpawnerScene::NewWave()
+{
+	SpawnerGO->GetScript<Spawner>()->NewWave();
+}

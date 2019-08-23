@@ -1,6 +1,8 @@
 #ifndef COLLIDER_H
 #define COLLIDER_H
 
+#include <string>
+
 #include "../Node.h"
 #include "../../Utility/TypeID.h"
 #include "../../Utility/Component.h"
@@ -42,6 +44,8 @@ public:
 	Delegate<ColInfo> OnTriggerExit; //pass in other collider
 
 	bool isTrigger;
+
+	std::string tag;
 
 private:
 	Transform* t;

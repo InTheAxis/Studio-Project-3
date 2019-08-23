@@ -5,6 +5,7 @@
 #include "../../Utility/Math/Splines/Mountain.h"
 #include "../GameObj.h"
 #include "../Components/Sprite.h"
+#include "../../Application.h"
 
 MapGenerator::MapGenerator(std::string name) :
 	Node(name),
@@ -54,7 +55,7 @@ void MapGenerator::Update(double dt)
 	{
 		sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;		
 		sky->GetTransform()->translate.z = -10;		
-		sky->GetTransform()->translate.y -= 1;		
+		sky->GetTransform()->translate.y = 2;		
 
 
 		if (ControllerKeyboard::Instance()->IsKeyDown(VK_LEFT) || ControllerKeyboard::Instance()->IsKeyDown('A'))

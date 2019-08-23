@@ -13,6 +13,7 @@
 #include "SpawnerScene.h"
 #include "MapScene.h"
 #include "../Scripts/PlayerController.h"
+#include "../Manager/MgrSound.h"
 
 MainScene::MainScene(std::string name)
 	: Scene(name)
@@ -78,7 +79,7 @@ void MainScene::Start()
 	//attach camera
 	GetChild<MapScene>("MapScene")->SetCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
-	mg->SetProjOrtho(88);
+	mg->SetProjOrtho(Application::GetWindowHeight() * 0.12f); //divide by 720 * 88
 
 	Scene::Start();	
 
@@ -88,6 +89,8 @@ void MainScene::Start()
 	
 	healthminus = 1;
 	lightAngle = 0.f;
+
+	MgrSound::Instance()->PlayASound("bgm", true);
 }
 
 void MainScene::Update(double dt)
@@ -118,8 +121,15 @@ void MainScene::Update(double dt)
 		redbar->GetGameObj()->GetTransform()->scale.Set(2.4, 1, 0);
 		if (spawner->GetEnemyKilled() >= 3)	
 			ChangeGameState(WIN);	
+		if (spawner->GetEnemyKilled() >= 3 && spawner->GetBossKilled())
+		{
+			spawner->SetWave(spawner->GetSpawnerWave() + 1);
+			spawner->NewWave();
+		}
+		else if (spawner->GetSpawnerWave() >= 3)
+			ChangeGameState(WIN);
 		else if (playerGO->GetScript<PlayerController>()->IsDead())
-			ChangeGameState(LOSE);	
+			ChangeGameState(LOSE);
 		break;
 	case LOSE:
 		if (!playerGO->GetScript<PlayerController>()->IsDead())

@@ -12,8 +12,8 @@ public:
 	~Strategy();
 
 	virtual int CalDest(Vector3 dest, Vector3 enemyPos);
-	virtual void Attack();
-	virtual bool Update(Vector3& dest, Vector3& enemyPos, double dt);
+	virtual bool Attack() = 0;
+	virtual void Update(Vector3& dest, Vector3& enemyPos, double dt) = 0;
 
 	virtual void SetDest(float x, float y) = 0;
 	virtual float GetDestX() = 0;

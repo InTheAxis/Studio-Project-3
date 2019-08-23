@@ -1,6 +1,6 @@
 #include "StrategyOne.h"
 
-StrategyOne::StrategyOne(): currentState(IDLE)
+StrategyOne::StrategyOne(): currentState(IDLE), shouldAttack(false)
 {
 }
 
@@ -8,7 +8,7 @@ StrategyOne::~StrategyOne()
 {
 }
 
-bool StrategyOne::Update(Vector3& dest, Vector3& enemyPos, double dt)
+void StrategyOne::Update(Vector3& dest, Vector3& enemyPos, double dt)
 {
 	int distanceHeroToEnemy = CalDest(dest, enemyPos);
 
@@ -25,19 +25,18 @@ bool StrategyOne::Update(Vector3& dest, Vector3& enemyPos, double dt)
 	switch(currentState)
 	{
 	case ATTACK:
-		return true;
+		shouldAttack = true;
 		break;
 	case REPEL:
-		return false;
 		break;
 	default: //IDLE
 		break;
 	}
-	return false;
 }
 
-void StrategyOne::Attack()
+bool StrategyOne::Attack()
 {
+	return shouldAttack;
 }
 
 void StrategyOne::SetDest(float x, float y)

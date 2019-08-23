@@ -7,40 +7,10 @@
 #include "../../Node/Components/Collider.h"
 #include "../Scripts/PlayerController.h"
 
-void AIOnHit(ColInfo info)
-{
-	if (info.other->GetGameObj()->GetScript<Projectile>())
-		return;
-	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
-	{
-		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
-		if (ai->m_lifetime > ai->bounceTime + 0.5)
-		{
-			ai->bounceTime = ai->m_lifetime;
-			ai->health--;
-
-			if (ai->health <= 0)
-			{
-				ai->gameObject->ActiveSelf(false);
-				ai->health = 0;
-				ai->dead = true;
-			}
-		}
-	}
-}
-
-void AIOnAttack(ColInfo info)
-{
-	//if (info.other->GetGameObj()->GetScript<PlayerController>())
-	//	info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
-
-	//if (info.other->GetGameObj()->GetScript<PlayerController>())
-	//	info.coll->GetGameObj()->GetTransform()->translate +=  info.penetration;
-}
 AI::AI(std::string name) 
 	: Node(name)
 	, playerTrans(0.f, 0.f, 0.f)
-	, health(3.f)
+	//, health(0)
 	, damage(0.f)
 	, strategy(nullptr)
 	, direction(0.f,0.f,0.f)
@@ -60,16 +30,13 @@ AI::~AI()
 
 void AI::OnEnable()
 {
-	coll->OnCollideStay += AIOnHit;
-	trigger->OnTriggerEnter += AIOnAttack;
+	coll->OnCollideStay.Subscribe(&AI::HandleColl, this, "coll");	
 }
 
 void AI::OnDisable()
 {
 	if (coll)
-		coll->OnCollideStay -= AIOnHit;
-	if (trigger)
-		trigger->OnTriggerEnter -= AIOnAttack;
+		coll->OnCollideStay.UnSubscribe("coll");		
 }
 
 void AI::Start()
@@ -94,67 +61,80 @@ void AI::Start()
 	for (int i = 0; i < ammoCount; ++i)
 	{
 		projectile[i] = AddChild<GameObj>("bull" + std::to_string(i))->AddScript<Projectile>();
+		projectile[i]->SetTarget("player");
 		projectile[i]->GetGameObj()->ActiveSelf(false);
 	}
 
-	if (strategy == NULL)
+	if (gameObject->GetName()[0] == 'e' && strategy == NULL)
+	{
+		gameObject->GetScript<AI>()->health = 3;
 		ChangeStrategy(new StrategyOne(), false);
+	}
+	if (gameObject->GetName()[0] == 'b' && strategy == NULL)
+	{
+		gameObject->GetScript<AI>()->health = 6;
+		ChangeStrategy(new StrategyOne(), false);
+	}
 	
 	Vector3 scale = gameObject->GetTransform()->scale;
 	coll = AddChild<Collider>("c");
 	coll->SetGameObj(gameObject);
 	coll->CreateAABB(0.5f);
+	coll->tag = "enemy";
 	
 	trigger = AddChild<Collider>("t");
 	trigger->SetGameObj(gameObject);
 	trigger->isTrigger = true;
 	trigger->CreateAABB(0.5f);
+	trigger->tag = "enemyA";
 
 	Node::Start();
 }
 
 void AI::Update(double dt)
 { 
-	interval += 1.f * static_cast<float>(dt);
-	direction = (playerTrans - gameObject->GetTransform()->translate);
-	if (!direction.IsZero())
-		direction.Normalize();
-
-	strategy->SetDest(playerTrans.x, playerTrans.y);
-	if (strategy->Update(playerTrans, gameObject->GetTransform()->translate, dt))
+	if (!dead)
 	{
+		interval += 1.f * static_cast<float>(dt);
+		direction = (playerTrans - gameObject->GetTransform()->translate);
+		if (!direction.IsZero())
+			direction.Normalize();
 
-	}
+		strategy->SetDest(playerTrans.x, playerTrans.y);
+		strategy->Update(playerTrans, gameObject->GetTransform()->translate, dt);
 
-	if (interval >= 3.f)
-	{
-		Projectile* p = GetProjectile();
-		if (p)
+		if (strategy->Attack() && interval >= 3.f)
 		{
-			p->Discharge(gameObject->GetTransform()->translate, direction * 10);
-			p->GetGameObj()->ActiveSelf(true);
+			Projectile* p = GetProjectile();
+			if (p)
+			{
+				p->Discharge(gameObject->GetTransform()->translate, direction * 10);
+				p->GetGameObj()->ActiveSelf(true);
+			}
+			interval = 0;
 		}
-		interval = 0;
-	}
 
-	if ((playerTrans - gameObject->GetTransform()->translate).LengthSquared() > 3.f)
+		if ((playerTrans - gameObject->GetTransform()->translate).LengthSquared() > 3.f)
 			kineB->ApplyForce(direction);
-	else
-		kineB->ResetVel(1, 0);
+		else
+			kineB->ResetVel(1, 0);
 
-	if (gameObject->GetTransform()->translate.y > GetWorldHeight() + 0.1f)
-	{
-		kineB->useGravity = true;
-	}
-	else
-	{
-		gameObject->GetTransform()->translate.y = GetWorldHeight();
-		kineB->useGravity = false;
-		kineB->ResetVel(0, 1);
-	}
+		if (gameObject->GetTransform()->translate.y > GetWorldHeight() + 0.1f)
+		{
+			kineB->useGravity = true;
+		}
+		else
+		{
+			gameObject->GetTransform()->translate.y = GetWorldHeight();
+			kineB->useGravity = false;
+			kineB->ResetVel(0, 1);
+		}
 
-	kineB->UpdateSuvat(dt);
-	kineB->ResetForce();
+		kineB->UpdateSuvat(dt);
+		kineB->ResetForce();
+	}
+	else if (m_lifetime > bounceTime + 0.5f)
+		gameObject->ActiveSelf(false);
 
 	sat = Math::Max(0.f,  health / 3.f);
 
@@ -246,6 +226,27 @@ Projectile * AI::GetProjectile()
   			return projectile[i];
 	}
 	return nullptr;
+}
+
+void AI::HandleColl(ColInfo info)
+{
+	if (info.other->GetGameObj()->GetScript<Projectile>())
+		return;
+	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
+	{
+		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
+		if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
+		{
+			ai->bounceTime = ai->m_lifetime;
+			ai->health--;
+
+			if (ai->health <= 0)
+			{
+				ai->health = 0;
+				ai->dead = true;
+			}
+		}
+	}
 }
 
 void AI::SetPlayerTrans(Vector3 trans)
