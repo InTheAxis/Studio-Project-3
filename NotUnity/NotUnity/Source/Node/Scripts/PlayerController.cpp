@@ -21,14 +21,6 @@ PlayerController::~PlayerController()
 {
 }
 
-void PlayerOnColl(ColInfo info)
-{
-	if (info.other->tag == "bulletplayer")
-	{
-		info.coll->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
-	}
-}
-
 void PlayerController::Start()
 {
 	gameObject->GetTransform()->translate.Set(-1, 1, 0.1f);
@@ -182,13 +174,13 @@ void PlayerController::End()
 
 void PlayerController::OnEnable()
 {
-	hitbox->OnCollideStay += PlayerOnColl;
+	hitbox->OnCollideStay.Subscribe(&PlayerController::HandleCollision, this, "coll");
 }
 
 void PlayerController::OnDisable()
 {
 	if (hitbox)
-		hitbox->OnCollideStay -= PlayerOnColl;
+		hitbox->OnCollideStay.UnSubscribe("coll");
 }
 
 void PlayerController::TryChangeState(P_STATE state)
@@ -431,4 +423,10 @@ void PlayerController::PrintState()
 		Debug::Log("I am DYING_R");
 		break;
 	}
+}
+
+void PlayerController::HandleCollision(ColInfo info)
+{
+	if (info.other->tag == "bulletplayer")
+		TakeDamage(1);
 }

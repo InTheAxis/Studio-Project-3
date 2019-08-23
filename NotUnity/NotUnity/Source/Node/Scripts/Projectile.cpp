@@ -8,12 +8,10 @@
 #include "../../Node/Components/Collider.h"
 #include "../../Node/Scripts/PlayerController.h"
 
-void OnHit(ColInfo info)
+void Projectile::OnHit(ColInfo info)
 {
-	if (info.other->tag == info.coll->GetGameObj()->GetScript<Projectile>()->target)
-	{
-		info.coll->GetGameObj()->ActiveSelf(false);
-	}
+	if (info.other->tag == target)
+		ActiveSelf(false);
 }
 
 
@@ -28,13 +26,13 @@ Projectile::~Projectile()
 
 void Projectile::OnEnable()
 {
-	coll->OnCollideEnter += OnHit;
+	coll->OnCollideEnter.Subscribe(&Projectile::OnHit, this, "hit");
 }
 
 void Projectile::OnDisable()
 {
 	if (coll)
-		coll->OnCollideEnter -= OnHit;
+		coll->OnCollideEnter.UnSubscribe("hit");
 	if (kinb)
 		kinb->ResetVel(1, 1);
 }

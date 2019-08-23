@@ -65,8 +65,7 @@ private:
 	float GetWorldHeight();
 	Projectile* GetProjectile();
 
-	friend void AIOnColl(ColInfo info);
-	friend void AIOnAttack(ColInfo info);
+	void HandleColl(ColInfo info);	
 };
 
 #endif

@@ -90,6 +90,8 @@ private:
 	void Hit(double dt);
 
 	void PrintState();
+
+	void HandleCollision(ColInfo info);
 };
 
 #endif

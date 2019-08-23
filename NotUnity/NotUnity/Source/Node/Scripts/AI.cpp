@@ -7,27 +7,6 @@
 #include "../../Node/Components/Collider.h"
 #include "../Scripts/PlayerController.h"
 
-void AIOnColl(ColInfo info)
-{
-	if (info.other->GetGameObj()->GetScript<Projectile>())
-		return;
-	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
-	{
-		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
-		if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
-		{
-			ai->bounceTime = ai->m_lifetime;
-			ai->health--;
-
-			if (ai->health <= 0)
-			{
-				ai->health = 0;
-				ai->dead = true;
-			}
-		}
-	}
-}
-
 AI::AI(std::string name) 
 	: Node(name)
 	, playerTrans(0.f, 0.f, 0.f)
@@ -51,16 +30,13 @@ AI::~AI()
 
 void AI::OnEnable()
 {
-	coll->OnCollideStay += AIOnColl;
-	//trigger->OnTriggerEnter += AIOnAttack;
+	coll->OnCollideStay.Subscribe(&AI::HandleColl, this, "coll");	
 }
 
 void AI::OnDisable()
 {
 	if (coll)
-		coll->OnCollideStay -= AIOnColl;
-	//if (trigger)
-	//	trigger->OnTriggerEnter -= AIOnAttack;
+		coll->OnCollideStay.UnSubscribe("coll");		
 }
 
 void AI::Start()
@@ -247,6 +223,27 @@ Projectile * AI::GetProjectile()
   			return projectile[i];
 	}
 	return nullptr;
+}
+
+void AI::HandleColl(ColInfo info)
+{
+	if (info.other->GetGameObj()->GetScript<Projectile>())
+		return;
+	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
+	{
+		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
+		if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
+		{
+			ai->bounceTime = ai->m_lifetime;
+			ai->health--;
+
+			if (ai->health <= 0)
+			{
+				ai->health = 0;
+				ai->dead = true;
+			}
+		}
+	}
 }
 
 void AI::SetPlayerTrans(Vector3 trans)
