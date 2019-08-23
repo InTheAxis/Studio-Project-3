@@ -54,6 +54,8 @@ void Camera::Update(double dt)
 
 void Camera::End()
 {
+	t = nullptr;
+	axis = nullptr;
 	Node::End();
 }
 

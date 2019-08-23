@@ -31,6 +31,9 @@ void Renderable::Update(double dt)
 
 void Renderable::End()
 {
+	mesh = nullptr;
+	material = nullptr; 
+	t = nullptr;
 	Node::End();
 }
 

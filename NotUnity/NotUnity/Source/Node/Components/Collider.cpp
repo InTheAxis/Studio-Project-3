@@ -37,6 +37,8 @@ void Collider::Update(double dt)
 
 void Collider::End()
 {
+	t = nullptr;	
+	cr = nullptr;
 	Node::End();
 }
 
