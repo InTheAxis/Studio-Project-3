@@ -10,9 +10,8 @@
 
 void OnHit(ColInfo info)
 {
-	if (info.other->GetGameObj()->GetScript<PlayerController>())
+	if (info.other->tag == info.coll->GetGameObj()->GetScript<Projectile>()->target)
 	{
-		info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
 		info.coll->GetGameObj()->ActiveSelf(false);
 	}
 }
@@ -58,6 +57,7 @@ void Projectile::Start()
 	coll = AddChild<Collider>();
 	coll->SetGameObj(gameObject);
 	coll->CreateAABB(size);
+	coll->tag = "bullet";
 	Node::Start();
 }
 
@@ -65,6 +65,7 @@ void Projectile::Update(double dt)
 {
 	if (m_lifetime > 5)
 		gameObject->ActiveSelf(false);
+	coll->tag = "bullet" + target;
 	kinb->UpdateSuvat(dt);
 	Node::Update(dt);
 }
@@ -78,4 +79,10 @@ void Projectile::Discharge(Vector3 origin, Vector3 vel)
 {	
 	t->translate = origin;
 	kinb->ApplyImpulse(vel);
+}
+
+Projectile * Projectile::SetTarget(std::string target)
+{
+	this->target = target;	
+	return this;
 }

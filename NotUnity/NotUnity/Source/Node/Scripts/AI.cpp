@@ -7,7 +7,7 @@
 #include "../../Node/Components/Collider.h"
 #include "../Scripts/PlayerController.h"
 
-void AIOnHit(ColInfo info)
+void AIOnColl(ColInfo info)
 {
 	if (info.other->GetGameObj()->GetScript<Projectile>())
 		return;
@@ -28,14 +28,6 @@ void AIOnHit(ColInfo info)
 	}
 }
 
-void AIOnAttack(ColInfo info)
-{
-	//if (info.other->GetGameObj()->GetScript<PlayerController>())
-	//	info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
-
-	//if (info.other->GetGameObj()->GetScript<PlayerController>())
-	//	info.coll->GetGameObj()->GetTransform()->translate +=  info.penetration;
-}
 AI::AI(std::string name) 
 	: Node(name)
 	, playerTrans(0.f, 0.f, 0.f)
@@ -59,16 +51,16 @@ AI::~AI()
 
 void AI::OnEnable()
 {
-	coll->OnCollideStay += AIOnHit;
-	trigger->OnTriggerEnter += AIOnAttack;
+	coll->OnCollideStay += AIOnColl;
+	//trigger->OnTriggerEnter += AIOnAttack;
 }
 
 void AI::OnDisable()
 {
 	if (coll)
-		coll->OnCollideStay -= AIOnHit;
-	if (trigger)
-		trigger->OnTriggerEnter -= AIOnAttack;
+		coll->OnCollideStay -= AIOnColl;
+	//if (trigger)
+	//	trigger->OnTriggerEnter -= AIOnAttack;
 }
 
 void AI::Start()
@@ -93,6 +85,7 @@ void AI::Start()
 	for (int i = 0; i < ammoCount; ++i)
 	{
 		projectile[i] = AddChild<GameObj>("bull" + std::to_string(i))->AddScript<Projectile>();
+		projectile[i]->SetTarget("player");
 		projectile[i]->GetGameObj()->ActiveSelf(false);
 	}
 
@@ -103,11 +96,13 @@ void AI::Start()
 	coll = AddChild<Collider>("c");
 	coll->SetGameObj(gameObject);
 	coll->CreateAABB(0.5f);
+	coll->tag = "enemy";
 	
 	trigger = AddChild<Collider>("t");
 	trigger->SetGameObj(gameObject);
 	trigger->isTrigger = true;
 	trigger->CreateAABB(0.5f);
+	trigger->tag = "enemyA";
 
 	Node::Start();
 }

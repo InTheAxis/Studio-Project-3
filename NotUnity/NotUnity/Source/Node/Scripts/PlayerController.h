@@ -1,6 +1,8 @@
 #ifndef PLAYER_CONTROL_H
 #define PLAYER_CONTROL_H
 
+//refactored player.h and player.cpp by terence
+
 #include <sstream>
 
 #include "../Node.h"
@@ -42,6 +44,9 @@ public:
 	virtual void Update(double dt);
 	virtual void End();
 	
+	void OnEnable();
+	void OnDisable();
+
 	PlayerController* SetTerrain(Spline * s);	
 	void TakeDamage(int dmg);	
 	int DamageDealt();

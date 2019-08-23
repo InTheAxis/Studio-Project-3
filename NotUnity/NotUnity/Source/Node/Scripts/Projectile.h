@@ -31,11 +31,14 @@ public:
 
 	friend void OnHit(ColInfo info);
 
+	Projectile* SetTarget(std::string target);
+
 private:
 	Transform* t;	
 	KinemeticBody* kinb;
 	Sprite* sprite;
 	Collider* coll;
+	std::string target;
 };
 
 #endif
