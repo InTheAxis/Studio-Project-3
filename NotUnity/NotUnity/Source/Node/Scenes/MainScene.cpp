@@ -13,6 +13,7 @@
 #include "SpawnerScene.h"
 #include "MapScene.h"
 #include "../Scripts/PlayerController.h"
+#include "../Manager/MgrSound.h"
 
 MainScene::MainScene(std::string name)
 	: Scene(name)
@@ -77,6 +78,8 @@ void MainScene::Start()
 	playerGO = player->GetPlayer();
 	
 	lightAngle = 0.f;
+
+	MgrSound::Instance()->PlayASound("bgm", true);
 }
 
 void MainScene::Update(double dt)

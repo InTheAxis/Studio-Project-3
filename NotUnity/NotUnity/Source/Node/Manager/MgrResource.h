@@ -17,5 +17,6 @@ protected:
 
 	void LoadMeshes();
 	void LoadMaterials();	
+	void LoadSounds();
 };
 #endif

@@ -2,6 +2,7 @@
 
 #include "../../Utility/Graphics/MeshBuilder.h"
 #include "../../Utility/Graphics/Material.h"
+#include "MgrSound.h"
 
 MgrResource::MgrResource(std::string name) : Manager<MgrResource>(name)
 {
@@ -15,6 +16,7 @@ void MgrResource::Start()
 {
 	LoadMeshes();
 	LoadMaterials();
+	LoadSounds();
 	Node::Start();
 }
 
@@ -36,8 +38,7 @@ void MgrResource::LoadMeshes()
 	MeshBuilder::GenerateAxes("axes", 10, 10, 10);
 	MeshBuilder::GeneratePlane("text", 16, 16);
 	MeshBuilder::GenerateQuad("quad");	
-	MeshBuilder::GeneratePlane("plane", 1, 8);
-	MeshBuilder::GeneratePlane("bg", 1, 1);
+	MeshBuilder::GeneratePlane("plane", 1, 8);	
 }
 
 void MgrResource::LoadMaterials()
@@ -97,4 +98,10 @@ void MgrResource::LoadMaterials()
 
 	temp = new Material("enemy");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/tomato.tga");
+}
+
+void MgrResource::LoadSounds()
+{
+	MgrSound* mgS = MgrSound::Instance();	
+	mgS->RegisterSound("bgm", "wav/foggy-forest.wav");	
 }

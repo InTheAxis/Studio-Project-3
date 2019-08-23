@@ -48,7 +48,7 @@ void MgrSound::RegisterSound(std::string name, std::string filePath, float vol)
 {
 	if (sounds.count(name) > 0)
 		return Debug::Log("Sound " + name + " already exists!");
-	sounds[name] = filePath;
+	sounds[name] = "Resources/" + filePath;
 	SetVolume(name);
 }
 
@@ -95,7 +95,7 @@ void MgrSound::PlayASound3D(std::string name, Vector3 soundPos, float minDist, f
 
 void MgrSound::SetVolume(std::string name, float vol)
 {
-	if (volume.count(name) > 0)
+	if (volume.count(name) <= 0)
 		volume[name] = Math::Clamp(vol, 0.f, 1.f);
 }
 
