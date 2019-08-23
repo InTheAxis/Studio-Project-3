@@ -14,14 +14,13 @@ void AIOnHit(ColInfo info)
 	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
 	{
 		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
-		if (ai->m_lifetime > ai->bounceTime + 0.5)
+		if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
 		{
 			ai->bounceTime = ai->m_lifetime;
 			ai->health--;
 
 			if (ai->health <= 0)
 			{
-				ai->gameObject->ActiveSelf(false);
 				ai->health = 0;
 				ai->dead = true;
 			}
@@ -115,46 +114,53 @@ void AI::Start()
 
 void AI::Update(double dt)
 { 
-	interval += 1.f * static_cast<float>(dt);
-	direction = (playerTrans - gameObject->GetTransform()->translate);
-	if (!direction.IsZero())
-		direction.Normalize();
-
-	strategy->SetDest(playerTrans.x, playerTrans.y);
-	if (strategy->Update(playerTrans, gameObject->GetTransform()->translate, dt))
+	if (!dead)
 	{
 
-	}
 
-	if (interval >= 3.f)
-	{
-		Projectile* p = GetProjectile();
-		if (p)
+		interval += 1.f * static_cast<float>(dt);
+		direction = (playerTrans - gameObject->GetTransform()->translate);
+		if (!direction.IsZero())
+			direction.Normalize();
+
+		strategy->SetDest(playerTrans.x, playerTrans.y);
+		if (strategy->Update(playerTrans, gameObject->GetTransform()->translate, dt))
 		{
-			p->Discharge(gameObject->GetTransform()->translate, direction * 10);
-			p->GetGameObj()->ActiveSelf(true);
+
 		}
-		interval = 0;
-	}
 
-	if ((playerTrans - gameObject->GetTransform()->translate).LengthSquared() > 3.f)
+		if (interval >= 3.f)
+		{
+			Projectile* p = GetProjectile();
+			if (p)
+			{
+				p->Discharge(gameObject->GetTransform()->translate, direction * 10);
+				p->GetGameObj()->ActiveSelf(true);
+			}
+			interval = 0;
+		}
+
+		if ((playerTrans - gameObject->GetTransform()->translate).LengthSquared() > 3.f)
 			kineB->ApplyForce(direction);
-	else
-		kineB->ResetVel(1, 0);
+		else
+			kineB->ResetVel(1, 0);
 
-	if (gameObject->GetTransform()->translate.y > GetWorldHeight() + 0.1f)
-	{
-		kineB->useGravity = true;
-	}
-	else
-	{
-		gameObject->GetTransform()->translate.y = GetWorldHeight();
-		kineB->useGravity = false;
-		kineB->ResetVel(0, 1);
-	}
+		if (gameObject->GetTransform()->translate.y > GetWorldHeight() + 0.1f)
+		{
+			kineB->useGravity = true;
+		}
+		else
+		{
+			gameObject->GetTransform()->translate.y = GetWorldHeight();
+			kineB->useGravity = false;
+			kineB->ResetVel(0, 1);
+		}
 
-	kineB->UpdateSuvat(dt);
-	kineB->ResetForce();
+		kineB->UpdateSuvat(dt);
+		kineB->ResetForce();
+	}
+	else if (m_lifetime > bounceTime + 0.5f)
+		gameObject->ActiveSelf(false);
 
 	sat = Math::Max(0.f,  health / 3.f);
 
