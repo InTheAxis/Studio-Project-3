@@ -68,7 +68,7 @@ void MainScene::Start()
 	//attach camera
 	GetChild<MapScene>("MapScene")->SetCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
-	mg->SetProjOrtho(88);
+	mg->SetProjOrtho(Application::GetWindowHeight() * 0.12f); //divide by 720 * 88
 
 	Scene::Start();	
 
