@@ -35,6 +35,7 @@ class Sprite;
 class ColInfo;
 class Collider;
 class Spline;
+class ColorSpot;
 class PlayerController : public Node, public TypeID<PlayerController>, public Component
 {
 public:
@@ -51,6 +52,7 @@ public:
 	PlayerController* SetTerrain(Spline * s);	
 	void TakeDamage(int dmg);	
 	int DamageDealt();
+	PlayerController* SetColorSpotRad(float radius);
 
 	bool IsDead();
 	void Reset();
@@ -65,13 +67,14 @@ private:
 	Collider* attackRight, *attackLeft, *attackAir;
 	Collider* hitbox;
 	Spline* terrain;
+	ColorSpot* colorSpot;
 
 	P_STATE currState, nextState;
 
 	Vector3 moveSpeed;
 	int direction;
 	double jumpTimer, attackTimer, hitTimer, deadTimer;	
-	int health;
+	int health, maxHealth;
 	int damage;
     int speedincrease;
 

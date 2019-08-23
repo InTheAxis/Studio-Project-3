@@ -152,6 +152,7 @@ void MainScene::Update(double dt)
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);
 	spawner->SetTerrain(map->GetTerrain());
 	player->SetTerrain(map->GetTerrain());
+	player->SetColorSpotRad(0.1f * spawner->GetEnemyKilled() + 1);
 
 	lightAngle = cosf((float)m_lifetime * 2) * Math::PI * 0.1f - 1.75f;
 	MgrGraphics::Instance()->SetDirLight(true, Vector3(cosf(lightAngle), sinf(lightAngle), 0));

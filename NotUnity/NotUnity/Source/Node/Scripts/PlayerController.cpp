@@ -6,6 +6,7 @@
 #include "../../Node/Components/KinemeticBody.h"
 #include "../../Node/Components/Collider.h"
 #include "../../Node/Components/Renderable.h"
+#include "../../Node/Scripts/ColorSpot.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Utility/Input/ControllerMouse.h"
 #include "../../Utility/Math/Spline.h"
@@ -77,6 +78,10 @@ void PlayerController::Start()
 	hitbox->CreateAABB(0.5f);	
 	hitbox->tag = "player";
 
+	colorSpot = AddChild<ColorSpot>();
+	colorSpot->SetGameObj(gameObject);
+
+	maxHealth = 20;
 	addHealth = false;
 	ActiveSelf(true);
 	Reset();
@@ -91,7 +96,7 @@ void PlayerController::Update(double dt)
 	ControllerMouse* m = ControllerMouse::Instance();
 	Vector3 input;
 	float dtf = static_cast<float>(dt);
-	
+
 	//get input
 	if (kb->IsKeyDown('A') && CanMove())
 	{
@@ -172,12 +177,14 @@ void PlayerController::Update(double dt)
 	Hit(dt);
 	Die(dt);
 
-
 	ChangeState();
+
+	//update colorSpot
+	colorSpot->SetUniform(0);
 
 	// achievemets
 	// kinb->maxVel.Set(Achievements::Instance()->maxValX, Achievements::Instance()->maxValY, 0);	
-	
+
 	Node::Update(dt);
 }
 
@@ -383,6 +390,12 @@ int PlayerController::DamageDealt()
 	return damage;
 }
 
+PlayerController* PlayerController::SetColorSpotRad(float radius)
+{
+	colorSpot->radius = radius;
+	return this;
+}
+
 bool PlayerController::IsDead()
 {
 	return deadTimer > 0;
@@ -395,7 +408,7 @@ void PlayerController::Reset()
 	moveSpeed.Set(10, 30, 0);
 	direction = 1;
 	jumpTimer = attackTimer = hitTimer = deadTimer = 0.0;
-	health = 20;
+	health = maxHealth;
 
 	walking = false;
 

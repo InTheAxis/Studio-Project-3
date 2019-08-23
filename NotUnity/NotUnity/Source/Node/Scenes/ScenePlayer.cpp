@@ -5,7 +5,6 @@
 #include "../Scripts/DebugText.h"
 #include "../Scripts/Player.h"
 #include "../Scripts/PlayerController.h"
-#include "../Scripts/ColorSpot.h"
 
 ScenePlayer::ScenePlayer(std::string name)
 	: Scene(name)
@@ -14,7 +13,6 @@ ScenePlayer::ScenePlayer(std::string name)
 
 ScenePlayer::~ScenePlayer()
 {
-	colorSpot = nullptr;
 	playerScript = nullptr;
 }
 
@@ -26,15 +24,11 @@ void ScenePlayer::Start()
 	//add & set up components and scripts	
 	playerScript = GetChild<GameObj>("Player")->AddScript<PlayerController>();
 
-	colorSpot = GetChild<GameObj>("Player")->AddComp<ColorSpot>();
-
 	Scene::Start();
 }
 
 void ScenePlayer::Update(double dt)
 {
-	colorSpot->SetUniform(0);
-
 	Scene::Update(dt);
 }
 
@@ -58,7 +52,14 @@ GameObj* ScenePlayer::GetPlayer()
 	return playerScript->GetGameObj();
 }
 
-void ScenePlayer::SetTerrain(Spline* s)
+ScenePlayer* ScenePlayer::SetTerrain(Spline* s)
 {
 	playerScript->SetTerrain(s);
+	return this;
+}
+
+ScenePlayer* ScenePlayer::SetColorSpotRad(float radius)
+{
+	playerScript->SetColorSpotRad(radius);
+	return this;
 }
