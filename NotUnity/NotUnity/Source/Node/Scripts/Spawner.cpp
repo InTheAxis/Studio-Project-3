@@ -49,8 +49,10 @@ void Spawner::Update(double dt)
 
 	UpdatePlayerPosToAI("e1");
 
-	if (GetEnemiesKilled() >= 5 && !GetBossKilled())
-		SpawnBoss("eboss");
+	if (GetEnemiesKilled() >= 3 && !GetBossKilled())
+	{
+		SpawnBoss("boss");
+	}
 
 	Node::Update(dt);
 }
@@ -173,7 +175,7 @@ void Spawner::SpawnBoss(std::string bosStage)
 
 	boss->GetTransform()->translate = spawnerPos + offset;
 	boss->ActiveSelf(true);
-	boss->GetScript<AI>()->Reset();
+	//Debug::Log("BOSS: " + std::to_string(boss->GetScript<AI>()->GetHealth()));
 }
 
 void Spawner::CreateEnemies(std::string waveOne)
@@ -204,7 +206,7 @@ void Spawner::SpawnEnemy(std::string waveOne)
 		enemyPool[i]->GetTransform()->translate = spawnerPos + offset;
 		enemyPool[i]->ActiveSelf(true);
 		enemyPool[i]->GetScript<AI>()->Reset();
-
+		//Debug::Log("ENEMY: " + std::to_string(enemyPool[i]->GetScript<AI>()->GetHealth()));
 		++waveCount;
 		return;
 	}
