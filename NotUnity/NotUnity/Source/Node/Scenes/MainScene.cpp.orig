@@ -27,14 +27,6 @@ MainScene::MainScene(std::string name)
 
 MainScene::~MainScene()
 {
-	spawner = nullptr;
-	player = nullptr;
-	map = nullptr;
-	title = nullptr;
-	wasd = nullptr;
-	lmb = nullptr;
-	playerGO = nullptr;
-	mainCam = nullptr;
 }
 
 void MainScene::Start()
@@ -123,10 +115,14 @@ void MainScene::Update(double dt)
 		lmb->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-2.f, 0, 0);
 		break;
 	case GAMEPLAY:
+<<<<<<< HEAD
 		greenbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3( (player->GetHealth() * 0.05) - 7.2, 4.0f, 0.f);
 		greenbar->GetGameObj()->GetTransform()->scale.Set(player->GetHealth() * 0.125, 1, 0);
 		redbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-6.2 , 4.0f, 0);
 		redbar->GetGameObj()->GetTransform()->scale.Set(2.4, 1, 0);
+		if (spawner->GetEnemyKilled() >= 3)	
+			ChangeGameState(WIN);	
+=======
 		if (spawner->GetEnemyKilled() >= 3 && spawner->GetBossKilled())
 		{
 			spawner->SetWave(spawner->GetSpawnerWave() + 1);
@@ -134,6 +130,7 @@ void MainScene::Update(double dt)
 		}
 		else if (spawner->GetSpawnerWave() >= 3)
 			ChangeGameState(WIN);
+>>>>>>> 370177331def8fc29359e7cf86baeb179515a425
 		else if (playerGO->GetScript<PlayerController>()->IsDead())
 			ChangeGameState(LOSE);
 		break;

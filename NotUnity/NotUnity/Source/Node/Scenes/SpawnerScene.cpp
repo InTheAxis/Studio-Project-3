@@ -4,6 +4,7 @@
 #include "../Components/Renderable.h"
 #include "../Scripts/Spawner.h"
 #include "../Scenes/ScenePlayer.h"
+#include "../Manager/MgrAchievements.h"
 
 SpawnerScene::SpawnerScene(std::string name) 
 	: Scene(name)
@@ -83,6 +84,7 @@ void SpawnerScene::Reset()
 
 int SpawnerScene::GetEnemyKilled()
 {
+
 	return SpawnerGO->GetScript<Spawner>()->GetEnemiesKilled();
 }
 

@@ -52,8 +52,11 @@ private:
 
 	double winTimer;
 	float lightAngle;	
+<<<<<<< HEAD
 
 	int healthminus;
+=======
+>>>>>>> 370177331def8fc29359e7cf86baeb179515a425
 	void ChangeGameState(GAME_STATE gs);
 };
 

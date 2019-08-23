@@ -98,6 +98,7 @@ void MgrResource::LoadMaterials()
 
 	temp = new Material("enemy");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/tomato.tga");
+<<<<<<< HEAD
 
 	temp = new Material("redbar");
 	temp-> maps[Material::COLOR0] = Resource::LoadTGA("tga/redbar.tga");
@@ -105,10 +106,12 @@ void MgrResource::LoadMaterials()
 	temp = new Material("greenbar");
 	temp-> maps[Material::COLOR0] = Resource::LoadTGA("tga/greenbar.tga");
 }
-
+=======
+}
 
 void MgrResource::LoadSounds()
 {
 	MgrSound* mgS = MgrSound::Instance();	
 	mgS->RegisterSound("bgm", "wav/foggy-forest.wav");	
 }
+>>>>>>> 370177331def8fc29359e7cf86baeb179515a425

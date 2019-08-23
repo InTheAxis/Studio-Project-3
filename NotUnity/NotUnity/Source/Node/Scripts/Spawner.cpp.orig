@@ -1,7 +1,7 @@
 #include "Spawner.h"
 #include "../Manager/MgrGraphics.h"
 #include "../../Node/GameObj.h"
-#include "../Manager/MgrAchievements.h"
+#include "Achievements.h"
 
 Spawner::Spawner(std::string name)
 	: Node(name)
@@ -94,8 +94,13 @@ int Spawner::GetEnemiesKilled()
 	{
 		if (enemyPool[i]->GetScript<AI>()->IsDead())
 			++c;
+<<<<<<< HEAD
 	}
-	MgrAchievements::Instance()->SetCurrentEnemyKilled(c);
+	Achievements::Instance()->SetCurrentEnemyKilled(c);
+=======
+	}	
+
+>>>>>>> 370177331def8fc29359e7cf86baeb179515a425
 	return c;
 }
 

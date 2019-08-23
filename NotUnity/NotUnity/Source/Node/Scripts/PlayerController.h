@@ -11,6 +11,7 @@
 #include "../Scripts.h"
 #include "../Components.h"
 #include "../../Utility/Math/Vector3.h"
+#include "../../Node/Scene.h"
 
 enum class P_STATE
 {
@@ -54,19 +55,23 @@ public:
 	bool IsDead();
 	void Reset();
 
+
+	void SetHealth(int h);
+	int	GetHealth();
+
 private:
 	KinemeticBody* kinb;
 	Sprite* sprite;
 	Collider* attackRight, *attackLeft, *attackAir;
 	Collider* hitbox;
 	Spline* terrain;
-	
+
 	P_STATE currState, nextState;
 
 	Vector3 moveSpeed;
 	int direction;
 	double jumpTimer, attackTimer, hitTimer, deadTimer;	
-	int health, healthINC;
+	int health;
 	int damage;
     int speedincrease;
 
@@ -79,7 +84,9 @@ private:
 	float GetTerrainHeight();
 
 	bool CanMove();
+	bool addHealth;
 	bool OnGround(float offset = 0, bool exact = false);
+	
 	void Move(float inputX);
 	void Friction();
 	void Jump();

@@ -9,8 +9,8 @@
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Utility/Input/ControllerMouse.h"
 #include "../../Utility/Math/Spline.h"
-#include "../Manager/MgrSkillTree.h"
-#include "../Manager/MgrAchievements.h"
+#include "../../Node/Scripts/SkillTree.h"
+#include "../../Node/Scripts/Achievements.h"
 
 PlayerController::PlayerController(std::string name)
 	: Node(name)
@@ -77,11 +77,14 @@ void PlayerController::Start()
 	hitbox->CreateAABB(0.5f);	
 	hitbox->tag = "player";
 
+<<<<<<< HEAD
 	addHealth = false;
+=======
 	ActiveSelf(true);
+>>>>>>> 370177331def8fc29359e7cf86baeb179515a425
 	Reset();
 
-	MgrAchievements::Instance()->setKnibRefrence(kinb);
+	Achievements::Instance()->setKnibRefrence(kinb);
 	Node::Start();
 }
 
@@ -110,24 +113,24 @@ void PlayerController::Update(double dt)
 	}
 	if (walking)
 	{
-		MgrAchievements::Instance()->GetWalkTime(0.1);
+		Achievements::Instance()->GetWalkTime(0.1);
 	}
 
 	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
 	{
-		MgrAchievements::Instance()->GetJumpTimes(1);
+		Achievements::Instance()->GetJumpTimes(1);
 		jumpTimer += dt;
 	}
 	else
 		jumpTimer = 0;
 	if ((m->IsButtonPressed(0) || kb->IsKeyPressed('Z')) && !attackTimer)
 	{
-		MgrAchievements::Instance()->GetAttacTimes(1);
+		Achievements::Instance()->GetAttacTimes(1);
 		attackTimer = 0.3f;
 	}
 	if (kb->IsKeyPressed('Q')) // TO BE PUT IN ENEMYSIDE TO DETECT IF ENEMY IS DEAD 
 	{
-		MgrAchievements::Instance()->GetEnemyKilled();
+		Achievements::Instance()->SetEnemyKilled(1);
 	}
 
 	if (kb->IsKeyPressed(VK_LCONTROL))
@@ -158,7 +161,7 @@ void PlayerController::Update(double dt)
 	//apply attacks
 	Attack(dt);
 	
-	if (MgrAchievements::Instance()->enemyAch() && addHealth == false)
+	if (Achievements::Instance()->enemyAch() && addHealth == false)
 	{
 		SetHealth(30);
 		addHealth = true;
@@ -378,7 +381,7 @@ void PlayerController::TakeDamage(int dmg)
 }
 int PlayerController::DamageDealt()
 {
-	if (MgrAchievements::Instance()->attackAch(true))
+	if (Achievements::Instance()->attackAch(true))
 		damage = 2;
 	return damage;
 }

@@ -10,7 +10,7 @@
 AI::AI(std::string name) 
 	: Node(name)
 	, playerTrans(0.f, 0.f, 0.f)
-	, health(3.f)
+	//, health(0)
 	, damage(0.f)
 	, strategy(nullptr)
 	, direction(0.f,0.f,0.f)
@@ -66,9 +66,15 @@ void AI::Start()
 	}
 
 	if (gameObject->GetName()[0] == 'e' && strategy == NULL)
+	{
+		gameObject->GetScript<AI>()->health = 3;
 		ChangeStrategy(new StrategyOne(), false);
+	}
 	if (gameObject->GetName()[0] == 'b' && strategy == NULL)
+	{
+		gameObject->GetScript<AI>()->health = 6;
 		ChangeStrategy(new StrategyOne(), false);
+	}
 	
 	Vector3 scale = gameObject->GetTransform()->scale;
 	coll = AddChild<Collider>("c");

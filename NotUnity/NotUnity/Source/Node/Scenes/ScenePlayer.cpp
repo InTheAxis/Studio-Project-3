@@ -48,6 +48,11 @@ void ScenePlayer::Render()
 	Scene::Render();
 }
 
+int ScenePlayer::GetHealth()
+{
+	return playerScript->GetHealth();
+}
+
 GameObj* ScenePlayer::GetPlayer()
 {
 	return playerScript->GetGameObj();

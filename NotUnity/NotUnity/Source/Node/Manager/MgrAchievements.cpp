@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include "../../Node/Components/KinemeticBody.h"
+#include "../../Node/Scripts/PlayerController.h"
 
 MgrAchievements::MgrAchievements(std::string name)
 	: Manager<MgrAchievements>(name)
@@ -18,12 +19,16 @@ MgrAchievements::~MgrAchievements()
 
 void MgrAchievements::Start()
 {
+	enemyDowned = false;
 	ReadTextFile();
 	Node::Start();
 }
 
 void MgrAchievements::Update(double dt)
 {
+	Debug::Log(enemyKilled);
+	Debug::Log(currentKilled);
+	Debug::Log(totalEnemyKilled);
 	WriteTextFile();
 	AchievementCheck();
 	Node::Update(dt);
@@ -40,6 +45,7 @@ void MgrAchievements::AchievementCheck()
 	if (attackTimes >= 10)
 	{
 		attackAch(true);
+
 		if (attackAch(true) && attackTimes >= 50)
 			attackAch2(true);
 	}
@@ -50,8 +56,13 @@ void MgrAchievements::AchievementCheck()
 			knibReference->maxVel.y = 1.3;
 		}
 		jumpAch(true);
-		if (jumpAch(true) && jumpTimes >= 50)
-			jumpAch2(true);
+		if (jumpAch(true) && jumpTimes >= 100)
+		{
+			if (knibReference->IsActive())
+			{
+				knibReference->maxVel.y = 1.6;
+			}
+		}
 	}
 	if (walkTime >= 10)
 	{
@@ -61,12 +72,14 @@ void MgrAchievements::AchievementCheck()
 		}
 		walkAch(true);
 		if (walkAch(true) && walkTime >= 200)
-			walkAch2(true);
+		{
+			if (knibReference->IsActive())
+			{
+				knibReference->maxVel.x = 1.6;
+			}
+		}
 	}
-	if (enemyKilled >= 10)
-	{
-		enemyAch(true);
-	}
+
 }
 
 int MgrAchievements::GetAttacTimes(int at)
@@ -93,7 +106,7 @@ int MgrAchievements::GetJumpTimes(int jt)
 
 bool MgrAchievements::jumpAch(bool JA)
 {
-	return false;
+	return JA;
 }
 
 bool MgrAchievements::jumpAch2(bool JA)
@@ -117,15 +130,29 @@ bool MgrAchievements::walkAch2(bool WA)
 	return WA;
 }
 
-int MgrAchievements::GetEnemyKilled(int ek)
+int MgrAchievements::GetEnemyKilled()
 {
-	enemyKilled += ek;
 	return enemyKilled;
 }
 
-bool MgrAchievements::enemyAch(bool EA)
+void MgrAchievements::SetEnemyKilled(int ek)
 {
-	return EA;
+	 enemyKilled += currentKilled;
+	
+}
+void MgrAchievements::SetCurrentEnemyKilled(int ek)
+{
+	currentKilled = ek;
+	totalEnemyKilled = enemyKilled + currentKilled;
+}
+bool MgrAchievements::enemyAch()
+{
+	if (totalEnemyKilled >= 10)
+	{
+		return true;
+	}
+	else
+		return false;
 }
 
 void MgrAchievements::ReadTextFile()
@@ -135,22 +162,29 @@ void MgrAchievements::ReadTextFile()
 
 	if (Print.is_open())
 	{
-		while (/*std::getline(stats , line)*/std::getline(Print,line))
+		while (std::getline(Print,line))
 		{
-			int ID = line.find(","); //find , finds ,
+			int ID = line.find(","); //find , 
 			std::string tmp = line.substr(ID + 1);
 			int Cord = tmp.find(","); //cord after this
+			std::string tmp2 = tmp.substr(Cord + 1);
+			int Coord = tmp2.find(",");
+			std::string tmp3 = tmp2.substr(Coord + 1);
+
 			std::string attack = line.substr(0, ID);
+
 			std::string jump = tmp.substr(0, Cord);
-			std::string walkTimer = tmp.substr(Cord + 1);
-			std::string enemyKILL = tmp.substr(Cord + 1);
-				 
+
+			std::string walkTimer = tmp2.substr(Coord + 1);
+
+			std::string enemyKILL = tmp3;				 
 
 
 			this->attackTimes = std::stoi(attack);
 			this->jumpTimes = std::stoi(jump);
 			this->walkTime = std::stoi(walkTimer);
 			this->enemyKilled = std::stoi(enemyKILL);
+
 		}
 		Print.close();
 	}
@@ -163,15 +197,20 @@ void MgrAchievements::WriteTextFile()
 	std::ofstream Write("Resources/LifeTimeStats.txt");
 	if (Write.is_open())
 	{
-		int ID = line.find(",");
+	
+		int ID = line.find(","); //find , 
 		std::string tmp = line.substr(ID + 1);
-		int Cord = tmp.find(",");
+		int Cord = tmp.find(","); //cord after this
+		std::string tmp2 = tmp.substr(Cord + 1);
+		int Coord = tmp2.find(",");
+		std::string tmp3 = tmp2.substr(Coord + 1);
+
 		std::string attack = line.substr(0, ID);
 		std::string jump = tmp.substr(0, Cord);
-		std::string walkTimer = tmp.substr(Cord + 1);
-		std::string enemyKILL = tmp.substr(Cord + 1);
+		std::string walkTimer = tmp2.substr(Coord + 1);
+		std::string enemyKILL = tmp3;
 
-		Write << attackTimes << "," << jumpTimes << "," << walkTime << "," << enemyKilled;
+		Write << attackTimes << "," << jumpTimes << "," << walkTime << "," << totalEnemyKilled;
 		
 	}
 }
