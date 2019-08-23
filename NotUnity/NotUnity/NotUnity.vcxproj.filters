@@ -214,6 +214,9 @@
     <ClCompile Include="Source\Utility\Math\Splines\Mountain.cpp">
       <Filter>Source\Utility\Math\Splines</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Node\Manager\MgrSound.cpp">
+      <Filter>Source\Node\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Utility\TypeID.h">
@@ -416,6 +419,9 @@
     </ClInclude>
     <ClInclude Include="Source\Utility\Math\Splines\Mountain.h">
       <Filter>Source\Utility\Math\Splines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\MgrSound.h">
+      <Filter>Source\Node\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

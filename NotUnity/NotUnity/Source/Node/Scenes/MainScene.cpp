@@ -116,7 +116,7 @@ void MainScene::Update(double dt)
 			ChangeGameState(MENU);
 		break;
 	}
-	Debug::Log(spawner->GetSpawnerWave());
+
 	mainCam->GetTransform()->translate = playerGO->GetTransform()->translate;
 	mainCam->GetTransform()->translate.z = 1;
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);

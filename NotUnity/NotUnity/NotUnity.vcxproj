@@ -39,6 +39,7 @@
     <ClCompile Include="Source\Node\Manager\MgrMain.cpp" />
     <ClCompile Include="Source\Node\Manager\MgrResource.cpp" />
     <ClCompile Include="Source\Node\Manager\MgrScene.cpp" />
+    <ClCompile Include="Source\Node\Manager\MgrSound.cpp" />
     <ClCompile Include="Source\Node\Node.cpp" />
     <ClCompile Include="Source\Node\Scene.cpp" />
     <ClCompile Include="Source\Node\Scenes\MainScene.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="Source\Node\Manager\MgrMain.h" />
     <ClInclude Include="Source\Node\Manager\MgrResource.h" />
     <ClInclude Include="Source\Node\Manager\MgrScene.h" />
+    <ClInclude Include="Source\Node\Manager\MgrSound.h" />
     <ClInclude Include="Source\Node\Node.h" />
     <ClInclude Include="Source\Node\Scene.h" />
     <ClInclude Include="Source\Node\Scenes\MainScene.h" />

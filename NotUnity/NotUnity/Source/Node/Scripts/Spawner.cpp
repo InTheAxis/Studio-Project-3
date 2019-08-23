@@ -92,7 +92,7 @@ int Spawner::GetEnemiesKilled()
 		if (enemyPool[i]->GetScript<AI>()->IsDead())
 			++c;
 	}	
-	Debug::Log(c);
+
 	return c;
 }
 

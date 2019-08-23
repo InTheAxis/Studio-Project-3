@@ -4,6 +4,7 @@
 #include "MgrGraphics.h"
 #include "MgrResource.h"
 #include "MgrCollision.h"
+#include "MgrSound.h"
 
 MgrMain::MgrMain(std::string name) : Manager<MgrMain>(name)
 {
@@ -21,6 +22,7 @@ void MgrMain::Start()
 	AddChild("MgrResource", MgrResource::Instance());
 	AddChild("MgrScene", MgrScene::Instance());
 	AddChild("MgrCollision", MgrCollision::Instance());
+	AddChild("MgrSound", MgrSound::Instance());
 	
 	Node::Start();
 }

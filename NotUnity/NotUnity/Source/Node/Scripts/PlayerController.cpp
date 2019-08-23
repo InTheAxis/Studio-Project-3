@@ -21,11 +21,6 @@ PlayerController::~PlayerController()
 {
 }
 
-void test(ColInfo info)
-{
-	Debug::Log(info.other->GetName());
-}
-
 void PlayerController::Start()
 {
 	gameObject->GetTransform()->translate.Set(-1, 1, 0.1f);
@@ -62,11 +57,13 @@ void PlayerController::Start()
 	attackRight->CreateAABB(0.7f);
 	attackRight->isTrigger = true;
 	attackRight->ActiveSelf(false);
+	attackRight->tag = "playerAR";
 	attackLeft = AddChild<Collider>("l");
 	attackLeft->SetGameObj(gameObject);
 	attackLeft->CreateAABB(0.7f);
 	attackLeft->isTrigger = true;
 	attackLeft->ActiveSelf(false);
+	attackLeft->tag = "playerAL";
 	attackAir = AddChild<Collider>("a");
 	attackAir->SetGameObj(gameObject);
 	attackAir->CreateAABB(0.8f);
@@ -75,7 +72,9 @@ void PlayerController::Start()
 	hitbox = AddChild<Collider>("h");
 	hitbox->SetGameObj(gameObject);
 	hitbox->CreateAABB(0.5f);	
+	hitbox->tag = "player";
 
+	ActiveSelf(true);
 	Reset();
 
 	Achievements::Instance()->setKnibRefrence(kinb);
@@ -171,6 +170,17 @@ void PlayerController::Update(double dt)
 void PlayerController::End()
 {
 	Node::End();
+}
+
+void PlayerController::OnEnable()
+{
+	hitbox->OnCollideStay.Subscribe(&PlayerController::HandleCollision, this, "coll");
+}
+
+void PlayerController::OnDisable()
+{
+	if (hitbox)
+		hitbox->OnCollideStay.UnSubscribe("coll");
 }
 
 void PlayerController::TryChangeState(P_STATE state)
@@ -413,4 +423,10 @@ void PlayerController::PrintState()
 		Debug::Log("I am DYING_R");
 		break;
 	}
+}
+
+void PlayerController::HandleCollision(ColInfo info)
+{
+	if (info.other->tag == "bulletplayer")
+		TakeDamage(1);
 }

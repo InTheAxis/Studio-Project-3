@@ -8,13 +8,10 @@
 #include "../../Node/Components/Collider.h"
 #include "../../Node/Scripts/PlayerController.h"
 
-void OnHit(ColInfo info)
+void Projectile::OnHit(ColInfo info)
 {
-	if (info.other->GetGameObj()->GetScript<PlayerController>())
-	{
-		info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
-		info.coll->GetGameObj()->ActiveSelf(false);
-	}
+	if (info.other->tag == target)
+		ActiveSelf(false);
 }
 
 
@@ -29,13 +26,13 @@ Projectile::~Projectile()
 
 void Projectile::OnEnable()
 {
-	coll->OnCollideEnter += OnHit;
+	coll->OnCollideEnter.Subscribe(&Projectile::OnHit, this, "hit");
 }
 
 void Projectile::OnDisable()
 {
 	if (coll)
-		coll->OnCollideEnter -= OnHit;
+		coll->OnCollideEnter.UnSubscribe("hit");
 	if (kinb)
 		kinb->ResetVel(1, 1);
 }
@@ -58,6 +55,7 @@ void Projectile::Start()
 	coll = AddChild<Collider>();
 	coll->SetGameObj(gameObject);
 	coll->CreateAABB(size);
+	coll->tag = "bullet";
 	Node::Start();
 }
 
@@ -65,6 +63,7 @@ void Projectile::Update(double dt)
 {
 	if (m_lifetime > 5)
 		gameObject->ActiveSelf(false);
+	coll->tag = "bullet" + target;
 	kinb->UpdateSuvat(dt);
 	Node::Update(dt);
 }
@@ -78,4 +77,10 @@ void Projectile::Discharge(Vector3 origin, Vector3 vel)
 {	
 	t->translate = origin;
 	kinb->ApplyImpulse(vel);
+}
+
+Projectile * Projectile::SetTarget(std::string target)
+{
+	this->target = target;	
+	return this;
 }
