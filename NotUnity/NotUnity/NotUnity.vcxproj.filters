@@ -172,9 +172,6 @@
     <ClCompile Include="Source\Node\Scripts\MapGenerator.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Node\Scripts\Player.cpp">
-      <Filter>Source\Node\Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Node\Scripts\Spawner.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
@@ -183,12 +180,6 @@
     </ClCompile>
     <ClCompile Include="Source\Utility\Math\Rect2D.cpp">
       <Filter>Source\Utility\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Scripts\Achievements.cpp">
-      <Filter>Source\Node\Scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Scripts\SkillTree.cpp">
-      <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
     <ClCompile Include="Source\Node\Scripts\Skill.cpp">
       <Filter>Source\Node\Scripts</Filter>
@@ -215,6 +206,15 @@
       <Filter>Source\Utility\Math\Splines</Filter>
     </ClCompile>
     <ClCompile Include="Source\Node\Manager\MgrSound.cpp">
+      <Filter>Source\Node\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Scripts\Player.cpp">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Manager\MgrAchievements.cpp">
+      <Filter>Source\Node\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Manager\MgrSkillTree.cpp">
       <Filter>Source\Node\Manager</Filter>
     </ClCompile>
   </ItemGroup>
@@ -378,9 +378,6 @@
     <ClInclude Include="Source\Node\Scripts\MapGenerator.h">
       <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Node\Scripts\Player.h">
-      <Filter>Source\Node\Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Utility\Math\AABB.h">
       <Filter>Source\Utility\Math</Filter>
     </ClInclude>
@@ -389,12 +386,6 @@
     </ClInclude>
     <ClInclude Include="Source\Utility\Delegate.h">
       <Filter>Source\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Node\Scripts\Achievements.h">
-      <Filter>Source\Node\Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Node\Scripts\SkillTree.h">
-      <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node\Scripts\Skill.h">
       <Filter>Source\Node\Scripts</Filter>
@@ -421,6 +412,15 @@
       <Filter>Source\Utility\Math\Splines</Filter>
     </ClInclude>
     <ClInclude Include="Source\Node\Manager\MgrSound.h">
+      <Filter>Source\Node\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Scripts\Player.h">
+      <Filter>Source\Node\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\MgrAchievements.h">
+      <Filter>Source\Node\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\MgrSkillTree.h">
       <Filter>Source\Node\Manager</Filter>
     </ClInclude>
   </ItemGroup>

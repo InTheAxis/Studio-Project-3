@@ -1,17 +1,13 @@
 #ifndef ACHIEVEMENTS_H
 #define ACHIEVEMENTS_H
 
-#include "../Node.h"
-#include "../../Utility/TypeID.h"
-#include "../../Utility/Component.h"
-#include "../Scripts.h"
-#include "../Components.h"
+#include "Manager.h"
 #include "../../Utility/Delegate.h"
-#include "../../Utility/Singleton.h"
+
 class KinemeticBody;
-class Achievements : public Node, public TypeID<Achievements>, public Component, public Singleton<Achievements>
+class MgrAchievements : public Manager<MgrAchievements>
 {
-	friend Singleton<Achievements>;
+	friend Singleton<MgrAchievements>;
 	friend Node;
 public:
 	virtual void Start();
@@ -61,8 +57,8 @@ public:
 	void WriteTextFile();
 	void setKnibRefrence(KinemeticBody* knib);
 private:
-	Achievements(std::string name = "Achievements");
-	~Achievements();
+	MgrAchievements(std::string name = "MgrAchievements");
+	~MgrAchievements();
 
 	KinemeticBody* knibReference; // get set private variable !!!
 };

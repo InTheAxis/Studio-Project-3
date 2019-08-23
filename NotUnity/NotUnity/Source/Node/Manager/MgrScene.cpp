@@ -20,6 +20,7 @@ MgrScene::~MgrScene()
 			delete s.second;
 		s.second = nullptr;
 	}
+	allScenes.clear();
 }
 
 void MgrScene::LoadScenes()

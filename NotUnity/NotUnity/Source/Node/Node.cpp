@@ -1,14 +1,31 @@
 #include "Node.h"
 
+#include <sstream>
+
 Node::Node(std::string name) 
 	: m_name(name) 
 	, m_active(true)
 	, parent(nullptr)
+	, m_newed(false)
 {
 }
 
 Node::~Node()
 {
+	parent = nullptr;
+	std::stringstream ss;
+	for (auto &childNode : m_children)
+	{
+		if (childNode.second && childNode.second->m_newed)
+		{
+			ss.str("");
+			ss << "Deleted " << childNode.second->GetName() << " " << childNode.second;
+			Debug::Log(ss.str());
+			delete childNode.second;
+		}
+		childNode.second = nullptr;
+	}
+	m_children.clear();
 }
 
 void Node::Start()

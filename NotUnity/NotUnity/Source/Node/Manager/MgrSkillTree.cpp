@@ -1,34 +1,33 @@
-#include "SkillTree.h"
+#include "MgrSkillTree.h"
 
-SkillTree::SkillTree(std::string name)
-	: Node(name)
+MgrSkillTree::MgrSkillTree(std::string name)
+	: Manager<MgrSkillTree>(name)
 {
 }
 
-SkillTree::~SkillTree()
+MgrSkillTree::~MgrSkillTree()
 {
 }
 
-void SkillTree::Start()
+void MgrSkillTree::Start()
 {
 	skills[0] = AddChild<Skill>("Skill1");
 	skills[1] = AddChild<Skill>("Skill2");
 	skills[2] = AddChild<Skill>("Skill3");
-
 	Node::Start();
 }
 
-void SkillTree::Update(double dt)
+void MgrSkillTree::Update(double dt)
 {
 	Node::Update(dt);
 }
 
-void SkillTree::End()
+void MgrSkillTree::End()
 {
 	Node::End();
 }
 
-void SkillTree::ExpGained(int exp)
+void MgrSkillTree::ExpGained(int exp)
 {
 	expPoint += exp;
 	while (expPoint >= 10)
@@ -40,7 +39,7 @@ void SkillTree::ExpGained(int exp)
 	Debug::Log(skillPoint);
 }
 
-void SkillTree::SpendSkillPoint(int level)
+void MgrSkillTree::SpendSkillPoint(int level)
 {
 	if (skills[level]->GetPrevious()->GetUnlocked())
 	{
@@ -48,7 +47,7 @@ void SkillTree::SpendSkillPoint(int level)
 	}
 }
 
-std::vector<int> SkillTree::GetUnlockableSkill()
+std::vector<int> MgrSkillTree::GetUnlockableSkill()
 {
 	std::vector<int> temp;
 	if (skills[0]->GetUnlocked())

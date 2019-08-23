@@ -1,6 +1,8 @@
 #ifndef MGR_MAIN_H
 #define MGR_MAIN_H
 
+#include <vector>
+
 #include "Manager.h"
 
 class MgrMain : public Manager<MgrMain>
@@ -13,6 +15,7 @@ public:
 protected:
 	MgrMain(std::string name = "MgrMain");
 	~MgrMain();
-
+	
+	std::vector<Node*> allManagers;
 };
 #endif

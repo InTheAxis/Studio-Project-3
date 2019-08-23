@@ -72,7 +72,12 @@ public:
 		if (m_children.count(key) > 0)
 			return GetChild<T>(key);
 
-		T* child = ptr ? ptr : new T(key);
+		if (!ptr)
+		{
+			ptr = new T(key);
+			m_newed = true;
+		}
+		T* child = ptr;
 		child->parent = this;
 		child->m_active = m_active;
 		m_children[key] = static_cast<Node*>(child);
@@ -95,6 +100,8 @@ protected:
 
 	double m_lifetime;
 	Node* parent;
+
+	bool m_newed;
 };
 
 #endif

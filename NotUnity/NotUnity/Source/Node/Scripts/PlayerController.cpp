@@ -8,8 +8,8 @@
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Utility/Input/ControllerMouse.h"
 #include "../../Utility/Math/Spline.h"
-#include "../../Node/Scripts/SkillTree.h"
-#include "../../Node/Scripts/Achievements.h"
+#include "../Manager/MgrSkillTree.h"
+#include "../Manager/MgrAchievements.h"
 
 PlayerController::PlayerController(std::string name)
 	: Node(name)
@@ -77,7 +77,7 @@ void PlayerController::Start()
 	ActiveSelf(true);
 	Reset();
 
-	Achievements::Instance()->setKnibRefrence(kinb);
+	MgrAchievements::Instance()->setKnibRefrence(kinb);
 	Node::Start();
 }
 
@@ -106,24 +106,24 @@ void PlayerController::Update(double dt)
 	}
 	if (walking)
 	{
-		Achievements::Instance()->GetWalkTime(0.1);
+		MgrAchievements::Instance()->GetWalkTime(0.1);
 	}
 
 	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
 	{
-		Achievements::Instance()->GetJumpTimes(1);
+		MgrAchievements::Instance()->GetJumpTimes(1);
 		jumpTimer += dt;
 	}
 	else
 		jumpTimer = 0;
 	if ((m->IsButtonPressed(0) || kb->IsKeyPressed('Z')) && !attackTimer)
 	{
-		Achievements::Instance()->GetAttacTimes(1);
+		MgrAchievements::Instance()->GetAttacTimes(1);
 		attackTimer = 0.3f;
 	}
 	if (kb->IsKeyPressed('Q')) // TO BE PUT IN ENEMYSIDE TO DETECT IF ENEMY IS DEAD 
 	{
-		Achievements::Instance()->GetEnemyKilled(1);
+		MgrAchievements::Instance()->GetEnemyKilled(1);
 	}
 
 	if (kb->IsKeyPressed(VK_LCONTROL))
@@ -354,7 +354,7 @@ void PlayerController::TakeDamage(int dmg)
 }
 int PlayerController::DamageDealt()
 {
-	if (Achievements::Instance()->attackAch(true))
+	if (MgrAchievements::Instance()->attackAch(true))
 		damage = 2;
 	return damage;
 }

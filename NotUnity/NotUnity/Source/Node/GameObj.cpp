@@ -13,6 +13,9 @@ GameObj::GameObj(std::string name) : Node(name)
 
 GameObj::~GameObj()
 {
+	comps = nullptr;
+	scripts = nullptr;
+	t = nullptr;
 }
 
 void GameObj::Start()

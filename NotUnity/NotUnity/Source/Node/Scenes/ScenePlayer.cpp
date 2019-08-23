@@ -6,8 +6,7 @@
 #include "../Scripts/Player.h"
 #include "../Scripts/PlayerController.h"
 #include "../Scripts/ColorSpot.h"
-#include "../Scripts/SkillTree.h"
-#include "../../Node/Scripts/Achievements.h"
+
 ScenePlayer::ScenePlayer(std::string name)
 	: Scene(name)
 {
@@ -26,8 +25,6 @@ void ScenePlayer::Start()
 	
 	//add & set up components and scripts	
 	playerScript = GetChild<GameObj>("Player")->AddScript<PlayerController>();
-	AddChild("SkillTree", SkillTree::Instance());
-	AddChild("Achievement", Achievements::Instance());
 
 	colorSpot = GetChild<GameObj>("Player")->AddComp<ColorSpot>();
 
@@ -48,15 +45,6 @@ void ScenePlayer::End()
 
 void ScenePlayer::Render()
 {
-	//If got diff render pipeline
-
-	//for (auto r : *renderables)
-	//{
-	//	r->Render();
-	//}
-
-	//OR
-
 	Scene::Render();
 }
 
