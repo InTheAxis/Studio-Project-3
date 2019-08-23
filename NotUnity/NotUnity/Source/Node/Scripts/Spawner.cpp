@@ -181,7 +181,7 @@ void Spawner::SpawnBoss(std::string bosStage)
 
 	int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
 	offset.x = sign * (1 + Math::RandFloatMinMax(0, 2));
-	offset.y = (playerTrans.y + Math::RandFloatMinMax(0, 3));
+	offset.y = (playerTrans.y + Math::RandFloatMinMax(5, 7));
 	offset.z = 1;
 
 	boss->ActiveSelf(true);
@@ -212,7 +212,7 @@ void Spawner::SpawnEnemy(std::string waveOne)
 
 		int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
 		offset.x = sign * (1 + Math::RandFloatMinMax(0, 2));
-		offset.y = (playerTrans.y + Math::RandFloatMinMax(0, 3));
+		offset.y = (playerTrans.y + Math::RandFloatMinMax(5, 7));
 		offset.z = 1;
 
 		enemyPool[i]->ActiveSelf(true);
