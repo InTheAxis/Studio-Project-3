@@ -27,6 +27,14 @@ MainScene::MainScene(std::string name)
 
 MainScene::~MainScene()
 {
+	spawner = nullptr;
+	player = nullptr;
+	map = nullptr;
+	title = nullptr;
+	wasd = nullptr;
+	lmb = nullptr;
+	playerGO = nullptr;
+	mainCam = nullptr;
 }
 
 void MainScene::Start()

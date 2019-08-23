@@ -15,6 +15,7 @@ SpawnerScene::SpawnerScene(std::string name)
 
 SpawnerScene::~SpawnerScene()
 {
+	SpawnerGO = nullptr;
 }
 
 void SpawnerScene::Start()

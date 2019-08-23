@@ -15,6 +15,8 @@ ScenePlayer::ScenePlayer(std::string name)
 
 ScenePlayer::~ScenePlayer()
 {
+	colorSpot = nullptr;
+	playerScript = nullptr;
 }
 
 void ScenePlayer::Start()
