@@ -39,6 +39,11 @@ private:
 	Sprite* title;
 	Renderable* wasd;
 	Renderable* lmb;
+	
+	Renderable* greenbar;
+	Renderable* redbar;
+	//PlayerController* pc;
+
 	GameObj* playerGO;
 	GameObj* mainCam;
 
@@ -48,6 +53,7 @@ private:
 	double winTimer;
 	float lightAngle;	
 
+	int healthminus;
 	void ChangeGameState(GAME_STATE gs);
 };
 

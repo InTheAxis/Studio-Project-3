@@ -45,12 +45,7 @@ void Achievements::AchievementCheck()
 			}
 		}
 	}
-	if (enemyKilled >= 10)
-	{
-		enemyAch(true);
-			
-		/*if(enemyKilled >=)*/
-	}
+
 }
 
 int Achievements::GetAttacTimes(int at)
@@ -101,20 +96,30 @@ bool Achievements::walkAch2(bool WA)
 	return WA;
 }
 
-int Achievements::GetEnemyKilled(int ek)
+int Achievements::GetEnemyKilled()
 {
-	enemyKilled += ek;
 	return enemyKilled;
 }
-void Achievements::SetEnenmyKilled(int ek)
+void Achievements::SetEnemyKilled(int ek)
 {
-	enemyKilled = ek;
+	 enemyKilled += currentKilled;
+	
+}
+void Achievements::SetCurrentEnemyKilled(int ek)
+{
+	currentKilled = ek;
+	totalEnemyKilled = enemyKilled + currentKilled;
+}
+bool Achievements::enemyAch()
+{
+	if (totalEnemyKilled >= 10)
+	{
+		return true;
+	}
+	else
+		return false;
 }
 
-bool Achievements::enemyAch(bool EA)
-{
-	return EA;
-}
 
 void Achievements::ReadTextFile()
 {
@@ -158,19 +163,7 @@ void Achievements::WriteTextFile()
 	std::ofstream Write("Resources/LifeTimeStats.txt");
 	if (Write.is_open())
 	{
-	/*	int ID = line.find(",");
-		std::string tmp = line.substr(ID + 1);
-		int Cord = tmp.find(",");
-		std::string attack = line.substr(0, ID);
-		std::string jump = tmp.substr(0, Cord);
-		std::string walkTimer = tmp.substr(Cord + 1);
-		std::string enemyKILL = tmp.substr(Cord + 1);
-*/
-		//int ID = line.find(","); //find , finds ,
-		//std::string tmp = line.substr(ID + 1);
-		//int Cord = tmp.find(","); //cord after this
-		//std::string tmp2 = line.substr(Cord + 1);
-
+	
 		int ID = line.find(","); //find , 
 		std::string tmp = line.substr(ID + 1);
 		int Cord = tmp.find(","); //cord after this
@@ -183,7 +176,7 @@ void Achievements::WriteTextFile()
 		std::string walkTimer = tmp2.substr(Coord + 1);
 		std::string enemyKILL = tmp3;
 
-		Write << attackTimes << "," << jumpTimes << "," << walkTime << "," << enemyKilled;
+		Write << attackTimes << "," << jumpTimes << "," << walkTime << "," << totalEnemyKilled;
 		
 	}
 }
@@ -205,15 +198,17 @@ Achievements::~Achievements()
 
 void Achievements::Start()
 {			
+	enemyDowned = false;
 	ReadTextFile();
 	Node::Start();
 }
 
 void Achievements::Update(double dt)
 {
-
+	Debug::Log(enemyKilled);
+	Debug::Log(currentKilled);
+	Debug::Log(totalEnemyKilled);
 	WriteTextFile();
-	// Debug::Log(enemyKilled);
 	AchievementCheck();
 	Node::Update(dt);
 }

@@ -5,6 +5,7 @@
 #include "../../Node/Components/Transform.h"
 #include "../../Node/Components/KinemeticBody.h"
 #include "../../Node/Components/Collider.h"
+#include "../../Node/Components/Renderable.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Utility/Input/ControllerMouse.h"
 #include "../../Utility/Math/Spline.h"
@@ -14,6 +15,7 @@
 PlayerController::PlayerController(std::string name)
 	: Node(name)
 	, terrain(nullptr)
+
 {
 }
 
@@ -49,6 +51,7 @@ void PlayerController::Start()
 	sprite->SetGameObj(gameObject);
 	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"));
 	sprite->SetHSV(-1,1,-1)->SetRenderPass(RENDER_PASS::POST_FX)->SelectShader(MgrGraphics::HSV_LIT);
+	
 	
 	kinb = AddChild<KinemeticBody>();
 	kinb->SetGameObj(gameObject);
@@ -125,7 +128,7 @@ void PlayerController::Update(double dt)
 	}
 	if (kb->IsKeyPressed('Q')) // TO BE PUT IN ENEMYSIDE TO DETECT IF ENEMY IS DEAD 
 	{
-		Achievements::Instance()->GetEnemyKilled(1);
+		Achievements::Instance()->SetEnemyKilled(1);
 	}
 
 	if (kb->IsKeyPressed(VK_LCONTROL))
@@ -155,8 +158,8 @@ void PlayerController::Update(double dt)
 
 	//apply attacks
 	Attack(dt);
-
-	if (Achievements::Instance()->enemyAch(true) && addHealth == false)
+	
+	if (Achievements::Instance()->enemyAch() && addHealth == false)
 	{
 		SetHealth(30);
 		addHealth = true;
@@ -164,7 +167,7 @@ void PlayerController::Update(double dt)
 	else
 		addHealth = true;
 
-	Debug::Log(health);
+	/*Debug::Log(health);*/
 	
 	//apply damage
 	Hit(dt);

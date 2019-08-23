@@ -9,6 +9,7 @@
 #include "../Scripts.h"
 #include "../Components.h"
 #include "../../Utility/Math/Vector3.h"
+#include "../../Node/Scene.h"
 
 enum class P_STATE
 {
@@ -51,6 +52,7 @@ public:
 
 
 	void SetHealth(int h);
+	int	GetHealth();
 
 private:
 	KinemeticBody* kinb;
@@ -58,7 +60,7 @@ private:
 	Collider* attackRight, *attackLeft, *attackAir;
 	Collider* hitbox;
 	Spline* terrain;
-	
+
 	P_STATE currState, nextState;
 
 	Vector3 moveSpeed;
@@ -80,7 +82,6 @@ private:
 	bool addHealth;
 	bool OnGround(float offset = 0, bool exact = false);
 	
-	int	GetHealth();
 	void Move(float inputX);
 	void Friction();
 	void Jump();

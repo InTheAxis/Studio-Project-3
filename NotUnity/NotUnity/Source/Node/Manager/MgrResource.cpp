@@ -97,4 +97,10 @@ void MgrResource::LoadMaterials()
 
 	temp = new Material("enemy");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/tomato.tga");
+
+	temp = new Material("redbar");
+	temp-> maps[Material::COLOR0] = Resource::LoadTGA("tga/redbar.tga");
+
+	temp = new Material("greenbar");
+	temp-> maps[Material::COLOR0] = Resource::LoadTGA("tga/greenbar.tga");
 }

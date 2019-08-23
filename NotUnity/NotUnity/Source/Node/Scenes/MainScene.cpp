@@ -45,6 +45,8 @@ void MainScene::Start()
 	AddChild<GameObj>("title");
 	AddChild<GameObj>("wasd");
 	AddChild<GameObj>("lmb");
+	AddChild<GameObj>("greenbar");
+	AddChild<GameObj>("redbar");
 
 	//add & set up components and scripts
 	//mainCam->AddComp<Camera>()->SetMode(Camera::DEBUG);
@@ -58,6 +60,14 @@ void MainScene::Start()
 	lmb = GetChild<GameObj>("lmb")->AddComp<Renderable>();
 	lmb->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("lmb"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
 	lmb->ActiveSelf(false);
+
+
+	greenbar = GetChild<GameObj>("greenbar")->AddComp<Renderable>();
+	greenbar->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("greenbar"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
+	greenbar->ActiveSelf(false);
+	redbar = GetChild<GameObj>("redbar")->AddComp<Renderable>();
+	redbar->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("redbar"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
+	redbar->ActiveSelf(false);
 	Transform* t = GetChild<GameObj>("title")->GetTransform();
 	t->translate.Set(0, 6, 0);
 	t->scale.Set(4, 4, 1);
@@ -76,6 +86,7 @@ void MainScene::Start()
 	spawner->SetWave(0);
 	playerGO = player->GetPlayer();
 	
+	healthminus = 1;
 	lightAngle = 0.f;
 }
 
@@ -86,6 +97,8 @@ void MainScene::Update(double dt)
 	if (kb->IsKeyPressed('9'))
 		debug = !debug;
 
+	if (kb->IsKeyDown('F'))
+		healthminus -= 0.01 * dt;
 	switch (gs)
 	{
 	case MENU:
@@ -99,6 +112,10 @@ void MainScene::Update(double dt)
 		lmb->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-2.f, 0, 0);
 		break;
 	case GAMEPLAY:
+		greenbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3( (player->GetHealth() * 0.05) - 7.2, 4.0f, 0.f);
+		greenbar->GetGameObj()->GetTransform()->scale.Set(player->GetHealth() * 0.125, 1, 0);
+		redbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-6.2 , 4.0f, 0);
+		redbar->GetGameObj()->GetTransform()->scale.Set(2.4, 1, 0);
 		if (spawner->GetEnemyKilled() >= 3)	
 			ChangeGameState(WIN);	
 		else if (playerGO->GetScript<PlayerController>()->IsDead())
@@ -181,6 +198,8 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		lmb->ActiveSelf(false);
 		break;
 	case GAMEPLAY:
+		greenbar->ActiveSelf(false);
+		redbar->ActiveSelf(false);
 		spawner->SetWave(0);
 		break;
 	case LOSE:
@@ -207,6 +226,10 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		lmb->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-2.f, 0, 0);
 		break;
 	case GAMEPLAY:
+		greenbar->ActiveSelf(true);
+		redbar->ActiveSelf(true);
+		greenbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3((player->GetHealth() * 0.05) - 7.2, 4.0f, 0.f);
+		redbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-6.3 , 4.0f, 0);
 		spawner->SetWave(1);
 		break;
 	case LOSE:		

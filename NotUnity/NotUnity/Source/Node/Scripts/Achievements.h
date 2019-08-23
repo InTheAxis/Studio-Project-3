@@ -53,10 +53,15 @@ public:
 
 	
 	// Killing 10 enemies and gain hp
-	int GetEnemyKilled(int ek);
-	void SetEnenmyKilled(int ek);
+	int GetEnemyKilled();
+	void SetEnemyKilled(int ek);
+	void SetCurrentEnemyKilled(int ek);
 	int enemyKilled;
-	bool enemyAch(bool EA);
+	int currentKilled;
+	int totalEnemyKilled;
+
+	bool enemyAch();
+	bool enemyDowned;
 
 
 	void ReadTextFile();
