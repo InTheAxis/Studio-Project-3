@@ -14,6 +14,7 @@ out vec4 color;
 
 // constants
 const int MAX_COLORMAPS = 13;
+const float SAT_THRESHOLD = 0.13;
 
 // misc uniforms
 struct Material
@@ -65,7 +66,7 @@ void main()
 	vec3 targetHsv = rgbToHsv(vec3(color));	
 	if (hsv.h >= 0)
 		targetHsv.x = hsv.h;
-	if (hsv.s >= 0 && targetHsv.y > 0.2)
+	if (hsv.s >= 0 && targetHsv.y > SAT_THRESHOLD)
 		targetHsv.y = clamp(hsv.s, 0, 1);
 	if (hsv.v >= 0)
 		targetHsv.z = clamp(hsv.v, 0, 1);

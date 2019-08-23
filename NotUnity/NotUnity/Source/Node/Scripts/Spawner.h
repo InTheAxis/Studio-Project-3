@@ -53,6 +53,7 @@ private:
 	void SpawnEnemy(std::string waveOne);
 	void GetEnemyCount(std::string waveOne);
 
+	void UpdateColorSpots();
 	void UpdatePlayerPosToAI(std::string names);
 	void SetEnemyCount(int enemyCount);
 

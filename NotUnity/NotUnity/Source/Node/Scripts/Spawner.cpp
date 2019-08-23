@@ -1,6 +1,7 @@
 #include "Spawner.h"
 #include "../Manager/MgrGraphics.h"
 #include "../../Node/GameObj.h"
+#include "../../Node/Scripts//ColorSpot.h"
 #include "../Manager/MgrAchievements.h"
 
 Spawner::Spawner(std::string name)
@@ -29,6 +30,8 @@ void Spawner::Start()
 
 void Spawner::Update(double dt)
 {
+	UpdateColorSpots();
+
 	if (!wave) //== 0
 		return;
 	
@@ -131,13 +134,18 @@ void Spawner::NewWave()
 	enemyCount = 0;
 }
 
+void Spawner::UpdateColorSpots()
+{
+	for (int i = 0; i < poolCount; ++i)
+		enemyPool[i]->GetScript<ColorSpot>()->SetUniform(i + 1); //cuz player reserves 0
+	boss->GetScript<ColorSpot>()->SetUniform(poolCount + 1);
+}
+
 void Spawner::UpdatePlayerPosToAI(std::string names)
 {
 	for (int i = 0; i < poolCount; ++i)
-	{
 		if (enemyPool[i]->IsActive())
 			enemyPool[i]->GetScript<AI>()->SetPlayerTrans(playerTrans);
-	}
 
 	if (boss->IsActive())
 		boss->GetScript<AI>()->SetPlayerTrans(playerTrans);
@@ -158,6 +166,7 @@ void Spawner::CreateBoss(std::string bosStage)
 	boss = gameObject->AddChild<GameObj>(bosStage);
 	boss->ActiveSelf(false);
 	boss->AddScript<AI>()->SetHealth(3);
+	boss->AddScript<ColorSpot>();
 	boss->GetScript<AI>()->ResetBullets();
 	boss->GetTransform()->scale.Set(2.f, 2.f, 2.f);
 }
@@ -172,10 +181,12 @@ void Spawner::SpawnBoss(std::string bosStage)
 
 	int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
 	offset.x = sign * (1 + Math::RandFloatMinMax(0, 2));
-	offset.y = (1 + Math::RandFloatMinMax(0, 3));
+	offset.y = (playerTrans.y + Math::RandFloatMinMax(0, 3));
+	offset.z = 1;
 
-	boss->GetTransform()->translate = spawnerPos + offset;
 	boss->ActiveSelf(true);
+	boss->GetScript<AI>()->Reset();
+	boss->GetTransform()->translate = spawnerPos + offset;
 	//Debug::Log("BOSS: " + std::to_string(boss->GetScript<AI>()->GetHealth()));
 }
 
@@ -186,7 +197,7 @@ void Spawner::CreateEnemies(std::string waveOne)
 		enemyPool[i] = gameObject->AddChild<GameObj>(waveOne + std::to_string(i));
 		enemyPool[i]->ActiveSelf(false);
 		enemyPool[i]->AddScript<AI>()->SetHealth(3);
-		enemyPool[i]->GetScript<AI>()->ResetBullets();
+		enemyPool[i]->AddScript<ColorSpot>();		
 	}
 }
 
@@ -201,12 +212,12 @@ void Spawner::SpawnEnemy(std::string waveOne)
 
 		int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
 		offset.x = sign * (1 + Math::RandFloatMinMax(0, 2));
+		offset.y = (playerTrans.y + Math::RandFloatMinMax(0, 3));
+		offset.z = 1;
 
-		offset.y = (1 + Math::RandFloatMinMax(0, 3));
-
-		enemyPool[i]->GetTransform()->translate = spawnerPos + offset;
 		enemyPool[i]->ActiveSelf(true);
-		enemyPool[i]->GetScript<AI>()->Reset();
+		enemyPool[i]->GetScript<AI>()->Reset();		
+		enemyPool[i]->GetTransform()->translate = spawnerPos + offset;
 		//Debug::Log("ENEMY: " + std::to_string(enemyPool[i]->GetScript<AI>()->GetHealth()));
 		++waveCount;
 		return;

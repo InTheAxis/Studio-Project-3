@@ -2,10 +2,11 @@
 #include "../Manager/MgrGraphics.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Node/GameObj.h"
-#include "../Scripts/Spawner.h"
-#include "Projectile.h"
 #include "../../Node/Components/Collider.h"
+#include "../Scripts/Spawner.h"
 #include "../Scripts/PlayerController.h"
+#include "../Scripts/ColorSpot.h"
+#include "Projectile.h"
 
 AI::AI(std::string name) 
 	: Node(name)
@@ -30,7 +31,7 @@ AI::~AI()
 
 void AI::OnEnable()
 {
-	coll->OnCollideStay.Subscribe(&AI::HandleColl, this, "coll");	
+	coll->OnCollideStay.Subscribe(&AI::HandleColl, this, "coll");		
 }
 
 void AI::OnDisable()
@@ -133,8 +134,12 @@ void AI::Update(double dt)
 		kineB->UpdateSuvat(dt);
 		kineB->ResetForce();
 	}
-	else if (m_lifetime > bounceTime + 0.5f)
-		gameObject->ActiveSelf(false);
+	else
+	{
+		gameObject->GetTransform()->translate.z = 0; //disable color spot
+		if (m_lifetime > bounceTime + 0.5f)
+			gameObject->ActiveSelf(false);
+	}
 
 	sat = Math::Max(0.f,  health / 3.f);
 
@@ -205,6 +210,8 @@ void AI::SetSaturation(float sat)
 
 void AI::Reset()
 {
+	gameObject->GetTransform()->translate.z = 0;  //disable color spot
+	gameObject->GetScript<ColorSpot>()->radius = 2;	
 	health = 3;
 	sat = 1;
 	dead = false;

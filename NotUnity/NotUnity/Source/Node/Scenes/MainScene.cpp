@@ -215,6 +215,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		break;
 	case GAMEPLAY:
 		greenbar->ActiveSelf(false);
+		greenbar->ActiveSelf(false);
 		redbar->ActiveSelf(false);
 		spawner->SetWave(0);
 		break;
