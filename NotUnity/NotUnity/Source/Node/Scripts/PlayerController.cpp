@@ -50,6 +50,14 @@ void PlayerController::Start()
 	sprite->SetHSV(-1,1,-1)->SetRenderPass(RENDER_PASS::POST_FX)->SelectShader(MgrGraphics::HSV_LIT);
 	sprite->ToggleCullFace(false);
 	
+	swordT = AddChild<GameObj>("sword")->GetTransform();
+	swordSprite = GetChild<GameObj>("sword")->AddComp<Sprite>()
+		->SetAnimation(0, 6, 0.3f, 1)
+		->SwitchAnimation(0)
+		->PlayAnimation();
+	swordSprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sword"));
+	swordSprite->SetHSV(-1, 1, -1)->SetRenderPass(RENDER_PASS::POST_FX)->SelectShader(MgrGraphics::HSV_UNLIT);
+	swordSprite->ToggleCullFace(false);
 	
 	kinb = AddChild<KinemeticBody>();
 	kinb->SetGameObj(gameObject);
@@ -183,6 +191,11 @@ void PlayerController::Update(double dt)
 
 	//update colorSpot
 	colorSpot->SetUniform(0);
+
+	//update sword's transform
+	swordT->translate = t->translate;
+	swordT->translate.z += 0.1f;
+	swordT->scale.x = t->scale.x;
 
 	// achievemets
 	// kinb->maxVel.Set(Achievements::Instance()->maxValX, Achievements::Instance()->maxValY, 0);	

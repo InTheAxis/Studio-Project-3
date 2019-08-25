@@ -59,19 +59,18 @@ void MgrResource::LoadMaterials()
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/myfont.tga");
 
 	temp = new Material("player");
-	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/idle_right.tga");
-	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/idle_right.tga");
-	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/idle_right.tga");
-	temp->maps[Material::COLOR3] = Resource::LoadTGA("tga/idle_right.tga");
-	temp->maps[Material::COLOR4] = Resource::LoadTGA("tga/idle_right.tga");
-	temp->maps[Material::COLOR5] = Resource::LoadTGA("tga/idle_right.tga");
-	temp->maps[Material::COLOR6] = Resource::LoadTGA("tga/idle_right.tga");
-	temp->maps[Material::COLOR7] = Resource::LoadTGA("tga/idle_right.tga");
-	temp->maps[Material::COLOR8] = Resource::LoadTGA("tga/idle_right.tga");
-	temp->maps[Material::COLOR9] = Resource::LoadTGA("tga/idle_right.tga");
-	temp->maps[Material::COLOR10] = Resource::LoadTGA("tga/idle_right.tga");
-	temp->maps[Material::COLOR11] = Resource::LoadTGA("tga/idle_right.tga");
-	temp->maps[Material::COLOR12] = Resource::LoadTGA("tga/idle_right.tga");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/player/idle.tga");
+	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/player/idle.tga");
+	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/player/idle.tga");
+	temp->maps[Material::COLOR3] = Resource::LoadTGA("tga/player/idle.tga");
+	temp->maps[Material::COLOR4] = Resource::LoadTGA("tga/player/idle.tga");
+	temp->maps[Material::COLOR5] = Resource::LoadTGA("tga/player/idle.tga");
+	temp->maps[Material::COLOR6] = Resource::LoadTGA("tga/player/idle.tga");
+	temp->maps[Material::COLOR7] = Resource::LoadTGA("tga/player/idle.tga");
+	temp->maps[Material::COLOR8] = Resource::LoadTGA("tga/player/idle.tga");
+
+	temp = new Material("sword");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/player/sword_idle.tga");
 
 	temp = new Material("background");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/bg_snow.tga");

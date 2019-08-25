@@ -57,9 +57,9 @@ public:
 	int	GetHealth();
 
 private:
-	Transform* t;
+	Transform* t, *swordT;
 	KinemeticBody* kinb;
-	Sprite* sprite;
+	Sprite* sprite, *swordSprite;
 	Collider* attackRight, *attackLeft, *attackAir;
 	Collider* hitbox;
 	Spline* terrain;
