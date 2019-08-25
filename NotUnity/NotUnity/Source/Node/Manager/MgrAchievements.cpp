@@ -26,9 +26,9 @@ void MgrAchievements::Start()
 
 void MgrAchievements::Update(double dt)
 {
-	Debug::Log(enemyKilled);
-	Debug::Log(currentKilled);
-	Debug::Log(totalEnemyKilled);
+	//Debug::Log(enemyKilled);
+	//Debug::Log(currentKilled);
+	//Debug::Log(totalEnemyKilled);
 	WriteTextFile();
 	AchievementCheck();
 	Node::Update(dt);

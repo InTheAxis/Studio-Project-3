@@ -26,7 +26,8 @@ PlayerController::~PlayerController()
 
 void PlayerController::Start()
 {
-	gameObject->GetTransform()->translate.Set(-1, 1, 0.1f);
+	t = gameObject->GetTransform();
+	t->translate.Set(-1, 1, 0.1f);
 
 	sprite = AddChild<Sprite>()
 		->SetAnimation(0, 8, 0.5f, 1)
@@ -45,8 +46,9 @@ void PlayerController::Start()
 		->SwitchAnimation(0)
 		->PlayAnimation();
 	sprite->SetGameObj(gameObject);
-	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"));
+	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("player"));
 	sprite->SetHSV(-1,1,-1)->SetRenderPass(RENDER_PASS::POST_FX)->SelectShader(MgrGraphics::HSV_LIT);
+	sprite->ToggleCullFace(false);
 	
 	
 	kinb = AddChild<KinemeticBody>();
@@ -214,6 +216,11 @@ void PlayerController::TryChangeState(P_STATE state)
 
 void PlayerController::ChangeState()
 {
+	if (direction > 0)
+		t->scale.x = 1;
+	else if (direction < 0)
+		t->scale.x = -1;
+
 	if (currState == nextState)
 		return;
 	
@@ -250,10 +257,7 @@ void PlayerController::Move(float inputX)
 {
 
 	kinb->ApplyForce(Vector3(inputX * moveSpeed.x /*+ speedincrease*/ * (OnGround() ? 1 : 0.3f), 0, 0));
-	if (direction > 0)
-		TryChangeState(P_STATE::MOVE_R);
-	else if (direction < 0)
-		TryChangeState(P_STATE::MOVE_L);	
+	TryChangeState(P_STATE::MOVE);	
 }
 
 void PlayerController::Friction()
@@ -263,10 +267,7 @@ void PlayerController::Friction()
 	else
 		kinb->ApplyForce(Vector3(-direction * kinb->mass * kinb->frictionCoeff, 0, 0));
 
-	if (direction > 0)
-		TryChangeState(P_STATE::IDLE_R);
-	else if (direction < 0)
-		TryChangeState(P_STATE::IDLE_L);
+	TryChangeState(P_STATE::IDLE);
 }
 
 void PlayerController::Jump()
@@ -314,18 +315,14 @@ void PlayerController::Attack(double dt)
 	{
 		TryChangeState(P_STATE::AIR_ATTACK);		
 		attackAir->ActiveSelf(true);
-		
 	}
-	else if (direction == 1)
+	else
 	{
-		TryChangeState(P_STATE::ATTACK_R);
-		attackRight->ActiveSelf(true);
-	
-	}
-	else if (direction == -1)
-	{
-		TryChangeState(P_STATE::ATTACK_L);
-		attackLeft->ActiveSelf(true);
+		if (direction == 1)
+			attackRight->ActiveSelf(true);
+		else if (direction == -1)
+			attackLeft->ActiveSelf(true);
+		TryChangeState(P_STATE::ATTACK);
 	}
 }
 
@@ -339,10 +336,7 @@ void PlayerController::Die(double dt)
 	else
 		deadTimer -= dt;
 
-	if (direction == 1)
-		TryChangeState(P_STATE::DYING_R);
-	else if (direction == -1)
-		TryChangeState(P_STATE::DYING_L);	
+	TryChangeState(P_STATE::DYING);
 }
 
 void PlayerController::Hit(double dt)
@@ -355,10 +349,7 @@ void PlayerController::Hit(double dt)
 	else
 		hitTimer -= dt;
 
-	if (direction == 1)
-		TryChangeState(P_STATE::HIT_R);
-	else if (direction == -1)
-		TryChangeState(P_STATE::HIT_L);
+	TryChangeState(P_STATE::HIT);
 }
 
 float PlayerController::GetTerrainHeight()
@@ -412,7 +403,7 @@ void PlayerController::Reset()
 
 	walking = false;
 
-	TryChangeState(P_STATE::IDLE_R);
+	TryChangeState(P_STATE::IDLE);
 	ChangeState();
 }
 
@@ -420,17 +411,11 @@ void PlayerController::PrintState()
 {
 	switch (currState)
 	{
-	case P_STATE::IDLE_R:
-		Debug::Log("I am IDLE_R");
+	case P_STATE::IDLE:
+		Debug::Log("I am IDLE");
 		break;
-	case P_STATE::IDLE_L:
-		Debug::Log("I am IDLE_L");
-		break;
-	case P_STATE::MOVE_L:
-		Debug::Log("I am MOVE_L");
-		break;
-	case P_STATE::MOVE_R:
-		Debug::Log("I am MOVE_R");
+	case P_STATE::MOVE:
+		Debug::Log("I am MOVE");
 		break;
 	case P_STATE::JUMP:
 		Debug::Log("I am JUMP");
@@ -438,26 +423,17 @@ void PlayerController::PrintState()
 	case P_STATE::FALL:
 		Debug::Log("I am FALL");
 		break;
-	case P_STATE::ATTACK_L:
-		Debug::Log("I am ATTACK_L");
-		break;
-	case P_STATE::ATTACK_R:
-		Debug::Log("I am ATTACK_R");
+	case P_STATE::ATTACK:
+		Debug::Log("I am ATTACK");
 		break;
 	case P_STATE::AIR_ATTACK:
 		Debug::Log("I am AIR_ATTACK");
 		break;
-	case P_STATE::HIT_L:
-		Debug::Log("I am HIT_L");
+	case P_STATE::HIT:
+		Debug::Log("I am HIT");
 		break;
-	case P_STATE::HIT_R:
-		Debug::Log("I am HIT_R");
-		break;
-	case P_STATE::DYING_L:
-		Debug::Log("I am DYING_L");
-		break;
-	case P_STATE::DYING_R:
-		Debug::Log("I am DYING_R");
+	case P_STATE::DYING:
+		Debug::Log("I am DYING");
 		break;
 	}
 }

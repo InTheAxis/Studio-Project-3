@@ -15,19 +15,14 @@
 
 enum class P_STATE
 {
-	IDLE_R = 0,
-	IDLE_L,
-	MOVE_L,
-	MOVE_R,
+	IDLE = 0,
+	MOVE,
 	JUMP,
 	FALL, 
-	ATTACK_L,
-	ATTACK_R,
+	ATTACK,
 	AIR_ATTACK,
-	HIT_L,
-	HIT_R,
-	DYING_L,
-	DYING_R,
+	HIT,
+	DYING,
 };
 
 class KinemeticBody;
@@ -62,6 +57,7 @@ public:
 	int	GetHealth();
 
 private:
+	Transform* t;
 	KinemeticBody* kinb;
 	Sprite* sprite;
 	Collider* attackRight, *attackLeft, *attackAir;
