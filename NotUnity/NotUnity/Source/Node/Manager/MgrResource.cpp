@@ -60,17 +60,19 @@ void MgrResource::LoadMaterials()
 
 	temp = new Material("player");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/player/idle.tga");
-	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/player/idle.tga");
-	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/player/idle.tga");
-	temp->maps[Material::COLOR3] = Resource::LoadTGA("tga/player/idle.tga");
-	temp->maps[Material::COLOR4] = Resource::LoadTGA("tga/player/idle.tga");
-	temp->maps[Material::COLOR5] = Resource::LoadTGA("tga/player/idle.tga");
-	temp->maps[Material::COLOR6] = Resource::LoadTGA("tga/player/idle.tga");
-	temp->maps[Material::COLOR7] = Resource::LoadTGA("tga/player/idle.tga");
-	temp->maps[Material::COLOR8] = Resource::LoadTGA("tga/player/idle.tga");
+	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/player/walk.tga");
+	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/player/jump.tga");
+	temp->maps[Material::COLOR3] = Resource::LoadTGA("tga/player/fall.tga");
+	temp->maps[Material::COLOR4] = Resource::LoadTGA("tga/player/attack.tga");
+	temp->maps[Material::COLOR5] = Resource::LoadTGA("tga/player/air_attack.tga");
+	temp->maps[Material::COLOR6] = Resource::LoadTGA("tga/player/hit.tga");
+	temp->maps[Material::COLOR7] = Resource::LoadTGA("tga/player/dying.tga");
+	temp->maps[Material::COLOR8] = Resource::LoadTGA("tga/player/cheer.tga");
 
 	temp = new Material("sword");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/player/sword_idle.tga");
+	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/player/sword_attack.tga");
+	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/player/sword_air_attack.tga");
 
 	temp = new Material("background");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/bg_snow.tga");

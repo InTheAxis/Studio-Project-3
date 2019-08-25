@@ -16,13 +16,14 @@
 enum class P_STATE
 {
 	IDLE = 0,
-	MOVE,
+	WALK,
 	JUMP,
 	FALL, 
 	ATTACK,
 	AIR_ATTACK,
 	HIT,
 	DYING,
+	CHERR,
 };
 
 class KinemeticBody;

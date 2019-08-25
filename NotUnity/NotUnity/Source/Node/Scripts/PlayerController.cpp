@@ -30,19 +30,15 @@ void PlayerController::Start()
 	t->translate.Set(-1, 1, 0.1f);
 
 	sprite = AddChild<Sprite>()
-		->SetAnimation(0, 8, 0.5f, 1)
-		->SetAnimation(1, 8, 0.5f, 1)
-		->SetAnimation(2, 8, 0.5f, 1)
-		->SetAnimation(3, 8, 0.5f, 1)
-		->SetAnimation(4, 8, 0.5f, 1)
-		->SetAnimation(5, 8, 0.5f, 1)
-		->SetAnimation(6, 8, 0.5f, 1)
-		->SetAnimation(7, 8, 0.5f, 1)
-		->SetAnimation(8, 8, 0.5f, 1)
-		->SetAnimation(9 ,8, 0.5f, 1)
-		->SetAnimation(10, 8, 0.5f, 1)
-		->SetAnimation(11, 8, 0.5f, 1)
-		->SetAnimation(12, 8, 0.5f, 1)
+		->SetAnimation(0, 8, 1.5f, 1) //idle
+		->SetAnimation(1, 8, 0.5f, 1) //walk
+		->SetAnimation(2, 8, 0.5f, 0) //jump
+		->SetAnimation(3, 8, 0.5f, 1) //fall
+		->SetAnimation(4, 6, 0.5f, 0) //attack
+		->SetAnimation(5, 8, 0.5f, 1) //air attack
+		->SetAnimation(6, 8, 1.5f, 1) //hit
+		->SetAnimation(7, 8, 0.5f, 1) //dying
+		->SetAnimation(8, 8, 0.5f, 1) //cheer
 		->SwitchAnimation(0)
 		->PlayAnimation();
 	sprite->SetGameObj(gameObject);
@@ -52,18 +48,20 @@ void PlayerController::Start()
 	
 	swordT = AddChild<GameObj>("sword")->GetTransform();
 	swordSprite = GetChild<GameObj>("sword")->AddComp<Sprite>()
-		->SetAnimation(0, 6, 0.3f, 1)
+		->SetAnimation(0, 6, 0.3f, 1) //idle
+		->SetAnimation(1, 6, 0.3f, 0) //attack
+		->SetAnimation(2, 6, 0.3f, 1) //air attack
 		->SwitchAnimation(0)
 		->PlayAnimation();
 	swordSprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sword"));
 	swordSprite->SetHSV(-1, 1, -1)->SetRenderPass(RENDER_PASS::POST_FX)->SelectShader(MgrGraphics::HSV_UNLIT);
-	swordSprite->ToggleCullFace(false);
+	swordSprite->ToggleCullFace(false);	
 	
 	kinb = AddChild<KinemeticBody>();
 	kinb->SetGameObj(gameObject);
-	kinb->maxVel.Set(1, 1, 0);
+	kinb->maxVel.Set(1, 4, 0);
 	kinb->frictionCoeff = 5;
-	kinb->gravScale = 5;
+	kinb->gravScale = 10;
 	kinb->useGravity = false;
 
 	attackRight = AddChild<Collider>("r");
@@ -92,6 +90,7 @@ void PlayerController::Start()
 	colorSpot->SetGameObj(gameObject);
 
 	maxHealth = 20;
+	moveSpeed.Set(10, 80, 0);
 	addHealth = false;
 	ActiveSelf(true);
 	Reset();
@@ -194,8 +193,12 @@ void PlayerController::Update(double dt)
 
 	//update sword's transform
 	swordT->translate = t->translate;
-	swordT->translate.z += 0.1f;
 	swordT->scale.x = t->scale.x;
+	if (t->scale.x < 0)
+		swordT->translate += Vector3(-0.25f, 0.2f, -0.1f);
+	else
+		swordT->translate.z += 0.1f;
+
 
 	// achievemets
 	// kinb->maxVel.Set(Achievements::Instance()->maxValX, Achievements::Instance()->maxValY, 0);	
@@ -239,6 +242,10 @@ void PlayerController::ChangeState()
 	
 	currState = nextState;
 	sprite->SwitchAnimation((int)currState)->PlayAnimation();
+	if (currState == P_STATE::ATTACK || currState == P_STATE::AIR_ATTACK)
+		swordSprite->SwitchAnimation((int)currState - 3)->PlayAnimation();
+	else
+		swordSprite->SwitchAnimation(0)->PlayAnimation();
 	PrintState();
 }
 
@@ -270,7 +277,7 @@ void PlayerController::Move(float inputX)
 {
 
 	kinb->ApplyForce(Vector3(inputX * moveSpeed.x /*+ speedincrease*/ * (OnGround() ? 1 : 0.3f), 0, 0));
-	TryChangeState(P_STATE::MOVE);	
+	TryChangeState(P_STATE::WALK);	
 }
 
 void PlayerController::Friction()
@@ -326,7 +333,7 @@ void PlayerController::Attack(double dt)
 
 	if (!OnGround(0.1f))
 	{
-		TryChangeState(P_STATE::AIR_ATTACK);		
+		TryChangeState(P_STATE::AIR_ATTACK);	
 		attackAir->ActiveSelf(true);
 	}
 	else
@@ -408,8 +415,7 @@ bool PlayerController::IsDead()
 void PlayerController::Reset()
 {
 	//gameObject->GetTransform()->translate.Set(-1, 1, 0);
-
-	moveSpeed.Set(10, 30, 0);
+	
 	direction = 1;
 	jumpTimer = attackTimer = hitTimer = deadTimer = 0.0;
 	health = maxHealth;
@@ -427,7 +433,7 @@ void PlayerController::PrintState()
 	case P_STATE::IDLE:
 		Debug::Log("I am IDLE");
 		break;
-	case P_STATE::MOVE:
+	case P_STATE::WALK:
 		Debug::Log("I am MOVE");
 		break;
 	case P_STATE::JUMP:
