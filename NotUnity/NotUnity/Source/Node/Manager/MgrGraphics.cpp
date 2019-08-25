@@ -32,6 +32,7 @@ MgrGraphics::~MgrGraphics()
 
 void MgrGraphics::Start()
 {
+	Debug::Log("Initializing OpenGL");
 	//init opengl
 	glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 	glEnable(GL_DEPTH_TEST);

@@ -14,8 +14,11 @@ MgrResource::~MgrResource()
 
 void MgrResource::Start()
 {
+	Debug::Log("Loading meshes...");
 	LoadMeshes();
+	Debug::Log("Loading materials...");
 	LoadMaterials();
+	Debug::Log("Loading sounds...");
 	LoadSounds();
 	Node::Start();
 }

@@ -9,9 +9,6 @@ MgrSound::MgrSound(std::string name)
 	, listenerPosDef(0,0,0)
 	, listenerViewDef(0,0,-1)
 {
-	soundEngine = irrklang::createIrrKlangDevice();
-	if (!soundEngine)
-		Debug::LogWarning("Sound Engine not initialised");
 }
 
 MgrSound::~MgrSound()
@@ -28,7 +25,11 @@ MgrSound::~MgrSound()
 }
 
 void MgrSound::Start()
-{			
+{		
+	Debug::Log("Initliazing IrrKlang: ");
+	soundEngine = irrklang::createIrrKlangDevice();
+	if (!soundEngine)
+		Debug::LogWarning("Sound Engine not initialised");
 	Node::Start();
 }
 

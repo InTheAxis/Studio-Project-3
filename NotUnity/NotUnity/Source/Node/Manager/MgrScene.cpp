@@ -25,10 +25,10 @@ MgrScene::~MgrScene()
 
 void MgrScene::LoadScenes()
 {
+	Debug::Log("Loading scenes...");
 	allScenes["default"] = new MainScene;	
-	allScenes["spawner"] = new SpawnerScene;
-	allScenes["player"] = new ScenePlayer;
-	
+	//allScenes["spawner"] = new SpawnerScene;
+	//allScenes["player"] = new ScenePlayer;
 	
 	SwitchScene("default"); //change this line to your working scene
 }

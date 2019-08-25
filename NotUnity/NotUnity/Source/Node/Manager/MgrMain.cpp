@@ -18,6 +18,7 @@ MgrMain::~MgrMain()
 
 void MgrMain::Start()
 {
+	Debug::Log("Initalising Engine");
 	//order matters, make sure not to use generic template
 	allManagers.emplace_back(MgrGraphics::Instance());
 	allManagers.emplace_back(MgrSound::Instance());
