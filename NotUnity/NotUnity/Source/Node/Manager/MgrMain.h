@@ -12,10 +12,13 @@ public:
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();	
+
+	void SetTimeScale(float timeScale);
 protected:
 	MgrMain(std::string name = "MgrMain");
 	~MgrMain();
 	
 	std::vector<Node*> allManagers;
+	float timeScale;
 };
 #endif

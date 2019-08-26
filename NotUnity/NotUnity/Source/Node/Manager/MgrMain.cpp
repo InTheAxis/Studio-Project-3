@@ -8,7 +8,7 @@
 #include "MgrSkillTree.h"
 #include "MgrAchievements.h"
 
-MgrMain::MgrMain(std::string name) : Manager<MgrMain>(name)
+MgrMain::MgrMain(std::string name) : Manager<MgrMain>(name), timeScale(1)
 {
 }
 
@@ -37,7 +37,7 @@ void MgrMain::Start()
 void MgrMain::Update(double dt)
 {
 	for (auto m : allManagers)
-		m->Update(dt);
+		m->Update(timeScale * dt);
 	Node::Update(dt);
 }
 
@@ -46,5 +46,10 @@ void MgrMain::End()
 	for (auto m : allManagers)
 		m->End();
 	Node::End();	
+}
+
+void MgrMain::SetTimeScale(float timeScale)
+{
+	this->timeScale = timeScale;
 }
 

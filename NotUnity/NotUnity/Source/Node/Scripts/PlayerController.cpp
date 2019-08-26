@@ -107,6 +107,9 @@ void PlayerController::Update(double dt)
 	Vector3 input;
 	float dtf = static_cast<float>(dt);
 
+	if (Math::FIsEqual(dtf, 0.f))
+		return;
+
 	//get input
 	if (kb->IsKeyDown('A') && CanMove())
 	{

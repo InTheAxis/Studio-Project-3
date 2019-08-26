@@ -14,12 +14,14 @@
 #include "MapScene.h"
 #include "../Scripts/PlayerController.h"
 #include "../Manager/MgrSound.h"
+#include "../Manager/MgrMain.h"
 
 MainScene::MainScene(std::string name)
 	: Scene(name)
 	, debug(false)
 	, gs (MENU)
 	, winTimer(0)
+	, pause(false)
 {
 	floatFbo[0].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
 	floatFbo[1].Init(Application::GetWindowWidth(), Application::GetWindowHeight());
@@ -33,6 +35,7 @@ MainScene::~MainScene()
 	title = nullptr;
 	wasd = nullptr;
 	lmb = nullptr;
+	pauseMenu = nullptr;
 	playerGO = nullptr;
 	mainCam = nullptr;
 }
@@ -54,6 +57,7 @@ void MainScene::Start()
 	AddChild<GameObj>("title");
 	AddChild<GameObj>("wasd");
 	AddChild<GameObj>("lmb");
+	AddChild<GameObj>("pauseMenu");
 	AddChild<GameObj>("greenbar");
 	AddChild<GameObj>("redbar");
 
@@ -69,6 +73,10 @@ void MainScene::Start()
 	lmb = GetChild<GameObj>("lmb")->AddComp<Renderable>();
 	lmb->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("lmb"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
 	lmb->ActiveSelf(false);
+	pauseMenu = GetChild<GameObj>("pauseMenu")->AddComp<Renderable>();
+	pauseMenu->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("paused"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
+	pauseMenu->ActiveSelf(false);
+
 
 
 	greenbar = GetChild<GameObj>("greenbar")->AddComp<Renderable>();
@@ -78,11 +86,11 @@ void MainScene::Start()
 	redbar->AttachMesh(mg->GetCachedMesh("quad"))->AttachMaterial(mg->GetCachedMaterial("redbar"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
 	redbar->ActiveSelf(false);
 	Transform* t = GetChild<GameObj>("title")->GetTransform();
-	t->translate.Set(0, 6, 0);
 	t->scale.Set(4, 4, 1);
 	t = GetChild<GameObj>("wasd")->GetTransform();
-	t->translate.Set(-2.5f, 3, 0);
 	t->scale.Set(1.5f, 1.5f, 1);
+	t = GetChild<GameObj>("pauseMenu")->GetTransform();
+	t->scale.Set(16.f, 9.f, 1);
 	
 	//attach camera
 	GetChild<MapScene>("MapScene")->SetCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
@@ -108,12 +116,23 @@ void MainScene::Update(double dt)
 	ControllerMouse* m = ControllerMouse::Instance();
 	if (kb->IsKeyPressed('9'))
 		debug = !debug;
+	if (kb->IsKeyPressed(VK_TAB))
+		pause = !pause;		
 
-	if (kb->IsKeyDown('F'))
-		healthminus -= 0.01 * dt;
+	pauseMenu->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(0, 0, 0.1f);
+	pauseMenu->ActiveSelf(pause);
+	MgrMain::Instance()->SetTimeScale((int)!pause);
+
+	if (pause)
+		return;
+
+	//if (kb->IsKeyDown('F'))
+	//	healthminus -= 0.01 * dt;
 	switch (gs)
 	{
 	case MENU:
+		wasd->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-1.5f, 0, 0);
+		title->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(0, 2, 0);
 		title->SetHSV(m_lifetime * 300, -1, -1);
 		if (kb->IsKeyPressed('W') || kb->IsKeyPressed('A') || kb->IsKeyPressed('S') || kb->IsKeyPressed('D'))
 			ChangeGameState(TUTO);
@@ -121,7 +140,7 @@ void MainScene::Update(double dt)
 	case TUTO:
 		if (m->IsButtonPressed(0))
 			ChangeGameState(GAMEPLAY);
-		lmb->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-2.f, 0, 0);
+		lmb->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-1.5f, 0, 0);
 		break;
 	case GAMEPLAY:
 		greenbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3( (player->GetHealth() * 0.05) - 7.2, 4.0f, 0.f);
