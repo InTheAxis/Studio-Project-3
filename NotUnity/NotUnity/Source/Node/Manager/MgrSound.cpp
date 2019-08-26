@@ -1,6 +1,7 @@
 #include "MgrSound.h"
 
 #include "../Components/Collider.h"
+#include "../../Utility/Input/ControllerKeyboard.h"
 
 MgrSound::MgrSound(std::string name) 
 	: Manager<MgrSound>(name)
@@ -8,6 +9,7 @@ MgrSound::MgrSound(std::string name)
 	, listenerView(nullptr)
 	, listenerPosDef(0,0,0)
 	, listenerViewDef(0,0,-1)
+	, globalVol(0)
 {
 }
 
@@ -40,6 +42,10 @@ void MgrSound::Update(double dt)
 	soundEngine->setListenerPosition(
 		irrklang::vec3df(listenerPos->x, listenerPos->y, listenerPos->z),
 		irrklang::vec3df(listenerView->x, listenerView->y, listenerView->z));
+
+	if (ControllerKeyboard::Instance()->IsKeyDown(VK_OEM_PLUS)) globalVol = Math::Min(1.f, globalVol += 0.01f);
+	if (ControllerKeyboard::Instance()->IsKeyDown(VK_OEM_MINUS)) globalVol = Math::Max(0.f, globalVol -= 0.01f);
+	soundEngine->setSoundVolume(globalVol);
 	Node::Update(dt);
 }
 

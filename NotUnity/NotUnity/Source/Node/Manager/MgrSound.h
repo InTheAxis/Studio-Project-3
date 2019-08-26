@@ -38,5 +38,7 @@ protected:
 
 	std::map<std::string, std::string> sounds;
 	std::map<std::string, float> volume;
+
+	float globalVol;
 };
 #endif
