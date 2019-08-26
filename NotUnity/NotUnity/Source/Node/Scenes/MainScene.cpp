@@ -94,6 +94,7 @@ void MainScene::Start()
 	//init variables
 	spawner->SetWave(0);
 	playerGO = player->GetPlayer();
+	player->SetCameraRef(mainCam->GetComp<Camera>());
 	
 	healthminus = 1;
 	lightAngle = 0.f;

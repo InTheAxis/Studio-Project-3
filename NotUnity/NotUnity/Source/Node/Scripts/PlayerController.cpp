@@ -6,6 +6,7 @@
 #include "../../Node/Components/KinemeticBody.h"
 #include "../../Node/Components/Collider.h"
 #include "../../Node/Components/Renderable.h"
+#include "../../Node/Components/Camera.h"
 #include "../../Node/Scripts/ColorSpot.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Utility/Input/ControllerMouse.h"
@@ -393,6 +394,7 @@ void PlayerController::TakeDamage(int dmg)
 		deadTimer = 5;
 	else if (hitTimer <= 0)
 		hitTimer = 0.3f;
+	camera->Shake(0.05f, 0.15f);
 }
 int PlayerController::DamageDealt()
 {
@@ -404,6 +406,12 @@ int PlayerController::DamageDealt()
 PlayerController* PlayerController::SetColorSpotRad(float radius)
 {
 	colorSpot->radius = radius;
+	return this;
+}
+
+PlayerController * PlayerController::SetCameraRef(Camera * camera)
+{
+	this->camera = camera;
 	return this;
 }
 

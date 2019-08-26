@@ -32,6 +32,7 @@ class ColInfo;
 class Collider;
 class Spline;
 class ColorSpot;
+class Camera;
 class PlayerController : public Node, public TypeID<PlayerController>, public Component
 {
 public:
@@ -49,6 +50,7 @@ public:
 	void TakeDamage(int dmg);	
 	int DamageDealt();
 	PlayerController* SetColorSpotRad(float radius);
+	PlayerController* SetCameraRef(Camera* camera);
 
 	bool IsDead();
 	void Reset();
@@ -65,6 +67,7 @@ private:
 	Collider* hitbox;
 	Spline* terrain;
 	ColorSpot* colorSpot;
+	Camera* camera;
 
 	P_STATE currState, nextState;
 

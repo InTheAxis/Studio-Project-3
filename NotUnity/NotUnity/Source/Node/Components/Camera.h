@@ -27,9 +27,14 @@ public:
 	Camera* SetMode(MODE m);
 	Camera* SetSpeed(float s);
 	Mtx44* GetViewMtx();
+	void Shake(float strength, double duration, bool forceOff = false);
 private:
 	MODE mode;
 	float speed;
+
+	Vector3 origPos;
+	double bounceTime;
+	float shakeStrength;
 
 	Transform* t;
 	Axis* axis;

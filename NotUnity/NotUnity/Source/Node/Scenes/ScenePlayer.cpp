@@ -37,6 +37,11 @@ void ScenePlayer::End()
 	Scene::End();
 }
 
+void ScenePlayer::SetCameraRef(Camera * camera)
+{
+	this->playerScript->SetCameraRef(camera);
+}
+
 void ScenePlayer::Render()
 {
 	Scene::Render();

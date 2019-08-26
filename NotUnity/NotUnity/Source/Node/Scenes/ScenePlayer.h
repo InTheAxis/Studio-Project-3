@@ -8,6 +8,7 @@
 class Player;
 class PlayerController;
 class Renderable;
+class Camera;
 class ScenePlayer : public Scene
 {
 public:
@@ -17,6 +18,8 @@ public:
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
+
+	void SetCameraRef(Camera* camera);
 
 	int GetHealth();
 	GameObj* GetPlayer();
