@@ -24,11 +24,19 @@ Math namespace
 namespace Math
 {
 
-	const float	EPSILON    =	0.00001f;  ///Used for error checking
-	const float	PI         = 3.1415926535897932384626433832795f;
-	const float TWO_PI     = PI * 2.0f;
-	const float HALF_PI    = PI / 2.0f;
+	const float	EPSILON = 0.00001f;  ///Used for error checking
+	const float	PI = 3.1415926535897932384626433832795f;
+	const float TWO_PI = PI * 2.0f;
+	const float HALF_PI = PI / 2.0f;
 	const float QUARTER_PI = PI / 4.0f;
+
+	template <typename T>
+	inline T Lerp(T from, T to, float weight)
+	{
+		weight = Math::Clamp(weight, 0.f, 1.f);
+		//return (from - weight * (from + to));
+		return ((1.f - weight) * from + weight * to);
+	}
 
 	inline bool FIsEqual(float a, float b)
 	{

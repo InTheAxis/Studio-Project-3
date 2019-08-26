@@ -15,6 +15,9 @@ Renderable::Renderable(std::string name)
 
 Renderable::~Renderable()
 {
+	mesh = nullptr;
+	material = nullptr;
+	t = nullptr;
 }
 
 void Renderable::Start()

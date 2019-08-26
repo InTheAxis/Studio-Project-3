@@ -15,19 +15,15 @@
 
 enum class P_STATE
 {
-	IDLE_R = 0,
-	IDLE_L,
-	MOVE_L,
-	MOVE_R,
+	IDLE = 0,
+	WALK,
 	JUMP,
 	FALL, 
-	ATTACK_L,
-	ATTACK_R,
+	ATTACK,
 	AIR_ATTACK,
-	HIT_L,
-	HIT_R,
-	DYING_L,
-	DYING_R,
+	HIT,
+	DYING,
+	CHERR,
 };
 
 class KinemeticBody;
@@ -35,6 +31,7 @@ class Sprite;
 class ColInfo;
 class Collider;
 class Spline;
+class ColorSpot;
 class PlayerController : public Node, public TypeID<PlayerController>, public Component
 {
 public:
@@ -51,6 +48,7 @@ public:
 	PlayerController* SetTerrain(Spline * s);	
 	void TakeDamage(int dmg);	
 	int DamageDealt();
+	PlayerController* SetColorSpotRad(float radius);
 
 	bool IsDead();
 	void Reset();
@@ -60,18 +58,20 @@ public:
 	int	GetHealth();
 
 private:
+	Transform* t, *swordT;
 	KinemeticBody* kinb;
-	Sprite* sprite;
+	Sprite* sprite, *swordSprite;
 	Collider* attackRight, *attackLeft, *attackAir;
 	Collider* hitbox;
 	Spline* terrain;
+	ColorSpot* colorSpot;
 
 	P_STATE currState, nextState;
 
 	Vector3 moveSpeed;
 	int direction;
 	double jumpTimer, attackTimer, hitTimer, deadTimer;	
-	int health;
+	int health, maxHealth;
 	int damage;
     int speedincrease;
 

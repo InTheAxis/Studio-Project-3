@@ -2,10 +2,11 @@
 #include "../Manager/MgrGraphics.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Node/GameObj.h"
-#include "../Scripts/Spawner.h"
-#include "Projectile.h"
 #include "../../Node/Components/Collider.h"
+#include "../Scripts/Spawner.h"
 #include "../Scripts/PlayerController.h"
+#include "../Scripts/ColorSpot.h"
+#include "Projectile.h"
 
 AI::AI(std::string name) 
 	: Node(name)
@@ -30,7 +31,7 @@ AI::~AI()
 
 void AI::OnEnable()
 {
-	coll->OnCollideStay.Subscribe(&AI::HandleColl, this, "coll");	
+	coll->OnCollideStay.Subscribe(&AI::HandleColl, this, "coll");		
 }
 
 void AI::OnDisable()
@@ -74,14 +75,19 @@ void AI::Start()
 	Vector3 scale = gameObject->GetTransform()->scale;
 	coll = AddChild<Collider>("c");
 	coll->SetGameObj(gameObject);
-	coll->CreateAABB(0.5f);
+	coll->CreateAABB(0.5f * scale.x);
 	coll->tag = "enemy";
 	
 	trigger = AddChild<Collider>("t");
 	trigger->SetGameObj(gameObject);
 	trigger->isTrigger = true;
-	trigger->CreateAABB(0.5f);
+	trigger->CreateAABB(0.5f * scale.x);
 	trigger->tag = "enemyA";
+
+	colorSpot = AddChild<ColorSpot>();
+	colorSpot->SetGameObj(gameObject);	
+
+	t = gameObject->GetTransform();
 
 	Node::Start();
 }
@@ -98,7 +104,7 @@ void AI::Update(double dt)
 
 	if (!dead)
 	{
-		direction = (playerTrans - gameObject->GetTransform()->translate);
+		direction = (playerTrans - t->translate);
 		if (!direction.IsZero())
 			direction.Normalize();
 
@@ -116,14 +122,17 @@ void AI::Update(double dt)
 		IfHealthZero();
 		Gravity();
 		kineB->UpdateSuvat(dt);
-		kineB->ResetForce();
-
-
+		kineB->ResetForce();		
 	}
-	else if (m_lifetime > bounceTime + 0.5f)
-			 gameObject->ActiveSelf(false);
+	else
+	{
+		t->translate.z = 0; //disable color spot
+		if (m_lifetime > bounceTime + 0.5f)
+			gameObject->ActiveSelf(false);
+	}
 
 	sat = Math::Max(0.f,  health / 3.f);
+	colorSpot->radius = t->scale.x * 2 * (health / 3.f);
 
 	sprite->SetHSV(-1, sat, -1);
 
@@ -189,6 +198,11 @@ void AI::SetSaturation(float sat)
 	this->sat = sat;
 }
 
+ColorSpot* AI::GetColorSpot() const
+{
+	return colorSpot;
+}
+
 void AI::Reset()
 {
 	health = 3;
@@ -197,15 +211,24 @@ void AI::Reset()
 	dead = false;
 	bounceTime = 0;
 	ResetBullets();
+	ResetColorSpots();
+}
+
+void AI::ResetColorSpots()
+{
+	t->translate.z = 0;  //disable color spot
+	colorSpot->radius = t->scale.x * 2;
 }
 
 void AI::Gravity()
 {
-	if (gameObject->GetTransform()->translate.y > GetWorldHeight() + 0.1f)
+	if (t->translate.y > GetWorldHeight() + 0.1f)
+	{
 		kineB->useGravity = true;
+	}
 	else
 	{
-		gameObject->GetTransform()->translate.y = GetWorldHeight();
+		t->translate.y = GetWorldHeight();
 		kineB->useGravity = false;
 		kineB->ResetVel(0, 1);
 	}
@@ -232,8 +255,7 @@ void AI::IfHealthZero()
 
 float AI::GetWorldHeight()
 {
-	//return gameObject->GetTransform()->translate.x;
-	return s->Fn(gameObject->GetTransform()->translate.x);
+	return s->Fn(t->translate.x);
 }
 
 Projectile * AI::GetProjectile()

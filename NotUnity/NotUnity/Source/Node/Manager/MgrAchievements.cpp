@@ -1,4 +1,4 @@
-#include "Achievements.h"
+#include "MgrAchievements.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -6,7 +6,41 @@
 #include "../../Node/Components/KinemeticBody.h"
 #include "../../Node/Scripts/PlayerController.h"
 
-void Achievements::AchievementCheck()
+MgrAchievements::MgrAchievements(std::string name)
+	: Manager<MgrAchievements>(name)
+	, maxValX(1)
+	, maxValY(1)
+{
+}
+
+MgrAchievements::~MgrAchievements()
+{
+}
+
+void MgrAchievements::Start()
+{
+	enemyDowned = false;
+	ReadTextFile();
+	Node::Start();
+}
+
+void MgrAchievements::Update(double dt)
+{
+	//Debug::Log(enemyKilled);
+	//Debug::Log(currentKilled);
+	//Debug::Log(totalEnemyKilled);
+	WriteTextFile();
+	AchievementCheck();
+	Node::Update(dt);
+}
+
+void MgrAchievements::End()
+{
+	Node::End();
+}
+
+
+void MgrAchievements::AchievementCheck()
 {
 	if (attackTimes >= 10)
 	{
@@ -48,69 +82,70 @@ void Achievements::AchievementCheck()
 
 }
 
-int Achievements::GetAttacTimes(int at)
+int MgrAchievements::GetAttacTimes(int at)
 {
 	attackTimes += at;
 	return attackTimes;
 }
 
-bool Achievements::attackAch(bool AA)
+bool MgrAchievements::attackAch(bool AA)
 {
 	return AA;
 }
 
-bool Achievements::attackAch2(bool AA)
+bool MgrAchievements::attackAch2(bool AA)
 {
 	return AA;
 }
 
-int Achievements::GetJumpTimes(int jt)
+int MgrAchievements::GetJumpTimes(int jt)
 {
 	jumpTimes += jt;
 	return jumpTimes;
 }
 
-bool Achievements::jumpAch(bool JA)
+bool MgrAchievements::jumpAch(bool JA)
 {
 	return JA;
 }
 
-bool Achievements::jumpAch2(bool JA)
+bool MgrAchievements::jumpAch2(bool JA)
 {
 	return JA;
 }
 
-double Achievements::GetWalkTime(double wt)
+double MgrAchievements::GetWalkTime(double wt)
 {
 	walkTime += wt;
 	return walkTime;
 }
 
-bool Achievements::walkAch(bool WA)
+bool MgrAchievements::walkAch(bool WA)
 {
 	return WA;
 }
 
-bool Achievements::walkAch2(bool WA)
+bool MgrAchievements::walkAch2(bool WA)
 {
 	return WA;
 }
 
-int Achievements::GetEnemyKilled()
+int MgrAchievements::GetEnemyKilled()
 {
 	return enemyKilled;
 }
-void Achievements::SetEnemyKilled(int ek)
+
+void MgrAchievements::SetEnemyKilled(int ek)
 {
 	 enemyKilled += currentKilled;
 	
 }
-void Achievements::SetCurrentEnemyKilled(int ek)
+void MgrAchievements::SetCurrentEnemyKilled(int ek)
 {
 	currentKilled = ek;
 	totalEnemyKilled = enemyKilled + currentKilled;
 }
-bool Achievements::enemyAch()
+bool MgrAchievements::enemyAch()
 {
 	if (totalEnemyKilled >= 10)
 	{
@@ -120,8 +155,7 @@ bool Achievements::enemyAch()
 		return false;
 }
 
-
-void Achievements::ReadTextFile()
+void MgrAchievements::ReadTextFile()
 {
 	std::string line;
 	std::ifstream Print("Resources/LifeTimeStats.txt");
@@ -157,7 +191,7 @@ void Achievements::ReadTextFile()
 
 }
 
-void Achievements::WriteTextFile()
+void MgrAchievements::WriteTextFile()
 {
 	std::string line;
 	std::ofstream Write("Resources/LifeTimeStats.txt");
@@ -181,39 +215,7 @@ void Achievements::WriteTextFile()
 	}
 }
 
-void Achievements::setKnibRefrence(KinemeticBody * knib)
+void MgrAchievements::setKnibRefrence(KinemeticBody * knib)
 {
 	knibReference = knib;
-}
-
-Achievements::Achievements(std::string name) : Node(name), maxValX(1), maxValY(1)
-{
-	
-}
-
-Achievements::~Achievements()
-{
-	
-}
-
-void Achievements::Start()
-{			
-	enemyDowned = false;
-	ReadTextFile();
-	Node::Start();
-}
-
-void Achievements::Update(double dt)
-{
-	//Debug::Log(enemyKilled);
-	//Debug::Log(currentKilled);
-	//Debug::Log(totalEnemyKilled);
-	WriteTextFile();
-	AchievementCheck();
-	Node::Update(dt);
-}
-
-void Achievements::End()
-{
-	Node::End();
 }

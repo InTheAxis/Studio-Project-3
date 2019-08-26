@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+//unused class, for refrence?
+
 #include <sstream>
 
 #include "../Node.h"

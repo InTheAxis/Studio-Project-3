@@ -24,6 +24,8 @@ public:
 	Sprite* SetHSV(float hue = -1, float sat = -1, float val = -1);
 	Vector3 GetHSV();
 
+	void ToggleCullFace(bool on);
+
 protected:
 	int currFrame;
 	double currTime; 
@@ -32,6 +34,8 @@ protected:
 	Animation* anims[13];
 
 	Vector3 hsv;
+
+	bool cullBackFace;
 };
 
 #endif

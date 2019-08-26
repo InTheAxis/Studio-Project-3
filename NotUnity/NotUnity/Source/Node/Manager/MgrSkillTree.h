@@ -1,18 +1,15 @@
 #ifndef SKILL_TREE_H
 #define SKILL_TREE_H
-#include <vector>
-#include "../Node.h"
-#include "../../Utility/TypeID.h"
-#include "../../Utility/Component.h"
-#include "../Scripts.h"
-#include "../Components.h"
-#include "../../Utility/Delegate.h"
-#include "../../Utility/Singleton.h"
-#include "Skill.h"
 
-class SkillTree : public Node, public TypeID<SkillTree>, public Component, public Singleton<SkillTree>
+#include <vector>
+
+#include "Manager.h"
+#include "../../Utility/Delegate.h"
+#include "../Scripts/Skill.h"
+
+class MgrSkillTree : public Manager<MgrSkillTree>
 {
-	friend Singleton<SkillTree>;
+	friend Singleton<MgrSkillTree>;
 	friend Node;
 public:
 	virtual void Start();
@@ -24,8 +21,8 @@ public:
 	std::vector<int> GetUnlockableSkill();//func to get current unlockable skills
 
 private:
-	SkillTree(std::string name = "SkillTree");
-	~SkillTree();
+	MgrSkillTree(std::string name = "MgrSkillTree");
+	~MgrSkillTree();
 
 	
 	int expPoint;  //some exp tracker , every expPoint 10 is skillPoint

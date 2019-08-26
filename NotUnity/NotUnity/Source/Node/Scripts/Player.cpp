@@ -4,7 +4,7 @@
 #include "../../Node/Components/Sprite.h"
 #include "../../Node/Components/KinemeticBody.h"
 #include "../../Utility/Input//ControllerKeyboard.h"
-#include "../../Node/Scripts/SkillTree.h"
+#include "../Manager/MgrSkillTree.h"
 
 Player::Player(std::string name) 
 	: Node(name)
@@ -180,8 +180,7 @@ void Player::Update(double dt)
 	
 	if (kb->IsKeyPressed('E')) // To change to on enemy killed
 	{
-		SkillTree::Instance()->ExpGained(2);
-		
+		MgrSkillTree::Instance()->ExpGained(2);		
 	}
 
 	if (input.x != 0) //set dir

@@ -7,13 +7,13 @@
 #include "../Scripts.h"
 #include "../Components.h"
 #include "../../Utility/Delegate.h"
-#include "../../Utility/Singleton.h"
 
-class Skill : public Node, public TypeID<Skill>, public Component, public Singleton<Skill>
+class Skill : public Node, public TypeID<Skill>, public Component
 {
-	friend Singleton<Skill>;
-	friend Node;
 public:
+	Skill(std::string name = "Skill");
+	~Skill();
+
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();		
@@ -23,8 +23,6 @@ public:
 	bool GetUnlocked(); // get if skill is unlocked already 
 	Skill* GetPrevious();
 private:
-	Skill(std::string name = "Skill");
-	~Skill();
 
 	bool unlocked; //whether it is unlocked
 	int cost; //cost of this skill

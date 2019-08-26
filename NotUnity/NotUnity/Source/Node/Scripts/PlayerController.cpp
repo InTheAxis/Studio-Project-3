@@ -6,11 +6,12 @@
 #include "../../Node/Components/KinemeticBody.h"
 #include "../../Node/Components/Collider.h"
 #include "../../Node/Components/Renderable.h"
+#include "../../Node/Scripts/ColorSpot.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Utility/Input/ControllerMouse.h"
 #include "../../Utility/Math/Spline.h"
-#include "../../Node/Scripts/SkillTree.h"
-#include "../../Node/Scripts/Achievements.h"
+#include "../Manager/MgrSkillTree.h"
+#include "../Manager/MgrAchievements.h"
 
 PlayerController::PlayerController(std::string name)
 	: Node(name)
@@ -25,34 +26,42 @@ PlayerController::~PlayerController()
 
 void PlayerController::Start()
 {
-	gameObject->GetTransform()->translate.Set(-1, 1, 0.1f);
+	t = gameObject->GetTransform();
+	t->translate.Set(-1, 1, 0.1f);
 
 	sprite = AddChild<Sprite>()
-		->SetAnimation(0, 8, 0.5f, 1)
-		->SetAnimation(1, 8, 0.5f, 1)
-		->SetAnimation(2, 8, 0.5f, 1)
-		->SetAnimation(3, 8, 0.5f, 1)
-		->SetAnimation(4, 8, 0.5f, 1)
-		->SetAnimation(5, 8, 0.5f, 1)
-		->SetAnimation(6, 8, 0.5f, 1)
-		->SetAnimation(7, 8, 0.5f, 1)
-		->SetAnimation(8, 8, 0.5f, 1)
-		->SetAnimation(9 ,8, 0.5f, 1)
-		->SetAnimation(10, 8, 0.5f, 1)
-		->SetAnimation(11, 8, 0.5f, 1)
-		->SetAnimation(12, 8, 0.5f, 1)
+		->SetAnimation(0, 8, 1.5f, 1) //idle
+		->SetAnimation(1, 8, 0.5f, 1) //walk
+		->SetAnimation(2, 8, 0.5f, 0) //jump
+		->SetAnimation(3, 8, 0.5f, 1) //fall
+		->SetAnimation(4, 6, 0.5f, 0) //attack
+		->SetAnimation(5, 8, 0.5f, 1) //air attack
+		->SetAnimation(6, 8, 1.5f, 1) //hit
+		->SetAnimation(7, 8, 0.5f, 1) //dying
+		->SetAnimation(8, 8, 0.5f, 1) //cheer
 		->SwitchAnimation(0)
 		->PlayAnimation();
 	sprite->SetGameObj(gameObject);
-	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"));
+	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("player"));
 	sprite->SetHSV(-1,1,-1)->SetRenderPass(RENDER_PASS::POST_FX)->SelectShader(MgrGraphics::HSV_LIT);
+	sprite->ToggleCullFace(false);
 	
+	swordT = AddChild<GameObj>("sword")->GetTransform();
+	swordSprite = GetChild<GameObj>("sword")->AddComp<Sprite>()
+		->SetAnimation(0, 6, 0.3f, 1) //idle
+		->SetAnimation(1, 6, 0.3f, 0) //attack
+		->SetAnimation(2, 6, 0.3f, 1) //air attack
+		->SwitchAnimation(0)
+		->PlayAnimation();
+	swordSprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sword"));
+	swordSprite->SetHSV(-1, 1, -1)->SetRenderPass(RENDER_PASS::POST_FX)->SelectShader(MgrGraphics::HSV_UNLIT);
+	swordSprite->ToggleCullFace(false);	
 	
 	kinb = AddChild<KinemeticBody>();
 	kinb->SetGameObj(gameObject);
-	kinb->maxVel.Set(1, 1, 0);
+	kinb->maxVel.Set(1, 4, 0);
 	kinb->frictionCoeff = 5;
-	kinb->gravScale = 5;
+	kinb->gravScale = 10;
 	kinb->useGravity = false;
 
 	attackRight = AddChild<Collider>("r");
@@ -77,11 +86,16 @@ void PlayerController::Start()
 	hitbox->CreateAABB(0.5f);	
 	hitbox->tag = "player";
 
+	colorSpot = AddChild<ColorSpot>();
+	colorSpot->SetGameObj(gameObject);
+
+	maxHealth = 20;
+	moveSpeed.Set(10, 80, 0);
 	addHealth = false;
 	ActiveSelf(true);
 	Reset();
 
-	Achievements::Instance()->setKnibRefrence(kinb);
+	MgrAchievements::Instance()->setKnibRefrence(kinb);
 	Node::Start();
 }
 
@@ -91,7 +105,7 @@ void PlayerController::Update(double dt)
 	ControllerMouse* m = ControllerMouse::Instance();
 	Vector3 input;
 	float dtf = static_cast<float>(dt);
-	
+
 	//get input
 	if (kb->IsKeyDown('A') && CanMove())
 	{
@@ -110,24 +124,24 @@ void PlayerController::Update(double dt)
 	}
 	if (walking)
 	{
-		Achievements::Instance()->GetWalkTime(0.1);
+		MgrAchievements::Instance()->GetWalkTime(0.1);
 	}
 
 	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
 	{
-		Achievements::Instance()->GetJumpTimes(1);
+		MgrAchievements::Instance()->GetJumpTimes(1);
 		jumpTimer += dt;
 	}
 	else
 		jumpTimer = 0;
 	if ((m->IsButtonPressed(0) || kb->IsKeyPressed('Z')) && !attackTimer)
 	{
-		Achievements::Instance()->GetAttacTimes(1);
+		MgrAchievements::Instance()->GetAttacTimes(1);
 		attackTimer = 0.3f;
 	}
 	if (kb->IsKeyPressed('Q')) // TO BE PUT IN ENEMYSIDE TO DETECT IF ENEMY IS DEAD 
 	{
-		Achievements::Instance()->SetEnemyKilled(1);
+		MgrAchievements::Instance()->GetEnemyKilled();
 	}
 
 	if (kb->IsKeyPressed(VK_LCONTROL))
@@ -158,7 +172,7 @@ void PlayerController::Update(double dt)
 	//apply attacks
 	Attack(dt);
 	
-	if (Achievements::Instance()->enemyAch() && addHealth == false)
+	if (MgrAchievements::Instance()->enemyAch() && addHealth == false)
 	{
 		SetHealth(30);
 		addHealth = true;
@@ -172,12 +186,23 @@ void PlayerController::Update(double dt)
 	Hit(dt);
 	Die(dt);
 
-
 	ChangeState();
+
+	//update colorSpot
+	colorSpot->SetUniform(0);
+
+	//update sword's transform
+	swordT->translate = t->translate;
+	swordT->scale.x = t->scale.x;
+	if (t->scale.x < 0)
+		swordT->translate += Vector3(-0.25f, 0.2f, -0.1f);
+	else
+		swordT->translate.z += 0.1f;
+
 
 	// achievemets
 	// kinb->maxVel.Set(Achievements::Instance()->maxValX, Achievements::Instance()->maxValY, 0);	
-	
+
 	Node::Update(dt);
 }
 
@@ -207,11 +232,20 @@ void PlayerController::TryChangeState(P_STATE state)
 
 void PlayerController::ChangeState()
 {
+	if (direction > 0)
+		t->scale.x = 1;
+	else if (direction < 0)
+		t->scale.x = -1;
+
 	if (currState == nextState)
 		return;
 	
 	currState = nextState;
 	sprite->SwitchAnimation((int)currState)->PlayAnimation();
+	if (currState == P_STATE::ATTACK || currState == P_STATE::AIR_ATTACK)
+		swordSprite->SwitchAnimation((int)currState - 3)->PlayAnimation();
+	else
+		swordSprite->SwitchAnimation(0)->PlayAnimation();
 	PrintState();
 }
 
@@ -243,10 +277,7 @@ void PlayerController::Move(float inputX)
 {
 
 	kinb->ApplyForce(Vector3(inputX * moveSpeed.x /*+ speedincrease*/ * (OnGround() ? 1 : 0.3f), 0, 0));
-	if (direction > 0)
-		TryChangeState(P_STATE::MOVE_R);
-	else if (direction < 0)
-		TryChangeState(P_STATE::MOVE_L);	
+	TryChangeState(P_STATE::WALK);	
 }
 
 void PlayerController::Friction()
@@ -256,10 +287,7 @@ void PlayerController::Friction()
 	else
 		kinb->ApplyForce(Vector3(-direction * kinb->mass * kinb->frictionCoeff, 0, 0));
 
-	if (direction > 0)
-		TryChangeState(P_STATE::IDLE_R);
-	else if (direction < 0)
-		TryChangeState(P_STATE::IDLE_L);
+	TryChangeState(P_STATE::IDLE);
 }
 
 void PlayerController::Jump()
@@ -305,20 +333,16 @@ void PlayerController::Attack(double dt)
 
 	if (!OnGround(0.1f))
 	{
-		TryChangeState(P_STATE::AIR_ATTACK);		
+		TryChangeState(P_STATE::AIR_ATTACK);	
 		attackAir->ActiveSelf(true);
-		
 	}
-	else if (direction == 1)
+	else
 	{
-		TryChangeState(P_STATE::ATTACK_R);
-		attackRight->ActiveSelf(true);
-	
-	}
-	else if (direction == -1)
-	{
-		TryChangeState(P_STATE::ATTACK_L);
-		attackLeft->ActiveSelf(true);
+		if (direction == 1)
+			attackRight->ActiveSelf(true);
+		else if (direction == -1)
+			attackLeft->ActiveSelf(true);
+		TryChangeState(P_STATE::ATTACK);
 	}
 }
 
@@ -332,10 +356,7 @@ void PlayerController::Die(double dt)
 	else
 		deadTimer -= dt;
 
-	if (direction == 1)
-		TryChangeState(P_STATE::DYING_R);
-	else if (direction == -1)
-		TryChangeState(P_STATE::DYING_L);	
+	TryChangeState(P_STATE::DYING);
 }
 
 void PlayerController::Hit(double dt)
@@ -348,10 +369,7 @@ void PlayerController::Hit(double dt)
 	else
 		hitTimer -= dt;
 
-	if (direction == 1)
-		TryChangeState(P_STATE::HIT_R);
-	else if (direction == -1)
-		TryChangeState(P_STATE::HIT_L);
+	TryChangeState(P_STATE::HIT);
 }
 
 float PlayerController::GetTerrainHeight()
@@ -378,9 +396,15 @@ void PlayerController::TakeDamage(int dmg)
 }
 int PlayerController::DamageDealt()
 {
-	if (Achievements::Instance()->attackAch(true))
+	if (MgrAchievements::Instance()->attackAch(true))
 		damage = 2;
 	return damage;
+}
+
+PlayerController* PlayerController::SetColorSpotRad(float radius)
+{
+	colorSpot->radius = radius;
+	return this;
 }
 
 bool PlayerController::IsDead()
@@ -391,15 +415,14 @@ bool PlayerController::IsDead()
 void PlayerController::Reset()
 {
 	//gameObject->GetTransform()->translate.Set(-1, 1, 0);
-
-	moveSpeed.Set(10, 30, 0);
+	
 	direction = 1;
 	jumpTimer = attackTimer = hitTimer = deadTimer = 0.0;
-	health = 20;
+	health = maxHealth;
 
 	walking = false;
 
-	TryChangeState(P_STATE::IDLE_R);
+	TryChangeState(P_STATE::IDLE);
 	ChangeState();
 }
 
@@ -407,17 +430,11 @@ void PlayerController::PrintState()
 {
 	switch (currState)
 	{
-	case P_STATE::IDLE_R:
-		Debug::Log("I am IDLE_R");
+	case P_STATE::IDLE:
+		Debug::Log("I am IDLE");
 		break;
-	case P_STATE::IDLE_L:
-		Debug::Log("I am IDLE_L");
-		break;
-	case P_STATE::MOVE_L:
-		Debug::Log("I am MOVE_L");
-		break;
-	case P_STATE::MOVE_R:
-		Debug::Log("I am MOVE_R");
+	case P_STATE::WALK:
+		Debug::Log("I am MOVE");
 		break;
 	case P_STATE::JUMP:
 		Debug::Log("I am JUMP");
@@ -425,26 +442,17 @@ void PlayerController::PrintState()
 	case P_STATE::FALL:
 		Debug::Log("I am FALL");
 		break;
-	case P_STATE::ATTACK_L:
-		Debug::Log("I am ATTACK_L");
-		break;
-	case P_STATE::ATTACK_R:
-		Debug::Log("I am ATTACK_R");
+	case P_STATE::ATTACK:
+		Debug::Log("I am ATTACK");
 		break;
 	case P_STATE::AIR_ATTACK:
 		Debug::Log("I am AIR_ATTACK");
 		break;
-	case P_STATE::HIT_L:
-		Debug::Log("I am HIT_L");
+	case P_STATE::HIT:
+		Debug::Log("I am HIT");
 		break;
-	case P_STATE::HIT_R:
-		Debug::Log("I am HIT_R");
-		break;
-	case P_STATE::DYING_L:
-		Debug::Log("I am DYING_L");
-		break;
-	case P_STATE::DYING_R:
-		Debug::Log("I am DYING_R");
+	case P_STATE::DYING:
+		Debug::Log("I am DYING");
 		break;
 	}
 }

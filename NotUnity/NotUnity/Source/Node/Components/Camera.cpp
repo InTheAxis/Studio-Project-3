@@ -16,6 +16,8 @@ Camera::Camera(std::string name)
 
 Camera::~Camera()
 {
+	t = nullptr;
+	axis = nullptr;
 }
 
 void Camera::Start()

@@ -4,7 +4,7 @@
 #include "../Components/Renderable.h"
 #include "../Scripts/Spawner.h"
 #include "../Scenes/ScenePlayer.h"
-#include "../Scripts/Achievements.h"
+#include "../Manager/MgrAchievements.h"
 
 SpawnerScene::SpawnerScene(std::string name) 
 	: Scene(name)
@@ -16,6 +16,7 @@ SpawnerScene::SpawnerScene(std::string name)
 
 SpawnerScene::~SpawnerScene()
 {
+	SpawnerGO = nullptr;
 }
 
 void SpawnerScene::Start()

@@ -16,6 +16,8 @@ Collider::Collider(std::string name)
 
 Collider::~Collider()
 {
+	t = nullptr;
+	cr = nullptr;
 }
 
 void Collider::Start()

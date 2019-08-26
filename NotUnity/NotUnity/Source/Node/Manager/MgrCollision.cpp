@@ -8,6 +8,7 @@ MgrCollision::MgrCollision(std::string name) : Manager<MgrCollision>(name)
 
 MgrCollision::~MgrCollision()
 {
+	allColls.clear();
 }
 
 void MgrCollision::Start()
