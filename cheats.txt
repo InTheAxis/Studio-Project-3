@@ -1,0 +1,6 @@
+Non-gameplay:
+0/1 - Wireframe
+9 -  Render Axes, FPS
+
+Gameplay:
+F1 - player takes damage to health, and eventually dies

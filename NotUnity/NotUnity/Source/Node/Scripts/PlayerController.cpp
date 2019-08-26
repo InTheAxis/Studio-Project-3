@@ -38,7 +38,7 @@ void PlayerController::Start()
 		->SetAnimation(4, 6, 0.5f, 0) //attack
 		->SetAnimation(5, 8, 0.5f, 1) //air attack
 		->SetAnimation(6, 8, 1.5f, 1) //hit
-		->SetAnimation(7, 8, 3.f, 0) //dying
+		->SetAnimation(7, 8, 3.5f, 0) //dying
 		->SetAnimation(8, 8, 0.5f, 1) //cheer
 		->SwitchAnimation(0)
 		->PlayAnimation();
@@ -145,7 +145,7 @@ void PlayerController::Update(double dt)
 		MgrAchievements::Instance()->GetEnemyKilled();
 	}
 
-	if (kb->IsKeyPressed(VK_LCONTROL))
+	if (kb->IsKeyPressed(VK_F1))
 		TakeDamage(1);
 
 	if (input.x != 0)
