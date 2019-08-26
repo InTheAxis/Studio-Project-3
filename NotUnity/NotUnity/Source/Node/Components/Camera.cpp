@@ -16,6 +16,8 @@ Camera::Camera(std::string name)
 
 Camera::~Camera()
 {
+	t = nullptr;
+	axis = nullptr;
 }
 
 void Camera::Start()
@@ -47,6 +49,20 @@ void Camera::Update(double dt)
 		break;
 	}
 
+	//if (kb->IsKeyPressed('5'))
+	//	Shake(0.05f, 0.15f);
+
+	if (shakeStrength > 0)
+	{
+		if (m_lifetime > bounceTime)
+		{
+			shakeStrength = 0;
+			t->translate = origPos;
+		}
+		else
+			t->translate += Vector3(Math::RandFloatMinMax(-1, 1), Math::RandFloatMinMax(-1, 1)) * shakeStrength;
+	}
+
 	Vector3 target = t->translate + axis->view;
 	view.SetToLookAt(t->translate.x, t->translate.y, t->translate.z, target.x, target.y, target.z, axis->up.x, axis->up.y, axis->up.z);
 	Node::Update(dt);
@@ -72,4 +88,19 @@ Camera * Camera::SetSpeed(float s)
 Mtx44* Camera::GetViewMtx()
 {
 	return &view;
+}
+
+void Camera::Shake(float strength, double duration, bool forceOff)
+{
+	if (!forceOff)
+	{
+		shakeStrength = strength;
+		bounceTime = m_lifetime + duration;
+		origPos = t->translate;
+	}
+	else
+	{
+		shakeStrength = 0;
+		bounceTime = m_lifetime - 1;
+	}
 }

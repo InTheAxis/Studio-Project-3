@@ -13,14 +13,22 @@ MgrScene::MgrScene(std::string name) : Manager<MgrScene>(name)
 
 MgrScene::~MgrScene()
 {
+	rootScene = nullptr;
+	for (auto s : allScenes)
+	{
+		if (s.second)
+			delete s.second;
+		s.second = nullptr;
+	}
+	allScenes.clear();
 }
 
 void MgrScene::LoadScenes()
 {
+	Debug::Log("Loading scenes...");
 	allScenes["default"] = new MainScene;	
-	allScenes["spawner"] = new SpawnerScene;
-	allScenes["player"] = new ScenePlayer;
-	
+	//allScenes["spawner"] = new SpawnerScene;
+	//allScenes["player"] = new ScenePlayer;
 	
 	SwitchScene("default"); //change this line to your working scene
 }

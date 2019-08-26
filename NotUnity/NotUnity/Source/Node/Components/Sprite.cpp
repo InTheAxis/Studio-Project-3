@@ -9,12 +9,20 @@ Sprite::Sprite(std::string name)
 	, selectedAnim(0)
 	, hsv (-1, -1, -1)
 {
+	for (int i = 0; i < 13; ++i)
+		anims[i] = nullptr;
 	SetAnimation(0, 0, 1, false);	
 	renderPass = RENDER_PASS::GEO;
 }
 
 Sprite::~Sprite()
 {
+	for (int i = 0; i < 13; ++i)
+	{
+		if (anims[i])
+			delete anims[i];
+		anims[i] = nullptr;
+	}
 }
 
 void Sprite::Start()
@@ -59,8 +67,17 @@ void Sprite::Render()
 	if (shader != mgrG->GetCurrShader())
 		mgrG->UseShader(shader);
 
+	if (cullBackFace)
+		glEnable(GL_CULL_FACE);
+	else
+		glDisable(GL_CULL_FACE);
+
 	//set uniforms for transform
 	mgrG->SetUniform("model", t->GetModel());
+	if (scrollSpeed.IsZero())
+		mgrG->SetUniform("scrollAmt", Vector3());
+	else
+		mgrG->SetUniform("scrollAmt", m_lifetime * Vector3(scrollSpeed.x, scrollSpeed.y, 1));
 
 	//set uniforms for material
 	mgrG->SetUniform("material.albedo", material->albedo);

@@ -14,6 +14,7 @@ out vec4 color;
 
 // constants
 const int MAX_COLORMAPS = 13;
+const float SAT_THRESHOLD = 0.13;
 
 // misc uniforms
 struct Material
@@ -40,21 +41,15 @@ vec3 hsvToRgb(vec3 hsv);
 void main()
 {
 	/**HANDLING TEXTURES**/
-	vec4 baseColor = vec4(0);
-	int colorCount = 0;
+	vec4 baseColor = fragColor;
 	for (int i = 0; i < MAX_COLORMAPS; ++i)
 	{
 		if (material.colorMapEnabled[i])
 		{
-			baseColor += texture2D(material.colorMap[i], texCoord);
-			++colorCount;
+			baseColor = texture2D(material.colorMap[i], texCoord);
+			break;
 		}
 	}
-
-	if (colorCount > 0)
-		baseColor = baseColor / colorCount;
-	else
-		baseColor = fragColor;
 	
 	color = material.albedo * baseColor;
 	
@@ -65,7 +60,7 @@ void main()
 	vec3 targetHsv = rgbToHsv(vec3(color));	
 	if (hsv.h >= 0)
 		targetHsv.x = hsv.h;
-	if (hsv.s >= 0 && targetHsv.y > 0.2)
+	if (hsv.s >= 0 && targetHsv.y > SAT_THRESHOLD)
 		targetHsv.y = clamp(hsv.s, 0, 1);
 	if (hsv.v >= 0)
 		targetHsv.z = clamp(hsv.v, 0, 1);

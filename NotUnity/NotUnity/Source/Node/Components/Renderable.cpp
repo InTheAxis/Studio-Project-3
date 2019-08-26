@@ -10,11 +10,16 @@ Renderable::Renderable(std::string name)
 	, t(nullptr)
 	, shader(MgrGraphics::UNLIT)	
 	, renderPass(RENDER_PASS::FINAL)
+	, scrollSpeed(0,0)
+	, cullBackFace(true)
 {
 }
 
 Renderable::~Renderable()
 {
+	mesh = nullptr;
+	material = nullptr;
+	t = nullptr;
 }
 
 void Renderable::Start()
@@ -46,6 +51,11 @@ void Renderable::Render()
 
 	//set uniforms for transform
 	mgrG->SetUniform("model", t->GetModel());
+	if (scrollSpeed.IsZero())
+		mgrG->SetUniform("scrollAmt", Vector3());
+	else
+		mgrG->SetUniform("scrollAmt", m_lifetime * Vector3(scrollSpeed.x, scrollSpeed.y, 1));
+
 
 	//set uniforms for material
 	mgrG->SetUniform("material.albedo", material->albedo);
@@ -76,6 +86,18 @@ Renderable* Renderable::AttachMaterial(Material* material)
 Renderable * Renderable::SelectShader(MgrGraphics::SHADER shader)
 {
 	this->shader = shader;
+	return this;
+}
+
+Renderable* Renderable::SetToScroll(Vector2 scrollSpeed)
+{
+	this->scrollSpeed = scrollSpeed;
+	return this;
+}
+
+Renderable* Renderable::ToggleCullFace(bool on)
+{
+	cullBackFace = on;
 	return this;
 }
 

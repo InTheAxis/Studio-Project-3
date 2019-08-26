@@ -15,6 +15,8 @@ MapScene::MapScene(std::string name)
 
 MapScene::~MapScene()
 {
+	camera = nullptr;
+	mapGen = nullptr;
 }
 
 void MapScene::Start()

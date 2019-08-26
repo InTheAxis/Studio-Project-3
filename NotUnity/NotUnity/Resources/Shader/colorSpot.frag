@@ -9,7 +9,8 @@ in vec3 vertPos_modelSpace;
 out vec4 color;
 
 // constants
-const int MAX_POINTS = 2;
+const int MAX_POINTS = 22;
+const float SAT_THRESHOLD = 0.13;
 
 // misc uniforms
 struct Material
@@ -36,7 +37,7 @@ vec3 hsvToRgb(vec3 hsv);
 void main()
 {
 	/**HANDLING TEXTURES**/
-	vec4 baseColor = vec4(0);
+	vec4 baseColor;
 	if (material.colorMapEnabled[0])
 		baseColor = texture2D(material.colorMap[0], texCoord);
 	else
@@ -49,7 +50,7 @@ void main()
 
 	//apply hsv changes
 	vec3 targetHsv = rgbToHsv(vec3(color));	
-	if (targetHsv.y > 0.1)
+	if (targetHsv.y > SAT_THRESHOLD)
 	{
 		targetHsv.y = GetSaturation();
 		vec3 newColor = hsvToRgb(targetHsv);
@@ -68,7 +69,7 @@ float GetSaturation()
 	for (int i = 0; i < MAX_POINTS; ++i)
 	{
 		if (pt[i].pos.z <= 0)
-			break;
+			continue;
 
 		//get the points position in screen space, for depth info, only useful for perspective
 		pointPos_screenSpace = proj * view * vec4(pt[i].pos.xyz, 1);

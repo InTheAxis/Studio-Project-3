@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source">
@@ -184,12 +184,6 @@
     <ClCompile Include="Source\Utility\Math\Rect2D.cpp">
       <Filter>Source\Utility\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Node\Scripts\Achievements.cpp">
-      <Filter>Source\Node\Scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Node\Scripts\SkillTree.cpp">
-      <Filter>Source\Node\Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Node\Scripts\Skill.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
@@ -205,14 +199,35 @@
     <ClCompile Include="Source\Node\Scripts\Projectile.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Utility\Strategy\StrategyOne.cpp">
-      <Filter>Source\Utility\Strategy</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Utility\Strategy\Strategy.cpp">
       <Filter>Source\Utility\Strategy</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\Math\Splines\Mountain.cpp">
       <Filter>Source\Utility\Math\Splines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Manager\MgrSound.cpp">
+      <Filter>Source\Node\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Strategy\STomato.cpp">
+      <Filter>Source\Utility\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Strategy\SCarrot.cpp">
+      <Filter>Source\Utility\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Strategy\SBanana.cpp">
+      <Filter>Source\Utility\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Strategy\SKiwi.cpp">
+      <Filter>Source\Utility\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\Strategy\SBlueberry.cpp">
+      <Filter>Source\Utility\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Manager\MgrAchievements.cpp">
+      <Filter>Source\Node\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Manager\MgrSkillTree.cpp">
+      <Filter>Source\Node\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -387,12 +402,6 @@
     <ClInclude Include="Source\Utility\Delegate.h">
       <Filter>Source\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Node\Scripts\Achievements.h">
-      <Filter>Source\Node\Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Node\Scripts\SkillTree.h">
-      <Filter>Source\Node\Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Node\Scripts\Skill.h">
       <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
@@ -408,14 +417,35 @@
     <ClInclude Include="Source\Node\Scripts\Projectile.h">
       <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Utility\Strategy\StrategyOne.h">
-      <Filter>Source\Utility\Strategy</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Utility\Strategy\Strategy.h">
       <Filter>Source\Utility\Strategy</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\Math\Splines\Mountain.h">
       <Filter>Source\Utility\Math\Splines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\MgrSound.h">
+      <Filter>Source\Node\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Strategy\STomato.h">
+      <Filter>Source\Utility\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Strategy\SCarrot.h">
+      <Filter>Source\Utility\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Strategy\SBanana.h">
+      <Filter>Source\Utility\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Strategy\SKiwi.h">
+      <Filter>Source\Utility\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\Strategy\SBlueberry.h">
+      <Filter>Source\Utility\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\MgrAchievements.h">
+      <Filter>Source\Node\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Manager\MgrSkillTree.h">
+      <Filter>Source\Node\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

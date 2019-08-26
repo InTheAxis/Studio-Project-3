@@ -10,6 +10,8 @@ MgrGameObj::MgrGameObj(std::string name)  : Manager<MgrGameObj>(name)
 
 MgrGameObj::~MgrGameObj()
 {
+	goList.clear();
+	renderables.clear();
 }
 
 void MgrGameObj::Start()

@@ -16,6 +16,8 @@ Scene::Scene(std::string name)
 
 Scene::~Scene()
 {
+	mg = nullptr;
+	mgo = nullptr;
 }
 
 void Scene::Start()

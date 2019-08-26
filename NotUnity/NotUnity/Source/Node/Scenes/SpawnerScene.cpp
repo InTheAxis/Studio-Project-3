@@ -4,6 +4,7 @@
 #include "../Components/Renderable.h"
 #include "../Scripts/Spawner.h"
 #include "../Scenes/ScenePlayer.h"
+#include "../Manager/MgrAchievements.h"
 
 SpawnerScene::SpawnerScene(std::string name) 
 	: Scene(name)
@@ -15,6 +16,7 @@ SpawnerScene::SpawnerScene(std::string name)
 
 SpawnerScene::~SpawnerScene()
 {
+	SpawnerGO = nullptr;
 }
 
 void SpawnerScene::Start()
@@ -82,5 +84,22 @@ void SpawnerScene::Reset()
 
 int SpawnerScene::GetEnemyKilled()
 {
+
 	return SpawnerGO->GetScript<Spawner>()->GetEnemiesKilled();
+}
+
+int SpawnerScene::GetSpawnerWave()
+{
+	return SpawnerGO->GetScript<Spawner>()->GetSpawnerWave();
+}
+
+bool SpawnerScene::GetBossKilled()
+{
+	return SpawnerGO->GetScript<Spawner>()->GetBossKilled();
+}
+
+void SpawnerScene::NewWave(int wave)
+{
+	SpawnerGO->GetScript<Spawner>()->NewWave();
+	SpawnerGO->GetScript<Spawner>()->SetStrategy(wave);
 }

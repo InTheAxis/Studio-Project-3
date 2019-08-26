@@ -3,12 +3,13 @@
 
 #include "../Scene.h"
 #include "../../Utility/Math/Spline.h"
+#include "../../Node/Scene.h"
 
-//plain scene to show how to inherit properly
-class ColorSpot;
 class Player;
 class PlayerController;
-class ScenePlayer : public Scene  //alright to inherit because I won't need to Get it
+class Renderable;
+class Camera;
+class ScenePlayer : public Scene
 {
 public:
 	ScenePlayer(std::string name = "ScenePlayer");
@@ -18,12 +19,16 @@ public:
 	virtual void Update(double dt);
 	virtual void End();
 
+	void SetCameraRef(Camera* camera);
+
+	int GetHealth();
 	GameObj* GetPlayer();
-	void SetTerrain(Spline* s);
+	ScenePlayer* SetTerrain(Spline* s);
+	ScenePlayer* SetColorSpotRad(float radius);
 
 	void Render();	
+	
 protected:
-	ColorSpot* colorSpot;
 	PlayerController* playerScript;
 };
 

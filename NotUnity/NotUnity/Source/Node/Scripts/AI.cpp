@@ -2,45 +2,15 @@
 #include "../Manager/MgrGraphics.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../../Node/GameObj.h"
-#include "../Scripts/Spawner.h"
-#include "Projectile.h"
 #include "../../Node/Components/Collider.h"
+#include "../Scripts/Spawner.h"
 #include "../Scripts/PlayerController.h"
+#include "../Scripts/ColorSpot.h"
+#include "Projectile.h"
 
-void AIOnHit(ColInfo info)
-{
-	if (info.other->GetGameObj()->GetScript<Projectile>())
-		return;
-	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
-	{
-		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
-		if (ai->m_lifetime > ai->bounceTime + 0.5)
-		{
-			ai->bounceTime = ai->m_lifetime;
-			ai->health--;
-
-			if (ai->health <= 0)
-			{
-				ai->gameObject->ActiveSelf(false);
-				ai->health = 0;
-				ai->dead = true;
-			}
-		}
-	}
-}
-
-void AIOnAttack(ColInfo info)
-{
-	//if (info.other->GetGameObj()->GetScript<PlayerController>())
-	//	info.other->GetGameObj()->GetScript<PlayerController>()->TakeDamage(1);
-
-	//if (info.other->GetGameObj()->GetScript<PlayerController>())
-	//	info.coll->GetGameObj()->GetTransform()->translate +=  info.penetration;
-}
 AI::AI(std::string name) 
 	: Node(name)
 	, playerTrans(0.f, 0.f, 0.f)
-	, health(3.f)
 	, damage(0.f)
 	, strategy(nullptr)
 	, direction(0.f,0.f,0.f)
@@ -49,8 +19,9 @@ AI::AI(std::string name)
 	, kineB(nullptr)
 	, s(nullptr)
 	, sat(1)
-	, interval(0)
 	, bounceTime(0)
+	, wave(0)
+	, armour(0.f)
 {
 }
 
@@ -58,28 +29,16 @@ AI::~AI()
 {
 }
 
-void AI::OnEnable()
-{
-	coll->OnCollideStay += AIOnHit;
-	trigger->OnTriggerEnter += AIOnAttack;
-}
-
-void AI::OnDisable()
-{
-	if (coll)
-		coll->OnCollideStay -= AIOnHit;
-	if (trigger)
-		trigger->OnTriggerEnter -= AIOnAttack;
-}
-
 void AI::Start()
 {
 	sprite = AddChild<Sprite>();
 	sprite->SetGameObj(gameObject);
-	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))
-		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("anim"))
+	sprite->SetAnimation(0, 8, 0.5f, 1)
+		->SwitchAnimation(0)
+		->PlayAnimation()
+		->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))
+		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy"))
 		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX);
-
 
 	kineB = AddChild<KinemeticBody>();
 	kineB->SetGameObj(gameObject);
@@ -91,73 +50,103 @@ void AI::Start()
 	for (int i = 0; i < ammoCount; ++i)
 	{
 		projectile[i] = AddChild<GameObj>("bull" + std::to_string(i))->AddScript<Projectile>();
+		projectile[i]->SetTarget("player");
 		projectile[i]->GetGameObj()->ActiveSelf(false);
 	}
 
-	if (strategy == NULL)
-		ChangeStrategy(new StrategyOne(), false);
-	
+	if (gameObject->GetName()[0] == 'e')
+		gameObject->GetScript<AI>()->health = 3;
+	else
+	{
+		gameObject->GetScript<AI>()->health = 6;
+	}
+
 	Vector3 scale = gameObject->GetTransform()->scale;
 	coll = AddChild<Collider>("c");
 	coll->SetGameObj(gameObject);
-	coll->CreateAABB(0.5f);
+	coll->CreateAABB(0.5f * scale.x);
+	coll->tag = "enemy";
 	
 	trigger = AddChild<Collider>("t");
 	trigger->SetGameObj(gameObject);
 	trigger->isTrigger = true;
-	trigger->CreateAABB(0.5f);
+	trigger->CreateAABB(0.5f * scale.x);
+	trigger->tag = "enemyA";
+
+	colorSpot = AddChild<ColorSpot>();
+	colorSpot->SetGameObj(gameObject);	
+
+	t = gameObject->GetTransform();
 
 	Node::Start();
 }
 
 void AI::Update(double dt)
 { 
-	interval += 1.f * static_cast<float>(dt);
-	direction = (playerTrans - gameObject->GetTransform()->translate);
-	if (!direction.IsZero())
-		direction.Normalize();
-
-	strategy->SetDest(playerTrans.x, playerTrans.y);
-	if (strategy->Update(playerTrans, gameObject->GetTransform()->translate, dt))
+	if (strategy != nullptr)
 	{
-
+		if (gameObject->GetName()[0] == 'b')
+			strategy->Boss(true);
+		else
+			strategy->Boss(false);
 	}
 
-	if (interval >= 3.f)
+	if (!dead)
 	{
+		direction = (playerTrans - t->translate);
+		if (!direction.IsZero())
+			direction.Normalize();
+
+		//Movement
+		strategy->Update(playerTrans, gameObject->GetTransform()->translate, kineB, dt);
+
+		//Attack
 		Projectile* p = GetProjectile();
-		if (p)
-		{
-			p->Discharge(gameObject->GetTransform()->translate, direction * 10);
-			p->GetGameObj()->ActiveSelf(true);
-		}
-		interval = 0;
-	}
+		strategy->Attack(p, gameObject->GetTransform()->translate, direction, dt);
 
-	if ((playerTrans - gameObject->GetTransform()->translate).LengthSquared() > 3.f)
-			kineB->ApplyForce(direction);
-	else
-		kineB->ResetVel(1, 0);
+		//For SBanana
+		if (strategy->SelfInflict())
+			health--;
 
-	if (gameObject->GetTransform()->translate.y > GetWorldHeight() + 0.1f)
-	{
-		kineB->useGravity = true;
+		IfHealthZero();
+		Gravity();
+		kineB->UpdateSuvat(dt);
+		kineB->ResetForce();		
 	}
 	else
 	{
-		gameObject->GetTransform()->translate.y = GetWorldHeight();
-		kineB->useGravity = false;
-		kineB->ResetVel(0, 1);
+		t->translate.z = 0; //disable color spot
+		if (m_lifetime > bounceTime + 0.5f)
+			gameObject->ActiveSelf(false);
 	}
-
-	kineB->UpdateSuvat(dt);
-	kineB->ResetForce();
 
 	sat = Math::Max(0.f,  health / 3.f);
+	colorSpot->radius = t->scale.x * 2 * (health / 3.f);
 
 	sprite->SetHSV(-1, sat, -1);
 
 	Node::Update(dt);
+}
+
+void AI::End()
+{
+	Node::End();
+}
+
+void AI::OnEnable()
+{
+	coll->OnCollideStay.Subscribe(&AI::HandleColl, this, "coll");
+}
+
+void AI::OnDisable()
+{
+	if (coll)
+		coll->OnCollideStay.UnSubscribe("coll");
+}
+
+void AI::SetPlayerTrans(Vector3 trans)
+{
+	playerTrans = trans;
 }
 
 void AI::SetHealth(float health)
@@ -182,7 +171,6 @@ float AI::GetDamageDealt()
 
 void AI::ChangeStrategy(Strategy* newStrategy, bool remove)
 {
-	remove = true;
 	if (remove)
 	{
 		if (strategy != NULL)
@@ -206,6 +194,60 @@ AI* AI::SetTerrain(Spline * s)
 	return this;
 }
 
+void AI::SetSaturation(float sat)
+{
+	this->sat = sat;
+}
+
+ColorSpot* AI::GetColorSpot() const
+{
+	return colorSpot;
+}
+
+void AI::Reset()
+{
+	health = 3;
+	armour = 3;
+	sat = 1;
+	dead = false;
+	bounceTime = 0;
+	ResetBullets();
+	ResetColorSpots();
+}
+
+void AI::Gravity()
+{
+	if (t->translate.y > GetWorldHeight() + 0.1f)
+	{
+		kineB->useGravity = true;
+	}
+	else
+	{
+		t->translate.y = GetWorldHeight();
+		kineB->useGravity = false;
+		kineB->ResetVel(0, 1);
+	}
+}
+
+void AI::SetWave(int wave)
+{
+	this->wave = wave;
+}
+
+void AI::SetStrategy(Strategy* strat)
+{
+	strategy = strat;
+}
+
+void AI::IfHealthZero()
+{
+	if (health <= 0)
+	{
+		health = 0;
+		dead = true;
+	}
+}
+
 void AI::ResetBullets()
 {
 	for (int i = 0; i < ammoCount; ++i)
@@ -215,24 +257,15 @@ void AI::ResetBullets()
 	}
 }
 
-void AI::SetSaturation(float sat)
+void AI::ResetColorSpots()
 {
-	this->sat = sat;
-}
-
-void AI::Reset()
-{
-	health = 3;
-	sat = 1;
-	dead = false;
-	bounceTime = 0;
-	ResetBullets();
+	t->translate.z = 0;  //disable color spot
+	colorSpot->radius = t->scale.x * 2;
 }
 
 float AI::GetWorldHeight()
 {
-	//return gameObject->GetTransform()->translate.x;
-	return s->Fn(gameObject->GetTransform()->translate.x);
+	return s->Fn(t->translate.x);
 }
 
 Projectile * AI::GetProjectile()
@@ -245,12 +278,31 @@ Projectile * AI::GetProjectile()
 	return nullptr;
 }
 
-void AI::SetPlayerTrans(Vector3 trans)
+void AI::HandleColl(ColInfo info)
 {
-	playerTrans = trans;
-}
+	if (info.other->GetGameObj()->GetScript<Projectile>())
+		return;
+	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
+	{
+		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
+		if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
+		{
+			ai->bounceTime = ai->m_lifetime;
 
-void AI::End()
-{
-	Node::End();
+			if (ai->strategy->HasArmor())
+			{
+				ai->armour--;
+
+				if (ai->armour <= 0)
+				{
+					ai->armour = 0;
+					ai->health--;
+				}
+			}
+			else
+				ai->health--;
+
+			IfHealthZero();
+		}
+	}
 }

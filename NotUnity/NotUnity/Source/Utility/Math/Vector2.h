@@ -13,6 +13,9 @@ struct Vector2
 	Vector2( const Vector2 &rhs ); //copy constructor
 	~Vector2(); //default destructor
 	void Set( float a, float b ); //Set all data
+	void SetZero(void); //Set all data to zero
+	bool IsZero(void) const; //Check if data is zero
+	Vector2 Scale(const Vector2 &rhs);
 	Vector2 operator+( const Vector2& rhs ) const; //Vector addition
 	Vector2 operator-( const Vector2& rhs ) const; //Vector subtraction
 	Vector2 operator-( void ) const; //Unary negation

@@ -12,10 +12,27 @@ MgrGraphics::MgrGraphics(std::string name) : Manager<MgrGraphics>(name)
 
 MgrGraphics::~MgrGraphics()
 {
+	shaderPrograms.clear();
+	cachedUniforms.clear();
+	for (auto mesh : cachedMeshes)
+	{
+		if (mesh.second)
+			delete mesh.second;
+		mesh.second = nullptr;
+	}
+	cachedMeshes.clear();
+	for (auto mat : cachedMaterials)
+	{
+		if (mat.second)
+			delete mat.second;
+		mat.second = nullptr;
+	}
+	cachedMaterials.clear();
 }
 
 void MgrGraphics::Start()
 {
+	Debug::Log("Initializing OpenGL");
 	//init opengl
 	glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -76,6 +93,7 @@ void MgrGraphics::SetUniformScene()
 	SetUniform("view", *view);
 	SetUniform("proj", projStack.Top());
 	SetUniform("lightDir", lightDir);
+	SetUniform("scrollAmt", Vector3());
 }
 
 void MgrGraphics::UseShader(MgrGraphics::SHADER shader)

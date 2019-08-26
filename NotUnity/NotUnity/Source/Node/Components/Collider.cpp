@@ -4,17 +4,20 @@
 #include "../Components/ColliderRender.h"
 #include "../Manager/MgrCollision.h"
 
-Collider::Collider(std::string name) 
+Collider::Collider(std::string name)
 	: Node(name)
 	, isTrigger(false)
 	, collided(false)
 	, triggered(false)
+	, tag("coll")
 {
 	MgrCollision::Instance()->RegisterColl(this);
 }
 
 Collider::~Collider()
 {
+	t = nullptr;
+	cr = nullptr;
 }
 
 void Collider::Start()
