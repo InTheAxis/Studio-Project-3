@@ -93,6 +93,7 @@ void MgrGraphics::SetUniformScene()
 	SetUniform("view", *view);
 	SetUniform("proj", projStack.Top());
 	SetUniform("lightDir", lightDir);
+	SetUniform("scrollAmt", Vector3());
 }
 
 void MgrGraphics::UseShader(MgrGraphics::SHADER shader)

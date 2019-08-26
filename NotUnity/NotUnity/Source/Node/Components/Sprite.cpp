@@ -8,7 +8,6 @@ Sprite::Sprite(std::string name)
 	, currTime(0.0)
 	, selectedAnim(0)
 	, hsv (-1, -1, -1)
-	, cullBackFace(true)
 {
 	for (int i = 0; i < 13; ++i)
 		anims[i] = nullptr;
@@ -75,6 +74,10 @@ void Sprite::Render()
 
 	//set uniforms for transform
 	mgrG->SetUniform("model", t->GetModel());
+	if (scrollSpeed.IsZero())
+		mgrG->SetUniform("scrollAmt", Vector3());
+	else
+		mgrG->SetUniform("scrollAmt", m_lifetime * Vector3(scrollSpeed.x, scrollSpeed.y, 1));
 
 	//set uniforms for material
 	mgrG->SetUniform("material.albedo", material->albedo);
@@ -134,9 +137,4 @@ Sprite* Sprite::SetHSV(float hue, float sat, float val)
 Vector3 Sprite::GetHSV()
 {
 	return hsv;
-}
-
-void Sprite::ToggleCullFace(bool on)
-{
-	cullBackFace = on;
 }

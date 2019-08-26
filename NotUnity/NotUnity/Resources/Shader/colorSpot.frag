@@ -37,7 +37,7 @@ vec3 hsvToRgb(vec3 hsv);
 void main()
 {
 	/**HANDLING TEXTURES**/
-	vec4 baseColor = vec4(0);
+	vec4 baseColor;
 	if (material.colorMapEnabled[0])
 		baseColor = texture2D(material.colorMap[0], texCoord);
 	else

@@ -15,6 +15,7 @@ out vec3 vertNormal_cameraspace;
 
 // Values that stay constant for the whole mesh.
 uniform mat4 model, view, proj;
+uniform vec3 scrollAmt;
 
 void main()
 {
@@ -27,5 +28,8 @@ void main()
 	//pass throughs
 	fragColor = aVertColor;
 	fragPos =  vec3(temp);
-	texCoord = aVertTexCoord;
+	if (scrollAmt.z > 0)
+		texCoord = aVertTexCoord + vec2(scrollAmt);
+	else
+		texCoord = aVertTexCoord;
 }

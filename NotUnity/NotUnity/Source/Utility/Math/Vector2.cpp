@@ -19,6 +19,22 @@ void Vector2::Set( float a, float b )
 	y = b;
 }
 
+void Vector2::SetZero(void)
+{
+	x = y = 0.0f;
+}
+
+bool Vector2::IsZero(void) const
+{
+	return Math::FIsEqual(x, 0.f) && Math::FIsEqual(y, 0.f);
+}
+
+Vector2 Vector2::Scale(const Vector2 & rhs)
+{
+	Vector2 ret(x * rhs.x, y * rhs.y);
+	return ret;
+}
+
 Vector2 Vector2::operator+( const Vector2& rhs ) const
 {
 	return Vector2(x + rhs.x, y + rhs.y);

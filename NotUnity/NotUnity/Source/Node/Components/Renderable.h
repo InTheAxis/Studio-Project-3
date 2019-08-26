@@ -33,6 +33,8 @@ public:
 	Renderable* AttachMesh(Mesh* mesh);
 	Renderable* AttachMaterial(Material* material);
 	Renderable* SelectShader(MgrGraphics::SHADER shader);
+	Renderable* SetToScroll(Vector2 scrollSpeed);
+	Renderable* ToggleCullFace(bool on);
 
 	RENDER_PASS GetRenderPass() const;
 	Renderable* SetRenderPass(RENDER_PASS rp);
@@ -42,7 +44,8 @@ protected:
 	Transform* t;
 	MgrGraphics::SHADER shader;
 	RENDER_PASS renderPass;
-	
+	Vector2 scrollSpeed;
+	bool cullBackFace;
 
 	void DrawMesh();
 	void DrawMesh(unsigned count, unsigned offset);

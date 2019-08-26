@@ -23,7 +23,7 @@ public:
 	Spline* GetTerrain();
 
 	void ChangeToSaturated();
-	void ChangeToDeSat();
+	void ChangeToDeSat();	
 
 private:
 	Camera* camera;

@@ -42,8 +42,9 @@ void MapGenerator::Start()
 
 	sky = AddChild<GameObj>("Sky");
 	sky->AddComp<Sprite>()
-		->SetHSV(-1,1,-1)->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sky"))
-		->SetRenderPass(RENDER_PASS::GEO)->SelectShader(MgrGraphics::HSV_UNLIT);
+		->SetHSV(-1, 1, -1)->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("sky"))
+		->SetRenderPass(RENDER_PASS::GEO)->SelectShader(MgrGraphics::HSV_UNLIT)
+		->SetToScroll(Vector2(0.1f, 0));
 	sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;
 	sky->GetTransform()->scale.Set(15, 15, 1);	
 	Node::Start();
