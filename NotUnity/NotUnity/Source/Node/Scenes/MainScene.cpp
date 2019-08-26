@@ -124,7 +124,7 @@ void MainScene::Update(double dt)
 	case MENU:
 		wasd->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-1.5f, 0, 0);
 		title->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(0, 2, 0);
-		title->SetHSV(m_lifetime * 300, -1, -1);
+		title->SetHSV((float)m_lifetime * 300, -1, -1);
 		if (kb->IsKeyPressed('W') || kb->IsKeyPressed('A') || kb->IsKeyPressed('S') || kb->IsKeyPressed('D'))
 			ChangeGameState(TUTO);
 		break;
@@ -138,10 +138,10 @@ void MainScene::Update(double dt)
 	case GAMEPLAY:
 		if (kb->IsKeyPressed(VK_TAB))
 			pause = !pause;
-		greenbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3( (player->GetHealth() * 0.05) - 7.2, 4.0f, 0.f);
-		greenbar->GetGameObj()->GetTransform()->scale.Set(player->GetHealth() * 0.125, 1, 0);
-		redbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-6.2 , 4.0f, 0);
-		redbar->GetGameObj()->GetTransform()->scale.Set(2.4, 1, 0);
+		greenbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3( (player->GetHealth() * 0.05f) - 7.2f, 4.0f, 0.f);
+		greenbar->GetGameObj()->GetTransform()->scale.Set(player->GetHealth() * 0.125f, 1, 0);
+		redbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-6.2f , 4.0f, 0);
+		redbar->GetGameObj()->GetTransform()->scale.Set(2.4f, 1, 0);
 		if (spawner->GetEnemyKilled() >= 3 && spawner->GetBossKilled())
 		{
 			spawner->SetWave(spawner->GetSpawnerWave() + 1);
@@ -165,7 +165,7 @@ void MainScene::Update(double dt)
 
 	pauseMenu->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(0, 0, 0.1f);
 	pauseMenu->ActiveSelf(pause);
-	MgrMain::Instance()->SetTimeScale((int)!pause);
+	MgrMain::Instance()->SetTimeScale((float)!pause);
 	if (pause) return;
 
 	mainCam->GetTransform()->translate = playerGO->GetTransform()->translate;
@@ -267,8 +267,8 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 	case GAMEPLAY:
 		greenbar->ActiveSelf(true);
 		redbar->ActiveSelf(true);
-		greenbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3((player->GetHealth() * 0.05) - 7.2, 4.0f, 0.f);
-		redbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-6.3 , 4.0f, 0);
+		greenbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3((player->GetHealth() * 0.05f) - 7.2f, 4.0f, 0.f);
+		redbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-6.3f, 4.0f, 0);
 		spawner->SetWave(1);
 		break;
 	case LOSE:		
