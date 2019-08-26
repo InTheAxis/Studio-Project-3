@@ -38,7 +38,7 @@ void PlayerController::Start()
 		->SetAnimation(4, 6, 0.5f, 0) //attack
 		->SetAnimation(5, 8, 0.5f, 1) //air attack
 		->SetAnimation(6, 8, 1.5f, 1) //hit
-		->SetAnimation(7, 8, 0.5f, 1) //dying
+		->SetAnimation(7, 8, 3.f, 0) //dying
 		->SetAnimation(8, 8, 0.5f, 1) //cheer
 		->SwitchAnimation(0)
 		->PlayAnimation();
@@ -391,7 +391,7 @@ void PlayerController::TakeDamage(int dmg)
 {
 	health -= dmg;
 	if (health <= 0 && deadTimer <= 0)
-		deadTimer = 5;
+		deadTimer = 2.5f;
 	else if (hitTimer <= 0)
 		hitTimer = 0.3f;
 	camera->Shake(0.05f, 0.15f);
