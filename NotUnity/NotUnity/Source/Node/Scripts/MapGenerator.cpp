@@ -30,10 +30,11 @@ void MapGenerator::Start()
 	offsetBuffer = 1 * scaleX; // Desire ammount * scale
 	for (int i = 0; i < mapSize; ++i)
 	{
-		spline = new SplineMountain;
-		spline->SetOffset(i * -scaleX);
+		//spline = new SplineMountain;
+		//spline->SetOffset(i * -scaleX);
+		// chunkGO[i]->AddComp<Chunk>()->SetSpline(spline);	
 		chunkGO[i] = AddChild<GameObj>("Chunk" + std::to_string(i));
-		chunkGO[i]->AddComp<Chunk>()->SetSpline(spline);
+		chunkGO[i]->AddComp<Chunk>()->PopulateSplineList()->SetSplineOffset(i * -scaleX);
 		chunkGO[i]->GetTransform()->translate.Set(i * scaleX, 0, -5);
 		chunkGO[i]->GetTransform()->scale.Set(scaleX, scaleX, 1);
 	}

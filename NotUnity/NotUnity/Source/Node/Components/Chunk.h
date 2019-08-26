@@ -17,12 +17,17 @@ enum class BIOME_TYPE
 	TOTAL_BIOME
 };
 
+enum class SPLINE_TYPE
+{
+	XYLINE,
+	MOUNTAIN,
+	TOTAL_TYPE
+};
+
 class Sprite;
 class Spline;
-class SplineMountain;
 class Chunk : public Node, public TypeID<Chunk>, public Component
 {
-	
 public:
 	Chunk(std::string name = "Chunk");
 	~Chunk();
@@ -30,26 +35,35 @@ public:
 	void OnEnable();
 
 	void OnDisable();
-	
+
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
 
-	void AssignBiome(BIOME_TYPE bt);
-	
+	void AssignBiome();
+	void AssignBiome(int i);
+	Chunk* PopulateSplineList();
+
 	void SetSpline(Spline* spline);
+	Chunk* SetSplineOffset(float offset);
 	Spline* GetSpline();
 	Sprite* GetSprite();
 private:
 	Spline* spline;
 	Sprite* sprite;
 
-	Transform* t;
+	std::vector<GameObj*> GOList;
+	std::vector<Spline*> SplineList;
+
 	Vector3 HSV;
 
 	int currAnimIdx;
 
 	BIOME_TYPE currentBiome;
+
+	float splineOffsetX;
+	void GenerateMap(SPLINE_TYPE ST);
+	void UpdateMap(SPLINE_TYPE ST);
 };
 
 #endif
