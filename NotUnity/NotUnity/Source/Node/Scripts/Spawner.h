@@ -11,6 +11,13 @@
 #include "../Scripts/AI.h"
 #include "../../Utility/Math/Spline.h"
 
+#include "../../Utility/Strategy/Strategy.h"
+#include "../../Utility/Strategy/STomato.h"
+#include "../../Utility/Strategy/SCarrot.h"
+#include "../../Utility/Strategy/SBanana.h"
+#include "../../Utility/Strategy/SKiwi.h"
+#include "../../Utility/Strategy/SBlueberry.h"
+
 class Spawner : public Node, public TypeID<Spawner>, public Component
 {
 public:
@@ -31,6 +38,7 @@ public:
 	
 	void Reset();
 	void NewWave();
+	void SetStrategy(int wave);
 
 private:
 	int enemyCount;
@@ -42,7 +50,6 @@ private:
 	Vector3 playerTrans;
 
 	int enemyLeft;
-	bool canSpawn;
 	
 	const int poolCount = 20;
 	GameObj* enemyPool[20];
@@ -59,6 +66,14 @@ private:
 	bool IsWaveDone();
 	void CreateBoss(std::string bosStage);
 	void SpawnBoss(std::string bosStage);
+
+	Strategy* strategy;
+	STomato sTomato;
+	SCarrot sCarrot;
+	SBanana sBanana;
+	SKiwi sKiwi;
+	SBlueberry sBlueberry;
+
 };
 
 #endif

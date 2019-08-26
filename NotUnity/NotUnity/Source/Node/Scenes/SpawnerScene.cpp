@@ -97,7 +97,8 @@ bool SpawnerScene::GetBossKilled()
 	return SpawnerGO->GetScript<Spawner>()->GetBossKilled();
 }
 
-void SpawnerScene::NewWave()
+void SpawnerScene::NewWave(int wave)
 {
 	SpawnerGO->GetScript<Spawner>()->NewWave();
+	SpawnerGO->GetScript<Spawner>()->SetStrategy(wave);
 }

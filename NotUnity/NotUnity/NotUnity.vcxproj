@@ -73,8 +73,12 @@
     <ClCompile Include="Source\Utility\Math\Vector2.cpp" />
     <ClCompile Include="Source\Utility\Math\Vector3.cpp" />
     <ClCompile Include="Source\Utility\Math\Vector4.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\SBanana.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\SBlueberry.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\SCarrot.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\SKiwi.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\STomato.cpp" />
     <ClCompile Include="Source\Utility\Strategy\Strategy.cpp" />
-    <ClCompile Include="Source\Utility\Strategy\StrategyOne.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
@@ -141,8 +145,12 @@
     <ClInclude Include="Source\Utility\Math\Vector4.h" />
     <ClInclude Include="Source\Utility\Resource.h" />
     <ClInclude Include="Source\Utility\Singleton.h" />
+    <ClInclude Include="Source\Utility\Strategy\SBanana.h" />
+    <ClInclude Include="Source\Utility\Strategy\SBlueberry.h" />
+    <ClInclude Include="Source\Utility\Strategy\SCarrot.h" />
+    <ClInclude Include="Source\Utility\Strategy\SKiwi.h" />
+    <ClInclude Include="Source\Utility\Strategy\STomato.h" />
     <ClInclude Include="Source\Utility\Strategy\Strategy.h" />
-    <ClInclude Include="Source\Utility\Strategy\StrategyOne.h" />
     <ClInclude Include="Source\Utility\TypeID.h" />
     <ClInclude Include="Source\Utility\WinDebug.h" />
   </ItemGroup>

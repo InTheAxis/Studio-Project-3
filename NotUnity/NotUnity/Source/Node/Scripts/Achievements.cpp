@@ -205,9 +205,9 @@ void Achievements::Start()
 
 void Achievements::Update(double dt)
 {
-	Debug::Log(enemyKilled);
-	Debug::Log(currentKilled);
-	Debug::Log(totalEnemyKilled);
+	//Debug::Log(enemyKilled);
+	//Debug::Log(currentKilled);
+	//Debug::Log(totalEnemyKilled);
 	WriteTextFile();
 	AchievementCheck();
 	Node::Update(dt);

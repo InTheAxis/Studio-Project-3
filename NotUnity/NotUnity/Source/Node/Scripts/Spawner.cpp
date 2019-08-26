@@ -23,7 +23,7 @@ void Spawner::Start()
 {
 	CreateEnemies("e1");
 	CreateBoss("boss");
-
+	SetStrategy(1);
 	Node::Start();
 }
 
@@ -51,9 +51,7 @@ void Spawner::Update(double dt)
 	UpdatePlayerPosToAI("e1");
 
 	if (GetEnemiesKilled() >= 3 && !GetBossKilled())
-	{
 		SpawnBoss("boss");
-	}
 
 	Node::Update(dt);
 }
@@ -114,6 +112,7 @@ void Spawner::Reset()
 		enemyPool[i]->ActiveSelf(false);
 		enemyPool[i]->GetScript<AI>()->Reset();
 	}
+	SetStrategy(1);
 	boss->ActiveSelf(false);
 	boss->GetScript<AI>()->Reset();
 	waveCount = enemyCount = 0;	
@@ -125,9 +124,11 @@ void Spawner::NewWave()
 	{
 		enemyPool[i]->ActiveSelf(false);
 		enemyPool[i]->GetScript<AI>()->Reset();
+		enemyPool[i]->GetScript<AI>()->SetStrategy(strategy);
 	}
 	boss->ActiveSelf(false);
 	boss->GetScript<AI>()->Reset();
+	boss->GetScript<AI>()->SetStrategy(strategy);
 	enemyCount = 0;
 }
 
@@ -176,11 +177,13 @@ void Spawner::SpawnBoss(std::string bosStage)
 
 	boss->GetTransform()->translate = spawnerPos + offset;
 	boss->ActiveSelf(true);
-	//Debug::Log("BOSS: " + std::to_string(boss->GetScript<AI>()->GetHealth()));
+	boss->GetScript<AI>()->SetStrategy(strategy);
+	boss->GetScript<AI>()->Reset();
 }
 
 void Spawner::CreateEnemies(std::string waveOne)
 {
+	Debug::Log(wave);
 	for (unsigned int i = 0; i < poolCount; ++i)
 	{
 		enemyPool[i] = gameObject->AddChild<GameObj>(waveOne + std::to_string(i));
@@ -206,8 +209,8 @@ void Spawner::SpawnEnemy(std::string waveOne)
 
 		enemyPool[i]->GetTransform()->translate = spawnerPos + offset;
 		enemyPool[i]->ActiveSelf(true);
+		enemyPool[i]->GetScript<AI>()->SetStrategy(strategy);
 		enemyPool[i]->GetScript<AI>()->Reset();
-		//Debug::Log("ENEMY: " + std::to_string(enemyPool[i]->GetScript<AI>()->GetHealth()));
 		++waveCount;
 		return;
 	}
@@ -221,4 +224,24 @@ void Spawner::GetEnemyCount(std::string waveOne)
 		if (gameObject->GetChild<GameObj>(waveOne + std::to_string(i))->IsActive())
 			++enemyCount;
 	}
+}
+
+void Spawner::SetStrategy(int wave)
+{
+	//if (strategy == NULL || strategy != NULL)
+	//{
+	//	if (wave == 0 || wave == 1)
+	//		strategy = &sTomato;
+	//	else if (wave == 2)
+	//		strategy = &sCarrot;
+	//	else if (wave == 3)
+	//		strategy = &sBanana;
+	//	else if (wave == 4)
+	//		strategy = &sKiwi;
+	//	else if (wave == 5)
+	//		strategy = &sBlueberry;
+	//}
+
+	if (strategy == NULL || strategy != NULL)
+		strategy = &sBanana;
 }

@@ -10,7 +10,6 @@
 AI::AI(std::string name) 
 	: Node(name)
 	, playerTrans(0.f, 0.f, 0.f)
-	//, health(0)
 	, damage(0.f)
 	, strategy(nullptr)
 	, direction(0.f,0.f,0.f)
@@ -19,8 +18,9 @@ AI::AI(std::string name)
 	, kineB(nullptr)
 	, s(nullptr)
 	, sat(1)
-	, interval(0)
 	, bounceTime(0)
+	, wave(0)
+	, armour(0.f)
 {
 }
 
@@ -50,7 +50,6 @@ void AI::Start()
 		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy"))
 		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX);
 
-
 	kineB = AddChild<KinemeticBody>();
 	kineB->SetGameObj(gameObject);
 	kineB->maxVel.Set(2, 2, 0);
@@ -65,17 +64,13 @@ void AI::Start()
 		projectile[i]->GetGameObj()->ActiveSelf(false);
 	}
 
-	if (gameObject->GetName()[0] == 'e' && strategy == NULL)
-	{
+	if (gameObject->GetName()[0] == 'e')
 		gameObject->GetScript<AI>()->health = 3;
-		ChangeStrategy(new StrategyOne(), false);
-	}
-	if (gameObject->GetName()[0] == 'b' && strategy == NULL)
+	else
 	{
 		gameObject->GetScript<AI>()->health = 6;
-		ChangeStrategy(new StrategyOne(), false);
 	}
-	
+
 	Vector3 scale = gameObject->GetTransform()->scale;
 	coll = AddChild<Collider>("c");
 	coll->SetGameObj(gameObject);
@@ -93,48 +88,40 @@ void AI::Start()
 
 void AI::Update(double dt)
 { 
+	if (strategy != nullptr)
+	{
+		if (gameObject->GetName()[0] == 'b')
+			strategy->Boss(true);
+		else
+			strategy->Boss(false);
+	}
+
 	if (!dead)
 	{
-		interval += 1.f * static_cast<float>(dt);
 		direction = (playerTrans - gameObject->GetTransform()->translate);
 		if (!direction.IsZero())
 			direction.Normalize();
 
-		strategy->SetDest(playerTrans.x, playerTrans.y);
-		strategy->Update(playerTrans, gameObject->GetTransform()->translate, dt);
+		//Movement
+		strategy->Update(playerTrans, gameObject->GetTransform()->translate, kineB, dt);
 
-		if (strategy->Attack() && interval >= 3.f)
-		{
-			Projectile* p = GetProjectile();
-			if (p)
-			{
-				p->Discharge(gameObject->GetTransform()->translate, direction * 10);
-				p->GetGameObj()->ActiveSelf(true);
-			}
-			interval = 0;
-		}
+		//Attack
+		Projectile* p = GetProjectile();
+		strategy->Attack(p, gameObject->GetTransform()->translate, direction, dt);
 
-		if ((playerTrans - gameObject->GetTransform()->translate).LengthSquared() > 3.f)
-			kineB->ApplyForce(direction);
-		else
-			kineB->ResetVel(1, 0);
+		//For SBanana
+		if (strategy->SelfInflict())
+			health--;
 
-		if (gameObject->GetTransform()->translate.y > GetWorldHeight() + 0.1f)
-		{
-			kineB->useGravity = true;
-		}
-		else
-		{
-			gameObject->GetTransform()->translate.y = GetWorldHeight();
-			kineB->useGravity = false;
-			kineB->ResetVel(0, 1);
-		}
-
+		IfHealthZero();
+		Gravity();
 		kineB->UpdateSuvat(dt);
 		kineB->ResetForce();
+
+
 	}
 	else if (m_lifetime > bounceTime + 0.5f)
-		gameObject->ActiveSelf(false);
+			 gameObject->ActiveSelf(false);
 
 	sat = Math::Max(0.f,  health / 3.f);
 
@@ -165,7 +152,6 @@ float AI::GetDamageDealt()
 
 void AI::ChangeStrategy(Strategy* newStrategy, bool remove)
 {
-	remove = true;
 	if (remove)
 	{
 		if (strategy != NULL)
@@ -206,10 +192,42 @@ void AI::SetSaturation(float sat)
 void AI::Reset()
 {
 	health = 3;
+	armour = 3;
 	sat = 1;
 	dead = false;
 	bounceTime = 0;
 	ResetBullets();
+}
+
+void AI::Gravity()
+{
+	if (gameObject->GetTransform()->translate.y > GetWorldHeight() + 0.1f)
+		kineB->useGravity = true;
+	else
+	{
+		gameObject->GetTransform()->translate.y = GetWorldHeight();
+		kineB->useGravity = false;
+		kineB->ResetVel(0, 1);
+	}
+}
+
+void AI::SetWave(int wave)
+{
+	this->wave = wave;
+}
+
+void AI::SetStrategy(Strategy* strat)
+{
+	strategy = strat;
+}
+
+void AI::IfHealthZero()
+{
+	if (health <= 0)
+	{
+		health = 0;
+		dead = true;
+	}
 }
 
 float AI::GetWorldHeight()
@@ -238,13 +256,21 @@ void AI::HandleColl(ColInfo info)
 		if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
 		{
 			ai->bounceTime = ai->m_lifetime;
-			ai->health--;
 
-			if (ai->health <= 0)
+			if (ai->strategy->HasArmor())
 			{
-				ai->health = 0;
-				ai->dead = true;
+				ai->armour--;
+
+				if (ai->armour <= 0)
+				{
+					ai->armour = 0;
+					ai->health--;
+				}
 			}
+			else
+				ai->health--;
+
+			IfHealthZero();
 		}
 	}
 }

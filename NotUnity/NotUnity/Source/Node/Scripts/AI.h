@@ -9,7 +9,11 @@
 #include "../Components/Sprite.h"
 #include "../Scripts.h"
 #include "../../Utility/Strategy/Strategy.h"
-#include "../../Utility/Strategy/StrategyOne.h"
+#include "../../Utility/Strategy/STomato.h"
+#include "../../Utility/Strategy/SCarrot.h"
+#include "../../Utility/Strategy/SBanana.h"
+#include "../../Utility/Strategy/SKiwi.h"
+#include "../../Utility/Strategy/SBlueberry.h"
 #include "../../Utility/Math/Spline.h"
 
 class Projectile;
@@ -33,25 +37,30 @@ public:
 	float GetHealth();
 	void SetDamageDealt(float damage);
 	float GetDamageDealt();
-	void ChangeStrategy(Strategy* newStrategy, bool remove);
+	void ChangeStrategy(Strategy* newStrategy, bool remove = true);
 	bool IsDead();
 	AI* SetTerrain(Spline* s);
 	void ResetBullets();
 	void SetSaturation(float sat);
 
 	void Reset();
+	void Gravity();
+	void SetWave(int wave);
+	void SetStrategy(Strategy* strat);
+	void IfHealthZero();
 
 private:
 	Vector3 playerTrans;
 	float health;
 	float damage;
 	float sat;
-	float interval;
+	float armour;
 
 	double bounceTime;
 
 	Vector3 direction;
 	int enemyCount;
+	int wave;
 	bool dead;
 	const static int ammoCount = 3;
 
@@ -61,6 +70,12 @@ private:
 	Projectile* projectile[ammoCount];
 	Collider* coll, *trigger;
 	Sprite* sprite;
+	STomato sTomato;
+	SCarrot sCarrot;
+	SBanana sBanana;
+	SKiwi sKiwi;
+	SBlueberry sBlueberry;
+
 
 	float GetWorldHeight();
 	Projectile* GetProjectile();
