@@ -135,6 +135,67 @@ void Spawner::NewWave()
 	enemyCount = 0;
 }
 
+void Spawner::SetStrategy(int wave)
+{
+	if (strategy == NULL || strategy != NULL)
+	{
+		if (wave == 0 || wave == 1)
+			strategy = &sTomato;
+		else if (wave == 2)
+			strategy = &sCarrot;
+		else if (wave == 3)
+			strategy = &sBanana;
+		else if (wave == 4)
+			strategy = &sKiwi;
+		else if (wave == 5)
+			strategy = &sBlueberry;
+	}
+}
+
+void Spawner::CreateEnemies(std::string waveOne)
+{
+	Debug::Log(wave);
+	for (unsigned int i = 0; i < poolCount; ++i)
+	{
+		enemyPool[i] = gameObject->AddChild<GameObj>(waveOne + std::to_string(i));
+		enemyPool[i]->ActiveSelf(false);
+		enemyPool[i]->AddScript<AI>()->SetHealth(3);
+	}
+}
+
+void Spawner::SpawnEnemy(std::string waveOne)
+{
+	Vector3 spawnerPos = gameObject->GetTransform()->translate;
+	Vector3 offset;
+	for (int i = 0; i < poolCount; ++i)
+	{
+		if (enemyPool[i]->IsActive() || enemyPool[i]->GetScript<AI>()->IsDead())
+			continue;
+
+		int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
+		offset.x = sign * (1 + Math::RandFloatMinMax(0, 2));
+		offset.y = (playerTrans.y + Math::RandFloatMinMax(5, 7));
+		offset.z = 1;
+
+		enemyPool[i]->ActiveSelf(true);
+		enemyPool[i]->GetScript<AI>()->SetStrategy(strategy);
+		enemyPool[i]->GetScript<AI>()->Reset();
+		enemyPool[i]->GetTransform()->translate = spawnerPos + offset;
+		++waveCount;
+		return;
+	}
+}
+
+void Spawner::GetEnemyCount(std::string waveOne)
+{
+	enemyCount = 0;
+	for (int i = 0; i < poolCount; ++i)
+	{
+		if (gameObject->GetChild<GameObj>(waveOne + std::to_string(i))->IsActive())
+			++enemyCount;
+	}
+}
+
 void Spawner::UpdateColorSpots()
 {
 	for (int i = 0; i < poolCount; ++i)
@@ -187,65 +248,4 @@ void Spawner::SpawnBoss(std::string bosStage)
 	boss->GetScript<AI>()->SetStrategy(strategy);
 	boss->GetScript<AI>()->Reset();
 	boss->GetTransform()->translate = spawnerPos + offset;
-}
-
-void Spawner::CreateEnemies(std::string waveOne)
-{
-	Debug::Log(wave);
-	for (unsigned int i = 0; i < poolCount; ++i)
-	{
-		enemyPool[i] = gameObject->AddChild<GameObj>(waveOne + std::to_string(i));
-		enemyPool[i]->ActiveSelf(false);
-		enemyPool[i]->AddScript<AI>()->SetHealth(3);	
-	}
-}
-
-void Spawner::SpawnEnemy(std::string waveOne)
-{
-	Vector3 spawnerPos = gameObject->GetTransform()->translate;
-	Vector3 offset;
-	for (int i = 0; i < poolCount; ++i)
-	{
-		if (enemyPool[i]->IsActive() || enemyPool[i]->GetScript<AI>()->IsDead())
-			continue;
-
-		int sign = (Math::RandIntMinMax(0, 1) * 2 - 1);
-		offset.x = sign * (1 + Math::RandFloatMinMax(0, 2));
-		offset.y = (playerTrans.y + Math::RandFloatMinMax(5, 7));
-		offset.z = 1;
-
-		enemyPool[i]->ActiveSelf(true);
-		enemyPool[i]->GetScript<AI>()->SetStrategy(strategy);
-		enemyPool[i]->GetScript<AI>()->Reset();		
-		enemyPool[i]->GetTransform()->translate = spawnerPos + offset;
-		++waveCount;
-		return;
-	}
-}
-
-void Spawner::GetEnemyCount(std::string waveOne)
-{
-	enemyCount = 0;
-	for (int i = 0; i < poolCount; ++i)
-	{
-		if (gameObject->GetChild<GameObj>(waveOne + std::to_string(i))->IsActive())
-			++enemyCount;
-	}
-}
-
-void Spawner::SetStrategy(int wave)
-{
-	if (strategy == NULL || strategy != NULL)
-	{
-		if (wave == 0 || wave == 1)
-			strategy = &sTomato;
-		else if (wave == 2)
-			strategy = &sCarrot;
-		else if (wave == 3)
-			strategy = &sBanana;
-		else if (wave == 4)
-			strategy = &sKiwi;
-		else if (wave == 5)
-			strategy = &sBlueberry;
-	}
 }

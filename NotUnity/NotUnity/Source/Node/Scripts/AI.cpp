@@ -29,17 +29,6 @@ AI::~AI()
 {
 }
 
-void AI::OnEnable()
-{
-	coll->OnCollideStay.Subscribe(&AI::HandleColl, this, "coll");		
-}
-
-void AI::OnDisable()
-{
-	if (coll)
-		coll->OnCollideStay.UnSubscribe("coll");		
-}
-
 void AI::Start()
 {
 	sprite = AddChild<Sprite>();
@@ -139,6 +128,27 @@ void AI::Update(double dt)
 	Node::Update(dt);
 }
 
+void AI::End()
+{
+	Node::End();
+}
+
+void AI::OnEnable()
+{
+	coll->OnCollideStay.Subscribe(&AI::HandleColl, this, "coll");
+}
+
+void AI::OnDisable()
+{
+	if (coll)
+		coll->OnCollideStay.UnSubscribe("coll");
+}
+
+void AI::SetPlayerTrans(Vector3 trans)
+{
+	playerTrans = trans;
+}
+
 void AI::SetHealth(float health)
 {
 	this->health = health;
@@ -184,15 +194,6 @@ AI* AI::SetTerrain(Spline * s)
 	return this;
 }
 
-void AI::ResetBullets()
-{
-	for (int i = 0; i < ammoCount; ++i)
-	{
-		if (projectile[i])
-			projectile[i]->GetGameObj()->ActiveSelf(false);
-	}
-}
-
 void AI::SetSaturation(float sat)
 {
 	this->sat = sat;
@@ -212,12 +213,6 @@ void AI::Reset()
 	bounceTime = 0;
 	ResetBullets();
 	ResetColorSpots();
-}
-
-void AI::ResetColorSpots()
-{
-	t->translate.z = 0;  //disable color spot
-	colorSpot->radius = t->scale.x * 2;
 }
 
 void AI::Gravity()
@@ -251,6 +246,21 @@ void AI::IfHealthZero()
 		health = 0;
 		dead = true;
 	}
+}
+
+void AI::ResetBullets()
+{
+	for (int i = 0; i < ammoCount; ++i)
+	{
+		if (projectile[i])
+			projectile[i]->GetGameObj()->ActiveSelf(false);
+	}
+}
+
+void AI::ResetColorSpots()
+{
+	t->translate.z = 0;  //disable color spot
+	colorSpot->radius = t->scale.x * 2;
 }
 
 float AI::GetWorldHeight()
@@ -295,14 +305,4 @@ void AI::HandleColl(ColInfo info)
 			IfHealthZero();
 		}
 	}
-}
-
-void AI::SetPlayerTrans(Vector3 trans)
-{
-	playerTrans = trans;
-}
-
-void AI::End()
-{
-	Node::End();
 }

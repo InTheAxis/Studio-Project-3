@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Node\Components.cpp" />
+    <ClCompile Include="Source\Node\Components\Axis.cpp" />
+    <ClCompile Include="Source\Node\Components\Camera.cpp" />
+    <ClCompile Include="Source\Node\Components\Chunk.cpp" />
+    <ClCompile Include="Source\Node\Components\Collider.cpp" />
+    <ClCompile Include="Source\Node\Components\ColliderRender.cpp" />
+    <ClCompile Include="Source\Node\Components\KinemeticBody.cpp" />
+    <ClCompile Include="Source\Node\Components\Renderable.cpp" />
+    <ClCompile Include="Source\Node\Components\Sprite.cpp" />
+    <ClCompile Include="Source\Node\Components\Text.cpp" />
+    <ClCompile Include="Source\Node\Components\Transform.cpp" />
+    <ClCompile Include="Source\Node\GameObj.cpp" />
+    <ClCompile Include="Source\Node\Manager\MgrAchievements.cpp" />
+    <ClCompile Include="Source\Node\Manager\MgrCollision.cpp" />
+    <ClCompile Include="Source\Node\Manager\MgrGameObj.cpp" />
+    <ClCompile Include="Source\Node\Manager\MgrGraphics.cpp" />
+    <ClCompile Include="Source\Node\Manager\MgrMain.cpp" />
+    <ClCompile Include="Source\Node\Manager\MgrResource.cpp" />
+    <ClCompile Include="Source\Node\Manager\MgrScene.cpp" />
+    <ClCompile Include="Source\Node\Manager\MgrSound.cpp" />
+    <ClCompile Include="Source\Node\Manager\MgrSkillTree.cpp" />
+    <ClCompile Include="Source\Node\Node.cpp" />
+    <ClCompile Include="Source\Node\Scene.cpp" />
+    <ClCompile Include="Source\Node\Scenes\MainScene.cpp" />
+    <ClCompile Include="Source\Node\Scenes\MapScene.cpp" />
+    <ClCompile Include="Source\Node\Scenes\ScenePlayer.cpp" />
+    <ClCompile Include="Source\Node\Scenes\SpawnerScene.cpp" />
+    <ClCompile Include="Source\Node\Scripts.cpp" />
+    <ClCompile Include="Source\Node\Scripts\AI.cpp" />
+    <ClCompile Include="Source\Node\Scripts\ColorSpot.cpp" />
+    <ClCompile Include="Source\Node\Scripts\DebugText.cpp" />
+    <ClCompile Include="Source\Node\Scripts\MapGenerator.cpp" />
+    <ClCompile Include="Source\Node\Scripts\Player.cpp" />
+    <ClCompile Include="Source\Node\Scripts\PlayerController.cpp" />
+    <ClCompile Include="Source\Node\Scripts\Projectile.cpp" />
+    <ClCompile Include="Source\Node\Scripts\Skill.cpp" />
+    <ClCompile Include="Source\Node\Scripts\Spawner.cpp" />
+    <ClCompile Include="Source\Utility\Graphics\FBO.cpp" />
+    <ClCompile Include="Source\Utility\Graphics\FBO\DepthFBO.cpp" />
+    <ClCompile Include="Source\Utility\Graphics\FBO\FloatFBO.cpp" />
+    <ClCompile Include="Source\Utility\Input\ControllerKeyboard.cpp" />
+    <ClCompile Include="Source\Utility\Input\ControllerMouse.cpp" />
+    <ClCompile Include="Source\Utility\Math\AABB.cpp" />
+    <ClCompile Include="Source\Utility\Math\MatrixStack.cpp" />
+    <ClCompile Include="Source\Utility\Math\Mtx44.cpp" />
+    <ClCompile Include="Source\Utility\Math\Rect2D.cpp" />
+    <ClCompile Include="Source\Utility\Math\Spline.cpp" />
+    <ClCompile Include="Source\Utility\Math\Splines\Mountain.cpp" />
+    <ClCompile Include="Source\Utility\Math\Stopwatch.cpp" />
+    <ClCompile Include="Source\Utility\Math\Vector2.cpp" />
+    <ClCompile Include="Source\Utility\Math\Vector3.cpp" />
+    <ClCompile Include="Source\Utility\Math\Vector4.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\SBanana.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\SBlueberry.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\SCarrot.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\SKiwi.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\STomato.cpp" />
+    <ClCompile Include="Source\Utility\Strategy\Strategy.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\Node\Components.h" />
+    <ClInclude Include="Source\Node\Components\Axis.h" />
+    <ClInclude Include="Source\Node\Components\Camera.h" />
+    <ClInclude Include="Source\Node\Components\Chunk.h" />
+    <ClInclude Include="Source\Node\Components\Collider.h" />
+    <ClInclude Include="Source\Node\Components\ColliderRender.h" />
+    <ClInclude Include="Source\Node\Components\KinemeticBody.h" />
+    <ClInclude Include="Source\Node\Components\Renderable.h" />
+    <ClInclude Include="Source\Node\Components\Sprite.h" />
+    <ClInclude Include="Source\Node\Components\Text.h" />
+    <ClInclude Include="Source\Node\Components\Transform.h" />
+    <ClInclude Include="Source\Node\GameObj.h" />
+    <ClInclude Include="Source\Node\Manager\MgrAchievements.h" />
+    <ClInclude Include="Source\Node\Manager\Manager.h" />
+    <ClInclude Include="Source\Node\Manager\MgrCollision.h" />
+    <ClInclude Include="Source\Node\Manager\MgrGameObj.h" />
+    <ClInclude Include="Source\Node\Manager\MgrGraphics.h" />
+    <ClInclude Include="Source\Node\Manager\MgrMain.h" />
+    <ClInclude Include="Source\Node\Manager\MgrResource.h" />
+    <ClInclude Include="Source\Node\Manager\MgrScene.h" />
+    <ClInclude Include="Source\Node\Manager\MgrSound.h" />
+    <ClInclude Include="Source\Node\Manager\MgrSkillTree.h" />
+    <ClInclude Include="Source\Node\Node.h" />
+    <ClInclude Include="Source\Node\Scene.h" />
+    <ClInclude Include="Source\Node\Scenes\MainScene.h" />
+    <ClInclude Include="Source\Node\Scenes\MapScene.h" />
+    <ClInclude Include="Source\Node\Scenes\ScenePlayer.h" />
+    <ClInclude Include="Source\Node\Scenes\SpawnerScene.h" />
+    <ClInclude Include="Source\Node\Scripts.h" />
+    <ClInclude Include="Source\Node\Scripts\AI.h" />
+    <ClInclude Include="Source\Node\Scripts\ColorSpot.h" />
+    <ClInclude Include="Source\Node\Scripts\DebugText.h" />
+    <ClInclude Include="Source\Node\Scripts\MapGenerator.h" />
+    <ClInclude Include="Source\Node\Scripts\Player.h" />
+    <ClInclude Include="Source\Node\Scripts\PlayerController.h" />
+    <ClInclude Include="Source\Node\Scripts\Projectile.h" />
+    <ClInclude Include="Source\Node\Scripts\Skill.h" />
+    <ClInclude Include="Source\Node\Scripts\Spawner.h" />
+    <ClInclude Include="Source\Utility\Component.h" />
+    <ClInclude Include="Source\Utility\Delegate.h" />
+    <ClInclude Include="Source\Utility\Graphics\Animation.h" />
+    <ClInclude Include="Source\Utility\Graphics\FBO.h" />
+    <ClInclude Include="Source\Utility\Graphics\FBO\DepthFBO.h" />
+    <ClInclude Include="Source\Utility\Graphics\FBO\FloatFBO.h" />
+    <ClInclude Include="Source\Utility\Graphics\Material.h" />
+    <ClInclude Include="Source\Utility\Graphics\Mesh.h" />
+    <ClInclude Include="Source\Utility\Graphics\MeshBuilder.h" />
+    <ClInclude Include="Source\Utility\Graphics\Vertex.h" />
+    <ClInclude Include="Source\Utility\Input\ControllerKeyboard.h" />
+    <ClInclude Include="Source\Utility\Input\ControllerMouse.h" />
+    <ClInclude Include="Source\Utility\Math\AABB.h" />
+    <ClInclude Include="Source\Utility\Math\MatrixStack.h" />
+    <ClInclude Include="Source\Utility\Math\Mtx44.h" />
+    <ClInclude Include="Source\Utility\Math\MyMath.h" />
+    <ClInclude Include="Source\Utility\Math\Rect2D.h" />
+    <ClInclude Include="Source\Utility\Math\Spline.h" />
+    <ClInclude Include="Source\Utility\Math\Splines\Mountain.h" />
+    <ClInclude Include="Source\Utility\Math\Stopwatch.h" />
+    <ClInclude Include="Source\Utility\Math\Vector2.h" />
+    <ClInclude Include="Source\Utility\Math\Vector3.h" />
+    <ClInclude Include="Source\Utility\Math\Vector4.h" />
+    <ClInclude Include="Source\Utility\Resource.h" />
+    <ClInclude Include="Source\Utility\Singleton.h" />
+    <ClInclude Include="Source\Utility\Strategy\SBanana.h" />
+    <ClInclude Include="Source\Utility\Strategy\SBlueberry.h" />
+    <ClInclude Include="Source\Utility\Strategy\SCarrot.h" />
+    <ClInclude Include="Source\Utility\Strategy\SKiwi.h" />
+    <ClInclude Include="Source\Utility\Strategy\STomato.h" />
+    <ClInclude Include="Source\Utility\Strategy\Strategy.h" />
+    <ClInclude Include="Source\Utility\TypeID.h" />
+    <ClInclude Include="Source\Utility\WinDebug.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shader\colorSpot.frag" />
+    <None Include="Resources\Shader\default.vert" />
+    <None Include="Resources\Shader\hsv_lit.frag" />
+    <None Include="Resources\Shader\hsv_unlit.frag" />
+    <None Include="Resources\Shader\lit.frag" />
+    <None Include="Resources\Shader\simple.frag" />
+    <None Include="Resources\Shader\simple.vert" />
+    <None Include="Resources\Shader\unlit.frag" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{3327BBEC-58C0-4399-B26F-687C501D5D1A}</ProjectGuid>
+    <RootNamespace>NotUnity</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)/glfw/include;$(SolutionDir)/glew/include;$(SolutionDir)/irrklang/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);$(SolutionDir)/glfw/lib-msvc100;$(SolutionDir)/glew/lib;$(SolutionDir)/irrklang/lib/Win32-visualStudio;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>legacy_stdio_definitions.lib;winmm.lib;opengl32.lib;glu32.lib;glew32.lib;glfw3.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)/glfw/include;$(SolutionDir)/glew/include;$(SolutionDir)/irrklang/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);$(SolutionDir)/glfw/lib-msvc100;$(SolutionDir)/glew/lib;$(SolutionDir)/irrklang/lib/Win32-visualStudio;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>legacy_stdio_definitions.lib;winmm.lib;opengl32.lib;glu32.lib;glew32.lib;glfw3.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
