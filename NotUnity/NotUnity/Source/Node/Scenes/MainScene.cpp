@@ -116,15 +116,6 @@ void MainScene::Update(double dt)
 	ControllerMouse* m = ControllerMouse::Instance();
 	if (kb->IsKeyPressed('9'))
 		debug = !debug;
-	if (kb->IsKeyPressed(VK_TAB))
-		pause = !pause;		
-
-	pauseMenu->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(0, 0, 0.1f);
-	pauseMenu->ActiveSelf(pause);
-	MgrMain::Instance()->SetTimeScale((int)!pause);
-
-	if (pause)
-		return;
 
 	//if (kb->IsKeyDown('F'))
 	//	healthminus -= 0.01 * dt;
@@ -138,11 +129,15 @@ void MainScene::Update(double dt)
 			ChangeGameState(TUTO);
 		break;
 	case TUTO:
+		if (kb->IsKeyPressed(VK_TAB))
+			pause = !pause;
 		if (m->IsButtonPressed(0))
 			ChangeGameState(GAMEPLAY);
 		lmb->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-1.5f, 0, 0);
 		break;
 	case GAMEPLAY:
+		if (kb->IsKeyPressed(VK_TAB))
+			pause = !pause;
 		greenbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3( (player->GetHealth() * 0.05) - 7.2, 4.0f, 0.f);
 		greenbar->GetGameObj()->GetTransform()->scale.Set(player->GetHealth() * 0.125, 1, 0);
 		redbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-6.2 , 4.0f, 0);
@@ -166,6 +161,12 @@ void MainScene::Update(double dt)
 			ChangeGameState(MENU);
 		break;
 	}
+
+
+	pauseMenu->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(0, 0, 0.1f);
+	pauseMenu->ActiveSelf(pause);
+	MgrMain::Instance()->SetTimeScale((int)!pause);
+	if (pause) return;
 
 	mainCam->GetTransform()->translate = playerGO->GetTransform()->translate;
 	mainCam->GetTransform()->translate.z = 1;
