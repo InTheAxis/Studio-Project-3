@@ -9,7 +9,11 @@ MgrSound::MgrSound(std::string name)
 	, listenerView(nullptr)
 	, listenerPosDef(0,0,0)
 	, listenerViewDef(0,0,-1)
+#if _DEBUG
 	, globalVol(0)
+#else
+	, globalVol(1)
+#endif
 {
 }
 
