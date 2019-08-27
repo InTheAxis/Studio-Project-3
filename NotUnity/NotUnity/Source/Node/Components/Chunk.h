@@ -31,6 +31,7 @@ public:
 
 	Spline* GetSpline();
 	Sprite* GetSprite();	
+	int GetCurrBiome(); //returns 0,1,2 for mt, desert, snow	
 private:	
 	//refs
 	Sprite* sprite;

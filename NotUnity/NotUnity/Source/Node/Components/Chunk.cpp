@@ -77,6 +77,11 @@ Sprite * Chunk::GetSprite()
 	return sprite;
 }
 
+int Chunk::GetCurrBiome()
+{
+	return (biome->GetSpriteIdx() % 3);
+}
+
 //#include "Chunk.h"
 //#include "../../Utility/WinDebug.h"
 //#include "../../Utility/Input/ControllerKeyboard.h"
