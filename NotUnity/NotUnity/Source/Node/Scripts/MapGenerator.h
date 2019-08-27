@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MAP_GENERATOR_H
+#define MAP_GENERATOR_H
 
 #include <sstream>
 
@@ -46,3 +47,5 @@ private:
 	float GetDisplacement(int chunkIdx);
 	void CullChunk();
 };
+
+#endif
