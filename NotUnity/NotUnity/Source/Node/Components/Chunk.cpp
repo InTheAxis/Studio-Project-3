@@ -80,10 +80,10 @@ void Chunk::End()
 
 void Chunk::AssignBiome()
 {
+	int temp = Math::RandIntMinMax(1, 2);
 	switch (currentBiome)
 	{
 	case BIOME_TYPE::DESERT:
-		int temp = Math::RandIntMinMax(1, 2);
 		switch (temp)
 		{
 		case 1:
@@ -102,7 +102,6 @@ void Chunk::AssignBiome()
 		}
 		break;
 	case BIOME_TYPE::SNOW:
-		int temp = Math::RandIntMinMax(1, 2);
 		switch (temp)
 		{
 		case 1:
@@ -120,7 +119,6 @@ void Chunk::AssignBiome()
 		}
 		break;
 	case BIOME_TYPE::GRASS:
-		int temp = Math::RandIntMinMax(1, 3);
 		switch (temp)
 		{
 		case 1:
@@ -201,7 +199,7 @@ void Chunk::GenerateMap(SPLINE_TYPE ST)
 		->SetAnimation(7, 1, 0.5f, 0)
 		->SetAnimation(8, 1, 0.5f, 0);
 	sprite->SetGameObj(gameObject);
-	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("bg"));
+	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"));
 	switch (ST)
 	{
 	case SPLINE_TYPE::XYLINE:
