@@ -40,6 +40,7 @@ public:
 	void NewWave();
 	void SetStrategy(int wave);
 	void SetStartGame(bool start);
+	void Cheat();
 
 private:
 	int enemyCount;

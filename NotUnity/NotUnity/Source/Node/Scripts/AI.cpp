@@ -20,6 +20,7 @@ AI::AI(std::string name)
 	, s(nullptr)
 	, sat(1)
 	, bounceTime(0)
+	, bounceTimeTwo(0)
 	, wave(0)
 	, armour(0.f)
 {
@@ -118,11 +119,9 @@ void AI::Update(double dt)
 		t->translate.z = 0; //disable color spot
 		if (m_lifetime > bounceTime + 0.5f)
 			gameObject->ActiveSelf(false);
+		if (m_lifetime > bounceTimeTwo + 0.5f)
+			gameObject->ActiveSelf(false);
 	}
-
-	ControllerKeyboard* kb = ControllerKeyboard::Instance();
-	if (kb->IsKeyDown('K'))
-		health = -1;
 
 	sat = Math::Max(0.f,  health / 3.f);
 	colorSpot->radius = t->scale.x * 2 * (health / 3.f);
@@ -204,13 +203,14 @@ void AI::Reset()
 	sat = 1;
 	dead = false;
 	bounceTime = 0;
+	bounceTimeTwo = 0;
 	ResetBullets();
 	ResetColorSpots();
 }
 
 void AI::Gravity()
 {
-	if (t->translate.y > GetWorldHeight() + 0.1f)
+	if (t->translate.y > GetWorldHeight() + 0.2f)
 	{
 		kineB->useGravity = true;
 	}
@@ -256,6 +256,11 @@ void AI::ResetColorSpots()
 	colorSpot->radius = t->scale.x * 2;
 }
 
+void AI::SetDead(bool dead)
+{
+	this->dead = dead;
+}
+
 float AI::GetWorldHeight()
 {
 	return s->Fn(t->translate.x);
@@ -275,39 +280,40 @@ void AI::HandleColl(ColInfo info)
 {
 	if (info.other->GetGameObj()->GetScript<Projectile>())
 		return;
-	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
+	if (info.other->GetGameObj()->GetScript<PlayerController>())
 	{
 		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
-		if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
+		if (info.other->isTrigger)
 		{
-			ai->bounceTime = ai->m_lifetime;
-
-			if (ai->strategy->HasArmor())
+			if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
 			{
-				ai->armour--;
+				ai->bounceTime = ai->m_lifetime;
 
-				if (ai->armour <= 0)
+				if (ai->strategy->HasArmor())
 				{
-					ai->armour = 0;
-					ai->health--;
+					ai->armour--;
+
+					if (ai->armour <= 0)
+					{
+						ai->armour = 0;
+						ai->health--;
+					}
 				}
+				else
+					ai->health--;
+
+				IfHealthZero();
 			}
-			else
-				ai->health--;
-
-			IfHealthZero();
-		}
-	}
-
-	if (info.other->GetGameObj()->GetScript<PlayerController>() )
-	{
-		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
-		if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
-		{
-			ai->bounceTime = (ai->m_lifetime * 1.25f);
-			trigger->isTrigger = true;
 		}
 		else
-			trigger->isTrigger = false;
+		{
+			if (!ai->dead && ai->m_lifetime > ai->bounceTimeTwo + 0.5)
+			{
+				ai->bounceTimeTwo = (ai->m_lifetime * 1.2f);
+				trigger->isTrigger = true;
+			}
+			else
+				trigger->isTrigger = false;
+		}
 	}
 }

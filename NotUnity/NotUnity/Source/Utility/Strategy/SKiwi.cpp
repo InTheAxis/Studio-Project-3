@@ -24,19 +24,19 @@ void SKiwi::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double d
 
 	if (atkIn >= randSpeed)
 	{
-		if ((dest - enemyPos).LengthSquared() > 0.3f) //2) Will headbutt player after awile
+		if ((dest - enemyPos).LengthSquared() > 1.f) //2) Will headbutt player after awile
 			currentState = ATTACK;
 
-		if ((dest - enemyPos).LengthSquared() <= 0.1f)//3) Prevent AI from crossing player
+		if ((dest - enemyPos).LengthSquared() <= 0.5f)//3) Prevent AI from crossing player
 			currentState = WAIT;
 	}
 	else
 	{
-		if ((dest - enemyPos).LengthSquared() < 0.6f) // 4) Will move away from player after headbutt it
+		if ((dest - enemyPos).LengthSquared() < 3.f) // 4) Will move away from player after headbutt it
 			currentState = REPEL;
 		else
 		{
-			if ((dest - enemyPos).LengthSquared() > 0.8f) //1) Will move to player when spawn from far
+			if ((dest - enemyPos).LengthSquared() > 3.5f) //1) Will move to player when spawn from far
 				currentState = ATTACK;
 			else
 				currentState = IDLE;
@@ -74,7 +74,10 @@ void SKiwi::Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, double 
 	{
 		if (p)
 		{
-			p->Discharge(enemyPos, direction.Normalized() * 10);
+			if (direction.LengthSquared() == 0)
+				p->Discharge(enemyPos, direction * 10);
+			else
+				p->Discharge(enemyPos, direction.Normalized() * 10);
 			p->GetGameObj()->ActiveSelf(true);
 		}
 		inteval = 0.f;

@@ -52,6 +52,7 @@ public:
 	void IfHealthZero();
 	void ResetBullets();
 	void ResetColorSpots();
+	void SetDead(bool dead);
 
 private:
 	Vector3 playerTrans;
@@ -61,6 +62,7 @@ private:
 	float armour;
 
 	double bounceTime;
+	double bounceTimeTwo;
 
 	Vector3 direction;
 	int enemyCount;

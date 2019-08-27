@@ -393,7 +393,7 @@ void PlayerController::TakeDamage(int dmg)
 {
 	health -= dmg;
 	if (health <= 0 && deadTimer <= 0)
-		deadTimer = 2.5f;
+		deadTimer = 3.5f;
 	else if (hitTimer <= 0)
 		hitTimer = 0.3f;
 	camera->Shake(0.05f, 0.15f);

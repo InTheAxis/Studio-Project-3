@@ -3,6 +3,7 @@
 #include "../../Node/GameObj.h"
 #include "../../Node/Scripts//ColorSpot.h"
 #include "../Manager/MgrAchievements.h"
+#include "../../Utility/Input/ControllerKeyboard.h"
 
 Spawner::Spawner(std::string name)
 	: Node(name)
@@ -53,6 +54,8 @@ void Spawner::Update(double dt)
 
 	if (GetEnemiesKilled() >= 20) //&& !GetBossKilled()
 		SpawnBoss();
+
+	Cheat();
 	Node::Update(dt);
 }
 
@@ -157,6 +160,24 @@ void Spawner::SetStrategy(int wave)
 		{
 			strategy = &sBlueberry;
 			ChangeStrategy(&sBlueberry, false);
+		}
+	}
+}
+
+void Spawner::SetStartGame(bool start)
+{
+	startGame = start;
+}
+
+void Spawner::Cheat()
+{
+	ControllerKeyboard* kb = ControllerKeyboard::Instance();
+	
+	if (kb->IsKeyDown('K'))
+	{
+		for (unsigned int i = 0; i < poolCount; ++i)
+		{
+			enemyPool[i]->GetScript<AI>()->SetDead(true);
 		}
 	}
 }
@@ -271,9 +292,4 @@ void Spawner::ChangeStrategy(Strategy* newStrategy, bool remove)
 		}
 	}
 	strategy = newStrategy;
-}
-
-void Spawner::SetStartGame(bool start)
-{
-	startGame = start;
 }

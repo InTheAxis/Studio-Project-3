@@ -47,15 +47,19 @@ void SBlueberry::Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, do
 	inteval += 1.f * static_cast<float>(dt);
 
 	if (boss)
-		speed = 4.f;
-	else
 		speed = 5.f;
+	else
+		speed = 6.f;
 
 	if (shouldAttack && inteval >= speed)
 	{
 		if (p)
 		{
-			p->Discharge(enemyPos, direction.Normalized() * 10);
+			Vector3 temp(0, 0, 0);
+			if (direction.LengthSquared() == 0)
+				p->Discharge(enemyPos, direction* 5);
+			else
+				p->Discharge(enemyPos, direction.Normalize() * 5);
 			p->GetGameObj()->ActiveSelf(true);
 		}
 		inteval = 0.f;

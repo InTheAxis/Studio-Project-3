@@ -155,7 +155,7 @@ void MainScene::Update(double dt)
 		}
 		else if (spawner->GetSpawnerWave() >= 5 && spawner->GetEnemyKilled() >= 3 && spawner->GetBossKilled())
 			ChangeGameState(WIN);
-		else if (playerGO->GetScript<PlayerController>()->IsDead())
+		if (playerGO->GetScript<PlayerController>()->IsDead())
 			ChangeGameState(LOSE);
 		break;
 	case LOSE:
@@ -264,6 +264,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		//map->ResetPos();
 		playerGO->GetScript<PlayerController>()->Reset();
 		spawner->Reset();
+		spawner->SetStartGame(false);
 		break;
 	case TUTO:
 		lmb->ActiveSelf(true);	
@@ -275,6 +276,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		greenbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3((player->GetHealth() * 0.05f) - 7.2f, 4.0f, 0.f);
 		redbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-6.3f, 4.0f, 0);
 		spawner->SetWave(1);
+		spawner->SetStartGame(true);
 		break;
 	case LOSE:		
 		break;
