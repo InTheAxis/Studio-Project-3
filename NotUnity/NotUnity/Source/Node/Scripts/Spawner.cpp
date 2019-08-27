@@ -39,7 +39,7 @@ void Spawner::Update(double dt)
 
 	GetEnemyCount();
 
-	if (enemyCount < 10)
+	if (enemyCount < 3)
 		interval += 1.f * static_cast<float>(dt);
 	else
 		interval = 0;
