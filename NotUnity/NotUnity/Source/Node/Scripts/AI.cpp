@@ -279,7 +279,10 @@ Projectile * AI::GetProjectile()
 void AI::HandleColl(ColInfo info)
 {
 	if (info.other->tag == "rock")
-		health--;
+	{
+		if (info.other->GetGameObj()->GetComp<KinematicBody>()->GetVel().x != 0)
+			health--;
+	}
 	if (info.other->GetGameObj()->GetScript<Projectile>())
 		return;
 	if (info.other->GetGameObj()->GetScript<PlayerController>())

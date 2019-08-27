@@ -131,7 +131,7 @@ void PlayerController::Update(double dt)
 		MgrAchievements::Instance()->GetWalkTime(0.1);
 	}
 
-	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
+	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.8)
 	{
 		MgrAchievements::Instance()->GetJumpTimes(1);
 		jumpTimer += dt;
@@ -279,7 +279,7 @@ int PlayerController::GetHealth()
 void PlayerController::Move(float inputX)
 {
 
-	kinb->ApplyForce(Vector3(inputX * moveSpeed.x /*+ speedincrease*/ * (OnGround() ? 1 : 0.3f), 0, 0));
+	kinb->ApplyForce(Vector3(inputX * moveSpeed.x /*+ speedincrease*/ * (OnGround() ? 1 : 0.5f), 0, 0));
 	TryChangeState(P_STATE::WALK);	
 }
 

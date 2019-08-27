@@ -52,7 +52,7 @@ void Chunk::Start()
 	kb->useGravity = true;
 	kb->gravScale = 10;
 	Collider* c = rock->AddComp<Collider>();
-	c->CreateAABB(0.5f);
+	c->CreateAABB(0.25f);
 	c->tag = "rock";
 	rock->ActiveSelf(false);
 
@@ -105,9 +105,10 @@ void Chunk::InitInteractive()
 	{
 	case INTER::ROCK:
 		rock->ActiveSelf(true);
-		rock->GetTransform()->translate.x = gameObject->GetTransform()->translate.x - 1;
+		rock->GetTransform()->translate.x = gameObject->GetTransform()->translate.x - 0.2f;
 		rock->GetTransform()->translate.y = 10;
 		rock->GetTransform()->translate.z = 0.1;
+		rock->GetTransform()->scale.Set(0.5f, 0.5f);
 		break;
 	}
 }
