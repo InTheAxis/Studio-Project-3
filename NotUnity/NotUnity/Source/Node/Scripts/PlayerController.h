@@ -101,6 +101,7 @@ private:
 	void PrintState();
 
 	void HandleCollision(ColInfo info);
+	void HandleTrigger(ColInfo info);
 };
 
 #endif

@@ -45,7 +45,7 @@ void Chunk::Start()
 	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"));
 	sprite->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("background"));
 
-	rock = AddChild<GameObj>();
+	rock = AddChild<GameObj>("rock");
 	rock->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("placeholder"));
 	KinematicBody* kb = rock->AddComp<KinematicBody>();
 	kb->maxVel.Set(10, 10);
@@ -55,6 +55,13 @@ void Chunk::Start()
 	c->CreateAABB(0.25f);
 	c->tag = "rock";
 	rock->ActiveSelf(false);
+
+	crate = AddChild<GameObj>("crate");
+	crate->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("placeholder"));
+	c = crate->AddComp<Collider>();
+	c->CreateAABB(0.5f);
+	c->tag = "crate";
+	crate->ActiveSelf(false);
 
 	ChangeBiome();
 	
@@ -109,6 +116,9 @@ void Chunk::InitInteractive()
 		rock->GetTransform()->translate.y = 10;
 		rock->GetTransform()->translate.z = 0.1;
 		rock->GetTransform()->scale.Set(0.5f, 0.5f);
+	case INTER::CRATE:
+		crate->ActiveSelf(true);
+		crate->GetTransform()->translate.x = gameObject->GetTransform()->translate.x;
 		break;
 	}
 }
@@ -116,26 +126,41 @@ void Chunk::InitInteractive()
 void Chunk::UpdateInteractive()
 {	
 	rock->ActiveSelf(false);
+	crate->ActiveSelf(false);
 	switch (biome->GetInteractiveType())
 	{
 	case INTER::ROCK:
 		rock->ActiveSelf(true);
 		ConstrainTransform(rock->GetTransform(), rock->GetComp<KinematicBody>());
 		break;
+	case INTER::CRATE:
+		if (crate->GetTransform()->translate.y < 100)
+		{
+			crate->ActiveSelf(true);			
+			ConstrainTransform(crate->GetTransform());
+		}
+		break;
 	}
 }
 
 void Chunk::ConstrainTransform(Transform * t, KinematicBody* kb)
 {
-	if (t->translate.y < biome->GetSpline()->Fn(t->translate.x))
+	if (kb)
 	{
-		t->translate.y = biome->GetSpline()->Fn(t->translate.x);
-		kb->useGravity = false;
-		kb->ResetVel(0, 1);
+		if (t->translate.y < biome->GetSpline()->Fn(t->translate.x))
+		{
+			t->translate.y = biome->GetSpline()->Fn(t->translate.x);
+			kb->useGravity = false;
+			kb->ResetVel(0, 1);
+		}
+		else
+		{
+			kb->useGravity = true;
+		}
 	}
 	else
 	{
-		kb->useGravity = true;
+		t->translate.y = biome->GetSpline()->Fn(t->translate.x);
 	}
 }
 

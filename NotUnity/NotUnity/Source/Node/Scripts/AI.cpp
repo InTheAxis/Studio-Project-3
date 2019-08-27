@@ -306,7 +306,11 @@ void AI::HandleColl(ColInfo info)
 		if (info.other->GetGameObj()->GetComp<KinematicBody>()->GetVel().x != 0)
 			health--;
 	}
-	if (info.other->GetGameObj()->GetScript<Projectile>())
+	if (info.other->tag == "crate")
+	{
+		kineB->ResetVel(1, 0);
+	}
+	if (info.other->tag == "bulletplayer")
 		return;
 	if (info.other->GetGameObj()->GetScript<PlayerController>())
 	{
