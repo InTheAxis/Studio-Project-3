@@ -26,7 +26,7 @@ enum class P_STATE
 	CHERR,
 };
 
-class KinemeticBody;
+class KinematicBody;
 class Sprite;
 class ColInfo;
 class Collider;
@@ -61,7 +61,7 @@ public:
 
 private:
 	Transform* t, *swordT;
-	KinemeticBody* kinb;
+	KinematicBody* kinb;
 	Sprite* sprite, *swordSprite;
 	Collider* attackRight, *attackLeft, *attackAir;
 	Collider* hitbox;

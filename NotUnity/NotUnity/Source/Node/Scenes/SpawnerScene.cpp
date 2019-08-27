@@ -27,8 +27,9 @@ void SpawnerScene::Start()
 	AddChild<GameObj>("WaveCounter");
 	GetChild<GameObj>("WaveCounter")->GetComp<Transform>()->translate.Set(0, 5, -3);
 	waveNum = GetChild<GameObj>("WaveCounter")->AddComp<Text>();
-	waveNum->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("text"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("font"));
-	waveNum->SetSize(0.5f);
+	waveNum->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("text"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("font"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
+	waveNum->SetSize(2.f);
+	waveNum->SetAlignment(0);
 	Scene::Start();
 }
 

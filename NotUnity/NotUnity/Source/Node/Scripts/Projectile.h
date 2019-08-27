@@ -10,7 +10,7 @@
 #include "../Scripts.h"
 #include "../Components.h"
 
-class KinemeticBody;
+class KinematicBody;
 class Collider;
 class ColInfo;
 class Sprite;
@@ -35,7 +35,7 @@ public:
 
 private:
 	Transform* t;	
-	KinemeticBody* kinb;
+	KinematicBody* kinb;
 	Sprite* sprite;
 	Collider* coll;
 	std::string target;

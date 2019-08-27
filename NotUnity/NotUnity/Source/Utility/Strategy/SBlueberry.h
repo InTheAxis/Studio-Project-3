@@ -5,7 +5,7 @@
 #include "Strategy.h"
 #include "../Math/Vector3.h"
 
-class KinemeticBody;
+class KinematicBody;
 class Projectile;
 class SBlueberry : public Strategy
 {
@@ -13,7 +13,7 @@ public:
 	SBlueberry();
 	~SBlueberry();
 
-	void Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double dt);
+	void Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, double dt);
 	void Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, double dt);
 	bool SelfInflict();
 	bool HasArmor();

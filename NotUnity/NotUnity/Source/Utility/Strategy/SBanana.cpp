@@ -1,5 +1,5 @@
 #include "SBanana.h"
-#include "../../NotUnity/Source/Node/Components/KinemeticBody.h"
+#include "../../NotUnity/Source/Node/Components/KinematicBody.h"
 #include "../../NotUnity/Source/Node/Scripts/Projectile.h"
 
 SBanana::SBanana()
@@ -17,7 +17,7 @@ SBanana::~SBanana()
 {
 }
 
-void SBanana::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double dt)
+void SBanana::Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, double dt)
 {
 	atkIn += 1.f * static_cast<float>(dt);
 	shouldAttack = true;

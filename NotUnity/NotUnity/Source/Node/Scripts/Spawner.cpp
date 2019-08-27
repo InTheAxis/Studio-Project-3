@@ -40,7 +40,7 @@ void Spawner::Update(double dt)
 
 	GetEnemyCount();
 
-	if (enemyCount < 10)
+	if (enemyCount < 3)
 		interval += 1.f * static_cast<float>(dt);
 	else
 		interval = 0;
@@ -53,7 +53,7 @@ void Spawner::Update(double dt)
 
 	UpdatePlayerPosToAI(); //Will update Boss too
 
-	if (GetEnemiesKilled() >= 20 && !GetBossKilled()) //&& !GetBossKilled()
+	if (GetEnemiesKilled() >= 6 && !GetBossKilled()) //&& !GetBossKilled()
 		SpawnBoss();
 
 	Cheat();

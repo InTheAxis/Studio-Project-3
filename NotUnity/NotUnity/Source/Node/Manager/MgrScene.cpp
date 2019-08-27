@@ -35,6 +35,7 @@ void MgrScene::LoadScenes()
 
 void MgrScene::Start()
 {	
+	Math::InitRNG();
 	LoadScenes();
 	Node::Start();
 }

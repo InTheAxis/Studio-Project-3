@@ -54,8 +54,8 @@ private:
 	Vector3 playerTrans;
 	std::string eNames;
 	
-	const int poolCount = 20;
-	GameObj* enemyPool[20];
+	const int poolCount = 6;
+	GameObj* enemyPool[6];
 	GameObj* boss;
 
 	//Init Enemies for different waves

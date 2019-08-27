@@ -54,6 +54,7 @@ public:
 	void ResetColorSpots();
 	void SetDead(bool dead);
 	void SetName(std::string eNames);
+	void SetAnimation(int num);
 
 private:
 	Vector3 playerTrans;
@@ -74,7 +75,7 @@ private:
 
 	Transform* t;
 	Strategy* strategy;
-	KinemeticBody* kineB;
+	KinematicBody* kineB;
 	Spline* s;
 	Projectile* projectile[ammoCount];
 	Collider* coll, *trigger;

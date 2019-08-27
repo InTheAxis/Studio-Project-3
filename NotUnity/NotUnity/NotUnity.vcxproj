@@ -27,7 +27,7 @@
     <ClCompile Include="Source\Node\Components\Chunk.cpp" />
     <ClCompile Include="Source\Node\Components\Collider.cpp" />
     <ClCompile Include="Source\Node\Components\ColliderRender.cpp" />
-    <ClCompile Include="Source\Node\Components\KinemeticBody.cpp" />
+    <ClCompile Include="Source\Node\Components\KinematicBody.cpp" />
     <ClCompile Include="Source\Node\Components\Renderable.cpp" />
     <ClCompile Include="Source\Node\Components\Sprite.cpp" />
     <ClCompile Include="Source\Node\Components\Text.cpp" />
@@ -58,6 +58,9 @@
     <ClCompile Include="Source\Node\Scripts\Projectile.cpp" />
     <ClCompile Include="Source\Node\Scripts\Skill.cpp" />
     <ClCompile Include="Source\Node\Scripts\Spawner.cpp" />
+    <ClCompile Include="Source\Utility\Biomes\BiomeBase.cpp" />
+    <ClCompile Include="Source\Utility\Biomes\BiomePicker.cpp" />
+    <ClCompile Include="Source\Utility\Biomes\Biomes.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO\DepthFBO.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO\FloatFBO.cpp" />
@@ -88,7 +91,7 @@
     <ClInclude Include="Source\Node\Components\Chunk.h" />
     <ClInclude Include="Source\Node\Components\Collider.h" />
     <ClInclude Include="Source\Node\Components\ColliderRender.h" />
-    <ClInclude Include="Source\Node\Components\KinemeticBody.h" />
+    <ClInclude Include="Source\Node\Components\KinematicBody.h" />
     <ClInclude Include="Source\Node\Components\Renderable.h" />
     <ClInclude Include="Source\Node\Components\Sprite.h" />
     <ClInclude Include="Source\Node\Components\Text.h" />
@@ -120,6 +123,9 @@
     <ClInclude Include="Source\Node\Scripts\Projectile.h" />
     <ClInclude Include="Source\Node\Scripts\Skill.h" />
     <ClInclude Include="Source\Node\Scripts\Spawner.h" />
+    <ClInclude Include="Source\Utility\Biomes\BiomeBase.h" />
+    <ClInclude Include="Source\Utility\Biomes\BiomePicker.h" />
+    <ClInclude Include="Source\Utility\Biomes\Biomes.h" />
     <ClInclude Include="Source\Utility\Component.h" />
     <ClInclude Include="Source\Utility\Delegate.h" />
     <ClInclude Include="Source\Utility\Graphics\Animation.h" />

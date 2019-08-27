@@ -3,7 +3,7 @@
 #include "../../Node/GameObj.h"
 #include "../../Node/Components/Sprite.h"
 #include "../../Node/Components/Transform.h"
-#include "../../Node/Components/KinemeticBody.h"
+#include "../../Node/Components/KinematicBody.h"
 #include "../../Node/Components/Collider.h"
 #include "../../Node/Components/Renderable.h"
 #include "../../Node/Components/Camera.h"
@@ -58,7 +58,7 @@ void PlayerController::Start()
 	swordSprite->SetHSV(-1, 1, -1)->SetRenderPass(RENDER_PASS::POST_FX)->SelectShader(MgrGraphics::HSV_UNLIT);
 	swordSprite->ToggleCullFace(false);	
 	
-	kinb = AddChild<KinemeticBody>();
+	kinb = AddChild<KinematicBody>();
 	kinb->SetGameObj(gameObject);
 	kinb->maxVel.Set(1, 4, 0);
 	kinb->frictionCoeff = 5;
@@ -131,7 +131,7 @@ void PlayerController::Update(double dt)
 		MgrAchievements::Instance()->GetWalkTime(0.1);
 	}
 
-	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
+	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.8)
 	{
 		MgrAchievements::Instance()->GetJumpTimes(1);
 		jumpTimer += dt;
@@ -279,7 +279,7 @@ int PlayerController::GetHealth()
 void PlayerController::Move(float inputX)
 {
 
-	kinb->ApplyForce(Vector3(inputX * moveSpeed.x /*+ speedincrease*/ * (OnGround() ? 1 : 0.3f), 0, 0));
+	kinb->ApplyForce(Vector3(inputX * moveSpeed.x /*+ speedincrease*/ * (OnGround() ? 1 : 0.5f), 0, 0));
 	TryChangeState(P_STATE::WALK);	
 }
 
@@ -474,4 +474,7 @@ void PlayerController::HandleCollision(ColInfo info)
 
 	if (info.other->tag == "enemyA" && info.other->isTrigger)
 		TakeDamage(1);
+
+	if (info.other->tag == "rock")
+		info.other->GetGameObj()->GetComp<KinematicBody>()->ApplyImpulse(Vector3(10 * direction, 1, 0));
 }
