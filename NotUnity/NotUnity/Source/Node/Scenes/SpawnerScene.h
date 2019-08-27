@@ -4,8 +4,6 @@
 #include "../Scene.h"
 #include "../Components/Sprite.h"
 #include "../../Utility/Math/Spline.h"
-#include "../Components/Text.h"
-#include <sstream>
 
 class SpawnerScene : public Scene
 {
@@ -36,8 +34,6 @@ public:
 private:
 	Vector3 fromPlayer;
 	GameObj* SpawnerGO;
-	std::stringstream ss;
-	Text* waveNum;
 };
 
 #endif

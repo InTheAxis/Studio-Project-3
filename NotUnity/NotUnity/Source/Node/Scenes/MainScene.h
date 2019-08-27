@@ -1,15 +1,19 @@
 #ifndef MAIN_SCENE_H
 #define MAIN_SCENE_H
 
+#include <sstream>
+
 #include "../Scene.h"
 
 #include "../../Utility/Graphics/FBO/FloatFBO.h"
+#include "../Components/Text.h"
 
 class SpawnerScene;
 class ScenePlayer;
 class MapScene;
 class Sprite;
 class Renderable;
+class Text;
 class MainScene : public Scene //alright to inherit because I won't need to Get it
 {
 	enum GAME_STATE
@@ -23,10 +27,10 @@ class MainScene : public Scene //alright to inherit because I won't need to Get 
 public:
 	MainScene(std::string name = "MainScene");
 	~MainScene();
-	
+
 	virtual void Start();
 	virtual void Update(double dt);
-	virtual void End();	
+	virtual void End();
 
 	void Render();
 private:
@@ -37,10 +41,19 @@ private:
 	ScenePlayer* player;
 	MapScene* map;
 	Sprite* title;
+	Sprite* walkAchievement;
+	Sprite* attackAchievemnt;
+	Sprite* killAchievement;
 	Renderable* wasd;
 	Renderable* lmb;
 	Renderable* pauseMenu;
-	
+
+	Text* textWalkAchievement;
+	Text* textAttackAchievement;
+	Text* textJumpAchievement;
+	Text* waveNum;
+	std::stringstream ss;
+
 	Renderable* greenbar;
 	Renderable* redbar;
 	//PlayerController* pc;
@@ -53,10 +66,16 @@ private:
 
 	bool pause;
 	double winTimer;
-	float lightAngle;	
+	float lightAngle;
 
 	int healthminus;
 	void ChangeGameState(GAME_STATE gs);
+
+	float walkSat;
+	float attSat;
+	float killSat;
+
+	void updateAchievementUI();
 };
 
 #endif

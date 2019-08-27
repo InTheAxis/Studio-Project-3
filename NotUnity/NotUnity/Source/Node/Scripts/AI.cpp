@@ -17,7 +17,12 @@ AI::AI(std::string name)
 	, dead(false)
 	, enemyCount(0)
 	, kineB(nullptr)
+	, t(nullptr)
 	, s(nullptr)
+	, projectile{nullptr}
+	, coll (nullptr)
+	, trigger(nullptr)
+	, sprite (nullptr)
 	, sat(1)
 	, bounceTime(0)
 	, bounceTimeTwo(0)
@@ -29,6 +34,16 @@ AI::AI(std::string name)
 
 AI::~AI()
 {
+	strategy = nullptr;
+	kineB = nullptr;
+	t = nullptr;
+	s = nullptr;
+	coll = nullptr;
+	trigger = nullptr;
+	sprite = nullptr;
+
+	for (int i = 0; i < ammoCount; ++i)
+		projectile[i] = nullptr;
 }
 
 void AI::Start()
@@ -36,12 +51,14 @@ void AI::Start()
 	sprite = AddChild<Sprite>();
 	sprite->SetGameObj(gameObject);
 	sprite->SetAnimation(0, 8, 0.5f, 1)
+		->SetAnimation(1, 8, 0.5f, 1)
+		->SetAnimation(2, 8, 0.5f, 1)
+		->SetAnimation(3, 8, 0.5f, 1)
+		->SetAnimation(4, 8, 0.5f, 1)
 		->SwitchAnimation(0)
 		->PlayAnimation()
 		->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))
-		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy1"))
-		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy2"))
-		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy3"))
+		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy"))
 		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX)
 		->ToggleCullFace(false);
 
@@ -271,6 +288,8 @@ void AI::SetDead(bool dead)
 void AI::SetAnimation(int num)
 {
 	enemyName = num;
+	sprite->SwitchAnimation(enemyName)
+		->PlayAnimation();
 }
 
 void AI::PlayAnimation()

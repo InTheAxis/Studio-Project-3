@@ -23,13 +23,6 @@ void SpawnerScene::Start()
 	AddChild<GameObj>("SpawnerGO")->AddComp<Sprite>();
 	GetChild<GameObj>("SpawnerGO")->AddScript<Spawner>();
 	SpawnerGO = GetChild<GameObj>("SpawnerGO");
-
-	AddChild<GameObj>("WaveCounter");
-	GetChild<GameObj>("WaveCounter")->GetComp<Transform>()->translate.Set(0, 5, -3);
-	waveNum = GetChild<GameObj>("WaveCounter")->AddComp<Text>();
-	waveNum->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("text"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("font"))->SelectShader(MgrGraphics::UNLIT)->SetRenderPass(RENDER_PASS::HUD);
-	waveNum->SetSize(2.f);
-	waveNum->SetAlignment(0);
 	Scene::Start();
 }
 
@@ -37,10 +30,6 @@ void SpawnerScene::Update(double dt)
 {
 	SpawnerGO->GetTransform()->translate.Set(fromPlayer.x, 0);
 	SpawnerGO->GetScript<Spawner>()->SetPlayerTrans(fromPlayer);
-
-	ss.clear(); ss.str(""); ss.precision(2);
-	ss << SpawnerGO->GetScript<Spawner>()->GetSpawnerWave();
-	waveNum->SetText(ss.str());
 	Scene::Update(dt);
 }
 

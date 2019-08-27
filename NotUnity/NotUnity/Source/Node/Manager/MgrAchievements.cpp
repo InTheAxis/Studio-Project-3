@@ -8,8 +8,12 @@
 
 MgrAchievements::MgrAchievements(std::string name)
 	: Manager<MgrAchievements>(name)
-	, maxValX(1)
-	, maxValY(1)
+	, walkTime(0)
+	, maxValX1(1.3)
+	, maxValX2(1.6)
+	, walkAchievementLevel1(false)
+	, walkAchievementLevel2(false)
+	, bonusHealth(0)
 {
 }
 
@@ -17,9 +21,16 @@ MgrAchievements::~MgrAchievements()
 {
 }
 
+void MgrAchievements::HardReset()
+{
+	attackTimes = 0;
+	jumpTimes = 0;
+	walkTime = 0;
+	enemyKilled = 0;
+}
+
 void MgrAchievements::Start()
 {
-	enemyDowned = false;
 	ReadTextFile();
 	Node::Start();
 }
@@ -39,95 +50,120 @@ void MgrAchievements::End()
 	Node::End();
 }
 
-
 void MgrAchievements::AchievementCheck()
 {
-	if (attackTimes >= 10)
+	if (attackTimes >= 10 && !attackAchievementLevel1)
 	{
-		attackAch(true);
-
-		if (attackAch(true) && attackTimes >= 50)
-			attackAch2(true);
+		attackAchievementLevel1 = true;
 	}
-	if (jumpTimes >= 10)
+	if (attackTimes >= 50 && !attackAchievementLevel2)
 	{
-		if (knibReference->IsActive())
-		{
-			knibReference->maxVel.y = 1.3;
-		}
-		jumpAch(true);
-		if (jumpAch(true) && jumpTimes >= 100)
-		{
-			if (knibReference->IsActive())
-			{
-				knibReference->maxVel.y = 1.6;
-			}
-		}
-	}
-	if (walkTime >= 10)
-	{
-		if (knibReference->IsActive())
-		{
-			knibReference->maxVel.x = 1.3;
-		}
-		walkAch(true);
-		if (walkAch(true) && walkTime >= 200)
-		{
-			if (knibReference->IsActive())
-			{
-				knibReference->maxVel.x = 1.6;
-			}
-		}
+		attackAchievementLevel2 = true;
 	}
 
+	//if (jumpTimes >= 10)
+	//{
+	//	if (knibReference->IsActive())
+	//	{
+	//		knibReference->maxVel.y = 1.3;
+	//	}
+	//	GetJumpLevel1(true);
+	//	if (GetJumpLevel1(true) && jumpTimes >= 100)
+	//	{
+	//		if (knibReference->IsActive())
+	//		{
+	//			knibReference->maxVel.y = 1.6;
+	//		}
+	//	}
+	//}
+
+	if (walkTime >= 10 && !walkAchievementLevel1)
+	{
+		walkAchievementLevel1 = true;
+		if (knibReference->IsActive())
+			knibReference->maxVel.x = 1.3f;
+		else
+			Debug::Log("KNIBREFERENCE IS NOT ACTIVE!");
+	}
+	if (walkTime >= 100 && !walkAchievementLevel2)
+	{
+		walkAchievementLevel2 = true;
+		if (knibReference->IsActive())
+			knibReference->maxVel.x = 1.6f;
+		else
+			Debug::Log("KNIBREFERENCE IS NOT ACTIVE!");
+	}
+
+	if (finalEnemyKilled >= 10 && !enemyKilledAchievementLevel1)
+	{
+		enemyKilledAchievementLevel1 = true;
+		bonusHealth = 10;
+	}
+	if (finalEnemyKilled >= 100 && !enemyKilledAchievementLevel2)
+	{
+		enemyKilledAchievementLevel2 = true;
+		bonusHealth = 50;
+	}
 }
 
-int MgrAchievements::GetAttacTimes(int at)
+void MgrAchievements::SetAttackTimes(int at)
 {
 	attackTimes += at;
+}
+
+int MgrAchievements::GetAttactTimes()
+{
 	return attackTimes;
 }
 
-bool MgrAchievements::attackAch(bool AA)
+bool MgrAchievements::GetAttackLevel1()
 {
-	return AA;
+	return attackAchievementLevel1;
 }
 
-bool MgrAchievements::attackAch2(bool AA)
+bool MgrAchievements::GetAttackLevel2()
 {
-	return AA;
+	return attackAchievementLevel2;
+}
+
+void MgrAchievements::SetJumpTimes(int jt)
+{
+	jumpTimes += jt;
 }
 
 int MgrAchievements::GetJumpTimes(int jt)
 {
-	jumpTimes += jt;
 	return jumpTimes;
 }
 
-bool MgrAchievements::jumpAch(bool JA)
+bool MgrAchievements::GetJumpLevel1()
 {
-	return JA;
+	return jumpAchievementLevel1;
 }
 
-bool MgrAchievements::jumpAch2(bool JA)
+bool MgrAchievements::GetJumpLevel2()
 {
-	return JA;
+	return jumpAchievementLevel2;
 }
 
-double MgrAchievements::GetWalkTime(double wt)
+void MgrAchievements::SetWalkTime(float wt)
 {
 	walkTime += wt;
+}
+
+float MgrAchievements::GetWalkTime()
+{
 	return walkTime;
 }
 
-bool MgrAchievements::walkAch(bool WA)
+bool MgrAchievements::GetWalkAchievementLevel1()
 {
-	return WA;
+	return walkAchievementLevel1;
 }
 
-bool MgrAchievements::walkAch2(bool WA)
+bool MgrAchievements::GetWalkAchievementLevel2()
 {
-	return WA;
+	return walkAchievementLevel2;
 }
 
 int MgrAchievements::GetEnemyKilled()
@@ -137,22 +173,48 @@ int MgrAchievements::GetEnemyKilled()
 
 void MgrAchievements::SetEnemyKilled(int ek)
 {
-	 enemyKilled += currentKilled;
-	
-}
-void MgrAchievements::SetCurrentEnemyKilled(int ek)
-{
-	currentKilled = ek;
-	totalEnemyKilled = enemyKilled + currentKilled;
-}
-bool MgrAchievements::enemyAch()
-{
-	if (totalEnemyKilled >= 10)
+	if (enemyKilled < ek)
 	{
-		return true;
+		enemyKilled = ek;
 	}
-	else
-		return false;
+}
+
+void MgrAchievements::SetTotalKilled(int tk)
+{
+	totalEnemyKilled += tk;
+}
+
+void MgrAchievements::SetFinalKilled()
+{
+	finalEnemyKilled = totalEnemyKilled + enemyKilled;
+	totalEnemyKilled = 0;
+	enemyKilled = 0;
+}
+
+void MgrAchievements::ResetEnemyKilled()
+{
+	finalEnemyKilled = totalEnemyKilled + enemyKilled;
+	enemyKilled = 0;
+}
+
+int MgrAchievements::GetFinalEnemyKilled()
+{
+	return finalEnemyKilled;
+}
+
+int MgrAchievements::GetBonusHealth()
+{
+	return bonusHealth;
+}
+
+bool MgrAchievements::GetKillLevel1()
+{
+	return enemyKilledAchievementLevel1;
+}
+
+bool MgrAchievements::GetKillLevel2()
+{
+	return walkAchievementLevel2;
 }
 
 void MgrAchievements::ReadTextFile()
@@ -162,9 +224,9 @@ void MgrAchievements::ReadTextFile()
 
 	if (Print.is_open())
 	{
-		while (std::getline(Print,line))
+		while (std::getline(Print, line))
 		{
-			int ID = line.find(","); //find , 
+			int ID = line.find(","); //find ,
 			std::string tmp = line.substr(ID + 1);
 			int Cord = tmp.find(","); //cord after this
 			std::string tmp2 = tmp.substr(Cord + 1);
@@ -172,23 +234,23 @@ void MgrAchievements::ReadTextFile()
 			std::string tmp3 = tmp2.substr(Coord + 1);
 
 			std::string attack = line.substr(0, ID);
-
+			Debug::Log(line);
+			Debug::Log(tmp);
+			Debug::Log(tmp2);
+			Debug::Log(tmp3);
 			std::string jump = tmp.substr(0, Cord);
 
-			std::string walkTimer = tmp2.substr(Coord + 1);
+			std::string walkTimer = tmp2.substr(0, Coord);
 
-			std::string enemyKILL = tmp3;				 
-
+			std::string enemyKILL = tmp3;
 
 			this->attackTimes = std::stoi(attack);
 			this->jumpTimes = std::stoi(jump);
-			this->walkTime = std::stoi(walkTimer);
-			this->enemyKilled = std::stoi(enemyKILL);
-
+			this->walkTime = std::stof(walkTimer);
+			this->finalEnemyKilled = std::stoi(enemyKILL);
 		}
 		Print.close();
 	}
-
 }
 
 void MgrAchievements::WriteTextFile()
@@ -197,8 +259,7 @@ void MgrAchievements::WriteTextFile()
 	std::ofstream Write("Resources/LifeTimeStats.txt");
 	if (Write.is_open())
 	{
-	
-		int ID = line.find(","); //find , 
+		int ID = line.find(","); //find ,
 		std::string tmp = line.substr(ID + 1);
 		int Cord = tmp.find(","); //cord after this
 		std::string tmp2 = tmp.substr(Cord + 1);
@@ -210,8 +271,7 @@ void MgrAchievements::WriteTextFile()
 		std::string walkTimer = tmp2.substr(Coord + 1);
 		std::string enemyKILL = tmp3;
 
-		Write << attackTimes << "," << jumpTimes << "," << walkTime << "," << totalEnemyKilled;
-		
+		Write << attackTimes << "," << jumpTimes << "," << walkTime << "," << finalEnemyKilled;
 	}
 }
 

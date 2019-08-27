@@ -14,11 +14,17 @@ Spawner::Spawner(std::string name)
 	, wave(0)
 	, startGame(false)
 	, enemyType(0)
+	, boss(nullptr)
+	, enemyPool{nullptr}
 {
 }
 
 Spawner::~Spawner()
 {
+	boss = nullptr;
+
+	for (int i = 0; i < 6; ++i)
+		enemyPool[i] = nullptr;
 }
 
 void Spawner::Start()
@@ -97,7 +103,7 @@ int Spawner::GetEnemiesKilled()
 		if (enemyPool[i]->GetScript<AI>()->IsDead())
 			++c;
 	}
-	MgrAchievements::Instance()->SetCurrentEnemyKilled(c);
+	MgrAchievements::Instance()->SetEnemyKilled(c);
 	return c;
 }
 
@@ -231,7 +237,6 @@ void Spawner::GetEnemyCount()
 	enemyCount = 0;
 	for (int i = 0; i < poolCount; ++i)
 	{
-		//if (gameObject->GetChild<GameObj>(waveOne + std::to_string(i))->IsActive())
 		if (enemyPool[i]->IsActive())
 			++enemyCount;
 	}
