@@ -1,5 +1,5 @@
 #include "SCarrot.h"
-#include "../../NotUnity/Source/Node/Components/KinemeticBody.h"
+#include "../../NotUnity/Source/Node/Components/KinematicBody.h"
 #include "../../NotUnity/Source/Node/Scripts/Projectile.h"
 
 SCarrot::SCarrot() 
@@ -7,7 +7,7 @@ SCarrot::SCarrot()
 	, shouldAttack(false)
 	, inteval(0.f)
 	, atkIn(0.f)
-	, randSpeed(Math::RandFloatMinMax(0.5f, 2.f))
+	, randSpeed(Math::RandFloatMinMax(0.5f, 1.5f))
 	, speed(0)
 	, boss(false)
 {
@@ -17,26 +17,26 @@ SCarrot::~SCarrot()
 {
 }
 
-void SCarrot::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double dt)
+void SCarrot::Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, double dt)
 {
 	atkIn += 1.f * static_cast<float>(dt);
 	shouldAttack = false;
 
 	if (atkIn >= randSpeed)
 	{
-		if ((dest - enemyPos).LengthSquared() > 0.3f) //2) Will headbutt player after awile
+		if ((dest - enemyPos).LengthSquared() > 1.f) //2) Will headbutt player after awile
 			currentState = ATTACK;
 
-		if ((dest - enemyPos).LengthSquared() <= 0.1f)//3) Prevent AI from crossing player
+		if ((dest - enemyPos).LengthSquared() <= 0.5f)//3) Prevent AI from crossing player
 			currentState = WAIT;
 	}
 	else
 	{
-		if ((dest - enemyPos).LengthSquared() < 0.6f) // 4) Will move away from player after headbutt it
+		if ((dest - enemyPos).LengthSquared() < 3.f) // 4) Will move away from player after headbutt it
 			currentState = REPEL;
 		else
 		{
-			if ((dest - enemyPos).LengthSquared() > 0.8f) //1) Will move to player when spawn from far
+			if ((dest - enemyPos).LengthSquared() > 3.5f) //1) Will move to player when spawn from far 0.8f
 				currentState = ATTACK;
 			else
 				currentState = IDLE;
@@ -46,14 +46,14 @@ void SCarrot::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double
 	switch (currentState)
 	{
 	case ATTACK:
-		kb->ApplyForce((dest - enemyPos));
+		kb->ApplyForce((dest - enemyPos).Normalized());
 		break;
 	case WAIT:
 		kb->ResetVel(1, 0);
 		atkIn = 0.f;
 		break;
 	case REPEL:
-		kb->ApplyForce(-(dest - enemyPos));
+		kb->ApplyForce(-(dest - enemyPos).Normalized());
 		break;
 	default: //IDLE
 		kb->ResetVel(1, 0);
@@ -74,7 +74,10 @@ void SCarrot::Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, doubl
 	{
 		if (p)
 		{
-			p->Discharge(enemyPos, direction * 10);
+			if (direction.LengthSquared() == 0)
+				p->Discharge(enemyPos, direction * 10);
+			else
+				p->Discharge(enemyPos, direction.Normalized() * 10);
 			p->GetGameObj()->ActiveSelf(true);
 		}
 		inteval = 0.f;

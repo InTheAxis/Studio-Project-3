@@ -1,5 +1,5 @@
 #include "SBanana.h"
-#include "../../NotUnity/Source/Node/Components/KinemeticBody.h"
+#include "../../NotUnity/Source/Node/Components/KinematicBody.h"
 #include "../../NotUnity/Source/Node/Scripts/Projectile.h"
 
 SBanana::SBanana()
@@ -17,22 +17,22 @@ SBanana::~SBanana()
 {
 }
 
-void SBanana::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double dt)
+void SBanana::Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, double dt)
 {
 	atkIn += 1.f * static_cast<float>(dt);
 	shouldAttack = true;
 	
 	if (atkIn >= 3.2f)
 	{
-		if ((dest - enemyPos).LengthSquared() < 2.5f)
+		if ((dest - enemyPos).LengthSquared() < 5.5f)
 			currentState = REPEL;
 
-		if ((dest - enemyPos).LengthSquared() > 6.f)
+		if ((dest - enemyPos).LengthSquared() > 10.f)
 			currentState = WAIT;
 	}
 	else
 	{
-		if ((dest - enemyPos).LengthSquared() >= 2.f)
+		if ((dest - enemyPos).LengthSquared() >= 5.f)
 			currentState = ATTACK;
 		else
 			currentState = IDLE;
@@ -41,10 +41,10 @@ void SBanana::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double
 	switch(currentState)
 	{
 	case ATTACK:
-		kb->ApplyForce((dest - enemyPos));
+		kb->ApplyForce((dest - enemyPos).Normalized());
 		break;
 	case REPEL:
-		kb->ApplyForce(-(dest - enemyPos));
+		kb->ApplyForce(-(dest - enemyPos).Normalized());
 		break;
 	case WAIT:
 		kb->ResetVel(1, 0);
@@ -69,7 +69,10 @@ void SBanana::Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, doubl
 	{
 		if (p)
 		{
-			p->Discharge(enemyPos, direction * 10);
+			if (direction.LengthSquared() == 0)
+				p->Discharge(enemyPos, direction * 10);
+			else
+				p->Discharge(enemyPos, direction.Normalized() * 10);
 			p->GetGameObj()->ActiveSelf(true);
 			selfInflict = true;
 		}

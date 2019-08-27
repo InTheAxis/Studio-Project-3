@@ -39,7 +39,6 @@ public:
 	float GetHealth();
 	void SetDamageDealt(float damage);
 	float GetDamageDealt();
-	void ChangeStrategy(Strategy* newStrategy, bool remove = true);
 	bool IsDead();
 	AI* SetTerrain(Spline* s);
 	void SetSaturation(float sat);	
@@ -53,6 +52,7 @@ public:
 	void IfHealthZero();
 	void ResetBullets();
 	void ResetColorSpots();
+	void SetDead(bool dead);
 
 private:
 	Vector3 playerTrans;
@@ -62,6 +62,7 @@ private:
 	float armour;
 
 	double bounceTime;
+	double bounceTimeTwo;
 
 	Vector3 direction;
 	int enemyCount;
@@ -71,7 +72,7 @@ private:
 
 	Transform* t;
 	Strategy* strategy;
-	KinemeticBody* kineB;
+	KinematicBody* kineB;
 	Spline* s;
 	Projectile* projectile[ammoCount];
 	Collider* coll, *trigger;

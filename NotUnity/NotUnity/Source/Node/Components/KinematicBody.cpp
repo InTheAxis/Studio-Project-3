@@ -1,7 +1,7 @@
-#include "KinemeticBody.h"
+#include "KinematicBody.h"
 #include "Transform.h"
 
-KinemeticBody::KinemeticBody(std::string name) : Node(name)
+KinematicBody::KinematicBody(std::string name) : Node(name)
 {
 	acceleration.SetZero();
 	force.SetZero();
@@ -15,38 +15,38 @@ KinemeticBody::KinemeticBody(std::string name) : Node(name)
 	gravScale = 1;
 }
 
-KinemeticBody::~KinemeticBody()
+KinematicBody::~KinematicBody()
 {
 }
 
-void KinemeticBody::Start()
+void KinematicBody::Start()
 {
 	Node::Start();
 }
 
-void KinemeticBody::Update(double dt)
+void KinematicBody::Update(double dt)
 {
 	UpdateSuvat(dt);
 	//Debug::Log(maxVel);
 	Node::Update(dt);
 }
 
-void KinemeticBody::End()
+void KinematicBody::End()
 {
 	Node::End();
 }
 
-void KinemeticBody::ApplyForce(Vector3 force)
+void KinematicBody::ApplyForce(Vector3 force)
 {
 	this->force += force;
 }
 
-void KinemeticBody::ApplyImpulse(Vector3 impulse)
+void KinematicBody::ApplyImpulse(Vector3 impulse)
 {
 	this->velocity = impulse;
 }
 
-void KinemeticBody::UpdateSuvat(double dt)
+void KinematicBody::UpdateSuvat(double dt)
 {
 	float dtf = static_cast<float>(dt);
 	acceleration = force * (1 / mass);
@@ -63,19 +63,19 @@ void KinemeticBody::UpdateSuvat(double dt)
 	gameObject->GetTransform()->translate += velocity * dtf;
 }
 
-void KinemeticBody::ResetForce()
+void KinematicBody::ResetForce()
 {
 	force.SetZero();
 }
 
-void KinemeticBody::ResetVel(bool x, bool y, bool z)
+void KinematicBody::ResetVel(bool x, bool y, bool z)
 {
 	if (x) velocity.x = 0;
 	if (y) velocity.y = 0;
 	if (z) velocity.z = 0;
 }
 
-Vector3 KinemeticBody::GetVel() const
+Vector3 KinematicBody::GetVel() const
 {
 	return velocity;
 }

@@ -1,5 +1,5 @@
 #include "STomato.h"
-#include "../../NotUnity/Source/Node/Components/KinemeticBody.h"
+#include "../../NotUnity/Source/Node/Components/KinematicBody.h"
 #include "../../NotUnity/Source/Node/Scripts/Projectile.h"
 
 STomato::STomato()
@@ -15,11 +15,11 @@ STomato::~STomato()
 {
 }
 
-void STomato::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double dt)
+void STomato::Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, double dt)
 {
 	shouldAttack = true;
 
-	if ((dest - enemyPos).LengthSquared() > 2.8f)
+	if ((dest - enemyPos).LengthSquared() > 4.f)
 		currentState = ATTACK;
 	else
 		currentState = IDLE;
@@ -27,7 +27,7 @@ void STomato::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double
 	switch(currentState)
 	{
 	case ATTACK:
-		kb->ApplyForce((dest - enemyPos));
+		kb->ApplyForce((dest - enemyPos).Normalized());
 		break;
 	default: //IDLE
 		kb->ResetVel(1, 0);
@@ -48,8 +48,12 @@ void STomato::Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, doubl
 	{
 		if (p)
 		{
-			p->Discharge(enemyPos, direction * 10);
+			if (direction.LengthSquared() == 0)
+				p->Discharge(enemyPos, direction * 10);
+			else
+				p->Discharge(enemyPos, direction.Normalized() * 10);
 			p->GetGameObj()->ActiveSelf(true);
+			Debug::Log(direction.Normalized());
 		}
 		inteval = 0;
 	}

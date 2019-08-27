@@ -20,6 +20,7 @@ AI::AI(std::string name)
 	, s(nullptr)
 	, sat(1)
 	, bounceTime(0)
+	, bounceTimeTwo(0)
 	, wave(0)
 	, armour(0.f)
 {
@@ -40,7 +41,7 @@ void AI::Start()
 		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy"))
 		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX);
 
-	kineB = AddChild<KinemeticBody>();
+	kineB = AddChild<KinematicBody>();
 	kineB->SetGameObj(gameObject);
 	kineB->maxVel.Set(2, 2, 0);
 	kineB->frictionCoeff = 0.2f;
@@ -118,6 +119,8 @@ void AI::Update(double dt)
 		t->translate.z = 0; //disable color spot
 		if (m_lifetime > bounceTime + 0.5f)
 			gameObject->ActiveSelf(false);
+		if (m_lifetime > bounceTimeTwo + 0.5f)
+			gameObject->ActiveSelf(false);
 	}
 
 	sat = Math::Max(0.f,  health / 3.f);
@@ -136,12 +139,15 @@ void AI::End()
 void AI::OnEnable()
 {
 	coll->OnCollideStay.Subscribe(&AI::HandleColl, this, "coll");
+	trigger->OnCollideEnter.Subscribe(&AI::HandleColl, this, "tcoll");
 }
 
 void AI::OnDisable()
 {
 	if (coll)
 		coll->OnCollideStay.UnSubscribe("coll");
+	if (trigger)
+		trigger->OnCollideEnter.UnSubscribe("tcoll");
 }
 
 void AI::SetPlayerTrans(Vector3 trans)
@@ -167,20 +173,6 @@ void AI::SetDamageDealt(float damage)
 float AI::GetDamageDealt()
 {
 	return damage;
-}
-
-void AI::ChangeStrategy(Strategy* newStrategy, bool remove)
-{
-	if (remove)
-	{
-		if (strategy != NULL)
-		{
-			delete strategy;
-			strategy = NULL;
-		}
-	}
-
-	strategy = newStrategy;
 }
 
 bool AI::IsDead()
@@ -211,13 +203,14 @@ void AI::Reset()
 	sat = 1;
 	dead = false;
 	bounceTime = 0;
+	bounceTimeTwo = 0;
 	ResetBullets();
 	ResetColorSpots();
 }
 
 void AI::Gravity()
 {
-	if (t->translate.y > GetWorldHeight() + 0.1f)
+	if (t->translate.y > GetWorldHeight() + 0.2f)
 	{
 		kineB->useGravity = true;
 	}
@@ -263,6 +256,11 @@ void AI::ResetColorSpots()
 	colorSpot->radius = t->scale.x * 2;
 }
 
+void AI::SetDead(bool dead)
+{
+	this->dead = dead;
+}
+
 float AI::GetWorldHeight()
 {
 	return s->Fn(t->translate.x);
@@ -280,29 +278,51 @@ Projectile * AI::GetProjectile()
 
 void AI::HandleColl(ColInfo info)
 {
-	if (info.other->GetGameObj()->GetScript<Projectile>())
+	if (info.other->tag == "rock")
+	{
+		if (info.other->GetGameObj()->GetComp<KinematicBody>()->GetVel().x != 0)
+			health--;
+	}
+	if (info.other->tag == "crate")
+	{
+		kineB->ResetVel(1, 0);
+	}
+	if (info.other->tag == "bulletplayer")
 		return;
-	if (info.other->GetGameObj()->GetScript<PlayerController>() && info.other->isTrigger)
+	if (info.other->GetGameObj()->GetScript<PlayerController>())
 	{
 		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
-		if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
+		if (info.other->isTrigger)
 		{
-			ai->bounceTime = ai->m_lifetime;
-
-			if (ai->strategy->HasArmor())
+			if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
 			{
-				ai->armour--;
+				ai->bounceTime = ai->m_lifetime;
 
-				if (ai->armour <= 0)
+				if (ai->strategy->HasArmor())
 				{
-					ai->armour = 0;
-					ai->health--;
+					ai->armour--;
+
+					if (ai->armour <= 0)
+					{
+						ai->armour = 0;
+						ai->health--;
+					}
 				}
+				else
+					ai->health--;
+
+				IfHealthZero();
+			}
+		}
+		else
+		{
+			if (!ai->dead && ai->m_lifetime > ai->bounceTimeTwo + 0.5)
+			{
+				ai->bounceTimeTwo = (ai->m_lifetime * 1.2f);
+				trigger->isTrigger = true;
 			}
 			else
-				ai->health--;
-
-			IfHealthZero();
+				trigger->isTrigger = false;
 		}
 	}
 }

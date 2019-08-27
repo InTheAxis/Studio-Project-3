@@ -4,7 +4,7 @@
 #include "Manager.h"
 #include "../../Utility/Delegate.h"
 
-class KinemeticBody;
+class KinematicBody;
 class MgrAchievements : public Manager<MgrAchievements>
 {
 	friend Singleton<MgrAchievements>;

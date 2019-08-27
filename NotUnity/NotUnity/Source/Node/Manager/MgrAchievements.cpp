@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "../../Node/Components/KinemeticBody.h"
+#include "../../Node/Components/KinematicBody.h"
 #include "../../Node/Scripts/PlayerController.h"
 
 MgrAchievements::MgrAchievements(std::string name)
@@ -275,7 +275,7 @@ void MgrAchievements::WriteTextFile()
 	}
 }
 
-void MgrAchievements::setKnibRefrence(KinemeticBody * knib)
+void MgrAchievements::setKnibRefrence(KinematicBody * knib)
 {
 	knibReference = knib;
 }

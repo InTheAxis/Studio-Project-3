@@ -3,7 +3,7 @@
 #include "../../Node/GameObj.h"
 #include "../../Node/Components/Sprite.h"
 #include "../../Node/Components/Transform.h"
-#include "../../Node/Components/KinemeticBody.h"
+#include "../../Node/Components/KinematicBody.h"
 #include "../../Node/Components/Collider.h"
 #include "../../Node/Components/Renderable.h"
 #include "../../Node/Components/Camera.h"
@@ -58,7 +58,7 @@ void PlayerController::Start()
 	swordSprite->SetHSV(-1, 1, -1)->SetRenderPass(RENDER_PASS::POST_FX)->SelectShader(MgrGraphics::HSV_UNLIT);
 	swordSprite->ToggleCullFace(false);	
 	
-	kinb = AddChild<KinemeticBody>();
+	kinb = AddChild<KinematicBody>();
 	kinb->SetGameObj(gameObject);
 	kinb->maxVel.Set(1, 4, 0);
 	kinb->frictionCoeff = 5;
@@ -131,7 +131,7 @@ void PlayerController::Update(double dt)
 		MgrAchievements::Instance()->SetWalkTime(0.1f);
 	}
 
-	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
+	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.8)
 	{
 		MgrAchievements::Instance()->SetJumpTimes(1);
 		jumpTimer += dt;
@@ -195,7 +195,6 @@ void PlayerController::Update(double dt)
 	else
 		swordT->translate.z += 0.1f;
 
-
 	// achievemets
 	// kinb->maxVel.Set(Achievements::Instance()->maxValX, Achievements::Instance()->maxValY, 0);	
 
@@ -210,12 +209,18 @@ void PlayerController::End()
 void PlayerController::OnEnable()
 {
 	hitbox->OnCollideStay.Subscribe(&PlayerController::HandleCollision, this, "coll");
+	attackLeft->OnTriggerStay.Subscribe(&PlayerController::HandleTrigger, this, "trigL");
+	attackRight->OnTriggerStay.Subscribe(&PlayerController::HandleTrigger, this, "trigR");
 }
 
 void PlayerController::OnDisable()
 {
 	if (hitbox)
 		hitbox->OnCollideStay.UnSubscribe("coll");
+	if (attackLeft)
+		attackLeft->OnTriggerStay.UnSubscribe("trigL");
+	if (attackRight)
+		attackRight->OnTriggerStay.UnSubscribe("trigR");
 }
 
 void PlayerController::TryChangeState(P_STATE state)
@@ -272,7 +277,7 @@ int PlayerController::GetHealth()
 void PlayerController::Move(float inputX)
 {
 
-	kinb->ApplyForce(Vector3(inputX * moveSpeed.x /*+ speedincrease*/ * (OnGround() ? 1 : 0.3f), 0, 0));
+	kinb->ApplyForce(Vector3(inputX * moveSpeed.x /*+ speedincrease*/ * (OnGround() ? 1 : 0.5f), 0, 0));
 	TryChangeState(P_STATE::WALK);	
 }
 
@@ -386,7 +391,7 @@ void PlayerController::TakeDamage(int dmg)
 {
 	health -= dmg;
 	if (health <= 0 && deadTimer <= 0)
-		deadTimer = 2.5f;
+		deadTimer = 3.5f;
 	else if (hitTimer <= 0)
 		hitTimer = 0.3f;
 	camera->Shake(0.05f, 0.15f);
@@ -466,4 +471,16 @@ void PlayerController::HandleCollision(ColInfo info)
 {
 	if (info.other->tag == "bulletplayer")
 		TakeDamage(1);
+
+	if (info.other->tag == "enemyA" && info.other->isTrigger)
+		TakeDamage(1);
+
+	if (info.other->tag == "rock")
+		info.other->GetGameObj()->GetComp<KinematicBody>()->ApplyImpulse(Vector3(10 * direction, 1, 0));
+}
+
+void PlayerController::HandleTrigger(ColInfo info)
+{
+	if (info.other->tag == "crate")
+		info.other->GetGameObj()->GetTransform()->translate.y = 100;
 }
