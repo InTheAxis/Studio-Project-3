@@ -39,7 +39,6 @@ public:
 	float GetHealth();
 	void SetDamageDealt(float damage);
 	float GetDamageDealt();
-	void ChangeStrategy(Strategy* newStrategy, bool remove = true);
 	bool IsDead();
 	AI* SetTerrain(Spline* s);
 	void SetSaturation(float sat);	

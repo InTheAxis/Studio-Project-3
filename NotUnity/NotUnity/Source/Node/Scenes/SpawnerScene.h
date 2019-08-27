@@ -20,6 +20,7 @@ public:
 
 	void Render();
 	void SetWave(int wave); //Set starting wave from other scene
+	int GetWave();
 	void PlayerTrans(Vector3 trans);
 	void SetTerrain(Spline* s);
 	void Reset();
@@ -27,9 +28,10 @@ public:
 	int GetEnemyKilled();
 	int GetSpawnerWave();
 	bool GetBossKilled();
-	void NewWave(int wave);
+	void NewWave();
+	void SetStartGame(bool start);
+
 private:
-	int currentWave;
 	Vector3 fromPlayer;
 	GameObj* SpawnerGO;
 };

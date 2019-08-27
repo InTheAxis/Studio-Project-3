@@ -136,12 +136,15 @@ void AI::End()
 void AI::OnEnable()
 {
 	coll->OnCollideStay.Subscribe(&AI::HandleColl, this, "coll");
+	trigger->OnCollideEnter.Subscribe(&AI::HandleColl, this, "tcoll");
 }
 
 void AI::OnDisable()
 {
 	if (coll)
 		coll->OnCollideStay.UnSubscribe("coll");
+	if (trigger)
+		trigger->OnCollideEnter.UnSubscribe("tcoll");
 }
 
 void AI::SetPlayerTrans(Vector3 trans)
@@ -167,20 +170,6 @@ void AI::SetDamageDealt(float damage)
 float AI::GetDamageDealt()
 {
 	return damage;
-}
-
-void AI::ChangeStrategy(Strategy* newStrategy, bool remove)
-{
-	if (remove)
-	{
-		if (strategy != NULL)
-		{
-			delete strategy;
-			strategy = NULL;
-		}
-	}
-
-	strategy = newStrategy;
 }
 
 bool AI::IsDead()
@@ -304,5 +293,17 @@ void AI::HandleColl(ColInfo info)
 
 			IfHealthZero();
 		}
+	}
+
+	if (info.other->GetGameObj()->GetScript<PlayerController>() )
+	{
+		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
+		if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
+		{
+			ai->bounceTime = (ai->m_lifetime * 1.25f);
+			trigger->isTrigger = true;
+		}
+		else
+			trigger->isTrigger = false;
 	}
 }

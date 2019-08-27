@@ -46,14 +46,14 @@ void SKiwi::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double d
 	switch (currentState)
 	{
 	case ATTACK:
-		kb->ApplyForce((dest - enemyPos));
+		kb->ApplyForce((dest - enemyPos).Normalized());
 		break;
 	case WAIT:
 		kb->ResetVel(1, 0);
 		atkIn = 0.f;
 		break;
 	case REPEL:
-		kb->ApplyForce(-(dest - enemyPos));
+		kb->ApplyForce(-(dest - enemyPos).Normalized());
 		break;
 	default: //IDLE
 		kb->ResetVel(1, 0);
@@ -74,7 +74,7 @@ void SKiwi::Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, double 
 	{
 		if (p)
 		{
-			p->Discharge(enemyPos, direction * 10);
+			p->Discharge(enemyPos, direction.Normalized() * 10);
 			p->GetGameObj()->ActiveSelf(true);
 		}
 		inteval = 0.f;

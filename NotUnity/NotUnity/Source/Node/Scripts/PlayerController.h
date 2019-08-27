@@ -79,7 +79,6 @@ private:
     int speedincrease;
 
 	bool walking;
-	
 
 	void TryChangeState(P_STATE state);
 	void ChangeState();

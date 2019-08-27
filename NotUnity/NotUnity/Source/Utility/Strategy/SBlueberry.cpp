@@ -20,20 +20,24 @@ void SBlueberry::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, dou
 {
 	shouldAttack = true;
 
-	if ((dest - enemyPos).LengthSquared() < 0.05f)
+	if ((dest - enemyPos).LengthSquared() < 4.f && (dest - enemyPos).LengthSquared() > 0.5f) //0.4f
 		currentState = ATTACK;
+	else if ((dest - enemyPos).LengthSquared() <= 0.5f)
+		currentState = ATTACH;
 	else
 		currentState = TRAVEL;
 
 	switch (currentState)
 	{
 	case ATTACK:
+		kb->ApplyForce((dest - enemyPos).Normalized() * 0.2f);
+		break;
+	case ATTACH:
 		enemyPos = dest;
+		kb->ResetVel(1, 0);
 		break;
-	case TRAVEL:
-		kb->ApplyForce((dest - enemyPos));
-		break;
-	default: //IDLE
+	default: //TRAVEL
+		kb->ApplyForce((dest - enemyPos).Normalized());
 		break;
 	}
 }
@@ -51,7 +55,7 @@ void SBlueberry::Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, do
 	{
 		if (p)
 		{
-			p->Discharge(enemyPos, direction * 10);
+			p->Discharge(enemyPos, direction.Normalized() * 10);
 			p->GetGameObj()->ActiveSelf(true);
 		}
 		inteval = 0.f;

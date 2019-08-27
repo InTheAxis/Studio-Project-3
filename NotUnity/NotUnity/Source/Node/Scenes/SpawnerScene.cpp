@@ -8,7 +8,6 @@
 
 SpawnerScene::SpawnerScene(std::string name) 
 	: Scene(name)
-	, currentWave(0)
 	, fromPlayer(0.f, 0.f, 0.f)
 	, SpawnerGO(nullptr)
 {
@@ -31,7 +30,6 @@ void SpawnerScene::Update(double dt)
 {
 	SpawnerGO->GetTransform()->translate.Set(fromPlayer.x, 0);
 	SpawnerGO->GetScript<Spawner>()->SetPlayerTrans(fromPlayer);
-	SpawnerGO->GetScript<Spawner>()->SetSpawnerWave(currentWave);
 	Scene::Update(dt);
 }
 
@@ -64,7 +62,13 @@ void SpawnerScene::Render()
 
 void SpawnerScene::SetWave(int wave)
 {
-	currentWave = wave;
+	SpawnerGO->GetScript<Spawner>()->SetSpawnerWave(wave);
+	SpawnerGO->GetScript<Spawner>()->SetStrategy(wave);
+}
+
+int SpawnerScene::GetWave()
+{
+	return SpawnerGO->GetScript<Spawner>()->GetSpawnerWave();
 }
 
 void SpawnerScene::PlayerTrans(Vector3 trans)
@@ -84,7 +88,6 @@ void SpawnerScene::Reset()
 
 int SpawnerScene::GetEnemyKilled()
 {
-
 	return SpawnerGO->GetScript<Spawner>()->GetEnemiesKilled();
 }
 
@@ -98,8 +101,12 @@ bool SpawnerScene::GetBossKilled()
 	return SpawnerGO->GetScript<Spawner>()->GetBossKilled();
 }
 
-void SpawnerScene::NewWave(int wave)
+void SpawnerScene::NewWave()
 {
 	SpawnerGO->GetScript<Spawner>()->NewWave();
-	SpawnerGO->GetScript<Spawner>()->SetStrategy(wave);
+}
+
+void SpawnerScene::SetStartGame(bool start)
+{
+	SpawnerGO->GetScript<Spawner>()->SetStartGame(start);
 }

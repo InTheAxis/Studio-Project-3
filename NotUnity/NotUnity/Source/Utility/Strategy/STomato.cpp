@@ -27,7 +27,7 @@ void STomato::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double
 	switch(currentState)
 	{
 	case ATTACK:
-		kb->ApplyForce((dest - enemyPos));
+		kb->ApplyForce((dest - enemyPos).Normalized());
 		break;
 	default: //IDLE
 		kb->ResetVel(1, 0);
@@ -48,7 +48,7 @@ void STomato::Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, doubl
 	{
 		if (p)
 		{
-			p->Discharge(enemyPos, direction * 10);
+			p->Discharge(enemyPos, direction.Normalized() * 10);
 			p->GetGameObj()->ActiveSelf(true);
 		}
 		inteval = 0;

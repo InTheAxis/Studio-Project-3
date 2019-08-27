@@ -8,11 +8,10 @@ Spawner::Spawner(std::string name)
 	: Node(name)
 	, enemyCount(0)
 	, interval(1.f)
-	, EnemyNames("")
 	, playerTrans(0.f, 0.f, 0.f)
-	, enemyLeft(0)
 	, waveCount(0)
 	, wave(0)
+	, startGame(false)
 {
 }
 
@@ -24,38 +23,36 @@ void Spawner::Start()
 {
 	CreateEnemies("e1");
 	CreateBoss("boss");
-	SetStrategy(1);
 	Node::Start();
 }
 
 void Spawner::Update(double dt)
 {
-	UpdateColorSpots();
-
-	if (!wave) //== 0
+	if (!startGame)
 		return;
+
+	UpdateColorSpots();
 	
 	if (IsWaveDone())
 		return;
 
-	GetEnemyCount("e1");
+	GetEnemyCount();
 
-	if (enemyCount < 10)
+	if (enemyCount < 1)
 		interval += 1.f * static_cast<float>(dt);
 	else
 		interval = 0;
 
 	if (interval >= 3.f)
 	{
-		SpawnEnemy("e1");
+		SpawnEnemy();
 		interval = 0;
 	}
 
-	UpdatePlayerPosToAI("e1");
+	UpdatePlayerPosToAI(); //Will update Boss too
 
-	if (GetEnemiesKilled() >= 3 && !GetBossKilled())
-		SpawnBoss("boss");
-
+	if (GetEnemiesKilled() >= 20) //&& !GetBossKilled()
+		SpawnBoss();
 	Node::Update(dt);
 }
 
@@ -64,9 +61,9 @@ void Spawner::End()
 	Node::End();
 }
 
-void Spawner::SetSpawnerWave(int waved)
+void Spawner::SetSpawnerWave(int wave)
 {
-	wave = waved;
+	this->wave = wave;
 }
 
 int Spawner::GetSpawnerWave()
@@ -115,7 +112,6 @@ void Spawner::Reset()
 		enemyPool[i]->ActiveSelf(false);
 		enemyPool[i]->GetScript<AI>()->Reset();
 	}
-	SetStrategy(1);
 	boss->ActiveSelf(false);
 	boss->GetScript<AI>()->Reset();
 	waveCount = enemyCount = 0;	
@@ -127,11 +123,9 @@ void Spawner::NewWave()
 	{
 		enemyPool[i]->ActiveSelf(false);
 		enemyPool[i]->GetScript<AI>()->Reset();
-		enemyPool[i]->GetScript<AI>()->SetStrategy(strategy);
 	}
 	boss->ActiveSelf(false);
 	boss->GetScript<AI>()->Reset();
-	boss->GetScript<AI>()->SetStrategy(strategy);
 	enemyCount = 0;
 }
 
@@ -139,16 +133,31 @@ void Spawner::SetStrategy(int wave)
 {
 	if (strategy == NULL || strategy != NULL)
 	{
-		if (wave == 0 || wave == 1)
+		if (wave == 1)
+		{
 			strategy = &sTomato;
+			ChangeStrategy(&sTomato, false);
+		}
 		else if (wave == 2)
+		{
 			strategy = &sCarrot;
+			ChangeStrategy(&sCarrot, false);
+		}
 		else if (wave == 3)
+		{
 			strategy = &sBanana;
+			ChangeStrategy(&sBanana, false);
+		}
 		else if (wave == 4)
+		{
 			strategy = &sKiwi;
+			ChangeStrategy(&sKiwi, false);
+		}
 		else if (wave == 5)
+		{
 			strategy = &sBlueberry;
+			ChangeStrategy(&sBlueberry, false);
+		}
 	}
 }
 
@@ -163,7 +172,7 @@ void Spawner::CreateEnemies(std::string waveOne)
 	}
 }
 
-void Spawner::SpawnEnemy(std::string waveOne)
+void Spawner::SpawnEnemy()
 {
 	Vector3 spawnerPos = gameObject->GetTransform()->translate;
 	Vector3 offset;
@@ -186,12 +195,13 @@ void Spawner::SpawnEnemy(std::string waveOne)
 	}
 }
 
-void Spawner::GetEnemyCount(std::string waveOne)
+void Spawner::GetEnemyCount()
 {
 	enemyCount = 0;
 	for (int i = 0; i < poolCount; ++i)
 	{
-		if (gameObject->GetChild<GameObj>(waveOne + std::to_string(i))->IsActive())
+		//if (gameObject->GetChild<GameObj>(waveOne + std::to_string(i))->IsActive())
+		if (enemyPool[i]->IsActive())
 			++enemyCount;
 	}
 }
@@ -203,7 +213,7 @@ void Spawner::UpdateColorSpots()
 	boss->GetScript<AI>()->GetColorSpot()->SetUniform(poolCount + 1);
 }
 
-void Spawner::UpdatePlayerPosToAI(std::string names)
+void Spawner::UpdatePlayerPosToAI()
 {
 	for (int i = 0; i < poolCount; ++i)
 		if (enemyPool[i]->IsActive())
@@ -227,11 +237,11 @@ void Spawner::CreateBoss(std::string bosStage)
 {
 	boss = gameObject->AddChild<GameObj>(bosStage);
 	boss->ActiveSelf(false);
-	boss->AddScript<AI>()->SetHealth(3);	
+	boss->AddScript<AI>()->SetHealth(6);
 	boss->GetTransform()->scale.Set(2.f, 2.f, 2.f);
 }
 
-void Spawner::SpawnBoss(std::string bosStage)
+void Spawner::SpawnBoss()
 {
 	Vector3 spawnerPos = gameObject->GetTransform()->translate;
 	Vector3 offset;
@@ -248,4 +258,22 @@ void Spawner::SpawnBoss(std::string bosStage)
 	boss->GetScript<AI>()->SetStrategy(strategy);
 	boss->GetScript<AI>()->Reset();
 	boss->GetTransform()->translate = spawnerPos + offset;
+}
+
+void Spawner::ChangeStrategy(Strategy* newStrategy, bool remove)
+{
+	if (remove)
+	{
+		if (strategy != NULL)
+		{
+			delete strategy;
+			strategy = NULL;
+		}
+	}
+	strategy = newStrategy;
+}
+
+void Spawner::SetStartGame(bool start)
+{
+	startGame = start;
 }
