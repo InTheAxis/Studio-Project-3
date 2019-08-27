@@ -120,6 +120,10 @@ void AI::Update(double dt)
 			gameObject->ActiveSelf(false);
 	}
 
+	ControllerKeyboard* kb = ControllerKeyboard::Instance();
+	if (kb->IsKeyDown('K'))
+		health = -1;
+
 	sat = Math::Max(0.f,  health / 3.f);
 	colorSpot->radius = t->scale.x * 2 * (health / 3.f);
 
