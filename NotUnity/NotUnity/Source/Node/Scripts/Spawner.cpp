@@ -96,7 +96,7 @@ int Spawner::GetEnemiesKilled()
 		if (enemyPool[i]->GetScript<AI>()->IsDead())
 			++c;
 	}
-	MgrAchievements::Instance()->SetCurrentEnemyKilled(c);
+	MgrAchievements::Instance()->SetEnemyKilled(c);
 	return c;
 }
 

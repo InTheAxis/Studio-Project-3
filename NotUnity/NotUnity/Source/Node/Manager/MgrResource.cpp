@@ -24,7 +24,7 @@ void MgrResource::Start()
 }
 
 void MgrResource::Update(double dt)
-{	
+{
 	Node::Update(dt);
 }
 
@@ -40,8 +40,8 @@ void MgrResource::LoadMeshes()
 
 	MeshBuilder::GenerateAxes("axes", 10, 10, 10);
 	MeshBuilder::GeneratePlane("text", 16, 16);
-	MeshBuilder::GenerateQuad("quad");	
-	MeshBuilder::GeneratePlane("plane", 1, 8);	
+	MeshBuilder::GenerateQuad("quad");
+	MeshBuilder::GeneratePlane("plane", 1, 8);
 }
 
 void MgrResource::LoadMaterials()
@@ -104,15 +104,17 @@ void MgrResource::LoadMaterials()
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/enemy/tomato.tga");
 
 	temp = new Material("redbar");
-	temp-> maps[Material::COLOR0] = Resource::LoadTGA("tga/ui/redbar.tga");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/ui/redbar.tga");
 
 	temp = new Material("greenbar");
-	temp-> maps[Material::COLOR0] = Resource::LoadTGA("tga/ui/greenbar.tga");
-}
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/ui/greenbar.tga");
 
+	temp = new Material("achievements");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/ui/achievements.tga");
+}
 
 void MgrResource::LoadSounds()
 {
-	MgrSound* mgS = MgrSound::Instance();	
-	mgS->RegisterSound("bgm", "wav/foggy-forest.wav");	
+	MgrSound* mgS = MgrSound::Instance();
+	mgS->RegisterSound("bgm", "wav/foggy-forest.wav");
 }

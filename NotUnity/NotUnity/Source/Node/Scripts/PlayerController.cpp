@@ -90,7 +90,7 @@ void PlayerController::Start()
 	colorSpot = AddChild<ColorSpot>();
 	colorSpot->SetGameObj(gameObject);
 
-	maxHealth = 20;
+	maxHealth = 20 + MgrAchievements::Instance()->GetBonusHealth();
 	moveSpeed.Set(10, 80, 0);
 	addHealth = false;
 	ActiveSelf(true);
@@ -128,19 +128,19 @@ void PlayerController::Update(double dt)
 	}
 	if (walking)
 	{
-		MgrAchievements::Instance()->GetWalkTime(0.1);
+		MgrAchievements::Instance()->SetWalkTime(0.1f);
 	}
 
 	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
 	{
-		MgrAchievements::Instance()->GetJumpTimes(1);
+		MgrAchievements::Instance()->SetJumpTimes(1);
 		jumpTimer += dt;
 	}
 	else
 		jumpTimer = 0;
 	if ((m->IsButtonPressed(0) || kb->IsKeyPressed('Z')) && !attackTimer)
 	{
-		MgrAchievements::Instance()->GetAttacTimes(1);
+		MgrAchievements::Instance()->SetAttackTimes(1);
 		attackTimer = 0.3f;
 	}
 	if (kb->IsKeyPressed('Q')) // TO BE PUT IN ENEMYSIDE TO DETECT IF ENEMY IS DEAD 
@@ -175,14 +175,6 @@ void PlayerController::Update(double dt)
 
 	//apply attacks
 	Attack(dt);
-	
-	if (MgrAchievements::Instance()->enemyAch() && addHealth == false)
-	{
-		SetHealth(30);
-		addHealth = true;
-	}
-	else
-		addHealth = true;
 
 	/*Debug::Log(health);*/
 	
@@ -312,7 +304,7 @@ void PlayerController::Fall()
 	{		
 		gameObject->GetTransform()->translate.y = GetTerrainHeight();
 		kinb->useGravity = false;
-		kinb->ResetVel(0, 1);
+		kinb->ResetVel(0, 1); 
 	}
 }
 
@@ -401,9 +393,11 @@ void PlayerController::TakeDamage(int dmg)
 }
 int PlayerController::DamageDealt()
 {
-	if (MgrAchievements::Instance()->attackAch(true))
-		damage = 2;
-	return damage;
+	if (MgrAchievements::Instance()->GetAttackLevel1())
+		return damage = 2;
+	else if (MgrAchievements::Instance()->GetAttackLevel2())
+		return damage = 4;
+	return damage = 1;
 }
 
 PlayerController* PlayerController::SetColorSpotRad(float radius)
