@@ -9,22 +9,10 @@
 
 #include <vector>
 
-enum class BIOME_TYPE
-{
-	DESERT,
-	SNOW,
-	GRASS,
-	TOTAL_BIOME
-};
-
-enum class SPLINE_TYPE
-{
-	XYLINE,
-	MOUNTAIN,
-	TOTAL_TYPE
-};
-
+class GameObj;
 class Sprite;
+class Biome;
+enum class INTER;
 class Spline;
 class Chunk : public Node, public TypeID<Chunk>, public Component
 {
@@ -33,37 +21,22 @@ public:
 	~Chunk();
 
 	void OnEnable();
-
 	void OnDisable();
 
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void End();
 
-	void AssignBiome();
-	void AssignBiome(int i);
-	Chunk* PopulateSplineList();
+	Chunk* ChangeBiome();
 
-	void SetSpline(Spline* spline);
-	Chunk* SetSplineOffset(float offset);
 	Spline* GetSpline();
-	Sprite* GetSprite();
-private:
-	Spline* spline;
+	Sprite* GetSprite();	
+private:	
+	//refs
 	Sprite* sprite;
 
-	std::vector<GameObj*> GOList;
-	std::vector<Spline*> SplineList;
-
-	Vector3 HSV;
-
-	int currAnimIdx;
-
-	BIOME_TYPE currentBiome;
-
-	float splineOffsetX;
-	void GenerateMap(SPLINE_TYPE ST);
-	void UpdateMap(SPLINE_TYPE ST);
+	//biome presets;
+	Biome* biome;
 };
 
 #endif

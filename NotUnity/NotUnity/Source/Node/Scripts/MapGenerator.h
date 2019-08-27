@@ -11,9 +11,8 @@
 #include "../Components/Chunk.h"
 #include "../Components/Camera.h"
 #include "../Components.h"
-class Spline;
-class GameObj;
 
+class GameObj;
 class MapGenerator : public Node, public TypeID<MapGenerator>,public Component
 {
 public:
@@ -31,16 +30,14 @@ public:
 	GameObj* GetChunkGO(int idx);
 	GameObj* GetSky();
 private:
+	GameObj* chunkGO[mapSize];
+	GameObj* sky;
 	Camera* camera;
+
 	int offsetBuffer; //displacement > offsetBuffer to spawn the new blocks
 	int offsetX; // increase over time when chunk gets pop and push to the back
 	int scaleX; //scale of the chunk		
 	int chunkLeft, chunkRight; //leftmost and rightmost chunk
-
-	Spline* spline;
-
-	GameObj* chunkGO[mapSize];
-	GameObj* sky;
 
 	void UpdateChunkNum(int incrementAmt);
 	void MoveChunk(int chunkIdx, float xPos);

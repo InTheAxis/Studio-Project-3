@@ -1,11 +1,10 @@
 #include "MapGenerator.h"
-#include "../Manager/MgrGameObj.h"
-#include "../../Node/GameObj.h"
-#include "../../Utility/Input/ControllerKeyboard.h"
-#include "../../Utility/Math/Splines/Mountain.h"
-#include "../GameObj.h"
-#include "../Components/Sprite.h"
 #include "../../Application.h"
+#include "../GameObj.h"
+#include "../../Node/GameObj.h"
+#include "../Manager/MgrGameObj.h"
+#include "../Components/Sprite.h"
+#include "../../Utility/Input/ControllerKeyboard.h"
 
 MapGenerator::MapGenerator(std::string name) :
 	Node(name),
@@ -19,11 +18,6 @@ MapGenerator::MapGenerator(std::string name) :
 
 MapGenerator::~MapGenerator()
 {
-	if (spline != nullptr)
-	{
-		delete spline;
-		spline = nullptr;
-	}
 }
 
 void MapGenerator::Start()
@@ -32,7 +26,7 @@ void MapGenerator::Start()
 	for (int i = 0; i < mapSize; ++i)
 	{
 		chunkGO[i] = AddChild<GameObj>("Chunk" + std::to_string(i));
-		chunkGO[i]->AddComp<Chunk>()->PopulateSplineList()->SetSplineOffset(i * -scaleX);
+		chunkGO[i]->AddComp<Chunk>();
 		chunkGO[i]->GetTransform()->translate.Set(i * scaleX, 0, -1);
 		chunkGO[i]->GetTransform()->scale.Set(scaleX, scaleX, 1);
 	}
@@ -45,7 +39,13 @@ void MapGenerator::Start()
 		->SetToScroll(Vector2(0.1f, 0));
 	sky->GetTransform()->translate = camera->GetParent()->GetChild<Transform>()->translate;
 	sky->GetTransform()->scale.Set(15, 15, 1);	
+	
 	Node::Start();
+
+	for (int i = 0; i < mapSize; ++i)
+	{
+		chunkGO[i]->GetComp<Chunk>()->GetSpline()->SetOffset((-i * scaleX));
+	}
 }
 
 void MapGenerator::Update(double dt)
@@ -111,7 +111,7 @@ void MapGenerator::UpdateChunkNum(int incrementAmt)
 void MapGenerator::MoveChunk(int chunkIdx, float xPos)
 {	
 	chunkGO[chunkIdx]->GetTransform()->translate.Set(xPos, 0, -1);
-	chunkGO[chunkIdx]->GetComp<Chunk>()->GetSpline()->SetOffset((-scaleX * offsetX));	
+	chunkGO[chunkIdx]->GetComp<Chunk>()->ChangeBiome()->GetSpline()->SetOffset((-xPos));
 	CullChunk();	
 }
 

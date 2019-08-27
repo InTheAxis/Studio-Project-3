@@ -58,6 +58,9 @@
     <ClCompile Include="Source\Node\Scripts\Projectile.cpp" />
     <ClCompile Include="Source\Node\Scripts\Skill.cpp" />
     <ClCompile Include="Source\Node\Scripts\Spawner.cpp" />
+    <ClCompile Include="Source\Utility\Biomes\BiomeBase.cpp" />
+    <ClCompile Include="Source\Utility\Biomes\BiomePicker.cpp" />
+    <ClCompile Include="Source\Utility\Biomes\Biomes.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO\DepthFBO.cpp" />
     <ClCompile Include="Source\Utility\Graphics\FBO\FloatFBO.cpp" />
@@ -120,6 +123,9 @@
     <ClInclude Include="Source\Node\Scripts\Projectile.h" />
     <ClInclude Include="Source\Node\Scripts\Skill.h" />
     <ClInclude Include="Source\Node\Scripts\Spawner.h" />
+    <ClInclude Include="Source\Utility\Biomes\BiomeBase.h" />
+    <ClInclude Include="Source\Utility\Biomes\BiomePicker.h" />
+    <ClInclude Include="Source\Utility\Biomes\Biomes.h" />
     <ClInclude Include="Source\Utility\Component.h" />
     <ClInclude Include="Source\Utility\Delegate.h" />
     <ClInclude Include="Source\Utility\Graphics\Animation.h" />

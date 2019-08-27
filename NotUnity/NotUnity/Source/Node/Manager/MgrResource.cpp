@@ -75,15 +75,9 @@ void MgrResource::LoadMaterials()
 	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/player/sword_air_attack.tga");
 
 	temp = new Material("background");
-	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/env/bg_snow.tga");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/env/bg_mt.tga");
 	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/env/bg_snow.tga");
-	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/env/bg_snow.tga");
-	temp->maps[Material::COLOR3] = Resource::LoadTGA("tga/env/bg_mt.tga");
-	temp->maps[Material::COLOR4] = Resource::LoadTGA("tga/env/bg_mt.tga");
-	temp->maps[Material::COLOR5] = Resource::LoadTGA("tga/env/bg_mt.tga");
-	temp->maps[Material::COLOR6] = Resource::LoadTGA("tga/env/bg_des.tga");
-	temp->maps[Material::COLOR7] = Resource::LoadTGA("tga/env/bg_des.tga");
-	temp->maps[Material::COLOR8] = Resource::LoadTGA("tga/env/bg_des.tga");
+	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/env/bg_des.tga");
 
 	temp = new Material("sky");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/env/sky.tga");
