@@ -10,7 +10,8 @@
 MapGenerator::MapGenerator(std::string name) :
 	Node(name),
 	offsetBuffer(0),
-	chunkNumber(0),
+	chunkLeft(0),
+	chunkRight(mapSize - 1),
 	offsetX(0),
 	scaleX(15)	
 {
@@ -55,17 +56,17 @@ void MapGenerator::Update(double dt)
 		sky->GetTransform()->translate.z = -10;		
 		sky->GetTransform()->translate.y = 2;		
 
-		float displacement = GetDisplacement(chunkNumber);
-		if (displacement < offsetBuffer)
+		if (GetDisplacement(chunkLeft) > offsetBuffer)
 		{
+			MoveChunk(chunkLeft, (mapSize + offsetX) * scaleX);
+			UpdateChunkNum(1);				
+		}			
+		if (GetDisplacement(chunkRight) > offsetBuffer + scaleX)
+		{
+			MoveChunk(chunkRight, (offsetX) * scaleX);
 			UpdateChunkNum(-1);			
-			MoveChunk(chunkNumber, scaleX * offsetX);
 		}
-		else if (displacement > offsetBuffer)
-		{
-			MoveChunk(chunkNumber, (mapSize + offsetX) * scaleX);
-			UpdateChunkNum(1);			
-		}
+		Debug::Log(std::to_string(chunkLeft) + " " + std::to_string(chunkRight));
 	}
 
 	Node::Update(dt);
@@ -102,15 +103,16 @@ GameObj * MapGenerator::GetSky()
 
 void MapGenerator::UpdateChunkNum(int incrementAmt)
 {
-	chunkNumber = Math::Wrap(chunkNumber + incrementAmt, 0, mapSize - 1);
-	offsetX += incrementAmt;
+	chunkLeft = Math::Wrap(chunkLeft + incrementAmt, 0, mapSize - 1);
+	chunkRight = Math::Wrap(chunkRight + incrementAmt, 0, mapSize - 1);	
+	offsetX += incrementAmt;	
 }
 
 void MapGenerator::MoveChunk(int chunkIdx, float xPos)
 {	
 	chunkGO[chunkIdx]->GetTransform()->translate.Set(xPos, 0, -1);
-	chunkGO[chunkIdx]->GetComp<Chunk>()->GetSpline()->SetOffset((-scaleX * offsetX));
-	CullChunk();
+	chunkGO[chunkIdx]->GetComp<Chunk>()->GetSpline()->SetOffset((-scaleX * offsetX));	
+	CullChunk();	
 }
 
 float MapGenerator::GetDisplacement(int chunkIdx)

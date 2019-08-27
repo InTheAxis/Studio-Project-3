@@ -31,11 +31,10 @@ public:
 	GameObj* GetSky();
 private:
 	Camera* camera;
-	int offsetBuffer; // displacement > offsetBuffer to spawn the new blocks
-	int offsetX; // increase overtime when chunk gets pop and push to the back
-	int scaleX;	
-	bool cull;
-	int chunkNumber;
+	int offsetBuffer; //displacement > offsetBuffer to spawn the new blocks
+	int offsetX; // increase over time when chunk gets pop and push to the back
+	int scaleX; //scale of the chunk		
+	int chunkLeft, chunkRight; //leftmost and rightmost chunk
 
 	Spline* spline;
 
