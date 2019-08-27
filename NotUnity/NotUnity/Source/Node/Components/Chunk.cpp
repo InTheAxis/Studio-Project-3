@@ -46,7 +46,7 @@ void Chunk::Start()
 }
 
 void Chunk::Update(double dt)
-{		
+{	
 	Node::Update(dt);
 }
 
@@ -60,7 +60,7 @@ Chunk * Chunk::ChangeBiome()
 	if (biome)
 		delete biome;	
 	biome = BiomePicker::Pick();
-	sprite->SwitchAnimation(biome->GetSpriteIdx())->PlayAnimation();		
+	sprite->SwitchAnimation(biome->GetSpriteIdx())->PlayAnimation();	
 	return this;
 }
 

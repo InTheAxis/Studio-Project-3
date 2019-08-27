@@ -43,30 +43,28 @@ void MapGenerator::Start()
 	Node::Start();
 
 	for (int i = 0; i < mapSize; ++i)
-	{
 		chunkGO[i]->GetComp<Chunk>()->GetSpline()->SetOffset((-i * scaleX));
-	}
 }
 
 void MapGenerator::Update(double dt)
-{
+{	
 	if (camera)
 	{
 		sky->GetTransform()->translate.x = camera->GetParent()->GetChild<Transform>()->translate.x;		
 		sky->GetTransform()->translate.z = -10;		
 		sky->GetTransform()->translate.y = 2;		
 
-		if (GetDisplacement(chunkLeft) > offsetBuffer)
+		if (GetDisplacement(chunkLeft) > offsetBuffer + scaleX)
 		{
 			MoveChunk(chunkLeft, (mapSize + offsetX) * scaleX);
 			UpdateChunkNum(1);				
 		}			
-		if (GetDisplacement(chunkRight) > offsetBuffer + scaleX)
+		if (GetDisplacement(chunkRight) > offsetBuffer)
 		{
-			MoveChunk(chunkRight, (offsetX) * scaleX);
+			MoveChunk(chunkRight, (offsetX - 1) * scaleX);
 			UpdateChunkNum(-1);			
 		}
-		Debug::Log(std::to_string(chunkLeft) + " " + std::to_string(chunkRight));
+		//Debug::Log(std::to_string(chunkLeft) + " " + std::to_string(chunkRight));
 	}
 
 	Node::Update(dt);
