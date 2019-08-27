@@ -17,6 +17,8 @@
 #include "../../Utility/Strategy/SBanana.h"
 #include "../../Utility/Strategy/SKiwi.h"
 #include "../../Utility/Strategy/SBlueberry.h"
+#include "../Components/Text.h"
+#include <sstream>
 
 class Spawner : public Node, public TypeID<Spawner>, public Component
 {
@@ -50,9 +52,10 @@ private:
 
 	int wave;
 	Vector3 playerTrans;
+	std::string eNames;
 	
-	const int poolCount = 20;
-	GameObj* enemyPool[20];
+	const int poolCount = 6;
+	GameObj* enemyPool[6];
 	GameObj* boss;
 
 	//Init Enemies for different waves
@@ -76,6 +79,8 @@ private:
 	SKiwi sKiwi;
 	SBlueberry sBlueberry;
 
+	std::stringstream ss;
+	Text* waveNum;
 };
 
 #endif

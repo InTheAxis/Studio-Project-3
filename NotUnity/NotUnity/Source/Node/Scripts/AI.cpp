@@ -23,6 +23,7 @@ AI::AI(std::string name)
 	, bounceTimeTwo(0)
 	, wave(0)
 	, armour(0.f)
+	, eNames("")
 {
 }
 
@@ -38,8 +39,9 @@ void AI::Start()
 		->SwitchAnimation(0)
 		->PlayAnimation()
 		->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))
-		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy"))
-		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX);
+		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial(eNames))
+		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX)
+		->ToggleCullFace(false);
 
 	kineB = AddChild<KinematicBody>();
 	kineB->SetGameObj(gameObject);
@@ -92,6 +94,14 @@ void AI::Update(double dt)
 			strategy->Boss(false);
 	}
 
+	sprite->SetAnimation(0, 8, 0.5f, 1)
+		->SwitchAnimation(0)
+		->PlayAnimation()
+		->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))
+		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial(eNames))
+		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX)
+		->ToggleCullFace(false);
+
 	if (!dead)
 	{
 		direction = (playerTrans - t->translate);
@@ -125,7 +135,8 @@ void AI::Update(double dt)
 
 	sat = Math::Max(0.f,  health / 3.f);
 	colorSpot->radius = t->scale.x * 2 * (health / 3.f);
-
+	if (t->scale.x * direction.x < 0)
+		t->scale.x = -t->scale.x;
 	sprite->SetHSV(-1, sat, -1);
 
 	Node::Update(dt);
@@ -259,6 +270,18 @@ void AI::ResetColorSpots()
 void AI::SetDead(bool dead)
 {
 	this->dead = dead;
+}
+
+void AI::SetName(std::string eNames)
+{
+	this->eNames = eNames;
+}
+
+void AI::SetAnimation(int num)
+{
+	//sprite->SetAnimation(0, 8, 0.5f, 1)
+	//	->SwitchAnimation(num)
+	//	->PlayAnimation();
 }
 
 float AI::GetWorldHeight()

@@ -184,13 +184,13 @@ void MainScene::Update(double dt)
 		spawner->SetStartGame(true);
 		if (spawner->GetSpawnerWave() < 5)
 		{
-			if (spawner->GetEnemyKilled() >= 20 && spawner->GetBossKilled())
+			if (spawner->GetEnemyKilled() >= 6 && spawner->GetBossKilled())
 			{
 				spawner->SetWave(spawner->GetSpawnerWave() + 1);
 				spawner->Reset();
 			}
 		}
-		else if (spawner->GetSpawnerWave() >= 5 && spawner->GetEnemyKilled() >= 3 && spawner->GetBossKilled())
+		else if (spawner->GetSpawnerWave() >= 5 && spawner->GetEnemyKilled() >= 6 && spawner->GetBossKilled())
 			ChangeGameState(WIN);
 		if (playerGO->GetScript<PlayerController>()->IsDead())
 			ChangeGameState(LOSE);
