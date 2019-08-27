@@ -23,6 +23,7 @@ public:
 	{
 		ATTACK,
 		TRAVEL,
+		ATTACH,
 		IDLE,
 	};
 

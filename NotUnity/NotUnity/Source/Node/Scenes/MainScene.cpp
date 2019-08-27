@@ -100,7 +100,8 @@ void MainScene::Start()
 	Scene::Start();	
 
 	//init variables
-	spawner->SetWave(0);
+	spawner->SetWave(1);
+	spawner->SetStartGame(false);
 	playerGO = player->GetPlayer();
 	player->SetCameraRef(mainCam->GetComp<Camera>());
 	
@@ -142,12 +143,17 @@ void MainScene::Update(double dt)
 		greenbar->GetGameObj()->GetTransform()->scale.Set(player->GetHealth() * 0.125f, 1, 0);
 		redbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-6.2f , 4.0f, 0);
 		redbar->GetGameObj()->GetTransform()->scale.Set(2.4f, 1, 0);
-		if (spawner->GetEnemyKilled() >= 3 && spawner->GetBossKilled())
+
+		spawner->SetStartGame(true);
+		if (spawner->GetSpawnerWave() < 5)
 		{
-			spawner->SetWave(spawner->GetSpawnerWave() + 1);
-			spawner->NewWave(spawner->GetSpawnerWave() + 1);
+			if (spawner->GetEnemyKilled() >= 20 && spawner->GetBossKilled())
+			{
+				spawner->SetWave(spawner->GetSpawnerWave() + 1);
+				spawner->Reset();
+			}
 		}
-		else if (spawner->GetSpawnerWave() >= 6)
+		else if (spawner->GetSpawnerWave() >= 5 && spawner->GetEnemyKilled() >= 3 && spawner->GetBossKilled())
 			ChangeGameState(WIN);
 		else if (playerGO->GetScript<PlayerController>()->IsDead())
 			ChangeGameState(LOSE);
@@ -161,7 +167,6 @@ void MainScene::Update(double dt)
 			ChangeGameState(MENU);
 		break;
 	}
-
 
 	pauseMenu->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(0, 0, 0.1f);
 	pauseMenu->ActiveSelf(pause);

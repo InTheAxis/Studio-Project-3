@@ -203,7 +203,6 @@ void PlayerController::Update(double dt)
 	else
 		swordT->translate.z += 0.1f;
 
-
 	// achievemets
 	// kinb->maxVel.Set(Achievements::Instance()->maxValX, Achievements::Instance()->maxValY, 0);	
 
@@ -471,5 +470,8 @@ void PlayerController::PrintState()
 void PlayerController::HandleCollision(ColInfo info)
 {
 	if (info.other->tag == "bulletplayer")
+		TakeDamage(1);
+
+	if (info.other->tag == "enemyA" && info.other->isTrigger)
 		TakeDamage(1);
 }

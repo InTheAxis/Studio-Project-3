@@ -39,17 +39,16 @@ public:
 	void Reset();
 	void NewWave();
 	void SetStrategy(int wave);
+	void SetStartGame(bool start);
 
 private:
 	int enemyCount;
 	int waveCount;
 	float interval;
+	bool startGame;
 
 	int wave;
-	std::string EnemyNames; 
 	Vector3 playerTrans;
-
-	int enemyLeft;
 	
 	const int poolCount = 20;
 	GameObj* enemyPool[20];
@@ -57,16 +56,17 @@ private:
 
 	//Init Enemies for different waves
 	void CreateEnemies(std::string waveOne);
-	void SpawnEnemy(std::string waveOne);
-	void GetEnemyCount(std::string waveOne);
+	void SpawnEnemy();
+	void GetEnemyCount();
 
 	void UpdateColorSpots();
-	void UpdatePlayerPosToAI(std::string names);
+	void UpdatePlayerPosToAI();
 	void SetEnemyCount(int enemyCount);
 
 	bool IsWaveDone();
 	void CreateBoss(std::string bosStage);
-	void SpawnBoss(std::string bosStage);
+	void SpawnBoss();
+	void ChangeStrategy(Strategy* newStrategy, bool remove = true);
 
 	Strategy* strategy;
 	STomato sTomato;
