@@ -236,6 +236,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 	case MENU:
 		title->ActiveSelf(false);
 		wasd->ActiveSelf(false);
+		spawner->Reset();
 		break;
 	case TUTO:
 		lmb->ActiveSelf(false);
@@ -244,7 +245,8 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		greenbar->ActiveSelf(false);
 		greenbar->ActiveSelf(false);
 		redbar->ActiveSelf(false);
-		spawner->SetWave(0);
+		spawner->SetWave(1);
+		spawner->Reset();
 		break;
 	case LOSE:
 		break;

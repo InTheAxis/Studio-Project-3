@@ -13,7 +13,7 @@ Spawner::Spawner(std::string name)
 	, waveCount(0)
 	, wave(0)
 	, startGame(false)
-	, eNames("")
+	, enemyType(0)
 {
 }
 
@@ -141,31 +141,31 @@ void Spawner::SetStrategy(int wave)
 		{
 			strategy = &sTomato;
 			ChangeStrategy(&sTomato, false);
-			eNames = "enemy1";
+			enemyType = 0;
 		}
 		else if (wave == 2)
 		{
 			strategy = &sCarrot;
 			ChangeStrategy(&sCarrot, false);
-			eNames = "enemy2";
+			enemyType = 1;
 		}
 		else if (wave == 3)
 		{
 			strategy = &sBanana;
 			ChangeStrategy(&sBanana, false);
-			eNames = "enemy3";
+			enemyType = 2;
 		}
 		else if (wave == 4)
 		{
 			strategy = &sKiwi;
 			ChangeStrategy(&sKiwi, false);
-			eNames = "enemy4";
+			enemyType = 3;
 		}
 		else if (wave == 5)
 		{
 			strategy = &sBlueberry;
 			ChangeStrategy(&sBlueberry, false);
-			eNames = "enemy5";
+			enemyType = 4;
 		}
 	}
 }
@@ -179,13 +179,16 @@ void Spawner::Cheat()
 {
 	ControllerKeyboard* kb = ControllerKeyboard::Instance();
 	
-	if (kb->IsKeyDown('K'))
+	if (kb->IsKeyDown(VK_F2))
 	{
 		for (unsigned int i = 0; i < poolCount; ++i)
 		{
 			enemyPool[i]->GetScript<AI>()->SetDead(true);
 		}
 	}
+
+	if (kb->IsKeyDown(VK_F3))
+		boss->GetScript<AI>()->SetDead(true);
 }
 
 void Spawner::CreateEnemies(std::string waveOne)
@@ -215,7 +218,7 @@ void Spawner::SpawnEnemy()
 
 		enemyPool[i]->ActiveSelf(true);
 		enemyPool[i]->GetScript<AI>()->SetStrategy(strategy);
-		enemyPool[i]->GetScript<AI>()->SetName(eNames);
+		enemyPool[i]->GetScript<AI>()->SetAnimation(enemyType);
 		enemyPool[i]->GetScript<AI>()->Reset();
 		enemyPool[i]->GetTransform()->translate = spawnerPos + offset;
 		++waveCount;
@@ -284,7 +287,7 @@ void Spawner::SpawnBoss()
 
 	boss->ActiveSelf(true);
 	boss->GetScript<AI>()->SetStrategy(strategy);
-	boss->GetScript<AI>()->SetName(eNames);
+	boss->GetScript<AI>()->SetAnimation(enemyType);
 	boss->GetScript<AI>()->Reset();
 	boss->GetTransform()->translate = spawnerPos + offset;
 }

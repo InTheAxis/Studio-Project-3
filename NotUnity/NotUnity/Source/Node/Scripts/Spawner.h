@@ -51,8 +51,8 @@ private:
 	bool startGame;
 
 	int wave;
+	int enemyType;
 	Vector3 playerTrans;
-	std::string eNames;
 	
 	const int poolCount = 6;
 	GameObj* enemyPool[6];

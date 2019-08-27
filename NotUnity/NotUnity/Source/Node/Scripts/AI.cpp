@@ -23,7 +23,7 @@ AI::AI(std::string name)
 	, bounceTimeTwo(0)
 	, wave(0)
 	, armour(0.f)
-	, eNames("")
+	, enemyName(0)
 {
 }
 
@@ -39,9 +39,13 @@ void AI::Start()
 		->SwitchAnimation(0)
 		->PlayAnimation()
 		->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))
-		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial(eNames))
+		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy1"))
+		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy2"))
+		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy3"))
 		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX)
 		->ToggleCullFace(false);
+
+	PlayAnimation();
 
 	kineB = AddChild<KinematicBody>();
 	kineB->SetGameObj(gameObject);
@@ -93,14 +97,6 @@ void AI::Update(double dt)
 		else
 			strategy->Boss(false);
 	}
-
-	sprite->SetAnimation(0, 8, 0.5f, 1)
-		->SwitchAnimation(0)
-		->PlayAnimation()
-		->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))
-		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial(eNames))
-		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX)
-		->ToggleCullFace(false);
 
 	if (!dead)
 	{
@@ -272,16 +268,15 @@ void AI::SetDead(bool dead)
 	this->dead = dead;
 }
 
-void AI::SetName(std::string eNames)
-{
-	this->eNames = eNames;
-}
-
 void AI::SetAnimation(int num)
 {
-	//sprite->SetAnimation(0, 8, 0.5f, 1)
-	//	->SwitchAnimation(num)
-	//	->PlayAnimation();
+	enemyName = num;
+}
+
+void AI::PlayAnimation()
+{
+	sprite->SwitchAnimation(enemyName)
+		->PlayAnimation();
 }
 
 float AI::GetWorldHeight()

@@ -53,8 +53,8 @@ public:
 	void ResetBullets();
 	void ResetColorSpots();
 	void SetDead(bool dead);
-	void SetName(std::string eNames);
 	void SetAnimation(int num);
+	void PlayAnimation();
 
 private:
 	Vector3 playerTrans;
@@ -69,9 +69,9 @@ private:
 	Vector3 direction;
 	int enemyCount;
 	int wave;
+	int enemyName;
 	bool dead;
 	const static int ammoCount = 3;
-	std::string eNames;
 
 	Transform* t;
 	Strategy* strategy;
