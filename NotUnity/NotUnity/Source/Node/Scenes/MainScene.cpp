@@ -155,7 +155,7 @@ void MainScene::Update(double dt)
 		}
 		else if (spawner->GetSpawnerWave() >= 5 && spawner->GetEnemyKilled() >= 3 && spawner->GetBossKilled())
 			ChangeGameState(WIN);
-		else if (playerGO->GetScript<PlayerController>()->IsDead())
+		if (playerGO->GetScript<PlayerController>()->IsDead())
 			ChangeGameState(LOSE);
 		break;
 	case LOSE:
