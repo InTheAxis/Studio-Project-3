@@ -62,8 +62,8 @@ void MainScene::Start()
 	AddChild<GameObj>("redbar");
 
 	//add & set up components and scripts
-	mainCam->AddComp<Camera>()->SetMode(Camera::DEBUG)->SetSpeed(100);
-	//mainCam->AddComp<Camera>()->SetMode(Camera::CUSTOM);
+	//mainCam->AddComp<Camera>()->SetMode(Camera::DEBUG);
+	mainCam->AddComp<Camera>()->SetMode(Camera::CUSTOM);
 	mainCam->GetTransform()->translate.z = 1;
 	GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
 	title = GetChild<GameObj>("title")->AddComp<Sprite>();
@@ -95,7 +95,7 @@ void MainScene::Start()
 	//attach camera
 	GetChild<MapScene>("MapScene")->SetCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
-	//mg->SetProjOrtho(Application::GetWindowHeight() * 0.12f); //divide by 720 * 88
+	mg->SetProjOrtho(Application::GetWindowHeight() * 0.12f); //divide by 720 * 88
 
 	Scene::Start();	
 
@@ -155,7 +155,7 @@ void MainScene::Update(double dt)
 		}
 		else if (spawner->GetSpawnerWave() >= 5 && spawner->GetEnemyKilled() >= 3 && spawner->GetBossKilled())
 			ChangeGameState(WIN);
-		if (playerGO->GetScript<PlayerController>()->IsDead())
+		else if (playerGO->GetScript<PlayerController>()->IsDead())
 			ChangeGameState(LOSE);
 		break;
 	case LOSE:
@@ -173,8 +173,8 @@ void MainScene::Update(double dt)
 	MgrMain::Instance()->SetTimeScale((float)!pause);
 	if (pause) return;
 
-	//mainCam->GetTransform()->translate = playerGO->GetTransform()->translate;
-	//mainCam->GetTransform()->translate.z = 1;
+	mainCam->GetTransform()->translate = playerGO->GetTransform()->translate;
+	mainCam->GetTransform()->translate.z = 1;
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);
 	spawner->SetTerrain(map->GetTerrain());
 	player->SetTerrain(map->GetTerrain());
@@ -264,7 +264,6 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		//map->ResetPos();
 		playerGO->GetScript<PlayerController>()->Reset();
 		spawner->Reset();
-		spawner->SetStartGame(false);
 		break;
 	case TUTO:
 		lmb->ActiveSelf(true);	
@@ -276,7 +275,6 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		greenbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3((player->GetHealth() * 0.05f) - 7.2f, 4.0f, 0.f);
 		redbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-6.3f, 4.0f, 0);
 		spawner->SetWave(1);
-		spawner->SetStartGame(true);
 		break;
 	case LOSE:		
 		break;

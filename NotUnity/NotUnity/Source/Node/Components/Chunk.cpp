@@ -2,6 +2,7 @@
 #include "../../Utility/WinDebug.h"
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../Components/ColliderRender.h"
+#include "../Components/Collider.h"
 #include "../Components/Sprite.h"
 #include "../Components/KinematicBody.h"
 #include "../GameObj.h"
@@ -50,6 +51,9 @@ void Chunk::Start()
 	kb->maxVel.Set(10, 10);
 	kb->useGravity = true;
 	kb->gravScale = 10;
+	Collider* c = rock->AddComp<Collider>();
+	c->CreateAABB(0.5f);
+	c->tag = "rock";
 	rock->ActiveSelf(false);
 
 	ChangeBiome();
@@ -101,7 +105,7 @@ void Chunk::InitInteractive()
 	{
 	case INTER::ROCK:
 		rock->ActiveSelf(true);
-		rock->GetTransform()->translate.x = gameObject->GetTransform()->translate.x;
+		rock->GetTransform()->translate.x = gameObject->GetTransform()->translate.x - 1;
 		rock->GetTransform()->translate.y = 10;
 		rock->GetTransform()->translate.z = 0.1;
 		break;

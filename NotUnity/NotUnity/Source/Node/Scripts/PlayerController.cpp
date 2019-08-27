@@ -474,4 +474,7 @@ void PlayerController::HandleCollision(ColInfo info)
 
 	if (info.other->tag == "enemyA" && info.other->isTrigger)
 		TakeDamage(1);
+
+	if (info.other->tag == "rock")
+		info.other->GetGameObj()->GetComp<KinematicBody>()->ApplyImpulse(Vector3(10 * direction, 1, 0));
 }

@@ -7,11 +7,12 @@ Biome* BiomePicker::Pick()
 {
 	//TODO improve biome logic
 
-	switch (Math::RandIntMinMax(0, 9))
+	switch (Math::RandIntMinMax(0, 12))
 	{
 	case 0:
 	case 6:
 	case 9:
+	case 10:
 		return new BiomeMt;
 	case 1:
 	case 7:
@@ -20,6 +21,8 @@ Biome* BiomePicker::Pick()
 	case 8:
 		return new BiomeDes;
 	case 3:
+	case 11:
+	case 12:
 		return new BiomeMtFlat;
 	case 4:
 		return new BiomeSnowFlat;
