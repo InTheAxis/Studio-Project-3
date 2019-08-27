@@ -57,7 +57,7 @@ public:
 
 	void ReadTextFile();
 	void WriteTextFile();
-	void setKnibRefrence(KinemeticBody* knib);
+	void setKnibRefrence(KinematicBody* knib);
 private:
 	MgrAchievements(std::string name = "MgrAchievements");
 	~MgrAchievements();
@@ -89,7 +89,7 @@ private:
 
 	void HardReset();
 
-	KinemeticBody* knibReference; // get set private variable !!!
+	KinematicBody* knibReference; // get set private variable !!!
 };
 
 #endif

@@ -60,7 +60,7 @@ void PlayerController::Start()
 	
 	kinb = AddChild<KinematicBody>();
 	kinb->SetGameObj(gameObject);
-	kinb->maxVel.Set(1, 4, 0);
+	kinb->maxVel.Set(1, 3, 0);
 	kinb->frictionCoeff = 5;
 	kinb->gravScale = 10;
 	kinb->useGravity = false;
@@ -91,7 +91,7 @@ void PlayerController::Start()
 	colorSpot->SetGameObj(gameObject);
 
 	maxHealth = 20 + MgrAchievements::Instance()->GetBonusHealth();
-	moveSpeed.Set(10, 80, 0);
+	moveSpeed.Set(10, 40, 0);
 	addHealth = false;
 	ActiveSelf(true);
 	Reset();
@@ -131,7 +131,7 @@ void PlayerController::Update(double dt)
 		MgrAchievements::Instance()->SetWalkTime(0.1f);
 	}
 
-	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.8)
+	if ((kb->IsKeyDown(VK_SPACE) || kb->IsKeyDown('W')) && (jumpTimer > 0 || (OnGround(0.1f) && CanMove())) && jumpTimer < 0.3)
 	{
 		MgrAchievements::Instance()->SetJumpTimes(1);
 		jumpTimer += dt;

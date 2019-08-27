@@ -71,6 +71,7 @@ void MainScene::Start()
 	AddChild<GameObj>("attackAchievement");
 	AddChild<GameObj>("killAchievement");
 	AddChild<GameObj>("walkText");
+	AddChild<GameObj>("debugText")->AddComp<DebugText>();
 
 	//add & set up components and scripts
 	//mainCam->AddComp<Camera>()->SetMode(Camera::DEBUG);
@@ -186,6 +187,8 @@ void MainScene::Update(double dt)
 		{
 			if (spawner->GetEnemyKilled() >= 6 && spawner->GetBossKilled())
 			{
+				MgrAchievements::Instance()->SetEnemyKilled(spawner->GetEnemyKilled());
+				MgrAchievements::Instance()->ResetEnemyKilled();
 				spawner->SetWave(spawner->GetSpawnerWave() + 1);
 				spawner->Reset();
 			}
@@ -234,7 +237,7 @@ void MainScene::Update(double dt)
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);
 	spawner->SetTerrain(map->GetTerrain());
 	player->SetTerrain(map->GetTerrain());
-	player->SetColorSpotRad(0.1f * spawner->GetEnemyKilled() + 1);
+	player->SetColorSpotRad((spawner->GetWave() / 5.f) * 9 + 1);
 
 	lightAngle = cosf((float)m_lifetime * 2) * Math::PI * 0.1f - 1.75f;
 	MgrGraphics::Instance()->SetDirLight(true, Vector3(cosf(lightAngle), sinf(lightAngle), 0));
@@ -300,7 +303,8 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		greenbar->ActiveSelf(false);
 		greenbar->ActiveSelf(false);
 		redbar->ActiveSelf(false);
-		spawner->SetWave(0);
+		spawner->SetWave(1);
+		spawner->SetStartGame(false);
 		break;
 	case LOSE:
 		break;
