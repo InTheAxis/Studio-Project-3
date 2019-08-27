@@ -33,8 +33,7 @@ private:
 	Camera* camera;
 	int offsetBuffer; // displacement > offsetBuffer to spawn the new blocks
 	int offsetX; // increase overtime when chunk gets pop and push to the back
-	int scaleX;
-	int cullingAmount;
+	int scaleX;	
 	bool cull;
 	int chunkNumber;
 
@@ -43,6 +42,8 @@ private:
 	GameObj* chunkGO[mapSize];
 	GameObj* sky;
 
-
+	void UpdateChunkNum(int incrementAmt);
+	void MoveChunk(int chunkIdx, float xPos);
+	float GetDisplacement(int chunkIdx);
 	void CullChunk();
 };
