@@ -23,3 +23,24 @@ BiomeSnow::BiomeSnow()
 	spline = new SplineMountain;
 	interactiveType = INTER::NONE;
 }
+
+BiomeMtFlat::BiomeMtFlat()
+{
+	spriteIdx = 3;
+	spline = new Spline;
+	interactiveType = INTER::ROCK;
+}
+
+BiomeDesFlat::BiomeDesFlat()
+{
+	spriteIdx = 4;
+	spline = new Spline;
+	interactiveType = INTER::NONE;
+}
+
+BiomeSnowFlat::BiomeSnowFlat()
+{
+	spriteIdx = 5;
+	spline = new Spline;
+	interactiveType = INTER::NONE;
+}

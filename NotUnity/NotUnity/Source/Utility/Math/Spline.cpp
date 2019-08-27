@@ -11,12 +11,12 @@ Spline::~Spline()
 
 float Spline::Fn(float x)
 {
-	return x + offset;
+	return -3;
 }
 
 Vector3 Spline::Normal(float x)
 {
-	return Vector3(-1, 1, 0).Normalized();
+	return Vector3(0, 1, 0);
 }
 
 std::vector<Vector3> Spline::GetSamplePts()

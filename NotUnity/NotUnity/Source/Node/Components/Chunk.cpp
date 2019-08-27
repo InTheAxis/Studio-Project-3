@@ -34,6 +34,9 @@ void Chunk::Start()
 		->SetAnimation(0, 1, 0.5f, 0)
 		->SetAnimation(1, 1, 0.5f, 0)
 		->SetAnimation(2, 1, 0.5f, 0)
+		->SetAnimation(3, 1, 0.5f, 0)
+		->SetAnimation(4, 1, 0.5f, 0)
+		->SetAnimation(5, 1, 0.5f, 0)
 		->SwitchAnimation(0)
 		->PlayAnimation();
 	sprite->SetGameObj(gameObject);

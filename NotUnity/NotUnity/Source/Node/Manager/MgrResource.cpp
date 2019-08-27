@@ -78,6 +78,9 @@ void MgrResource::LoadMaterials()
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/env/bg_mt.tga");
 	temp->maps[Material::COLOR1] = Resource::LoadTGA("tga/env/bg_snow.tga");
 	temp->maps[Material::COLOR2] = Resource::LoadTGA("tga/env/bg_des.tga");
+	temp->maps[Material::COLOR3] = Resource::LoadTGA("tga/env/bg_mtF.tga");
+	temp->maps[Material::COLOR4] = Resource::LoadTGA("tga/env/bg_snowF.tga");
+	temp->maps[Material::COLOR5] = Resource::LoadTGA("tga/env/bg_desF.tga");
 
 	temp = new Material("sky");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/env/sky.tga");

@@ -20,4 +20,22 @@ class BiomeSnow : public Biome
 public:
 	BiomeSnow();
 };
+
+class BiomeMtFlat : public Biome
+{
+public:
+	BiomeMtFlat();
+};
+
+class BiomeDesFlat : public Biome
+{
+public:
+	BiomeDesFlat();
+};
+
+class BiomeSnowFlat : public Biome
+{
+public:
+	BiomeSnowFlat();
+};
 #endif
