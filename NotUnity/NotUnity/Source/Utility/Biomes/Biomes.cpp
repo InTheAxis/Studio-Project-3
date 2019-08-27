@@ -7,21 +7,21 @@ BiomeMt::BiomeMt()
 {
 	spriteIdx = 0;
 	spline = new SplineMountain;
-	interactiveType = INTER::ROCK;
+	interactiveType = INTER::CRATE;
 }
 
 BiomeDes::BiomeDes()
 {
 	spriteIdx = 1;
 	spline = new SplineMountain;
-	interactiveType = INTER::NONE;
+	interactiveType = INTER::CRATE;
 }
 
 BiomeSnow::BiomeSnow()
 {
 	spriteIdx = 2;
 	spline = new SplineMountain;
-	interactiveType = INTER::NONE;
+	interactiveType = INTER::CRATE;
 }
 
 BiomeMtFlat::BiomeMtFlat()
@@ -35,12 +35,12 @@ BiomeDesFlat::BiomeDesFlat()
 {
 	spriteIdx = 4;
 	spline = new Spline;
-	interactiveType = INTER::NONE;
+	interactiveType = INTER::ROCK;
 }
 
 BiomeSnowFlat::BiomeSnowFlat()
 {
 	spriteIdx = 5;
 	spline = new Spline;
-	interactiveType = INTER::NONE;
+	interactiveType = INTER::ROCK;
 }

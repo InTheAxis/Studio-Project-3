@@ -217,12 +217,18 @@ void PlayerController::End()
 void PlayerController::OnEnable()
 {
 	hitbox->OnCollideStay.Subscribe(&PlayerController::HandleCollision, this, "coll");
+	attackLeft->OnTriggerStay.Subscribe(&PlayerController::HandleTrigger, this, "trigL");
+	attackRight->OnTriggerStay.Subscribe(&PlayerController::HandleTrigger, this, "trigR");
 }
 
 void PlayerController::OnDisable()
 {
 	if (hitbox)
 		hitbox->OnCollideStay.UnSubscribe("coll");
+	if (attackLeft)
+		attackLeft->OnTriggerStay.UnSubscribe("trigL");
+	if (attackRight)
+		attackRight->OnTriggerStay.UnSubscribe("trigR");
 }
 
 void PlayerController::TryChangeState(P_STATE state)
@@ -477,4 +483,10 @@ void PlayerController::HandleCollision(ColInfo info)
 
 	if (info.other->tag == "rock")
 		info.other->GetGameObj()->GetComp<KinematicBody>()->ApplyImpulse(Vector3(10 * direction, 1, 0));
+}
+
+void PlayerController::HandleTrigger(ColInfo info)
+{
+	if (info.other->tag == "crate")
+		info.other->GetGameObj()->GetTransform()->translate.y = 100;
 }

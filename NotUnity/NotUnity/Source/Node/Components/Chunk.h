@@ -37,6 +37,7 @@ private:
 	//refs
 	Sprite* sprite;
 	GameObj* rock;
+	GameObj* crate;
 
 	//biome presets;
 	Biome* biome;
@@ -44,7 +45,7 @@ private:
 	//for interactives
 	void InitInteractive();
 	void UpdateInteractive();
-	void ConstrainTransform(Transform* t, KinematicBody* kb);
+	void ConstrainTransform(Transform* t, KinematicBody* kb = nullptr);
 };
 
 #endif
