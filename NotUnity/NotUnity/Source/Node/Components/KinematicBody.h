@@ -1,16 +1,16 @@
-#ifndef KINEMETICBODY_H
-#define KINEMETICBODY_H
+#ifndef KINEMATIC_BODY_H
+#define KINEMATIC_BODY_H
 
 #include "../Node.h"
 #include "../../Utility/TypeID.h"
 #include "../../Utility/Component.h"
 #include "../../Utility/Math/Vector3.h"
 
-class KinemeticBody : public Node, public TypeID<KinemeticBody>, public Component
+class KinematicBody : public Node, public TypeID<KinematicBody>, public Component
 {
 public:
-	KinemeticBody(std::string name = "KinemeticBody");
-	~KinemeticBody();
+	KinematicBody(std::string name = "KinemeticBody");
+	~KinematicBody();
 	
 	virtual void Start();
 	virtual void Update(double dt);

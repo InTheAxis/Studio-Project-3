@@ -62,8 +62,8 @@ void MainScene::Start()
 	AddChild<GameObj>("redbar");
 
 	//add & set up components and scripts
-	//mainCam->AddComp<Camera>()->SetMode(Camera::DEBUG);
-	mainCam->AddComp<Camera>()->SetMode(Camera::CUSTOM);
+	mainCam->AddComp<Camera>()->SetMode(Camera::DEBUG)->SetSpeed(100);
+	//mainCam->AddComp<Camera>()->SetMode(Camera::CUSTOM);
 	mainCam->GetTransform()->translate.z = 1;
 	GetChild<GameObj>("axes")->AddComp<Renderable>()->AttachMesh(mg->GetCachedMesh("axes"))->AttachMaterial(mg->GetCachedMaterial("default"));
 	title = GetChild<GameObj>("title")->AddComp<Sprite>();
@@ -95,7 +95,7 @@ void MainScene::Start()
 	//attach camera
 	GetChild<MapScene>("MapScene")->SetCamera(GetChild<GameObj>("mainCam")->GetComp<Camera>());
 	mg->AttachView(GetChild<GameObj>("mainCam")->GetComp<Camera>()->GetViewMtx());	
-	mg->SetProjOrtho(Application::GetWindowHeight() * 0.12f); //divide by 720 * 88
+	//mg->SetProjOrtho(Application::GetWindowHeight() * 0.12f); //divide by 720 * 88
 
 	Scene::Start();	
 
@@ -173,8 +173,8 @@ void MainScene::Update(double dt)
 	MgrMain::Instance()->SetTimeScale((float)!pause);
 	if (pause) return;
 
-	mainCam->GetTransform()->translate = playerGO->GetTransform()->translate;
-	mainCam->GetTransform()->translate.z = 1;
+	//mainCam->GetTransform()->translate = playerGO->GetTransform()->translate;
+	//mainCam->GetTransform()->translate.z = 1;
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);
 	spawner->SetTerrain(map->GetTerrain());
 	player->SetTerrain(map->GetTerrain());

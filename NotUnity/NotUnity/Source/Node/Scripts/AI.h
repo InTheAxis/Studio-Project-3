@@ -72,7 +72,7 @@ private:
 
 	Transform* t;
 	Strategy* strategy;
-	KinemeticBody* kineB;
+	KinematicBody* kineB;
 	Spline* s;
 	Projectile* projectile[ammoCount];
 	Collider* coll, *trigger;

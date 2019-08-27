@@ -41,7 +41,7 @@ void AI::Start()
 		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy"))
 		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX);
 
-	kineB = AddChild<KinemeticBody>();
+	kineB = AddChild<KinematicBody>();
 	kineB->SetGameObj(gameObject);
 	kineB->maxVel.Set(2, 2, 0);
 	kineB->frictionCoeff = 0.2f;

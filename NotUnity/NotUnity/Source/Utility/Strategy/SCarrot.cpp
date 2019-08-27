@@ -1,5 +1,5 @@
 #include "SCarrot.h"
-#include "../../NotUnity/Source/Node/Components/KinemeticBody.h"
+#include "../../NotUnity/Source/Node/Components/KinematicBody.h"
 #include "../../NotUnity/Source/Node/Scripts/Projectile.h"
 
 SCarrot::SCarrot() 
@@ -17,7 +17,7 @@ SCarrot::~SCarrot()
 {
 }
 
-void SCarrot::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double dt)
+void SCarrot::Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, double dt)
 {
 	atkIn += 1.f * static_cast<float>(dt);
 	shouldAttack = false;

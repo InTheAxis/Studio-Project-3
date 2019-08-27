@@ -14,6 +14,7 @@ class Sprite;
 class Biome;
 enum class INTER;
 class Spline;
+class KinematicBody;
 class Chunk : public Node, public TypeID<Chunk>, public Component
 {
 public:
@@ -35,9 +36,15 @@ public:
 private:	
 	//refs
 	Sprite* sprite;
+	GameObj* rock;
 
 	//biome presets;
 	Biome* biome;
+
+	//for interactives
+	void InitInteractive();
+	void UpdateInteractive();
+	void ConstrainTransform(Transform* t, KinematicBody* kb);
 };
 
 #endif

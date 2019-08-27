@@ -27,7 +27,7 @@
     <ClCompile Include="Source\Node\Components\Chunk.cpp" />
     <ClCompile Include="Source\Node\Components\Collider.cpp" />
     <ClCompile Include="Source\Node\Components\ColliderRender.cpp" />
-    <ClCompile Include="Source\Node\Components\KinemeticBody.cpp" />
+    <ClCompile Include="Source\Node\Components\KinematicBody.cpp" />
     <ClCompile Include="Source\Node\Components\Renderable.cpp" />
     <ClCompile Include="Source\Node\Components\Sprite.cpp" />
     <ClCompile Include="Source\Node\Components\Text.cpp" />
@@ -91,7 +91,7 @@
     <ClInclude Include="Source\Node\Components\Chunk.h" />
     <ClInclude Include="Source\Node\Components\Collider.h" />
     <ClInclude Include="Source\Node\Components\ColliderRender.h" />
-    <ClInclude Include="Source\Node\Components\KinemeticBody.h" />
+    <ClInclude Include="Source\Node\Components\KinematicBody.h" />
     <ClInclude Include="Source\Node\Components\Renderable.h" />
     <ClInclude Include="Source\Node\Components\Sprite.h" />
     <ClInclude Include="Source\Node\Components\Text.h" />

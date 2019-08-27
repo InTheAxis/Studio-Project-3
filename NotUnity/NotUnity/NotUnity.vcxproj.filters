@@ -169,9 +169,6 @@
     <ClCompile Include="Source\Node\Components\ColliderRender.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Node\Components\KinemeticBody.cpp">
-      <Filter>Source\Node\Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Node\Scripts\MapGenerator.cpp">
       <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
@@ -240,6 +237,9 @@
     </ClCompile>
     <ClCompile Include="Source\Utility\Biomes\BiomePicker.cpp">
       <Filter>Source\Utility\Biomes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Node\Components\KinematicBody.cpp">
+      <Filter>Source\Node\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -396,9 +396,6 @@
     <ClInclude Include="Source\Node\Components\ColliderRender.h">
       <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Node\Components\KinemeticBody.h">
-      <Filter>Source\Node\Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Node\Scripts\MapGenerator.h">
       <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
@@ -467,6 +464,9 @@
     </ClInclude>
     <ClInclude Include="Source\Utility\Biomes\BiomePicker.h">
       <Filter>Source\Utility\Biomes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Node\Components\KinematicBody.h">
+      <Filter>Source\Node\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

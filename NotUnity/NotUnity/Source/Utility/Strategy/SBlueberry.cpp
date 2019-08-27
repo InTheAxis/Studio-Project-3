@@ -1,5 +1,5 @@
 #include "SBlueberry.h"
-#include "../../NotUnity/Source/Node/Components/KinemeticBody.h"
+#include "../../NotUnity/Source/Node/Components/KinematicBody.h"
 #include "../../NotUnity/Source/Node/Scripts/Projectile.h"
 
 SBlueberry::SBlueberry() 
@@ -16,7 +16,7 @@ SBlueberry::~SBlueberry()
 {
 }
 
-void SBlueberry::Update(Vector3& dest, Vector3& enemyPos, KinemeticBody* kb, double dt)
+void SBlueberry::Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, double dt)
 {
 	shouldAttack = true;
 

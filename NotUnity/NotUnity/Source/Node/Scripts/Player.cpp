@@ -2,7 +2,7 @@
 //#include "../Manager/MgrGameObj.h"
 //#include "../../Node/GameObj.h"
 //#include "../../Node/Components/Sprite.h"
-//#include "../../Node/Components/KinemeticBody.h"
+//#include "../../Node/Components/KinematicBody.h"
 //#include "../../Utility/Input//ControllerKeyboard.h"
 //#include "../Manager/MgrSkillTree.h"
 //

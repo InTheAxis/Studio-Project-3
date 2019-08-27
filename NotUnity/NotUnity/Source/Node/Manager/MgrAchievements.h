@@ -4,7 +4,7 @@
 #include "Manager.h"
 #include "../../Utility/Delegate.h"
 
-class KinemeticBody;
+class KinematicBody;
 class MgrAchievements : public Manager<MgrAchievements>
 {
 	friend Singleton<MgrAchievements>;
@@ -61,12 +61,12 @@ public:
 
 	void ReadTextFile();
 	void WriteTextFile();
-	void setKnibRefrence(KinemeticBody* knib);
+	void setKnibRefrence(KinematicBody* knib);
 private:
 	MgrAchievements(std::string name = "MgrAchievements");
 	~MgrAchievements();
 
-	KinemeticBody* knibReference; // get set private variable !!!
+	KinematicBody* knibReference; // get set private variable !!!
 };
 
 #endif

@@ -3,7 +3,7 @@
 #include "../../Node/GameObj.h"
 #include "../../Node/Components/Sprite.h"
 #include "../../Node/Components/Transform.h"
-#include "../../Node/Components/KinemeticBody.h"
+#include "../../Node/Components/KinematicBody.h"
 #include "../../Node/Components/Collider.h"
 #include "../../Node/Components/Renderable.h"
 #include "../../Node/Components/Camera.h"
@@ -58,7 +58,7 @@ void PlayerController::Start()
 	swordSprite->SetHSV(-1, 1, -1)->SetRenderPass(RENDER_PASS::POST_FX)->SelectShader(MgrGraphics::HSV_UNLIT);
 	swordSprite->ToggleCullFace(false);	
 	
-	kinb = AddChild<KinemeticBody>();
+	kinb = AddChild<KinematicBody>();
 	kinb->SetGameObj(gameObject);
 	kinb->maxVel.Set(1, 4, 0);
 	kinb->frictionCoeff = 5;

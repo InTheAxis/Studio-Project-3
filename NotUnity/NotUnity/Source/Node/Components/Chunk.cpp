@@ -3,6 +3,7 @@
 #include "../../Utility/Input/ControllerKeyboard.h"
 #include "../Components/ColliderRender.h"
 #include "../Components/Sprite.h"
+#include "../Components/KinematicBody.h"
 #include "../GameObj.h"
 #include "../../Utility/Biomes/BiomeBase.h"
 #include "../../Utility/Biomes/BiomePicker.h"
@@ -43,6 +44,14 @@ void Chunk::Start()
 	sprite->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"));
 	sprite->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("background"));
 
+	rock = AddChild<GameObj>();
+	rock->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("placeholder"));
+	KinematicBody* kb = rock->AddComp<KinematicBody>();
+	kb->maxVel.Set(10, 10);
+	kb->useGravity = true;
+	kb->gravScale = 10;
+	rock->ActiveSelf(false);
+
 	ChangeBiome();
 	
 	Node::Start();
@@ -50,6 +59,7 @@ void Chunk::Start()
 
 void Chunk::Update(double dt)
 {	
+	UpdateInteractive();
 	Node::Update(dt);
 }
 
@@ -64,6 +74,9 @@ Chunk * Chunk::ChangeBiome()
 		delete biome;	
 	biome = BiomePicker::Pick();
 	sprite->SwitchAnimation(biome->GetSpriteIdx())->PlayAnimation();	
+
+	InitInteractive();
+
 	return this;
 }
 
@@ -80,6 +93,45 @@ Sprite * Chunk::GetSprite()
 int Chunk::GetCurrBiome()
 {
 	return (biome->GetSpriteIdx() % 3);
+}
+
+void Chunk::InitInteractive()
+{
+	switch (biome->GetInteractiveType())
+	{
+	case INTER::ROCK:
+		rock->ActiveSelf(true);
+		rock->GetTransform()->translate.x = gameObject->GetTransform()->translate.x;
+		rock->GetTransform()->translate.y = 10;
+		rock->GetTransform()->translate.z = 0.1;
+		break;
+	}
+}
+
+void Chunk::UpdateInteractive()
+{	
+	rock->ActiveSelf(false);
+	switch (biome->GetInteractiveType())
+	{
+	case INTER::ROCK:
+		rock->ActiveSelf(true);
+		ConstrainTransform(rock->GetTransform(), rock->GetComp<KinematicBody>());
+		break;
+	}
+}
+
+void Chunk::ConstrainTransform(Transform * t, KinematicBody* kb)
+{
+	if (t->translate.y < biome->GetSpline()->Fn(t->translate.x))
+	{
+		t->translate.y = biome->GetSpline()->Fn(t->translate.x);
+		kb->useGravity = false;
+		kb->ResetVel(0, 1);
+	}
+	else
+	{
+		kb->useGravity = true;
+	}
 }
 
 //#include "Chunk.h"

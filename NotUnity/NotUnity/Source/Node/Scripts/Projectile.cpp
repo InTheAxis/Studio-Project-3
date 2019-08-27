@@ -3,7 +3,7 @@
 #include "../Manager/MgrGraphics.h"
 #include "../../Node/GameObj.h"
 #include "../../Node/Components/Transform.h"
-#include "../../Node/Components/KinemeticBody.h"
+#include "../../Node/Components/KinematicBody.h"
 #include "../../Node/Components/Sprite.h"
 #include "../../Node/Components/Collider.h"
 #include "../../Node/Scripts/PlayerController.h"
@@ -43,7 +43,7 @@ void Projectile::Start()
 	float size = 0.1f;
 	t->scale.Set(size, size, size);
 
-	kinb = AddChild<KinemeticBody>();
+	kinb = AddChild<KinematicBody>();
 	kinb->SetGameObj(gameObject);
 	kinb->useGravity = false;
 	kinb->maxVel.Set(3, 3, 0);
