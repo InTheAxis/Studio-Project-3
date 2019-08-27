@@ -100,8 +100,20 @@ void MgrResource::LoadMaterials()
 	temp = new Material("paused");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/ui/paused.tga");
 
-	temp = new Material("enemy");
+	temp = new Material("enemy1");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/enemy/tomato.tga");
+
+	temp = new Material("enemy2");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/enemy/carrot.tga");
+
+	temp = new Material("enemy3");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/enemy/banana.tga");
+
+	temp = new Material("enemy4");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/enemy/kiwi.tga");
+
+	temp = new Material("enemy5");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/enemy/blueberry.tga");
 
 	temp = new Material("redbar");
 	temp-> maps[Material::COLOR0] = Resource::LoadTGA("tga/ui/redbar.tga");

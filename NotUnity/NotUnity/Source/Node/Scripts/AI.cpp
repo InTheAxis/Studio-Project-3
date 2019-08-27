@@ -23,6 +23,7 @@ AI::AI(std::string name)
 	, bounceTimeTwo(0)
 	, wave(0)
 	, armour(0.f)
+	, eNames("")
 {
 }
 
@@ -38,7 +39,7 @@ void AI::Start()
 		->SwitchAnimation(0)
 		->PlayAnimation()
 		->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))
-		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("enemy"))
+		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial(eNames))
 		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX);
 
 	kineB = AddChild<KinemeticBody>();
@@ -91,6 +92,13 @@ void AI::Update(double dt)
 		else
 			strategy->Boss(false);
 	}
+
+	sprite->SetAnimation(0, 8, 0.5f, 1)
+		->SwitchAnimation(0)
+		->PlayAnimation()
+		->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("plane"))
+		->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial(eNames))
+		->SelectShader(MgrGraphics::HSV_LIT)->SetRenderPass(RENDER_PASS::POST_FX);
 
 	if (!dead)
 	{
@@ -259,6 +267,11 @@ void AI::ResetColorSpots()
 void AI::SetDead(bool dead)
 {
 	this->dead = dead;
+}
+
+void AI::SetName(std::string eNames)
+{
+	this->eNames = eNames;
 }
 
 float AI::GetWorldHeight()
