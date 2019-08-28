@@ -24,19 +24,19 @@ void SCarrot::Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, double
 
 	if (atkIn >= randSpeed)
 	{
-		if ((dest - enemyPos).LengthSquared() > 1.f) //2) Will headbutt player after awile
+		if ((dest - enemyPos).Length() > 1.f) //2) Will headbutt player after awile
 			currentState = ATTACK;
 
-		if ((dest - enemyPos).LengthSquared() <= 0.5f)//3) Prevent AI from crossing player
+		if ((dest - enemyPos).Length() <= 0.5f)//3) Prevent AI from crossing player
 			currentState = WAIT;
 	}
 	else
 	{
-		if ((dest - enemyPos).LengthSquared() < 3.f) // 4) Will move away from player after headbutt it
+		if ((dest - enemyPos).Length() < 3.f) // 4) Will move away from player after headbutt it
 			currentState = REPEL;
 		else
 		{
-			if ((dest - enemyPos).LengthSquared() > 3.5f) //1) Will move to player when spawn from far 0.8f
+			if ((dest - enemyPos).Length() > 3.5f) //1) Will move to player when spawn from far 0.8f
 				currentState = ATTACK;
 			else
 				currentState = IDLE;
@@ -74,7 +74,7 @@ void SCarrot::Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, doubl
 	{
 		if (p)
 		{
-			if (direction.LengthSquared() == 0)
+			if (direction.Length() == 0)
 				p->Discharge(enemyPos, direction * 10);
 			else
 				p->Discharge(enemyPos, direction.Normalized() * 10);

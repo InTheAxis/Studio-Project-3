@@ -58,6 +58,7 @@ public:
 
 	void SetHealth(int h);
 	int	GetHealth();
+	void ResetHealth();
 
 private:
 	Transform* t, *swordT;
@@ -78,6 +79,7 @@ private:
 	int damage;
     int speedincrease;
 
+	double bounceTime;
 	bool walking;
 
 	void TryChangeState(P_STATE state);

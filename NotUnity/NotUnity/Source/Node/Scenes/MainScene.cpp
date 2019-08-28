@@ -201,6 +201,7 @@ void MainScene::Update(double dt)
 				MgrAchievements::Instance()->ResetEnemyKilled();
 				spawner->SetWave(spawner->GetSpawnerWave() + 1);
 				spawner->Reset();
+				playerGO->GetScript<PlayerController>()->ResetHealth();
 			}
 		}
 		else if (spawner->GetSpawnerWave() >= 5 && spawner->GetEnemyKilled() >= 6 && spawner->GetBossKilled())
@@ -251,7 +252,6 @@ void MainScene::Update(double dt)
 	spawner->PlayerTrans(playerGO->GetTransform()->translate);
 	spawner->SetTerrain(map->GetTerrain());
 	player->SetTerrain(map->GetTerrain());
-	player->SetColorSpotRad((spawner->GetWave() / 5.f) * 9 + 1);
 
 	lightAngle = cosf((float)m_lifetime * 2) * Math::PI * 0.1f - 1.75f;
 	MgrGraphics::Instance()->SetDirLight(true, Vector3(cosf(lightAngle), sinf(lightAngle), 0));

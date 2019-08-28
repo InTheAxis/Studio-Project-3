@@ -332,7 +332,7 @@ void AI::HandleColl(ColInfo info)
 		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
 		if (info.other->isTrigger)
 		{
-			if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.5)
+			if (!ai->dead && ai->m_lifetime > ai->bounceTime + 0.3)
 			{
 				ai->bounceTime = ai->m_lifetime;
 
@@ -354,7 +354,7 @@ void AI::HandleColl(ColInfo info)
 		}
 		else
 		{
-			if (!ai->dead && ai->m_lifetime > ai->bounceTimeTwo + 0.5)
+			if (!ai->dead && ai->m_lifetime > ai->bounceTimeTwo + 0.3)
 			{
 				ai->bounceTimeTwo = (ai->m_lifetime * 1.2f);
 				trigger->isTrigger = true;

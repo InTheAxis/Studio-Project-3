@@ -19,7 +19,7 @@ void STomato::Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, double
 {
 	shouldAttack = true;
 
-	if ((dest - enemyPos).LengthSquared() > 4.f)
+	if ((dest - enemyPos).Length() > 4.f)
 		currentState = ATTACK;
 	else
 		currentState = IDLE;
@@ -48,7 +48,7 @@ void STomato::Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, doubl
 	{
 		if (p)
 		{
-			if (direction.LengthSquared() == 0)
+			if (direction.Length() == 0)
 				p->Discharge(enemyPos, direction * 10);
 			else
 				p->Discharge(enemyPos, direction.Normalized() * 10);

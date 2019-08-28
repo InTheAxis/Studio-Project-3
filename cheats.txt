@@ -4,5 +4,4 @@ Non-gameplay:
 
 Gameplay:
 F1 - player takes damage to health, and eventually dies
-F2 - give enemies in wave the fat man
-F3 - say sayonara to boss
+F2 - say sayonara to enemies

@@ -192,9 +192,6 @@ void Spawner::Cheat()
 			enemyPool[i]->GetScript<AI>()->SetDead(true);
 		}
 	}
-
-	if (kb->IsKeyDown(VK_F3))
-		boss->GetScript<AI>()->SetDead(true);
 }
 
 void Spawner::CreateEnemies(std::string waveOne)
@@ -204,7 +201,7 @@ void Spawner::CreateEnemies(std::string waveOne)
 	{
 		enemyPool[i] = gameObject->AddChild<GameObj>(waveOne + std::to_string(i));
 		enemyPool[i]->ActiveSelf(false);
-		enemyPool[i]->AddScript<AI>()->SetHealth(3);
+		enemyPool[i]->AddScript<AI>()->SetHealth(2);
 	}
 }
 
@@ -273,7 +270,7 @@ void Spawner::CreateBoss(std::string bosStage)
 {
 	boss = gameObject->AddChild<GameObj>(bosStage);
 	boss->ActiveSelf(false);
-	boss->AddScript<AI>()->SetHealth(6);
+	boss->AddScript<AI>()->SetHealth(3);
 	boss->GetTransform()->scale.Set(2.f, 2.f, 2.f);
 }
 

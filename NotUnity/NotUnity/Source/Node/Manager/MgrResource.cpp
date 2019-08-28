@@ -85,6 +85,12 @@ void MgrResource::LoadMaterials()
 	temp = new Material("sky");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/env/sky.tga");
 
+	temp = new Material("rock");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/env/rock.tga");
+
+	temp = new Material("web");
+	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/env/web.tga");
+
 	temp = new Material("title");
 	temp->maps[Material::COLOR0] = Resource::LoadTGA("tga/ui/title.tga");
 

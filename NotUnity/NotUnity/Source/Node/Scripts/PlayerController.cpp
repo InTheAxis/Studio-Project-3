@@ -35,9 +35,9 @@ void PlayerController::Start()
 		->SetAnimation(1, 8, 0.5f, 1) //walk
 		->SetAnimation(2, 8, 0.5f, 0) //jump
 		->SetAnimation(3, 8, 0.5f, 1) //fall
-		->SetAnimation(4, 6, 0.5f, 0) //attack
+		->SetAnimation(4, 6, 0.3f, 0) //attack
 		->SetAnimation(5, 8, 0.5f, 1) //air attack
-		->SetAnimation(6, 8, 1.5f, 1) //hit
+		->SetAnimation(6, 8, 0.2f, 1) //hit
 		->SetAnimation(7, 8, 3.5f, 0) //dying
 		->SetAnimation(8, 8, 0.5f, 1) //cheer
 		->SwitchAnimation(0)
@@ -84,7 +84,7 @@ void PlayerController::Start()
 	attackAir->ActiveSelf(false);
 	hitbox = AddChild<Collider>("h");
 	hitbox->SetGameObj(gameObject);
-	hitbox->CreateAABB(0.5f);	
+	hitbox->CreateAABB(0.7f);	
 	hitbox->tag = "player";
 
 	colorSpot = AddChild<ColorSpot>();
@@ -138,7 +138,7 @@ void PlayerController::Update(double dt)
 	}
 	else
 		jumpTimer = 0;
-	if ((m->IsButtonPressed(0) || kb->IsKeyPressed('Z')) && !attackTimer)
+	if ((m->IsButtonPressed(0) || kb->IsKeyPressed('F')) && !attackTimer)
 	{
 		MgrAchievements::Instance()->SetAttackTimes(1);
 		attackTimer = 0.3f;
@@ -274,6 +274,11 @@ int PlayerController::GetHealth()
 	return health; 
 }
 
+void PlayerController::ResetHealth()
+{
+	health = maxHealth;
+}
+
 void PlayerController::Move(float inputX)
 {
 
@@ -393,7 +398,7 @@ void PlayerController::TakeDamage(int dmg)
 	if (health <= 0 && deadTimer <= 0)
 		deadTimer = 3.5f;
 	else if (hitTimer <= 0)
-		hitTimer = 0.3f;
+		hitTimer = 0.05f;
 	camera->Shake(0.05f, 0.15f);
 }
 int PlayerController::DamageDealt()
@@ -408,6 +413,7 @@ int PlayerController::DamageDealt()
 PlayerController* PlayerController::SetColorSpotRad(float radius)
 {
 	colorSpot->radius = radius;
+	colorSpot->SetUniform(0);
 	return this;
 }
 
@@ -428,7 +434,8 @@ void PlayerController::Reset()
 	
 	direction = 1;
 	jumpTimer = attackTimer = hitTimer = deadTimer = 0.0;
-	health = maxHealth;
+
+	ResetHealth();
 
 	walking = false;
 
@@ -469,17 +476,20 @@ void PlayerController::PrintState()
 
 void PlayerController::HandleCollision(ColInfo info)
 {
-	if (info.other->tag == "bulletplayer")
+	if (deadTimer <= 0 && m_lifetime > bounceTime + 0.1f)
 	{
-		TakeDamage(1);
-		Debug::Log("hittttttttttttt");
+		bounceTime = m_lifetime;
+		if (info.other->tag == "bulletplayer")
+		{
+			TakeDamage(1);
+		}
 	}
 
 	if (info.other->tag == "enemyA" && info.other->isTrigger)
 		TakeDamage(1);
 
 	if (info.other->tag == "rock")
-		info.other->GetGameObj()->GetComp<KinematicBody>()->ApplyImpulse(Vector3(10 * direction, 1, 0));
+		info.other->GetGameObj()->GetComp<KinematicBody>()->ApplyImpulse(Vector3(10 * direction, 3, 0));
 }
 
 void PlayerController::HandleTrigger(ColInfo info)

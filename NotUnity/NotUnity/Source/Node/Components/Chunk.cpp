@@ -46,7 +46,7 @@ void Chunk::Start()
 	sprite->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("background"));
 
 	rock = AddChild<GameObj>("rock");
-	rock->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("placeholder"));
+	rock->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("rock"));
 	KinematicBody* kb = rock->AddComp<KinematicBody>();
 	kb->maxVel.Set(10, 10);
 	kb->useGravity = true;
@@ -57,7 +57,7 @@ void Chunk::Start()
 	rock->ActiveSelf(false);
 
 	crate = AddChild<GameObj>("crate");
-	crate->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("placeholder"));
+	crate->AddComp<Sprite>()->AttachMesh(MgrGraphics::Instance()->GetCachedMesh("quad"))->AttachMaterial(MgrGraphics::Instance()->GetCachedMaterial("web"));
 	c = crate->AddComp<Collider>();
 	c->CreateAABB(0.5f);
 	c->tag = "crate";
