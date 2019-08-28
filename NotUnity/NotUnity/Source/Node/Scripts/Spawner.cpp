@@ -187,7 +187,7 @@ void Spawner::Cheat()
 	
 	if (kb->IsKeyDown(VK_F2))
 	{
-		for (unsigned int i = 0; i < poolCount; ++i)
+		for (int i = 0; i < poolCount; ++i)
 		{
 			enemyPool[i]->GetScript<AI>()->SetDead(true);
 		}
@@ -197,7 +197,7 @@ void Spawner::Cheat()
 void Spawner::CreateEnemies(std::string waveOne)
 {
 	Debug::Log(wave);
-	for (unsigned int i = 0; i < poolCount; ++i)
+	for (int i = 0; i < poolCount; ++i)
 	{
 		enemyPool[i] = gameObject->AddChild<GameObj>(waveOne + std::to_string(i));
 		enemyPool[i]->ActiveSelf(false);
