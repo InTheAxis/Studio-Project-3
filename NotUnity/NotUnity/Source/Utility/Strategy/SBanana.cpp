@@ -24,15 +24,15 @@ void SBanana::Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, double
 	
 	if (atkIn >= 3.2f)
 	{
-		if ((dest - enemyPos).Length() < 5.5f)
+		if ((dest - enemyPos).LengthSquared() < 5.5f)
 			currentState = REPEL;
 
-		if ((dest - enemyPos).Length() > 10.f)
+		if ((dest - enemyPos).LengthSquared() > 10.f)
 			currentState = WAIT;
 	}
 	else
 	{
-		if ((dest - enemyPos).Length() >= 5.f)
+		if ((dest - enemyPos).LengthSquared() >= 5.f)
 			currentState = ATTACK;
 		else
 			currentState = IDLE;

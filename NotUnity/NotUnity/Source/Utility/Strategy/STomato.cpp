@@ -19,7 +19,7 @@ void STomato::Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, double
 {
 	shouldAttack = true;
 
-	if ((dest - enemyPos).Length() > 4.f)
+	if ((dest - enemyPos).LengthSquared() > 4.f)
 		currentState = ATTACK;
 	else
 		currentState = IDLE;
