@@ -1,5 +1,7 @@
 #include "BiomeBase.h"
 
+#include "../WinDebug.h"
+
 Biome::Biome()
 	: spriteIdx(0)
 	, spline(nullptr)
@@ -12,6 +14,7 @@ Biome::~Biome()
 	if (spline)
 	{
 		delete spline;
+		Debug::Log("Deleting Spline");
 		spline = nullptr;
 	}
 }

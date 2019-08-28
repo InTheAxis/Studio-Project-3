@@ -51,7 +51,7 @@ class Node
 {
 public:	
 	Node(std::string name = "node");
-	~Node();
+	virtual ~Node();
 	
 	virtual void Start();
 	virtual void Update(double dt);

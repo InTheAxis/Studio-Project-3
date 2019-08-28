@@ -10,7 +10,7 @@ class FBO
 {
 public:
 	FBO();
-    ~FBO();
+    virtual ~FBO();
 
     bool Init(unsigned width, unsigned height);
     void BindForWriting();

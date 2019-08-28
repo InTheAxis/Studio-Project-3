@@ -33,6 +33,6 @@ public:
 	Singleton& operator=(Singleton const &) = delete;
 protected:
 	Singleton() {}
-	~Singleton() {}
+	virtual ~Singleton() {}
 };
 #endif

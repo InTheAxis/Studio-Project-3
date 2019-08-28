@@ -16,7 +16,7 @@ Node::~Node()
 	std::stringstream ss;
 	for (auto &childNode : m_children)
 	{
-		if (childNode.second && childNode.second->m_newed)
+		if (childNode.second)
 		{
 			ss.str("");
 			ss << "Deleted " << childNode.second->GetName() << " " << childNode.second;

@@ -9,7 +9,7 @@ class Spline
 {
 public:
 	Spline();
-	~Spline();
+	virtual ~Spline();
 
 	virtual float Fn(float x);
 	virtual Vector3 Normal(float x);

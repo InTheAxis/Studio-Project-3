@@ -10,7 +10,7 @@ class Strategy
 {
 public:
 	Strategy();
-	~Strategy();
+	virtual ~Strategy();
 
 	virtual void Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, double dt) = 0;
 	virtual void Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, double dt) = 0;

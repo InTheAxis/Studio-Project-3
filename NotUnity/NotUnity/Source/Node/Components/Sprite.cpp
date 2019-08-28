@@ -20,7 +20,10 @@ Sprite::~Sprite()
 	for (int i = 0; i < 13; ++i)
 	{
 		if (anims[i])
+		{
+			Debug::Log("Deleting Animations[" + std::to_string(i) + "]");
 			delete anims[i];
+		}
 		anims[i] = nullptr;
 	}
 }

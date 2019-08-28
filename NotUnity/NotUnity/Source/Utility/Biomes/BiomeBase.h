@@ -18,7 +18,7 @@ class Biome
 public:
 
 	Biome();
-	~Biome();
+	virtual ~Biome();
 
 	//getters
 	int GetSpriteIdx();
