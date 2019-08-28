@@ -3,8 +3,8 @@
 
 #include <vector>
 #include "../Math/Vector3.h"
-#include "../../NotUnity/Source/Node/Components/KinematicBody.h"
-#include "../../NotUnity/Source/Node/Scripts/Projectile.h"
+#include "../../Node/Components/KinematicBody.h"
+#include "../../Node/Scripts/Projectile.h"
 
 class Strategy
 {

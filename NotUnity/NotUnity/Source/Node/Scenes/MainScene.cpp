@@ -212,6 +212,7 @@ void MainScene::Update(double dt)
 		waveNum->ActiveSelf(true);
 		ss.clear(); ss.str(""); ss.precision(2); ss << spawner->GetSpawnerWave();
 		waveNum->SetText(ss.str());
+		player->SetColorSpotRad(spawner->GetWave() / 5.f * 9 + 1);
 		break;
 	case LOSE:
 		if (!playerGO->GetScript<PlayerController>()->IsDead())
@@ -313,6 +314,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		spawner->Reset();
 		spawner->SetStartGame(false);
 		spawner->SetWave(0);
+		player->SetColorSpotRad(1);
 		break;
 	case TUTO:
 		lmb->ActiveSelf(false);

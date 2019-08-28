@@ -20,7 +20,7 @@ void SBlueberry::Update(Vector3& dest, Vector3& enemyPos, KinematicBody* kb, dou
 {
 	shouldAttack = true;
 
-	if ((dest - enemyPos).LengthSquared() < 4.f && (dest - enemyPos).LengthSquared() > 0.5f) //0.4f
+	if ((dest - enemyPos).LengthSquared() < 4.f && (dest - enemyPos).LengthSquared() > 0.5f)
 		currentState = ATTACK;
 	else if ((dest - enemyPos).LengthSquared() <= 0.5f)
 		currentState = ATTACH;
