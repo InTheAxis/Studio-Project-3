@@ -470,7 +470,10 @@ void PlayerController::PrintState()
 void PlayerController::HandleCollision(ColInfo info)
 {
 	if (info.other->tag == "bulletplayer")
+	{
 		TakeDamage(1);
+		Debug::Log("hittttttttttttt");
+	}
 
 	if (info.other->tag == "enemyA" && info.other->isTrigger)
 		TakeDamage(1);

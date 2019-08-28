@@ -51,7 +51,7 @@ void Spawner::Update(double dt)
 	else
 		interval = 0;
 
-	if (interval >= 3.f)
+	if (interval >= 2.f)
 	{
 		SpawnEnemy();
 		interval = 0;

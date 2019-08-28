@@ -311,6 +311,8 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		wasd->ActiveSelf(false);
 		waveNum->ActiveSelf(false);
 		spawner->Reset();
+		spawner->SetStartGame(false);
+		spawner->SetWave(0);
 		break;
 	case TUTO:
 		lmb->ActiveSelf(false);
@@ -321,7 +323,6 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		greenbar->ActiveSelf(false);
 		redbar->ActiveSelf(false);
 		waveNum->ActiveSelf(false);
-		spawner->SetWave(1);
 		spawner->Reset();
 		spawner->SetStartGame(false);
 		break;
@@ -338,6 +339,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		title->ActiveSelf(true);
 		wasd->ActiveSelf(true);
 		waveNum->ActiveSelf(false);
+		spawner->SetStartGame(false);
 		title->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(0, 3, 0);
 		wasd->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-2.5f, 0, 0);
 
@@ -356,6 +358,7 @@ void MainScene::ChangeGameState(GAME_STATE gs)
 		greenbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3((player->GetHealth() * 0.05f) - 7.2f, 4.0f, 0.f);
 		redbar->GetGameObj()->GetTransform()->translate = playerGO->GetTransform()->translate + Vector3(-6.3f, 4.0f, 0);
 		spawner->SetWave(1);
+		spawner->SetStartGame(true);
 		break;
 	case LOSE:
 		break;

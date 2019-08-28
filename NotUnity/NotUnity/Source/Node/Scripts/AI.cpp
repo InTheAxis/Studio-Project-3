@@ -118,6 +118,7 @@ void AI::Update(double dt)
 	if (!dead)
 	{
 		direction = (playerTrans - t->translate);
+		direction.z = 0;
 		if (!direction.IsZero())
 			direction.Normalize();
 
@@ -326,7 +327,7 @@ void AI::HandleColl(ColInfo info)
 	}
 	if (info.other->tag == "bulletplayer")
 		return;
-	if (info.other->GetGameObj()->GetScript<PlayerController>())
+	if (info.other->tag == "player" || info.other->tag == "playerAL" || info.other->tag == "playerAR")
 	{
 		AI* ai = info.coll->GetGameObj()->GetScript<AI>();
 		if (info.other->isTrigger)

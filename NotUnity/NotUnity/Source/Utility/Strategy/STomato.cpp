@@ -53,7 +53,6 @@ void STomato::Attack(Projectile* p, Vector3& enemyPos, Vector3& direction, doubl
 			else
 				p->Discharge(enemyPos, direction.Normalized() * 10);
 			p->GetGameObj()->ActiveSelf(true);
-			Debug::Log(direction.Normalized());
 		}
 		inteval = 0;
 	}

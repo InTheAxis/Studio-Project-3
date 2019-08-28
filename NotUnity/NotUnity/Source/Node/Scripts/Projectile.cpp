@@ -40,7 +40,7 @@ void Projectile::OnDisable()
 void Projectile::Start()
 {		
 	t = gameObject->GetTransform();	
-	float size = 0.1f;
+	float size = 0.2f;
 	t->scale.Set(size, size, size);
 
 	kinb = AddChild<KinematicBody>();
