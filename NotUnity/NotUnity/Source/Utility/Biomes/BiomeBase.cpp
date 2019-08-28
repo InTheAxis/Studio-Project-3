@@ -1,6 +1,7 @@
 #include "BiomeBase.h"
 
 #include "../WinDebug.h"
+#include "../Math/Spline.h"
 
 Biome::Biome()
 	: spriteIdx(0)

@@ -152,7 +152,7 @@ void PlayerController::Update(double dt)
 		TakeDamage(1);
 
 	if (input.x != 0)
-		direction = input.x;
+		direction = (int)input.x;
 
 	//apply movement
 	if (OnGround(0.1f))
@@ -489,7 +489,7 @@ void PlayerController::HandleCollision(ColInfo info)
 		TakeDamage(1);
 
 	if (info.other->tag == "rock")
-		info.other->GetGameObj()->GetComp<KinematicBody>()->ApplyImpulse(Vector3(10 * direction, 3, 0));
+		info.other->GetGameObj()->GetComp<KinematicBody>()->ApplyImpulse(Vector3(10.f * direction, 3, 0));
 }
 
 void PlayerController::HandleTrigger(ColInfo info)

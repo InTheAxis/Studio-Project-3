@@ -114,7 +114,7 @@ void Chunk::InitInteractive()
 		rock->ActiveSelf(true);
 		rock->GetTransform()->translate.x = gameObject->GetTransform()->translate.x - 0.2f;
 		rock->GetTransform()->translate.y = 10;
-		rock->GetTransform()->translate.z = 0.1;
+		rock->GetTransform()->translate.z = 0.1f;
 		rock->GetTransform()->scale.Set(0.5f, 0.5f);
 	case INTER::CRATE:
 		crate->ActiveSelf(true);

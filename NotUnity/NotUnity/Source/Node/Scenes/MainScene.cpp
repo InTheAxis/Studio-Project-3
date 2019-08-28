@@ -376,11 +376,11 @@ void MainScene::updateAchievementUI()
 {
 	if (!MgrAchievements::Instance()->GetWalkAchievementLevel1())
 	{
-		walkSat = MgrAchievements::Instance()->GetWalkTime() / 10;
+		walkSat = MgrAchievements::Instance()->GetWalkTime() / 10.f;
 	}
 	else if (!MgrAchievements::Instance()->GetWalkAchievementLevel2())
 	{
-		walkSat = MgrAchievements::Instance()->GetWalkTime() / 100;
+		walkSat = MgrAchievements::Instance()->GetWalkTime() / 100.f;
 		ss.clear(); ss.str(""); ss << "Attack Damage I        Walk Speed II          Health Increase I"; textWalkAchievement->SetText(ss.str());
 	}
 	else
@@ -389,11 +389,11 @@ void MainScene::updateAchievementUI()
 	}
 	if (!MgrAchievements::Instance()->GetAttackLevel1())
 	{
-		attSat = MgrAchievements::Instance()->GetAttactTimes() / 10;
+		attSat = MgrAchievements::Instance()->GetAttactTimes() / 10.f;
 	}
 	else if (!MgrAchievements::Instance()->GetAttackLevel2())
 	{
-		attSat = MgrAchievements::Instance()->GetAttactTimes() / 50;
+		attSat = MgrAchievements::Instance()->GetAttactTimes() / 50.f;
 		ss.clear(); ss.str(""); ss << "Attack Damage II        Walk Speed I          Health Increase I"; textWalkAchievement->SetText(ss.str());
 	}
 	else
@@ -402,11 +402,11 @@ void MainScene::updateAchievementUI()
 	}
 	if (!MgrAchievements::Instance()->GetKillLevel1())
 	{
-		killSat = MgrAchievements::Instance()->GetFinalEnemyKilled() / 10;
+		killSat = MgrAchievements::Instance()->GetFinalEnemyKilled() / 10.f;
 	}
 	else if (!MgrAchievements::Instance()->GetKillLevel2())
 	{
-		killSat = MgrAchievements::Instance()->GetFinalEnemyKilled() / 50;
+		killSat = MgrAchievements::Instance()->GetFinalEnemyKilled() / 50.f;
 		ss.clear(); ss.str(""); ss << "Attack Damage I        Walk Speed I          Health Increase II"; textWalkAchievement->SetText(ss.str());
 	}
 	else

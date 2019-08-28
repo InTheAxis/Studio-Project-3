@@ -22,7 +22,7 @@ MapGenerator::~MapGenerator()
 
 void MapGenerator::Start()
 {
-	offsetBuffer = 1.5f * scaleX; // Desire ammount * scale
+	offsetBuffer = (int)(1.5f * scaleX); // Desire ammount * scale
 	for (int i = 0; i < mapSize; ++i)
 	{
 		chunkGO[i] = AddChild<GameObj>("Chunk" + std::to_string(i));
@@ -85,6 +85,7 @@ Chunk * MapGenerator::GetCurrChunk()
 	for (int i = 0; i < mapSize; ++i)
 		if (GetDisplacement(i) <= scaleX * 0.5f)
 			return chunkGO[i]->GetComp<Chunk>();
+	return nullptr;
 }
 
 GameObj * MapGenerator::GetChunkGO(int idx)

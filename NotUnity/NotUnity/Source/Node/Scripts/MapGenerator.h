@@ -36,7 +36,7 @@ private:
 
 	int offsetBuffer; //displacement > offsetBuffer to spawn the new blocks
 	int offsetX; // increase over time when chunk gets pop and push to the back
-	int scaleX; //scale of the chunk		
+	float scaleX; //scale of the chunk		
 	int chunkLeft, chunkRight; //leftmost and rightmost chunk
 
 	void UpdateChunkNum(int incrementAmt);

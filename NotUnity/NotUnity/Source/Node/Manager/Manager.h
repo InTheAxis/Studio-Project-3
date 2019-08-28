@@ -16,6 +16,6 @@ public:
 	virtual void End() = 0;
 protected:
 	Manager<T>(std::string name = "Manager") : Node(name) {}
-	~Manager<T>() {}
+	virtual ~Manager<T>() {}
 };
 #endif
