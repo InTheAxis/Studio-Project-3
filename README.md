@@ -1,1 +1,1 @@
-# 3automatic-funicular
+# Studio-Project-3
